@@ -1,0 +1,21 @@
+2?
+?
+vim .vimrc
+open_with m
+open_with libreoffice
+help delete
+open_with vim
+open_with acroread
+shell -p 
+help new
+mkdir CWK3
+mkdir Coursework
+cd 
+m
+mkdir SteamApps
+mkdir common
+
+open_with `
+open_with 
+delete 
+delete
