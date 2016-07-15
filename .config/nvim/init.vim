@@ -32,6 +32,8 @@ autocmd BufWritePre * if &ft !~# blacklist | :%s/\s\+$//e
 autocmd QuickFixCmdPost *grep* cwindow
 " open a mirror of Tagbar for all new tabs
 autocmd BufWinEnter * TagbarOpen
+" auto lint files with Neomake on enter and save
+autocmd! BufWritePost,BufEnter * Neomake
 " set :Todo to display all TODO and FIXME comments
 command Todo vimgrep /TODO\|FIXME/j ** | cw
 " set :Vimrc to open the .vimrc in a new tab
@@ -131,10 +133,11 @@ Plug 'tomasr/molokai'
 Plug 'godlygeek/tabular'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
+Plug 'airblade/vim-gitgutter'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" TODO: install and setup Neomake/Deoplete
+Plug 'neomake/neomake'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'bkad/CamelCaseMotion'
@@ -142,15 +145,15 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-airline'
-Plug 'airblade/vim-gitgutter'
 Plug 'wellle/targets.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'osyo-manga/vim-over'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx', { 'for': 'jsx' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'jdonaldson/vaxe', { 'for': 'haxe' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
-Plug 'sirtaj/vim-openscad', { 'for': 'scad' }
 " }}}
 " Post bundle commands {{{
 " End vim-plug
@@ -175,6 +178,12 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:nerdtree_tabs_open_on_console_startup = 1
 " Use Deoplete for auto-completion
 let g:deoplete#enable_at_startup = 1
-" Use smartcase.
+" Use smartcase
 let g:deoplete#enable_smart_case = 1
+" use ESLint for JavaScript linting
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_jsx_enabled_makers = ['eslint']
+" set nicer error and warning symbols in the gutter
+let g:neomake_warning_sign = { 'text': 'W', 'texthl': 'WarningMsg' }
+let g:neomake_error_sign = { 'text': 'E', 'texthl': 'ErrorMsg' }
 " }}}
