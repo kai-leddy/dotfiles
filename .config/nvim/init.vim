@@ -148,8 +148,8 @@ Plug 'bling/vim-airline'
 Plug 'wellle/targets.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'osyo-manga/vim-over'
+Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx', { 'for': 'jsx' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'jdonaldson/vaxe', { 'for': 'haxe' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
