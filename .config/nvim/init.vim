@@ -22,7 +22,7 @@ set tabstop=4                  " make tabs have a width of 4
 set shiftwidth=4               " make indents have a width of 4
 set fillchars=vert:\           " make vertical splits look less stupid
 set noshowmode				   " dont show the mode (insert/normal) as airline will
-"set list lcs=tab:\|\           " use vertical bars to show indent levels
+set list lcs=tab:\|\           " use vertical bars to show indent levels
 " }}}
 " Commands and auto commands {{{
 " trim trailing whitespace for everything except markdown and vim
@@ -146,7 +146,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-airline'
 Plug 'wellle/targets.vim'
-Plug 'nathanaelkane/vim-indent-guides'
+Plug 'Yggdroot/indentLine'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
@@ -186,4 +186,6 @@ let g:neomake_jsx_enabled_makers = ['eslint']
 " set nicer error and warning symbols in the gutter
 let g:neomake_warning_sign = { 'text': 'W', 'texthl': 'WarningMsg' }
 let g:neomake_error_sign = { 'text': 'E', 'texthl': 'ErrorMsg' }
+" set indent character
+let g:indentLine_char = '|'
 " }}}
