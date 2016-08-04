@@ -150,10 +150,13 @@ Plug 'Yggdroot/indentLine'
 Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'elzr/vim-json' , { 'for': 'json' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'jdonaldson/vaxe', { 'for': 'haxe' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 " }}}
 " Post bundle commands {{{
 " End vim-plug
@@ -188,4 +191,6 @@ let g:neomake_warning_sign = { 'text': 'W', 'texthl': 'WarningMsg' }
 let g:neomake_error_sign = { 'text': 'E', 'texthl': 'ErrorMsg' }
 " set indent character
 let g:indentLine_char = '|'
+" fix indentLine plugin breaking conceal settings for json
+let g:indentLine_concealcursor=''
 " }}}
