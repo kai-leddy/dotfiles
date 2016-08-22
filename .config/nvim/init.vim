@@ -1,3 +1,4 @@
+" TODO: setup snippets and tags for js and jsx
 " Standard vim settings {{{
 " Disable GUI Items {{{
 set go-=m
@@ -23,6 +24,9 @@ set shiftwidth=4               " make indents have a width of 4
 set fillchars=vert:\           " make vertical splits look less stupid
 set noshowmode				   " dont show the mode (insert/normal) as airline will
 set list lcs=tab:\|\           " use vertical bars to show indent levels
+
+" setup ignore folders for globs
+set wildignore+=node_modules/**,bin/**,obj/**,coverage/**,public/** 
 " }}}
 " Commands and auto commands {{{
 " trim trailing whitespace for everything except markdown and vim
@@ -147,14 +151,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-airline'
 Plug 'wellle/targets.vim'
 Plug 'Yggdroot/indentLine'
-Plug 'osyo-manga/vim-over'
 Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'elzr/vim-json' , { 'for': 'json' }
 Plug 'othree/html5.vim', { 'for': 'html' }
-Plug 'jdonaldson/vaxe', { 'for': 'haxe' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
-Plug 'PotatoesMaster/i3-vim-syntax', { 'for': 'i3' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " }}}
@@ -169,8 +170,9 @@ let g:UltiSnipsExpandTrigger="<C-E>"
 let g:UltiSnipsListSnippets="<C-S>"
 let g:UltiSnipsJumpForwardTrigger="<C-Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<C-S-Tab>"
-" Get delimitMate to auto indent the newline after an open squiggly bracket
+" Get delimitMate expand newlines and spaces
 let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
 " Set NERDTree to ignore java .class and .ctxt files
 let NERDTreeIgnore = ['\.class$', '\.ctxt$', '\.pyc$']
 " Setup vim-airline
