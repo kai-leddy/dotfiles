@@ -9,6 +9,7 @@ set go-=L
 " }}}
 set relativenumber             " show relative line numbers
 set number                     " show line number on the current line
+set autoread                   " automatically reload buffers when changed outside of vim
 set showmatch                  " jump to matches when entering regexp
 set ignorecase                 " ignore case when searching
 set smartcase                  " no ignorecase if Uppercase char present
@@ -34,8 +35,6 @@ let blacklist = '^vim$\|^mkd$\|^markdown$'
 autocmd BufWritePre * if &ft !~# blacklist | :%s/\s\+$//e
 " make all grep commands open the quick fix window
 autocmd QuickFixCmdPost *grep* cwindow
-" open a mirror of Tagbar for all new tabs
-autocmd BufWinEnter * TagbarOpen
 " auto lint files with Neomake on enter and save
 autocmd! BufWritePost,BufEnter * Neomake
 " set :Todo to display all TODO and FIXME comments
