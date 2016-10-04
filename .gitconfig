@@ -7,13 +7,9 @@
 	helper = cache --timeout=3600
 [push]
 	default = simple
-[merge]
-	tool = fugitive
-[mergetool "fugitive"]
-	cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 [core]
-	editor = vim
-[mergetool]
-	prompt = false
+	editor = nvim
+[diff]
+	compactionHeuristic = true
