@@ -63,6 +63,8 @@ alias move='noglob zmv -W'
 # create alias for removing orphaned packages from pacman/pacaur
 alias pacclean='pacaur -Rns $(pacman -Qtdq)'
 
+export $EDITOR=nvim
+
 # use ~/.dir_colors for directory colors to stop stupidly colored ntfs folders.
 eval "$(dircolors ~/.dir_colors)"
 archey3	# show archey on every terminal instance
