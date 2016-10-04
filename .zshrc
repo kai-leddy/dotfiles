@@ -45,7 +45,7 @@ DISABLE_AUTO_UPDATE="true"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(colored-man extract gem heroku rails vi-mode lol)
+plugins=(colored-man extract vi-mode lol)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -65,6 +65,4 @@ alias pacclean='pacaur -Rns $(pacman -Qtdq)'
 
 # use ~/.dir_colors for directory colors to stop stupidly colored ntfs folders.
 eval "$(dircolors ~/.dir_colors)"
-#make gvim open files in a new tab if an instance already exists
-gvim () { command gvim --remote-tab-silent "$@" || command gvim "$@"; }
 archey3	# show archey on every terminal instance
