@@ -26,8 +26,8 @@ set fillchars=vert:\           " make vertical splits look less stupid
 set noshowmode				   " dont show the mode (insert/normal) as airline will
 set list lcs=tab:\|\           " use vertical bars to show indent levels
 
-" setup ignore folders for globs
-set wildignore+=node_modules/**,bin/**,obj/**,coverage/**,public/** 
+" setup ignore wildcards for everything
+set wildignore+=node_modules/**,obj/**,coverage/**,public/**,**.jpg,**.svg
 " }}}
 " Commands and auto commands {{{
 " trim trailing whitespace for everything except markdown and vim
