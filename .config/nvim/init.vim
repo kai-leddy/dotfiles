@@ -151,7 +151,8 @@ Plug 'bling/vim-airline'
 Plug 'wellle/targets.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-Plug 'elzr/vim-json' , { 'for': 'json' }
+Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'rschmukler/pangloss-vim-indent', { 'for': 'javascript' }
 Plug 'othree/yajs.vim' | Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
