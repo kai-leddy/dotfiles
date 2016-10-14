@@ -150,9 +150,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-airline'
 Plug 'wellle/targets.vim'
 Plug 'Yggdroot/indentLine'
-Plug 'pangloss/vim-javascript' | Plug 'mxw/vim-jsx'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'elzr/vim-json' , { 'for': 'json' }
+Plug 'othree/yajs.vim' | Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -194,4 +196,6 @@ let g:neomake_error_sign = { 'text': 'E', 'texthl': 'ErrorMsg' }
 let g:indentLine_char = '|'
 " fix indentLine plugin breaking conceal settings for json
 let g:indentLine_concealcursor=''
+" Set up the list of JS libraries to provide syntax for
+let g:used_javascript_libs = 'underscore,react,flux,requirejs,backbone,angularjs,angularui,chai'
 " }}}
