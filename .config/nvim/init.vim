@@ -100,14 +100,19 @@ noremap <C-K> <C-W><C-K>
 noremap <C-L> <C-W><C-L>
 noremap <C-H> <C-W><C-H>
 " }}}
-" Remove mappings for Ctrl + npes so that ultisnips can use them {{{
-map <C-N> <NOP>
-map <C-P> <NOP>
+" Remove mappings for Ctrl + es so that ultisnips can use them {{{
 map <C-E> <NOP>
 map <C-S> <NOP>
 " }}}
 " Deoplete tab-complete {{{
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" }}}
+" Ultisnips expand if exists with <CR> {{{
+function! TryExpand()
+	call UltiSnips#ExpandSnippet()
+	return g:ulti_expand_res
+endfunction
+inoremap <CR> <C-R>=TryExpand() == 1 ? "" : "\<lt>CR>"<CR>
 " }}}
 " Remap K to split the line (opposite of J) {{{
 nnoremap K i<CR><ESC>
@@ -170,8 +175,8 @@ set background=dark
 " Change Ultisnips keybindings to prevent conflicts with YouCompleteMe
 let g:UltiSnipsExpandTrigger="<C-E>"
 let g:UltiSnipsListSnippets="<C-S>"
-let g:UltiSnipsJumpForwardTrigger="<C-Tab>"
-let g:UltiSnipsJumpBackwardTrigger="<C-S-Tab>"
+let g:UltiSnipsJumpForwardTrigger="<CR>"
+let g:UltiSnipsJumpBackwardTrigger="<S-CR>"
 " Get delimitMate expand newlines and spaces
 let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
