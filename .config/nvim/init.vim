@@ -157,10 +157,10 @@ Plug 'wellle/targets.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'rschmukler/pangloss-vim-indent', { 'for': 'javascript' }
-Plug 'othree/yajs.vim' | Plug 'mxw/vim-jsx', { 'for': 'javascript' }
-Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' }
+Plug 'rschmukler/pangloss-vim-indent', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'othree/yajs.vim' | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'othree/es.next.syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
