@@ -99,6 +99,7 @@ noremap <C-J> <C-W><C-J>
 noremap <C-K> <C-W><C-K>
 noremap <C-L> <C-W><C-L>
 noremap <C-H> <C-W><C-H>
+noremap <BS> <C-W><C-H>
 " }}}
 " Remove mappings for Ctrl + es so that ultisnips can use them {{{
 map <C-E> <NOP>
