@@ -1,4 +1,5 @@
-" TODO: setup snippets and tags for js and jsx
+" vim:foldmethod=marker:foldlevel=0
+
 " Standard vim settings {{{
 " Disable GUI Items {{{
 set go-=m
@@ -19,7 +20,8 @@ set splitbelow                 " create splits below instead of above
 set splitright                 " create splits to the right instead of to the left
 set wildmode=longest:full,list:full " setup command line completion mode
 set colorcolumn=80,100         " display a vertical line at 80 chars
-set foldmethod=marker          " set the foldmethod to custom comment markers
+set modelines=1                " allow the use of file-specific modeline configs
+set foldlevel=1                " close all folds by default on file open
 set tabstop=4                  " make tabs have a width of 4
 set shiftwidth=4               " make indents have a width of 4
 set fillchars=vert:\           " make vertical splits look less stupid
@@ -84,6 +86,13 @@ imap <A-left> <NOP>
 imap <A-Right> <NOP>
 " }}}
 " }}}
+" Remap H and L to go to the start and end of line {{{
+noremap H ^
+noremap L $
+" }}}
+" Use backspace to quick switch buffers {{{
+noremap <BS> <C-6>
+" }}}
 " Remap Q to save and Ctrl+q to quit {{{
 noremap Q :w<CR>
 noremap <C-q> :q<CR>
@@ -104,6 +113,10 @@ noremap <BS> <C-W><C-H>
 " Remove mappings for Ctrl + es so that ultisnips can use them {{{
 map <C-E> <NOP>
 map <C-S> <NOP>
+" }}}
+" Use Ctrl + p / P for FZF fuzzy find {{{
+nnoremap <M-p> :FZF<CR>
+nnoremap <M-P> :Ag<CR>
 " }}}
 " Deoplete tab-complete {{{
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
@@ -149,7 +162,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neomake/neomake'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
-Plug 'bkad/CamelCaseMotion'
+Plug 'pseewald/vim-anyfold'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -189,8 +202,6 @@ let NERDTreeIgnore = ['\.class$', '\.ctxt$', '\.pyc$']
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#whitespace#enabled = 0
-" Open NERDTree on console vim/neovim startup
-let g:nerdtree_tabs_open_on_console_startup = 1
 " Use Deoplete for auto-completion
 let g:deoplete#enable_at_startup = 1
 " Use smartcase
@@ -207,4 +218,9 @@ let g:indentLine_char = '|'
 let g:indentLine_concealcursor=''
 " Set up the list of JS libraries to provide syntax for
 let g:used_javascript_libs = 'underscore,react,flux,requirejs,backbone,angularjs,angularui,chai'
+" Setup vim-anyfold
+let anyfold_activate=1
+let anyfold_fold_comments=1
+" Filter fzf files through ag to follow gitignore etc
+let $FZF_DEFAULT_COMMAND='ag -l -g ""'
 " }}}
