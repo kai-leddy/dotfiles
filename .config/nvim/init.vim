@@ -22,6 +22,7 @@ set wildmode=longest:full,list:full " setup command line completion mode
 set colorcolumn=80,100         " display a vertical line at 80 chars
 set modelines=1                " allow the use of file-specific modeline configs
 set foldlevel=1                " close all folds by default on file open
+set foldmethod=syntax          " set foldmethod
 set tabstop=4                  " make tabs have a width of 4
 set shiftwidth=4               " make indents have a width of 4
 set fillchars=vert:\           " make vertical splits look less stupid
@@ -164,7 +165,6 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neomake/neomake'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
-Plug 'pseewald/vim-anyfold'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -220,9 +220,6 @@ let g:indentLine_char = '|'
 let g:indentLine_concealcursor=''
 " Set up the list of JS libraries to provide syntax for
 let g:used_javascript_libs = 'underscore,react,flux,requirejs,backbone,angularjs,angularui,chai'
-" Setup vim-anyfold
-let anyfold_activate=1
-let anyfold_fold_comments=1
 " Filter fzf files through ag to follow gitignore etc
 let $FZF_DEFAULT_COMMAND='ag -l -g ""'
 " }}}
