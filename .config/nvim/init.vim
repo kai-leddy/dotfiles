@@ -27,6 +27,7 @@ set shiftwidth=4               " make indents have a width of 4
 set fillchars=vert:\           " make vertical splits look less stupid
 set noshowmode				   " dont show the mode (insert/normal) as airline will
 set list lcs=tab:\|\           " use vertical bars to show indent levels
+set inccommand=split           " make use of NeoVim's new live search/replace
 
 " setup ignore wildcards for everything
 set wildignore+=node_modules/**,obj/**,bin/**,coverage/**,public/**,**.jpg,**.svg
@@ -114,9 +115,10 @@ noremap <BS> <C-W><C-H>
 map <C-E> <NOP>
 map <C-S> <NOP>
 " }}}
-" Use Ctrl + p / P for FZF fuzzy find {{{
+" Use Meta + p / P and <M-8> for FZF fuzzy find {{{
 nnoremap <M-p> :FZF<CR>
 nnoremap <M-P> :Ag<CR>
+nnoremap <M-8> :Ag <C-R>=expand("<cword>")<CR><CR>
 " }}}
 " Deoplete tab-complete {{{
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
