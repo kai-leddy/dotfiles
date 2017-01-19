@@ -1,3 +1,4 @@
 .vim/bundle
 .config/chromium
-.tmux/plugins
+.tmux/plugins/*
+!.tmux/plugins/tpm
