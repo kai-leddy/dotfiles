@@ -24,11 +24,13 @@ set modelines=1                " allow the use of file-specific modeline configs
 set foldlevel=1                " close all folds by default on file open
 set foldmethod=syntax          " set foldmethod
 set tabstop=4                  " make tabs have a width of 4
+set softtabstop=4              " not really sure what this changes to be honest
 set shiftwidth=4               " make indents have a width of 4
 set fillchars=vert:\           " make vertical splits look less stupid
-set noshowmode				   " dont show the mode (insert/normal) as airline will
+set noshowmode                 " dont show the mode (insert/normal) as airline will
 set list lcs=tab:\|\           " use vertical bars to show indent levels
 set inccommand=split           " make use of NeoVim's new live search/replace
+set encoding=utf-8             " force utf-8 encoding
 
 " setup ignore wildcards for everything
 set wildignore+=node_modules/**,obj/**,bin/**,coverage/**,public/**,**.jpg,**.svg
@@ -41,6 +43,8 @@ autocmd BufWritePre * if &ft !~# blacklist | :%s/\s\+$//e
 autocmd QuickFixCmdPost *grep* cwindow
 " auto lint files with Neomake on enter and save
 autocmd! BufWritePost,BufEnter * Neomake
+" auto pretty print (reformat) files with Neoformat on save
+" autocmd! BufWritePre * Neoformat
 " set :Todo to display all TODO and FIXME comments
 command Todo vimgrep /TODO\|FIXME/j ** | cw
 " set :Vimrc to open the .vimrc in a new tab
@@ -102,6 +106,9 @@ noremap <C-q> :q<CR>
 " Map \a to align the given pattern with Tabular {{{
 noremap <Leader>a :Tabular<Space>/
 " }}}
+" Map \f to pretty print (reformat) the file with Neoformat {{{
+noremap <Leader>f :Neoformat<CR>
+" }}}
 " Map Enter to removing search highlighting {{{
 noremap <CR> :nohlsearch<CR>
 " }}}
@@ -116,10 +123,9 @@ noremap <BS> <C-W><C-H>
 map <C-E> <NOP>
 map <C-S> <NOP>
 " }}}
-" Use Meta + p / P and <M-8> for FZF fuzzy find {{{
-nnoremap <M-p> :FZF<CR>
-nnoremap <M-P> :Ag<CR>
-nnoremap <M-8> :Ag <C-R>=expand("<cword>")<CR><CR>
+" Use Meta + p / P for FZF fuzzy find {{{
+nnoremap <M-p> :Files<CR>
+nnoremap <M-P> :Find<CR>
 " }}}
 " Deoplete tab-complete {{{
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
@@ -156,6 +162,7 @@ Plug 'junegunn/vim-plug'
 " various other plugins
 Plug 'tomasr/molokai'
 Plug 'godlygeek/tabular'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
@@ -163,6 +170,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neomake/neomake'
+Plug 'sbdchd/neoformat'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
@@ -173,7 +181,8 @@ Plug 'wellle/targets.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'rschmukler/pangloss-vim-indent', { 'for': [ 'javascript', 'javascript.jsx' ] }
+"Plug 'rschmukler/pangloss-vim-indent', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ], 'do': 'rm -rf compiler/ extras/ syntax/' }
 Plug 'othree/yajs.vim' | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/es.next.syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
@@ -183,13 +192,19 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'ryanoasis/vim-devicons' " must stay at bottom to load after other plugins
 " }}}
-" Post bundle commands {{{
+"" Post bundle commands {{{
 " End vim-plug
 call plug#end()
 " Set the colorscheme to molokai dark (vim version of TextMate's monokai)
 colorscheme molokai
 set background=dark
+" use ripgrep as the vimgrep backend
+set grepprg=rg\ --vimgrep
+" setup editorconfig plugin
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+" let g:EditorConfig_exec_path = 'Path to your EditorConfig Core executable'
 " Change Ultisnips keybindings to prevent conflicts with YouCompleteMe
 let g:UltiSnipsExpandTrigger="<C-E>"
 let g:UltiSnipsListSnippets="<C-S>"
@@ -215,11 +230,27 @@ let g:neomake_jsx_enabled_makers = ['eslint']
 let g:neomake_warning_sign = { 'text': 'W', 'texthl': 'WarningMsg' }
 let g:neomake_error_sign = { 'text': 'E', 'texthl': 'ErrorMsg' }
 " set indent character
-let g:indentLine_char = '|'
+let g:indentLine_char = '¦'
 " fix indentLine plugin breaking conceal settings for json
 let g:indentLine_concealcursor=''
 " Set up the list of JS libraries to provide syntax for
 let g:used_javascript_libs = 'underscore,react,flux,requirejs,backbone,angularjs,angularui,chai'
+" Use the prettier formatter before js-beautify when possible
+let g:neoformat_enabled_javascript = ['prettier', 'jsbeautify']
+let g:neoformat_enabled_js = ['prettier', 'jsbeautify']
+" }}}
+" Custom FZF fuzzy find grep madness {{{
 " Filter fzf files through ag to follow gitignore etc
-let $FZF_DEFAULT_COMMAND='ag -l -g ""'
+let $FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*" --glob "!**/node_modules/*" --color always'
+" --column: Show column number
+" --line-number: Show line number
+" --no-heading: Do not show file headings in results
+" --fixed-strings: Search term as a literal string
+" --ignore-case: Case insensitive search
+" --no-ignore: Do not respect .gitignore, etc...
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+" --color: Search color options
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --follow --glob "!.git/*" --glob "!**/node_modules/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 " }}}
