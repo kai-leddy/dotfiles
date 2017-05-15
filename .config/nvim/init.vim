@@ -26,6 +26,7 @@ set foldmethod=syntax          " set foldmethod
 set tabstop=4                  " make tabs have a width of 4
 set softtabstop=4              " not really sure what this changes to be honest
 set shiftwidth=4               " make indents have a width of 4
+set expandtab                  " expand tabs into spaces when used for indentation
 set fillchars=vert:\           " make vertical splits look less stupid
 set noshowmode                 " dont show the mode (insert/normal) as airline will
 set list lcs=tab:\|\           " use vertical bars to show indent levels
@@ -44,7 +45,8 @@ autocmd QuickFixCmdPost *grep* cwindow
 " auto lint files with Neomake on enter and save
 autocmd! BufWritePost,BufEnter * Neomake
 " auto pretty print (reformat) files with Neoformat on save
-" autocmd! BufWritePre * Neoformat
+"autocmd! BufWritePre * Neoformat
+autocmd FileType javascript,javascript.jsx set formatprg=prettier\ --stdin\ --tab-width\ 4 
 " set :Todo to display all TODO and FIXME comments
 command Todo vimgrep /TODO\|FIXME/j ** | cw
 " set :Vimrc to open the .vimrc in a new tab
@@ -178,23 +180,24 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'bling/vim-airline'
 Plug 'wellle/targets.vim'
+Plug 'mattn/emmet-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'elzr/vim-json', { 'for': 'json' }
-"Plug 'rschmukler/pangloss-vim-indent', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ], 'do': 'rm -rf compiler/ extras/ syntax/' }
 Plug 'othree/yajs.vim' | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/es.next.syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'ryanoasis/vim-devicons' " must stay at bottom to load after other plugins
 " }}}
-"" Post bundle commands {{{
+" Post bundle commands {{{
 " End vim-plug
 call plug#end()
 " Set the colorscheme to molokai dark (vim version of TextMate's monokai)
@@ -238,6 +241,7 @@ let g:used_javascript_libs = 'underscore,react,flux,requirejs,backbone,angularjs
 " Use the prettier formatter before js-beautify when possible
 let g:neoformat_enabled_javascript = ['prettier', 'jsbeautify']
 let g:neoformat_enabled_js = ['prettier', 'jsbeautify']
+let g:neoformat_try_formatprg = 1
 " }}}
 " Custom FZF fuzzy find grep madness {{{
 " Filter fzf files through ag to follow gitignore etc
