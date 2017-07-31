@@ -8,6 +8,7 @@ set go-=T
 set go-=r
 set go-=L
 " }}}
+set mouse=a                    " Some gibberish to make the mouse work in tmux on mac
 set relativenumber             " show relative line numbers
 set number                     " show line number on the current line
 set autoread                   " automatically reload buffers when changed outside of vim
@@ -44,9 +45,11 @@ autocmd BufWritePre * if &ft !~# blacklist | :%s/\s\+$//e
 autocmd QuickFixCmdPost *grep* cwindow
 " auto lint files with Neomake on enter and save
 autocmd! BufWritePost,BufEnter * Neomake
+" Make all javascript files interpret as jsx
+autocmd  BufNew,BufEnter *.js set filetype=javascript.jsx
 " auto pretty print (reformat) files with Neoformat on save
 "autocmd! BufWritePre * Neoformat
-autocmd FileType javascript,javascript.jsx set formatprg=prettier\ --stdin\ --tab-width\ 4 
+autocmd FileType javascript,javascript.jsx set formatprg=prettier\ --stdin\ --tab-width\ 4\ --jsx-bracket-same-line\ --single-quote\ --no-semi 
 " set :Todo to display all TODO and FIXME comments
 command Todo vimgrep /TODO\|FIXME/j ** | cw
 " set :Vimrc to open the .vimrc in a new tab
@@ -169,7 +172,8 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips' 
+Plug 'honza/vim-snippets'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'neomake/neomake'
 Plug 'sbdchd/neoformat'
@@ -184,10 +188,14 @@ Plug 'mattn/emmet-vim'
 Plug 'Yggdroot/indentLine'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'othree/yajs.vim' 
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ], 'do': 'rm -rf compiler/ extras/ syntax/' }
-Plug 'othree/yajs.vim' | Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/es.next.syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' }
@@ -205,6 +213,9 @@ colorscheme molokai
 set background=dark
 " use ripgrep as the vimgrep backend
 set grepprg=rg\ --vimgrep
+" give me some background transparency
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
 " setup editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " let g:EditorConfig_exec_path = 'Path to your EditorConfig Core executable'
@@ -245,7 +256,7 @@ let g:neoformat_try_formatprg = 1
 " }}}
 " Custom FZF fuzzy find grep madness {{{
 " Filter fzf files through ag to follow gitignore etc
-let $FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*" --glob "!**/node_modules/*" --color always'
+let $FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*" --glob "!**/node_modules/*" --color never'
 " --column: Show column number
 " --line-number: Show line number
 " --no-heading: Do not show file headings in results
