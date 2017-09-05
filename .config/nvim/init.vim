@@ -114,6 +114,9 @@ noremap <Leader>a :Tabular<Space>/
 " Map \f to pretty print (reformat) the file with Neoformat {{{
 noremap <Leader>f :Neoformat<CR>
 " }}}
+" Map \n to toggle NERDTree tabs on and off {{{
+noremap <Leader>n :NERDTreeTabsToggle<CR>
+" }}}
 " Map Enter to removing search highlighting {{{
 noremap <CR> :nohlsearch<CR>
 " }}}
@@ -229,6 +232,9 @@ let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 " Set NERDTree to ignore java .class and .ctxt files
 let NERDTreeIgnore = ['\.class$', '\.ctxt$', '\.pyc$']
+" Set NERDTree options for mirroring
+let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_focus_on_files = 1
 " Setup vim-airline
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
