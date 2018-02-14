@@ -1,1 +1,0 @@
-/Users/KCL2/.config/fisherman/nvm/functions/yarn.fish

@@ -1,1 +1,0 @@
-/Users/KCL2/.config/fisherman/nvm/__nvm_run.fish

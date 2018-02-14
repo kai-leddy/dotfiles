@@ -1,1 +1,0 @@
-/Users/KCL2/.config/fisherman/bass/functions/bass.fish
