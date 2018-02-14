@@ -1,8 +1,8 @@
 [color]
 	ui = true
 [user]
-	email = epickaimail@gmail.com
-	name = FrogInABox
+	email = kai.leddy@cambridgeconsultants.com
+	name = Kai Leddy
 [credential]
 	helper = cache --timeout=3600
 [push]
@@ -13,3 +13,10 @@
 	editor = nvim
 [diff]
 	compactionHeuristic = true
+[http]
+	emptyauth = 1
+	postBuffer = 2097152000
+[https]
+	postBuffer = 2097152000
+[pull]
+	rebase = true
