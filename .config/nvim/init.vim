@@ -21,8 +21,9 @@ set splitbelow                 " create splits below instead of above
 set splitright                 " create splits to the right instead of to the left
 set wildmode=longest:full,list:full " setup command line completion mode
 set colorcolumn=80,100         " display a vertical line at 80 chars
-set modelines=1                " allow the use of file-specific modeline configs
-set foldlevel=1                " close all folds by default on file open
+set modeline
+set modelines=5                " allow the use of file-specific modeline configs
+set foldlevel=0                " close all folds by default on file open
 set foldmethod=syntax          " set foldmethod
 set tabstop=4                  " make tabs have a width of 4
 set softtabstop=4              " not really sure what this changes to be honest
