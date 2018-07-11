@@ -22,3 +22,6 @@ set -g theme_show_exit_status yes
 set -g theme_color_scheme dark
 set -g fish_prompt_pwd_dir_length 1
 set -g theme_project_dir_length 0
+
+set -x GEM_HOME $HOME/.gem
+set -U fish_user_paths $HOME/.cargo/bin $HOME/.gem/bin /usr/local/lib/python2.7/site-packages

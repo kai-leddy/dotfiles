@@ -2,3 +2,9 @@
 .config/chromium
 .tmux/plugins/*
 !.tmux/plugins/tpm
+.tmux/resurrect
+.config/nvim/plugged/*
+!.config/nvim/plugged/vim-plug
+__pycache__
+*.pyc
+*.old
