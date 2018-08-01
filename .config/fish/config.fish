@@ -23,5 +23,13 @@ set -g theme_color_scheme dark
 set -g fish_prompt_pwd_dir_length 1
 set -g theme_project_dir_length 0
 
+# Setup FZF to use FD (like ripgrep but for files/folders)
+set -x FZF_DEFAULT_OPTS '--ansi'
+set -x FZF_DEFAULT_COMMAND 'fd --type file --color=always --follow --hidden --exclude .git'
+set -x FZF_ALT_C_COMMAND 'fd --type directory --color=always --follow --hidden --exclude .git . $HOME'
+set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+
+# Setup env vars for other stuff
 set -x GEM_HOME $HOME/.gem
+set -x GOPATH $HOME/go
 set -U fish_user_paths $HOME/.cargo/bin $HOME/.gem/bin /usr/local/lib/python2.7/site-packages
