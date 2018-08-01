@@ -23,10 +23,17 @@ set -g theme_color_scheme dark
 set -g fish_prompt_pwd_dir_length 1
 set -g theme_project_dir_length 0
 
+# Setup aliases for commands
+alias ll 'ls -lah'
+alias ef 'nvim ~/.config/fish/config.fish'
+alias ev 'nvim ~/.config/nvim/init.vim'
+alias et 'nvim ~/.tmux.conf'
+
+
 # Setup FZF to use FD (like ripgrep but for files/folders)
 set -x FZF_DEFAULT_OPTS '--ansi'
-set -x FZF_DEFAULT_COMMAND 'fd --type file --color=always --follow --hidden --exclude .git'
-set -x FZF_ALT_C_COMMAND 'fd --type directory --color=always --follow --hidden --exclude .git . $HOME'
+set -x FZF_DEFAULT_COMMAND 'fd --type file --color=always --follow --hidden --exclude .git . $dir'
+set -x FZF_ALT_C_COMMAND 'fd --type directory --color=always --follow --hidden --exclude .git . $dir'
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 # Setup env vars for other stuff
