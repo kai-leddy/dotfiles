@@ -32,4 +32,5 @@ set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 # Setup env vars for other stuff
 set -x GEM_HOME $HOME/.gem
 set -x GOPATH $HOME/go
-set -U fish_user_paths $HOME/.cargo/bin $HOME/.gem/bin /usr/local/lib/python2.7/site-packages
+set -x PYTHONPATH /usr/local/lib/python2.7/site-packages:/usr/local/lib/python3.7/site-packages
+set -U fish_user_paths $HOME/.cargo/bin $HOME/.gem/bin /usr/local/lib/python2.7/site-packages /usr/local/lib/python3.7/site-packages
