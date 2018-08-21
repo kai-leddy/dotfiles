@@ -328,7 +328,7 @@ Execute (PlugUpdate to install both again):
 
 Execute (PlugUpdate only to find out plugins are up-to-date, D key to check):
   PlugUpdate
-  AssertExpect 'Already up-to-date', 2
+  AssertExpect 'Already up.to.date', 2, 'Expected 2 times "Already up-to-date", but got: '.string(getline(1, '$'))
   normal D
   AssertEqual '0 plugin(s) updated.', getline(1)
   q
@@ -370,8 +370,15 @@ Execute (New commits on remote, PlugUpdate, then PlugDiff):
   AssertEqual 1, &previewwindow
   AssertEqual 'git', &filetype
 
-  " Back to plug window
-  wincmd p
+  " Close preview window
+  pclose
+
+  " Open and go to preview window with a custom mapping
+  nmap <buffer> <c-o> <plug>(plug-preview)<c-w>P
+  execute "normal \<c-o>"
+  AssertEqual 1, &previewwindow, 'Should be on preview window'
+  normal q
+  AssertEqual 0, &previewwindow, 'Should not be on preview window'
 
   " ]] motion
   execute 'normal $]]'
@@ -1130,10 +1137,17 @@ Before:
 **********************************************************************
 
 Execute (plug#helptags):
+  call plug#begin()
+  Plug '$PLUG_FIXTURES/xxx'
+  Plug '$PLUG_FIXTURES/yyy', { 'rtp': 'rtp' }
+  call plug#end()
   silent! call delete(expand('$PLUG_FIXTURES/xxx/doc/tags'))
+  silent! call delete(expand('$PLUG_FIXTURES/yyy/rtp/doc/tags'))
   Assert !filereadable(expand('$PLUG_FIXTURES/xxx/doc/tags'))
+  Assert !filereadable(expand('$PLUG_FIXTURES/yyy/rtp/doc/tags'))
   AssertEqual 1, plug#helptags()
   Assert filereadable(expand('$PLUG_FIXTURES/xxx/doc/tags'))
+  Assert filereadable(expand('$PLUG_FIXTURES/yyy/rtp/doc/tags'))
 
 **********************************************************************
 ~ Manual loading
@@ -1141,6 +1155,10 @@ Execute (plug#helptags):
 
 Execute (plug#load - invalid arguments):
   call ResetPlug()
+  call plug#begin()
+  Plug '$PLUG_FIXTURES/xxx', { 'for': 'xxx' }
+  Plug '$PLUG_FIXTURES/yyy', { 'for': 'yyy' }
+  call plug#end()
   AssertEqual 0, plug#load()
   AssertEqual 0, plug#load('non-existent-plugin')
   AssertEqual 0, plug#load('non-existent-plugin', 'another-non-existent-plugin')
@@ -1602,21 +1620,21 @@ Execute (#532 - Reuse plug window):
   call system(printf('cd "%s" && git commit --allow-empty -m "dummy"', g:plugs['goyo.vim'].dir))
 
   PlugDiff
-  AssertEqual 1, winnr()
-  AssertEqual 2, winnr('$')
+  AssertEqual 1, winnr(), 'Current window is #1 after PlugDiff (but is '.winnr().')'
+  AssertEqual 2, winnr('$'), 'Two windows after PlugDiff (but got '.winnr('$').')'
 
   " Open preview window
   execute "normal ]]jo"
-  AssertEqual 2, winnr()
-  AssertEqual 3, winnr('$')
+  AssertEqual 2, winnr(), 'Current window is #2 after opening preview (but is '.winnr().')'
+  AssertEqual 3, winnr('$'), 'Three windows with preview (but got '.winnr('$').')'
 
   " Move plug window to the right
   wincmd L
-  AssertEqual 3, winnr()
-  AssertEqual 3, winnr('$')
+  AssertEqual 3, winnr(), 'Current window is #3 after moving window (but is '.winnr().')'
+  AssertEqual 3, winnr('$'), 'Three windows after moving window (but got '.winnr('$').')'
 
   " Reuse plug window. Preview window is closed.
   PlugStatus
-  AssertEqual 2, winnr()
-  AssertEqual 2, winnr('$')
+  AssertEqual 2, winnr(), 'Current window is #2 after PlugStatus (but is '.winnr().')'
+  AssertEqual 2, winnr('$'), 'Three windows after PlugStatus (but got '.winnr('$').')'
   q

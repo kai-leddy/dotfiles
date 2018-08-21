@@ -50,7 +50,7 @@ autocmd! BufWritePost,BufEnter * Neomake
 autocmd  BufNew,BufEnter *.js set filetype=javascript.jsx
 " auto pretty print (reformat) files with Neoformat on save
 "autocmd! BufWritePre * Neoformat
-autocmd FileType javascript,javascript.jsx set formatprg=prettier\ --stdin\ --tab-width\ 4\ --jsx-bracket-same-line\ --single-quote\ --no-semi 
+autocmd FileType javascript,javascript.jsx,typescript,less,scss,css,graphql set formatprg=prettier\ --stdin\ --tab-width\ 4\ --jsx-bracket-same-line\ --single-quote\ --no-semi 
 " set :Todo to display all TODO and FIXME comments
 command Todo vimgrep /TODO\|FIXME/j ** | cw
 " set :Vimrc to open the .vimrc in a new tab
@@ -203,6 +203,7 @@ Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
 Plug 'othree/html5.vim', { 'for': 'html' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': 'cpp' }
+Plug 'jparise/vim-graphql'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'christoomey/vim-tmux-navigator'
