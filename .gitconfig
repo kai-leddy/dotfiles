@@ -11,9 +11,9 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 [core]
-	editor = nvim
+	editor = nvim -u ~/.config/nvim/slim.vim
 [diff]
-	compactionHeuristic = true
+	indentHeuristic = true
 	tool = meld
 [http]
 	emptyauth = 1
@@ -28,3 +28,5 @@
 	path = /Users/KCL2/.config/git-diff-meld.sh
 [svn]
 	rmdir = true
+[fetch]
+    prune = true

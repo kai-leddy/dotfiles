@@ -1,3 +1,3 @@
 function ev
-	nvim ~/.config/nvim/init.vim $argv
+	nvim ~/.config/nvim/init.vim -u ~/.config/nvim/slim.vim $argv
 end
