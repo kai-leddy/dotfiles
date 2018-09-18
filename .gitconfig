@@ -1,10 +1,8 @@
 [color]
 	ui = true
 [user]
-	email = kai.leddy@cambridgeconsultants.com
+	email = epickaimail@gmail.com
 	name = Kai Leddy
-[credential]
-	helper = cache --timeout=3600
 [push]
 	default = simple
 [alias]
@@ -15,18 +13,13 @@
 [diff]
 	indentHeuristic = true
 	tool = meld
-[http]
-	emptyauth = 1
-	postBuffer = 2097152000
-[https]
-	postBuffer = 2097152000
 [pull]
 	rebase = true
 [merge]
 	tool = meld
 [difftool "meld"]
-	path = /Users/KCL2/.config/git-diff-meld.sh
+	path = ~/.config/git-diff-meld.sh
 [svn]
 	rmdir = true
 [fetch]
-    prune = true
+	prune = true
