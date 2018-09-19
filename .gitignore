@@ -1,10 +1,8 @@
-.vim/bundle
-.config/chromium
-.tmux/plugins/*
-!.tmux/plugins/tpm
-.tmux/resurrect
-.config/nvim/plugged/*
-!.config/nvim/plugged/vim-plug
+tmux/.tmux/plugins/*
+!tmux/.tmux/plugins/tpm
+tmux/.tmux/resurrect
+nvim/.config/nvim/plugged/*
+!nvim/.config/nvim/plugged/vim-plug
 __pycache__
 *.pyc
 *.old
