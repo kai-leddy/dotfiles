@@ -17,4 +17,5 @@ stow nvim
 stow thefuck
 stow tmux
 stow vim
+stow alacritty
 ```
