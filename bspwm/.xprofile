@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Log stdout and stderr to file
+exec &> /tmp/xprofile.log
+
+echo $1
+
+pulseaudio -D
+
+case $1 in
+  bspwm)
+     sxhkd -s /tmp/sxhkd.fifo &
+     compton --backend glx --vsync drm &
+     light-locker &
+     wmname LG3D
+     ;;
+esac

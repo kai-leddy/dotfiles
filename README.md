@@ -18,4 +18,5 @@ stow thefuck
 stow tmux
 stow vim
 stow alacritty
+sudo stow xorg -t /etc/X11/
 ```
