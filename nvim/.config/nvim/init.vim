@@ -25,9 +25,9 @@ set modeline
 set modelines=5                " allow the use of file-specific modeline configs
 set foldlevel=0                " close all folds by default on file open
 set foldmethod=syntax          " set foldmethod
-set tabstop=4                  " make tabs have a width of 4
-set softtabstop=4              " not really sure what this changes to be honest
-set shiftwidth=4               " make indents have a width of 4
+set tabstop=2                  " make tabs have a width of 2
+set softtabstop=2              " not really sure what this changes to be honest
+set shiftwidth=2               " make indents have a width of 2
 set expandtab                  " expand tabs into spaces when used for indentation
 set fillchars=vert:\           " make vertical splits look less stupid
 set noshowmode                 " dont show the mode (insert/normal) as airline will
@@ -44,13 +44,11 @@ let blacklist = '^vim$\|^mkd$\|^markdown$'
 autocmd BufWritePre * if &ft !~# blacklist | :%s/\s\+$//e
 " make all grep commands open the quick fix window
 autocmd QuickFixCmdPost *grep* cwindow
-" auto lint files with Neomake on enter and save
-autocmd! BufWritePost,BufEnter * Neomake
 " Make all javascript files interpret as jsx
 autocmd  BufNew,BufEnter *.js set filetype=javascript.jsx
 " auto pretty print (reformat) files with Neoformat on save
-"autocmd! BufWritePre * Neoformat
-autocmd FileType javascript,javascript.jsx,typescript,less,scss,css,graphql set formatprg=prettier\ --stdin\ --tab-width\ 4\ --jsx-bracket-same-line\ --single-quote\ --no-semi 
+autocmd! BufWritePre * Neoformat
+autocmd FileType javascript,javascript.jsx,typescript,less,scss,css,graphql set formatprg=prettier\ --parser\ babylon\ --stdin\ --tab-width\ 2\ --jsx-bracket-same-line\ --single-quote
 " set :Todo to display all TODO and FIXME comments
 command Todo vimgrep /TODO\|FIXME/j ** | cw
 " set :Vimrc to open the .vimrc in a new tab
@@ -221,6 +219,8 @@ set grepprg=rg\ --vimgrep
 " give me some background transparency
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
+" Automatically lint with Neomake on read and write of buffers
+call neomake#configure#automake('rw')
 " setup editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " let g:EditorConfig_exec_path = 'Path to your EditorConfig Core executable'
@@ -249,14 +249,14 @@ let g:deoplete#enable_smart_case = 1
 let g:neomake_javascript_enabled_makers = ['eslint']
 let g:neomake_jsx_enabled_makers = ['eslint']
 " set nicer error and warning symbols in the gutter
-let g:neomake_warning_sign = { 'text': 'W', 'texthl': 'WarningMsg' }
-let g:neomake_error_sign = { 'text': 'E', 'texthl': 'ErrorMsg' }
+let g:neomake_warning_sign = { 'text': 'W', 'texthl': 'NeomakeWarning' }
+let g:neomake_error_sign = { 'text': 'E', 'texthl': 'NeomakeError' }
 " set indent character
 let g:indentLine_char = '¦'
 " fix indentLine plugin breaking conceal settings for json
 let g:indentLine_concealcursor=''
 " Set up the list of JS libraries to provide syntax for
-let g:used_javascript_libs = 'underscore,react,flux,requirejs,backbone,angularjs,angularui,chai'
+let g:used_javascript_libs = 'underscore,react,flux,requirejs,angularjs,angularui,chai'
 " Use the prettier formatter before js-beautify when possible
 let g:neoformat_enabled_javascript = ['prettier', 'jsbeautify']
 let g:neoformat_enabled_js = ['prettier', 'jsbeautify']
