@@ -19,4 +19,5 @@ stow tmux
 stow vim
 stow alacritty
 sudo stow xorg -t /etc/X11/
+sudo stow pacman -t /etc/
 ```
