@@ -18,6 +18,18 @@ super + Escape
 super + ctrl + Escape
 	light-locker-command -l
 
+# manage brightness with fn keys
+XF86MonBrightness{Down,Up}
+    xbacklight -{dec,inc} 10 -fps 60 -time 1000
+
+# manage volume with media keys
+XF86Audio{Lower,Raise}Volume
+    pulsemixer --change-volume {-,+}5
+
+# manage muting of speakers and mic
+XF86Audio{_,Mic}Mute
+    pulsemixer {_,--id 1} --toggle-mute
+
 #
 # bspwm hotkeys
 #

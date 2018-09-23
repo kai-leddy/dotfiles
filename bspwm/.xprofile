@@ -11,6 +11,7 @@ case $1 in
   bspwm)
      sxhkd -s /tmp/sxhkd.fifo &
      compton --backend glx --vsync drm &
+     polybar QUEEG500 &
      light-locker &
      wmname LG3D
      ;;
