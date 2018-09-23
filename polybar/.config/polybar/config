@@ -1,0 +1,225 @@
+[colors]
+  white = #FFF
+  black = #000
+  darkGrey = #222
+  grey = #444
+  lightGrey = #DFDFDF
+  red = #F00
+  green = #55aa55
+  blue = #0a81f5
+  yellow = #FFB52A
+  orange = #FF9000
+  pink = #FF00AA
+
+[settings]
+  screenchange-reload = true
+  compositing-background = screen
+  compositing-foreground = source
+  compositing-border = over
+
+[global/wm]
+  margin-top = 0
+  margin-bottom = 0
+
+[bar/base]
+  width: 100%
+  height: 30
+  radius: 0
+  background = ${colors.grey}
+  foreground = ${colors.lightGrey}
+  line-size = 2
+  border-size = 0
+  padding-left = 2
+  padding-right = 2
+  module-margin-left = 2
+  module-margin-right = 2
+  font-0 = "FontAwesome:pixelsize=12;4"
+  font-1 = fixed:pixelsize=10
+  font-2 = unifont:fontformat=truetype:size=8:antialias=false
+  font-3 = siji:pixelsize=10
+  modules-left = bspwm
+  modules-center = mpd
+  tray-position = right
+  tray-detached = false
+  tray-padding = 2
+  wm-restack = bspwm
+
+[bar/KOCHANSKI]
+  inherit = bar/base
+  monitor = ${env:MONITOR:HDMI-0}
+  modules-center = hamster
+  modules-right = rootFs homeFs mediaFs volume vpn date
+
+[bar/QUEEG500]
+  inherit = bar/base
+  modules-right = rootFs homeFs volume wlan vpn battery temperature date
+
+[bar/ARCHY]
+  inherit = bar/base
+  modules-center = hamster
+  monitor = ${env:MONITOR:VGA-1}
+  modules-right = rootFs homeFs optFs volume vpn date
+
+[module/rootFs]
+  type = internal/fs
+  interval = 25
+
+  mount-0 = /
+
+  label-mounted = %{F#0a81f5}%{F-} %percentage_used%%
+
+[module/homeFs]
+  type = internal/fs
+  interval = 25
+
+  mount-0 = /home
+
+  label-mounted = %{F#0a81f5}%{F-} %percentage_used%%
+
+[module/mediaFs]
+  type = internal/fs
+  interval = 25
+
+  mount-0 = /media
+
+  label-mounted = %{F#0a81f5}%{F-} %percentage_used%%
+
+[module/optFs]
+  type = internal/fs
+  interval = 25
+
+  mount-0 = /opt
+
+  label-mounted = %{F#0a81f5}%{F-} %percentage_used%%
+
+[module/bspwm]
+  type = internal/bspwm
+
+  pin-workspaces = false
+  enable-scroll = false
+  enable-click = false
+
+  label-focused = %index%
+  label-focused-background = ${colors.grey}
+  label-focused-foreground = ${colors.orange}
+  label-focused-padding = 1
+
+  label-urgent = %index%
+  label-urgent-background = ${colors.red}
+  label-urgent-foreground = ${colors.white}
+  label-urgent-padding = 1
+
+  label-empty = %index%
+  label-empty-background = ${colors.grey}
+  label-empty-foreground = ${colors.darkGrey}
+  label-empty-padding = 1
+
+  label-occupied = %index%
+  label-occupied-background = ${colors.grey}
+  label-occupied-foreground = ${colors.white}
+  label-occupied-padding = 1
+
+[module/wlan]
+  type = internal/network
+  interface = wlp2s0
+  interval = 3.0
+
+  format-connected = %{F#0a81f5}%{F-} <label-connected>
+  format-disconnected = %{F#0a81f5}%{F-} Disconnected
+  label-connected = %essid%
+
+[module/vpn]
+  type = custom/script
+  exec = pgrep openvpn
+  interval = 5
+  label = %{F#0a81f5}%{F-}
+  format-underline = ${colors.green}
+
+[module/date]
+  type = internal/date
+  interval = 5
+
+  date =
+  time = %H:%M
+
+  format-prefix = %{F#0a81f5}%{F-}
+  format-prefix-foreground = ${colors.lightGrey}
+
+  label = %date% %time%
+
+[module/volume]
+  type = internal/volume
+
+  format-volume = <ramp-volume> <label-volume>
+  ramp-volume-0 = %{F#0a81f5}%{F-}
+  ramp-volume-1 = %{F#0a81f5}%{F-}
+  ramp-volume-2 = %{F#0a81f5}%{F-}
+  ramp-headphones-0 = %{F#0a81f5}%{F-}
+  ramp-headphones-1 = %{F#0a81f5}%{F-}
+  label-muted = %{F#0a81f5}%{F-} muted
+  label-volume-foreground = ${colors.white}
+  format-muted-foreground = ${colors.white}
+
+[module/battery]
+  type = internal/battery
+  battery = BAT0
+  adapter = ADP1
+  full-at = 98
+
+  format-charging = <animation-charging> <label-charging>
+  format-charging-underline = ${colors.orange}
+
+  format-discharging = <ramp-capacity> <label-discharging>
+  format-discharging-underline = ${colors.orange}
+
+  format-full-prefix = 
+  format-full-prefix-foreground = ${colors.orange}
+  format-full-underline = ${colors.orange}
+
+  ramp-capacity-0 = 
+  ramp-capacity-1 = 
+  ramp-capacity-2 = 
+  ramp-capacity-3 = 
+  ramp-capacity-4 = 
+  ramp-capacity-foreground = ${colors.orange}
+
+  animation-charging-0 = 
+  animation-charging-1 = 
+  animation-charging-2 = 
+  animation-charging-3 = 
+  animation-charging-4 = 
+  animation-charging-foreground = ${colors.orange}
+  animation-charging-framerate = 750
+
+[module/temperature]
+  type = internal/temperature
+  thermal-zone = 0
+  warn-temperature = 60
+
+  format = <ramp> <label>
+  format-warn = <ramp> <label-warn>
+  format-warn-underline = ${colors.red}
+
+  label = %temperature%
+  label-warn = %temperature%
+  label-warn-foreground = ${colors.red}
+
+  ramp-0 = 
+  ramp-1 = 
+  ramp-2 = 
+  ramp-foreground = ${colors.orange}
+
+[module/hamster]
+  type = custom/script
+  interval = 10
+
+  exec = ~/.config/polybar/hamster.sh
+  exec-if = hamster current | grep -q -E -v '^No activity$'
+
+  format-prefix = " %{F#0a81f5}%{F-} "
+  format-prefix-foreground = ${colors.orange}
+  format-close-foreground = ${colors.red}
+
+  click-left = "hamster &"
+
+; vim:ft=dosini

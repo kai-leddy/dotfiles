@@ -18,6 +18,7 @@ stow thefuck
 stow tmux
 stow vim
 stow alacritty
+stow polybar
 sudo stow xorg -t /etc/X11/
 sudo stow pacman -t /etc/
 ```
