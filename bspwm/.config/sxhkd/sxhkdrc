@@ -8,11 +8,11 @@ super + Return
 
 # program launcher
 super + @space
-	dmenu_run
+	dmenu_run -i -f
 
-# make sxhkd reload its configuration files:
+# make bspwm & sxhkd reload its configuration files:
 super + Escape
-	pkill -USR1 -x sxhkd
+	bash ../bspwm/bspwmrc && pkill -USR1 -x sxhkd
 
 # lock the screen with light-locker
 super + ctrl + Escape
@@ -98,7 +98,7 @@ super + {o,i}
 
 # focus or send to the given desktop
 super + {_,shift + }{1-9,0}
-	bspc {desktop -f,node -d} '^{1-9,10}'
+	bspc {desktop -f,node -d} '{1-9,10}'
 
 #
 # preselect
