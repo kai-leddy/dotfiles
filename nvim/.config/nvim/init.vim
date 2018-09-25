@@ -1,4 +1,4 @@
-" vim:foldmethod=marker:foldlevel=0
+" vim:foldmethod=marker
 
 " Standard vim settings {{{
 " Disable GUI Items {{{
@@ -39,16 +39,11 @@ set encoding=utf-8             " force utf-8 encoding
 set wildignore+=node_modules/**,obj/**,bin/**,coverage/**,public/**,**.jpg,**.svg
 " }}}
 " Commands and auto commands {{{
-" trim trailing whitespace for everything except markdown and vim
-let blacklist = '^vim$\|^mkd$\|^markdown$'
-autocmd BufWritePre * if &ft !~# blacklist | :%s/\s\+$//e
 " make all grep commands open the quick fix window
 autocmd QuickFixCmdPost *grep* cwindow
 " Make all javascript files interpret as jsx
 autocmd  BufNew,BufEnter *.js set filetype=javascript.jsx
-" auto pretty print (reformat) files with Neoformat on save
-autocmd! BufWritePre * Neoformat
-autocmd FileType javascript,javascript.jsx,typescript,less,scss,css,graphql set formatprg=prettier\ --parser\ babylon\ --stdin\ --tab-width\ 2\ --jsx-bracket-same-line\ --single-quote
+autocmd FileType javascript,javascript.jsx,typescript,less,scss,css,graphql set formatprg=prettier-eslint\ --parser\ babylon\ --stdin\ --tab-width\ 2\ --jsx-bracket-same-line\ --single-quote
 " set :Todo to display all TODO and FIXME comments
 command Todo vimgrep /TODO\|FIXME/j ** | cw
 " set :Vimrc to open the .vimrc in a new tab
@@ -97,42 +92,47 @@ imap <A-Right> <NOP>
 " }}}
 " }}}
 " Remap H and L to go to the start and end of line {{{
-noremap H ^
-noremap L $
+nnoremap H ^
+nnoremap L $
 " }}}
 " Use backspace to quick switch buffers {{{
-noremap <BS> <C-6>
+nnoremap <BS> <C-6>
 " }}}
 " Remap Q to save and Ctrl+q to quit {{{
-noremap Q :w<CR>
-noremap <C-q> :q<CR>
+nnoremap Q :w<CR>
+nnoremap <C-q> :q<CR>
 " }}}
 " Map \a to align the given pattern with Tabular {{{
 noremap <Leader>a :Tabular<Space>/
 " }}}
-" Map \f to pretty print (reformat) the file with Neoformat {{{
-noremap <Leader>f :Neoformat<CR>
+" Map \f to pretty print (reformat) the file with ALE {{{
+noremap <Leader>f :ALEFix<CR>
 " }}}
 " Map \n to toggle NERDTree tabs on and off {{{
 noremap <Leader>n :NERDTreeTabsToggle<CR>
 " }}}
 " Map Enter to removing search highlighting {{{
-noremap <CR> :nohlsearch<CR>
+nnoremap <CR> :nohlsearch<CR>
 " }}}
 " Remap Ctrl + hjkl to switch focues between panes {{{
 noremap <C-J> <C-W><C-J>
 noremap <C-K> <C-W><C-K>
 noremap <C-L> <C-W><C-L>
 noremap <C-H> <C-W><C-H>
-noremap <BS> <C-W><C-H>
 " }}}
 " Remove mappings for Ctrl + es so that ultisnips can use them {{{
 map <C-E> <NOP>
 map <C-S> <NOP>
 " }}}
-" Use Meta + p / P for FZF fuzzy find {{{
-nnoremap <M-p> :Files<CR>
-nnoremap <M-P> :Find<CR>
+" Use Ctrl + p / P for FZF fuzzy find {{{
+nnoremap <C-p> :Files<CR>
+nnoremap <C-P> :Find<CR>
+" }}}
+" Map gd, gD, gr, gR to javascript utilities {{{
+nnoremap gd :TernDef<CR>
+nnoremap gD :TernDoc<CR>
+nnoremap gr :TernRename<CR>
+nnoremap gR :TernRefs<CR>
 " }}}
 " Deoplete tab-complete {{{
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
@@ -174,11 +174,10 @@ Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'airblade/vim-gitgutter'
 Plug 'jistr/vim-nerdtree-tabs'
-Plug 'SirVer/ultisnips' 
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'neomake/neomake'
-Plug 'sbdchd/neoformat'
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-repeat'
@@ -188,11 +187,11 @@ Plug 'bling/vim-airline'
 Plug 'wellle/targets.vim'
 Plug 'mattn/emmet-vim'
 Plug 'Yggdroot/indentLine'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
+Plug 'ternjs/tern_for_vim', { 'for': [ 'javascript', 'javascript.jsx' ], 'do': 'npm install' }
 Plug 'elzr/vim-json', { 'for': 'json' }
-Plug 'othree/yajs.vim' 
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'pangloss/vim-javascript', { 'for': [ 'javascript', 'javascript.jsx' ], 'do': 'rm -rf compiler/ extras/ syntax/' }
+" Plug 'othree/yajs.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'jelera/vim-javascript-syntax', { 'for': [ 'javascript', 'javascript.jsx' ] }
+Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
 Plug 'mxw/vim-jsx', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/es.next.syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
@@ -219,8 +218,6 @@ set grepprg=rg\ --vimgrep
 " give me some background transparency
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
-" Automatically lint with Neomake on read and write of buffers
-call neomake#configure#automake('rw')
 " setup editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " let g:EditorConfig_exec_path = 'Path to your EditorConfig Core executable'
@@ -245,22 +242,18 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:deoplete#enable_at_startup = 1
 " Use smartcase
 let g:deoplete#enable_smart_case = 1
-" use ESLint for JavaScript linting
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_jsx_enabled_makers = ['eslint']
-" set nicer error and warning symbols in the gutter
-let g:neomake_warning_sign = { 'text': 'W', 'texthl': 'NeomakeWarning' }
-let g:neomake_error_sign = { 'text': 'E', 'texthl': 'NeomakeError' }
 " set indent character
 let g:indentLine_char = '¦'
 " fix indentLine plugin breaking conceal settings for json
 let g:indentLine_concealcursor=''
 " Set up the list of JS libraries to provide syntax for
 let g:used_javascript_libs = 'underscore,react,flux,requirejs,angularjs,angularui,chai'
-" Use the prettier formatter before js-beautify when possible
-let g:neoformat_enabled_javascript = ['prettier', 'jsbeautify']
-let g:neoformat_enabled_js = ['prettier', 'jsbeautify']
-let g:neoformat_try_formatprg = 1
+" Set up formatters for use with ALEFix
+let g:ale_fix_on_save = 1
+let g:ale_fixers = {
+\  '*': ['remove_trailing_lines', 'trim_whitespace'],
+\  'javascript': ['prettier-eslint', 'prettier', 'eslint'],
+\}
 " }}}
 " Custom FZF fuzzy find grep madness {{{
 " Filter fzf files through ag to follow gitignore etc
