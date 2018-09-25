@@ -99,22 +99,22 @@
   enable-scroll = false
   enable-click = false
 
-  label-focused = %index%
+  label-focused = %name%
   label-focused-background = ${colors.grey}
   label-focused-foreground = ${colors.orange}
   label-focused-padding = 1
 
-  label-urgent = %index%
+  label-urgent = %name%
   label-urgent-background = ${colors.red}
   label-urgent-foreground = ${colors.white}
   label-urgent-padding = 1
 
-  label-empty = %index%
+  label-empty = %name%
   label-empty-background = ${colors.grey}
   label-empty-foreground = ${colors.darkGrey}
   label-empty-padding = 1
 
-  label-occupied = %index%
+  label-occupied = %name%
   label-occupied-background = ${colors.grey}
   label-occupied-foreground = ${colors.white}
   label-occupied-padding = 1
@@ -148,7 +148,7 @@
   label = %date% %time%
 
 [module/volume]
-  type = internal/volume
+  type = internal/pulseaudio
 
   format-volume = <ramp-volume> <label-volume>
   ramp-volume-0 = %{F#0a81f5}%{F-}
@@ -156,9 +156,10 @@
   ramp-volume-2 = %{F#0a81f5}%{F-}
   ramp-headphones-0 = %{F#0a81f5}%{F-}
   ramp-headphones-1 = %{F#0a81f5}%{F-}
+  format-muted = <label-muted>
   label-muted = %{F#0a81f5}%{F-} muted
   label-volume-foreground = ${colors.white}
-  format-muted-foreground = ${colors.white}
+  label-muted-foreground = ${colors.white}
 
 [module/battery]
   type = internal/battery
@@ -194,14 +195,14 @@
 [module/temperature]
   type = internal/temperature
   thermal-zone = 0
-  warn-temperature = 60
+  warn-temperature = 70
 
   format = <ramp> <label>
   format-warn = <ramp> <label-warn>
   format-warn-underline = ${colors.red}
 
-  label = %temperature%
-  label-warn = %temperature%
+  label = %temperature-c%
+  label-warn = %temperature-c%
   label-warn-foreground = ${colors.red}
 
   ramp-0 = 
