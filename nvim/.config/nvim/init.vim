@@ -124,9 +124,9 @@ noremap <C-H> <C-W><C-H>
 map <C-E> <NOP>
 map <C-S> <NOP>
 " }}}
-" Use Ctrl + p / P for FZF fuzzy find {{{
+" Use Ctrl + p / Alt + p for FZF fuzzy find {{{
 nnoremap <C-p> :Files<CR>
-nnoremap <C-P> :Find<CR>
+nnoremap <A-p> :Find<CR>
 " }}}
 " Map gd, gD, gr, gR to javascript utilities {{{
 nnoremap gd :TernDef<CR>
