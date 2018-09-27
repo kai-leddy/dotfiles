@@ -1,3 +1,5 @@
+; vim:ft=dosini
+
 [colors]
   white = #FFF
   black = #000
@@ -44,21 +46,10 @@
   tray-padding = 2
   wm-restack = bspwm
 
-[bar/KOCHANSKI]
+[bar/main]
   inherit = bar/base
-  monitor = ${env:MONITOR:HDMI-0}
-  modules-center = hamster
-  modules-right = rootFs homeFs mediaFs volume vpn date
-
-[bar/QUEEG500]
-  inherit = bar/base
-  modules-right = rootFs homeFs volume wlan vpn battery temperature date
-
-[bar/ARCHY]
-  inherit = bar/base
-  modules-center = hamster
-  monitor = ${env:MONITOR:VGA-1}
-  modules-right = rootFs homeFs optFs volume vpn date
+  monitor = ${env:MONITOR:eDP1}
+  modules-right = rootFs homeFs volume wlan battery temperature date
 
 [module/rootFs]
   type = internal/fs
@@ -75,22 +66,6 @@
   mount-0 = /home
 
   label-mounted = %{F#0a81f5}%{F-} %percentage_used%%
-
-[module/mediaFs]
-  type = internal/fs
-  interval = 25
-
-  mount-0 = /media
-
-  label-mounted = %{F#0a81f5}%{F-} %percentage_used%%
-
-[module/optFs]
-  type = internal/fs
-  interval = 25
-
-  mount-0 = /opt
-
-  label-mounted = %{F#0a81f5}%{F-} %percentage_used%%
 
 [module/bspwm]
   type = internal/bspwm
@@ -127,13 +102,6 @@
   format-connected = %{F#0a81f5}%{F-} <label-connected>
   format-disconnected = %{F#0a81f5}%{F-} Disconnected
   label-connected = %essid%
-
-[module/vpn]
-  type = custom/script
-  exec = pgrep openvpn
-  interval = 5
-  label = %{F#0a81f5}%{F-}
-  format-underline = ${colors.green}
 
 [module/date]
   type = internal/date
@@ -209,18 +177,3 @@
   ramp-1 = 
   ramp-2 = 
   ramp-foreground = ${colors.orange}
-
-[module/hamster]
-  type = custom/script
-  interval = 10
-
-  exec = ~/.config/polybar/hamster.sh
-  exec-if = hamster current | grep -q -E -v '^No activity$'
-
-  format-prefix = " %{F#0a81f5}%{F-} "
-  format-prefix-foreground = ${colors.orange}
-  format-close-foreground = ${colors.red}
-
-  click-left = "hamster &"
-
-; vim:ft=dosini

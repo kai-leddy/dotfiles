@@ -10,13 +10,14 @@ super + Return
 super + @space
 	rofi -show run
 
-# make bspwm & sxhkd reload its configuration files:
-super + Escape
-	bash ../bspwm/bspwmrc && pkill -USR1 -x sxhkd
-
 # lock the screen with light-locker
-super + ctrl + Escape
+super + Escape
 	light-locker-command -l
+
+# make bspwm & sxhkd reload its configuration files:
+super + ctrl + Escape
+    bash ~/.config/bspwm/bspwmrc; and \
+    pkill -USR1 -x sxhkd
 
 # manage brightness with fn keys
 XF86MonBrightness{Down,Up}

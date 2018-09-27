@@ -12,9 +12,7 @@ light-locker &
 case $1 in
   bspwm)
      sxhkd -s /tmp/sxhkd.fifo &
-     polybar QUEEG500 &
      compton -b
-     feh --bg-fill ~/.config/wallpaper 
      wmname LG3D
      ;;
 esac
