@@ -1,16 +1,7 @@
 # Standard config options
 ncmpcpp_directory = "~/.ncmpcpp"
-mpd_host = "localhost"
+mpd_host = "::1"
 mpd_port = "6600"
-mpd_music_dir = "~/music"
-
-# Visualizer config options
-visualizer_in_stereo = "yes"
-visualizer_fifo_path = "/tmp/mpd.fifo"
-visualizer_output_name = "my_fifo"
-visualizer_sync_interval = "1"
-visualizer_type = "spectrum"
-visualizer_look = "◆▋"
 
 # Config options stolen from internet
 playlist_shorten_total_times = "yes"
@@ -34,5 +25,4 @@ state_line_color = "yellow"
 state_flags_color = "red"
 progressbar_color = "yellow"
 statusbar_color = "cyan"
-visualizer_color = "red"
 startup_screen = "media_library"

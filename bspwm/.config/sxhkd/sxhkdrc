@@ -31,6 +31,10 @@ XF86Audio{Lower,Raise}Volume
 XF86Audio{_,Mic}Mute
     pulsemixer {_,--id 1} --toggle-mute
 
+# setup media keys for mpd
+XF86Audio{Play,Stop,Prev,Next}
+    mpc {toggle,stop,prev,next}
+
 #
 # bspwm hotkeys
 #
