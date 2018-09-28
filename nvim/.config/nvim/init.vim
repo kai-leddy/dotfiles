@@ -96,7 +96,7 @@ nnoremap H ^
 nnoremap L $
 " }}}
 " Use backspace to quick switch buffers {{{
-nnoremap <BS> <C-6>
+nnoremap <BS> <C-^>
 " }}}
 " Remap Q to save and Ctrl+q to quit {{{
 nnoremap Q :w<CR>
