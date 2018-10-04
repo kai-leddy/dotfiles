@@ -51,6 +51,11 @@
   monitor = ${env:MONITOR:eDP1}
   modules-right = rootFs homeFs volume wlan battery temperature date
 
+[bar/external]
+  inherit = bar/base
+  monitor = ${env:MONITOR:HDMI1}
+  modules-right = volume wlan battery temperature date
+
 [module/rootFs]
   type = internal/fs
   interval = 25
@@ -70,7 +75,7 @@
 [module/bspwm]
   type = internal/bspwm
 
-  pin-workspaces = false
+  pin-workspaces = true
   enable-scroll = false
   enable-click = false
 
@@ -160,10 +165,15 @@
   animation-charging-foreground = ${colors.orange}
   animation-charging-framerate = 750
 
+[module/mpd]
+type = internal/mpd
+host = 127.0.0.1
+port = 6600
+
 [module/temperature]
   type = internal/temperature
   thermal-zone = 0
-  warn-temperature = 70
+  warn-temperature = 80
 
   format = <ramp> <label>
   format-warn = <ramp> <label-warn>
