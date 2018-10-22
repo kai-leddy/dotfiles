@@ -124,6 +124,7 @@ map <C-S> <NOP>
 " Use Ctrl + p / Alt + p for FZF fuzzy find {{{
 nnoremap <C-p> :Files<CR>
 nnoremap <A-p> :Find<CR>
+nnoremap <A-b> :Buffers<CR>
 " }}}
 " Map gd, gD, gr, gR to javascript utilities {{{
 nnoremap gd :TernDef<CR>
@@ -175,6 +176,7 @@ Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Raimondi/delimitMate'
 Plug 'majutsushi/tagbar'
+Plug 'matze/vim-move'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
