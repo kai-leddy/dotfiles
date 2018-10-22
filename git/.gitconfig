@@ -10,6 +10,7 @@
 	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 [core]
 	editor = nvim -u ~/.config/nvim/slim.vim
+	excludesfile = /home/kai/.gitignore_global
 [diff]
 	indentHeuristic = true
 	tool = meld
