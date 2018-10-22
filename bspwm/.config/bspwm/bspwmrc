@@ -18,6 +18,5 @@ bspc rule -a Peek state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 
-# Setup
-polybar main &
+# Setup Monitors
 bash ~/.config/bspwm/monitors.sh
