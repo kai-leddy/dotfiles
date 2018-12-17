@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
 #
 # wm independent hotkeys
 #
@@ -16,7 +18,7 @@ super + Escape
 
 # make bspwm & sxhkd reload its configuration files:
 super + ctrl + Escape
-    bash ~/.config/bspwm/bspwmrc; and \
+    bash ~/.config/bspwm/bspwmrc; \
     pkill -USR1 -x sxhkd
 
 # manage brightness with fn keys

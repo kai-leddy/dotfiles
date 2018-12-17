@@ -5,6 +5,9 @@ exec &> /tmp/xprofile.log
 
 echo $1
 
+# Make bspwm & sxhkd play nice with(out) fish shell
+export SXHKD_SHELL='/usr/bin/sh'
+
 # start the light-locker daemon for screen locking with LightDM
 light-locker &
 mopidy &
