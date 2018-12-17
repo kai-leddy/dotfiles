@@ -37,6 +37,10 @@ XF86Audio{_,Mic}Mute
 XF86Audio{Play,Stop,Prev,Next}
     mpc {toggle,stop,prev,next}
 
+# Take screenshots with the printscreen button
+{_,shift + }Print
+    flameshot {_,gui}
+
 #
 # bspwm hotkeys
 #
