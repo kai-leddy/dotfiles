@@ -213,6 +213,10 @@ set grepprg=rg\ --vimgrep
 " give me some background transparency
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
+" Use space as the leader key
+let mapleader = "\<Space>"
+" Set netrw to display folder structure as a tree by default
+let g:netrw_liststyle = 3
 " setup editorconfig plugin
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " let g:EditorConfig_exec_path = 'Path to your EditorConfig Core executable'
