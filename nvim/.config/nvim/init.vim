@@ -155,18 +155,7 @@ inoremap <CR> <C-R>=TryExpand() == 1 ? "" : "\<lt>CR>"<CR>
 nnoremap K i<CR><ESC>
 " }}}
 " Map F5 to run :make {{{
-" Map F5 to build and run python files
 nnoremap <F5> :make!<CR>
-" }}}
-" Mappings for tab navigation {{{
-" Map Alt + qo to close and open tabs {{{
-nnoremap <A-q> :tabclose<CR>
-nnoremap <A-o> :tabnew<CR>
-" }}}
-" Map Alt + hl to switch between tabs {{{
-nnoremap <A-h> :tabprevious<CR>
-nnoremap <A-l> :tabnext<CR>
-" }}}
 " }}}
 " }}}
 " Custom bundle definitions {{{
