@@ -37,7 +37,7 @@ set encoding=utf-8             " force utf-8 encoding
 set undofile                   " maintain undo history across sessions
 set undodir=~/.vim-undodir     " store all undo history in ~/.vim-undodir
 " setup ignore wildcards for everything
-set wildignore+=node_modules/**,obj/**,bin/**,coverage/**,public/**,**.jpg,**.svg
+set wildignore+=node_modules/**,obj/**,bin/**,coverage/**
 " }}}
 " Commands and auto commands {{{
 " make all grep commands open the quick fix window
