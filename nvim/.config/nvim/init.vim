@@ -8,6 +8,7 @@ set go-=T
 set go-=r
 set go-=L
 " }}}
+syntax enable                  " Must be specified here before autocommands run
 set mouse=a                    " Some gibberish to make the mouse work in tmux on mac
 set relativenumber             " show relative line numbers
 set number                     " show line number on the current line
@@ -40,15 +41,22 @@ set undodir=~/.vim-undodir     " store all undo history in ~/.vim-undodir
 set wildignore+=node_modules/**,obj/**,bin/**,coverage/**
 " }}}
 " Commands and auto commands {{{
-" make all grep commands open the quick fix window
-autocmd QuickFixCmdPost *grep* cwindow
-" Make all javascript files interpret as jsx
-autocmd  BufNew,BufEnter *.js set filetype=javascript.jsx
-autocmd FileType javascript,javascript.jsx,typescript,less,scss,css,graphql set formatprg=prettier-eslint\ --parser\ babylon\ --stdin\ --tab-width\ 2\ --jsx-bracket-same-line\ --single-quote
+augroup custom_autocmds
+  " clear existing autocmds in the group
+  autocmd!
+  " better highlighting for todo comments
+  autocmd Syntax * syn match MyTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE|XXX)/
+        \ containedin=.*Comment,vimCommentTitle
+  " make all grep commands open the quick fix window
+  autocmd QuickFixCmdPost *grep* cwindow
+  " Make all javascript files interpret as jsx
+  autocmd  BufNew,BufEnter *.js set filetype=javascript.jsx
+augroup END
+hi def link MyTodo Todo
 " set :Todo to display all TODO and FIXME comments
-command Todo vimgrep /TODO\|FIXME/j ** | cw
-" set :Vimrc to open the .vimrc in a new tab
-command Vimrc tabnew $MYVIMRC
+command! Todo vimgrep /FIXME\|NOTE\|TODO\|OPTIMIZE\|XXX/j ** | cw
+" set :Vimrc to open the .vimrc in a new vsplit
+command! Vimrc vsplit $MYVIMRC
 " }}}
 " Custom key mappings {{{
 " Make Y work properly {{{
