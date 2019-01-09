@@ -12,6 +12,10 @@ super + Return
 super + @space
 	rofi -show run
 
+# window switcher
+super + Tab
+	rofi -show window
+
 # lock the screen with light-locker
 super + Escape
 	light-locker-command -l
@@ -100,7 +104,7 @@ super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
 
 # focus the last node/desktop
-super + {grave,Tab}
+super + {apostrophe,BackSpace}
 	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
