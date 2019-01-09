@@ -1,7 +1,7 @@
 ! vim:ft=xdefaults
 !
 ! "Enabled modi" Set from: Default
-rofi.modi:                           combi
+! rofi.modi:                           run,window,ssh,combi
 ! "Window width" Set from: Default
 ! rofi.width:                          50
 ! "Number of lines" Set from: Default
