@@ -6,7 +6,7 @@
 
 # terminal emulator
 super + Return
-	alacritty
+	st
 
 # program launcher
 super + @space
