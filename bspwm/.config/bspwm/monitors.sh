@@ -23,7 +23,7 @@ fi
 
 # re-map touch screen viewport to only map to built in monitor
 xinput map-to-output $(xinput list --id-only "Wacom Pen and multitouch sensor Finger") eDP1
-xinput map-to-output $(xinput list --id-only "Wacom Pen and multitouch sensor Pen Pen (0x9cd3158b)") eDP1
+#xinput map-to-output $(xinput list --id-only "Wacom Pen and multitouch sensor Pen Pen (0x9cd3158b)") eDP1
 
 # re-initialise the wallpaper to force tiling instead of stretching
 feh --bg-fill ~/.config/wallpaper

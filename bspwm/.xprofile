@@ -8,6 +8,9 @@ echo $1
 # Make bspwm & sxhkd play nice with(out) fish shell
 export SXHKD_SHELL='/usr/bin/sh'
 
+# Load the correct driver for hardware video acceleration
+export LIBVA_DRIVER_NAME=iHD
+
 # start the light-locker daemon for screen locking with LightDM
 light-locker &
 mopidy &
