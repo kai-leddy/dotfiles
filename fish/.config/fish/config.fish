@@ -31,6 +31,7 @@ set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 # Setup env vars for other stuff
 set -x GEM_HOME $HOME/.gem
-set -U fish_user_paths $HOME/.cargo/bin $HOME/.gem/bin $HOME/.gem/ruby/2.5.0/bin
+set -x GOPATH $HOME/go
+set -U fish_user_paths $HOME/.cargo/bin $HOME/.gem/bin $HOME/.gem/ruby/2.6.0/bin $GOPATH/bin
 
 thefuck --alias | source
