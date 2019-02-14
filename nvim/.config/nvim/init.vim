@@ -111,11 +111,14 @@ nnoremap <BS> <C-^>
 nnoremap Q :w<CR>
 nnoremap <C-q> :q<CR>
 " }}}
-" Map \a to align the given pattern with Tabular {{{
+" Map <Leader>a to align the given pattern with Tabular {{{
 noremap <Leader>a :Tabular<Space>/
 " }}}
-" Map \f to pretty print (reformat) the file with ALE {{{
+" Map <Leader>f to pretty print (reformat) the file with ALE {{{
 noremap <Leader>f :ALEFix<CR>
+" }}}
+" Map <Leader>u to toggle the Gundo undo history tree
+noremap <Leader>u :GundoToggle<CR>
 " }}}
 " Map Enter to removing search highlighting {{{
 nnoremap <CR> :nohlsearch<CR>
@@ -157,6 +160,10 @@ nnoremap K i<CR><ESC>
 " Map F5 to run :make {{{
 nnoremap <F5> :make!<CR>
 " }}}
+" Swap apostrophe and backtick for navigating to marks {{{
+noremap ' `
+noremap ` '
+" }}}
 " }}}
 " Custom bundle definitions {{{
 call plug#begin()
@@ -177,7 +184,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-vinegar'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
 Plug 'wellle/targets.vim'
 Plug 'mattn/emmet-vim'
 Plug 'Yggdroot/indentLine'
@@ -281,6 +288,7 @@ let g:ale_fixers = {
 \  'css': ['stylelint', 'prettier'],
 \  'scss': ['stylelint', 'prettier'],
 \  'sass': ['stylelint', 'prettier'],
+\  'sql': ['sqlfmt']
 \}
 " make startify change directories in a sensible way
 let g:startify_change_to_dir = 0
