@@ -133,10 +133,12 @@ noremap <C-H> <C-W><C-H>
 map <C-E> <NOP>
 map <C-S> <NOP>
 " }}}
-" Use Ctrl + p / Alt + p for FZF fuzzy find {{{
+" Use Ctrl + p / Alt + <?> for FZF fuzzy find {{{
 nnoremap <C-p> :Files<CR>
 nnoremap <A-p> :Find<CR>
 nnoremap <A-b> :Buffers<CR>
+nnoremap <A-m> :Marks<CR>
+nnoremap <A-s> :Snippets<CR>
 " }}}
 " Map gd, gD, gr, gR to javascript utilities {{{
 nnoremap gd :TernDef<CR>
@@ -301,7 +303,7 @@ let g:gundo_preview_bottom = 1
 let g:gundo_preview_height = 25
 " Custom FZF fuzzy find grep madness
 " Filter fzf files through ag to follow gitignore etc
-let $FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*" --glob "!**/node_modules/*" --color never'
+let $FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*" --glob "!**/node_modules/*" --color always'
 " --column: Show column number
 " --line-number: Show line number
 " --no-heading: Do not show file headings in results
@@ -312,5 +314,9 @@ let $FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*" --glob "!**/node_
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --follow --glob "!.git/*" --glob "!**/node_modules/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+command! -bang -nargs=* Find call fzf#run(fzf#wrap({
+  \ 'prefix': '^.*$',
+  \ 'source': 'rg -n ^ --color always',
+  \ 'options': '--ansi --delimiter : --nth 3..',
+  \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
 " }}}
