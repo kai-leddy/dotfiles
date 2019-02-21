@@ -117,7 +117,7 @@ noremap <Leader>a :Tabular<Space>/
 " Map <Leader>f to pretty print (reformat) the file with ALE {{{
 noremap <Leader>f :ALEFix<CR>
 " }}}
-" Map <Leader>u to toggle the Gundo undo history tree
+" Map <Leader>u to toggle the Gundo undo history tree {{{
 noremap <Leader>u :GundoToggle<CR>
 " }}}
 " Map Enter to removing search highlighting {{{
