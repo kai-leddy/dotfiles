@@ -314,9 +314,5 @@ let $FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*" --glob "!**/node_
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 " --color: Search color options
-command! -bang -nargs=* Find call fzf#run(fzf#wrap({
-  \ 'prefix': '^.*$',
-  \ 'source': 'rg -n ^ --color always',
-  \ 'options': '--ansi --delimiter : --nth 3..',
-  \ 'reducer': { lines -> join(split(lines[0], ':\zs')[2:], '') }}))
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --follow --glob "!.git/*" --glob "!**/node_modules/*" --color always '.shellescape(<q-args>), 1, { 'options': '--ansi --delimiter : --nth 3..' }, <bang>0)
 " }}}
