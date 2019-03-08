@@ -38,8 +38,11 @@ set encoding=utf-8             " force utf-8 encoding
 set undofile                   " maintain undo history across sessions
 set undodir=~/.vim-undodir     " store all undo history in ~/.vim-undodir
 set shell=/bin/sh              " use sh as the shell to spawn subprocesses
+set notimeout                  " disable timeout on partial key combos
 " setup ignore wildcards for everything
 set wildignore+=node_modules/**,obj/**,bin/**,coverage/**
+" Use space as the leader key
+let mapleader="\<Space>"
 " }}}
 " Commands and auto commands {{{
 augroup custom_autocmds
@@ -101,6 +104,9 @@ imap <A-left> <NOP>
 imap <A-Right> <NOP>
 " }}}
 " }}}
+" Remove mapping for space key {{{
+nnoremap <Space> <NOP>
+" }}}
 " Remap H and L to go to the start and end of line {{{
 nnoremap H ^
 nnoremap L $
@@ -108,15 +114,15 @@ nnoremap L $
 " Use backspace to quick switch buffers {{{
 nnoremap <BS> <C-^>
 " }}}
-" Remap Q to save and Ctrl+q to quit {{{
-nnoremap Q :w<CR>
-nnoremap <C-q> :q<CR>
+" map <Leader>s to save and <Leader>q to quit {{{
+nnoremap <Leader>s :w<CR>
+nnoremap <Leader>q :q<CR>
 " }}}
 " Map <Leader>a to align the given pattern with Tabular {{{
 noremap <Leader>a :Tabular<Space>/
 " }}}
-" Map <Leader>f to pretty print (reformat) the file with ALE {{{
-noremap <Leader>f :ALEFix<CR>
+" Map <Leader>= to pretty print (reformat) the file with ALE {{{
+noremap <Leader>= :ALEFix<CR>
 " }}}
 " Map <Leader>u to toggle the Gundo undo history tree {{{
 noremap <Leader>u :GundoToggle<CR>
@@ -134,12 +140,12 @@ noremap <C-H> <C-W><C-H>
 map <C-E> <NOP>
 map <C-S> <NOP>
 " }}}
-" Use Ctrl + p / Alt + <?> for FZF fuzzy find {{{
-nnoremap <C-p> :Files<CR>
-nnoremap <A-p> :Find<CR>
-nnoremap <A-b> :Buffers<CR>
-nnoremap <A-m> :Marks<CR>
-nnoremap <A-s> :Snippets<CR>
+" Use <Leader>f? mappings for FZF fuzzy find {{{
+nnoremap <Leader>ff :Files<CR>
+nnoremap <Leader>fl :Find<CR>
+nnoremap <Leader>fb :Buffers<CR>
+nnoremap <Leader>fm :Marks<CR>
+nnoremap <Leader>fs :Snippets<CR>
 " }}}
 " Map gd, gD, gr, gR to javascript utilities {{{
 nnoremap gd :TernDef<CR>
@@ -235,8 +241,6 @@ set grepprg=rg\ --vimgrep
 " give me some background transparency
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
-" Use space as the leader key
-let mapleader = "\<Space>"
 " Set netrw to display folder structure as a tree by default
 let g:netrw_liststyle = 3
 " setup editorconfig plugin
