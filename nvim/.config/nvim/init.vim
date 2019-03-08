@@ -37,6 +37,7 @@ set inccommand=split           " make use of NeoVim's new live search/replace
 set encoding=utf-8             " force utf-8 encoding
 set undofile                   " maintain undo history across sessions
 set undodir=~/.vim-undodir     " store all undo history in ~/.vim-undodir
+set shell=/bin/sh              " use sh as the shell to spawn subprocesses
 " setup ignore wildcards for everything
 set wildignore+=node_modules/**,obj/**,bin/**,coverage/**
 " }}}
