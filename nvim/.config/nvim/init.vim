@@ -182,9 +182,8 @@ Plug 'junegunn/vim-plug'
 Plug 'tomasr/molokai'
 Plug 'mhinz/vim-startify'
 Plug 'godlygeek/tabular'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'w0rp/ale'
 Plug 'Konfekt/FastFold'
 Plug 'Raimondi/delimitMate'
@@ -243,10 +242,7 @@ highlight Normal ctermbg=none
 highlight NonText ctermbg=none
 " Set netrw to display folder structure as a tree by default
 let g:netrw_liststyle = 3
-" setup editorconfig plugin
-let g:EditorConfig_exclude_patterns = ['fugitive://.*']
-" let g:EditorConfig_exec_path = 'Path to your EditorConfig Core executable'
-" Change Ultisnips keybindings to prevent conflicts with YouCompleteMe
+" Setup Ultisnips trigger keys
 let g:UltiSnipsExpandTrigger="<C-E>"
 let g:UltiSnipsListSnippets="<C-S>"
 let g:UltiSnipsJumpForwardTrigger="<CR>"
@@ -306,6 +302,11 @@ let g:gundo_return_on_revert = 0
 let g:gundo_right = 1
 let g:gundo_preview_bottom = 1
 let g:gundo_preview_height = 25
+"  set options for signify
+let g:signify_vcs_list = [ 'git' ]
+let g:signify_realtime = 1
+let g:signify_cursorhold_normal = 0
+let g:signify_cursorhold_insert = 0
 " Custom FZF fuzzy find grep madness
 " Filter fzf files through ag to follow gitignore etc
 let $FZF_DEFAULT_COMMAND='rg --files --follow --glob "!.git/*" --glob "!**/node_modules/*" --color always'
