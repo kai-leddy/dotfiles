@@ -1,6 +1,3 @@
-# Turn on Vi Mode keybindings
-set -U fish_key_bindings fish_vi_key_bindings
-
 # Settings for the 'bobthefish' theme
 set -g theme_display_git yes
 set -g theme_display_git_untracked yes
