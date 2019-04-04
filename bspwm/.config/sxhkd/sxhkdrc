@@ -89,7 +89,7 @@ super + ctrl + {m,x,s,p}
 super + {h,j,k,l}
 	bspc node -f {west,south,north,east}
 super + shift + {h,j,k,l}
-	bspc node -s {west,south,north,east} --follow 
+	bspc node -s {west,south,north,east} --follow
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
@@ -117,7 +117,7 @@ super + {o,i}
 super + {1-9,0}
 	bspc desktop -f '{1-9,10}'
 super + shift +{1-9,0}
-	bspc node -d '{1-9,10}' --follow 
+	bspc node -d '{1-9,10}' --follow
 
 #
 # preselect
