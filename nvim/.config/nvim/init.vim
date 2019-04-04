@@ -285,10 +285,12 @@ let g:used_javascript_libs = 'underscore,react,flux,requirejs,angularjs,angularu
 " Set up formatters for use with ALEFix
 let g:ale_fix_on_save = 1
 let g:ale_linters = {
-\  'javascript': ['eslint']
+\  'javascript': ['eslint'],
+\  'markdown': ['markdownlint', 'proselint']
 \}
 let g:ale_fixers = {
 \  '*': ['remove_trailing_lines', 'trim_whitespace'],
+\  'markdown': [],
 \  'javascript': ['prettier_eslint', 'prettier', 'eslint'],
 \  'json': ['prettier', 'jq'],
 \  'html': ['tidy'],
