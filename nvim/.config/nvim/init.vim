@@ -104,6 +104,9 @@ imap <A-left> <NOP>
 imap <A-Right> <NOP>
 " }}}
 " }}}
+" Disable the stupid ex mode {{{
+nnoremap Q <Nop>
+" }}}
 " Remove mapping for space key {{{
 nnoremap <Space> <NOP>
 " }}}
