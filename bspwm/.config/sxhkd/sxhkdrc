@@ -16,6 +16,10 @@ super + @space
 super + Tab
 	rofi -show window
 
+# clipboard history
+super + v
+  rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+
 # lock the screen with light-locker
 super + Escape
 	light-locker-command -l

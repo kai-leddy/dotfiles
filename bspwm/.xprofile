@@ -19,6 +19,7 @@ mopidy &
 case $1 in
   bspwm)
      sxhkd -s /tmp/sxhkd.fifo &
+     greenclip daemon &
      compton -b
      wmname LG3D
      ;;
