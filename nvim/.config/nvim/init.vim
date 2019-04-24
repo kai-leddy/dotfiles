@@ -21,7 +21,7 @@ set noswapfile                 " turn off creation of .swp files everywhere
 set splitbelow                 " create splits below instead of above
 set splitright                 " create splits to the right instead of to the left
 set wildmode=longest:full,list:full " setup command line completion mode
-set colorcolumn=80,100         " display a vertical line at 80 chars
+set colorcolumn=80,100,120     " display a vertical line at 80 chars
 set modeline
 set modelines=5                " allow the use of file-specific modeline configs
 set foldlevel=0                " close all folds by default on file open
@@ -39,6 +39,7 @@ set undofile                   " maintain undo history across sessions
 set undodir=~/.vim-undodir     " store all undo history in ~/.vim-undodir
 set shell=/bin/sh              " use sh as the shell to spawn subprocesses
 set notimeout                  " disable timeout on partial key combos
+set hidden                     " hide buffer when switching with changes instead of error
 " setup ignore wildcards for everything
 set wildignore+=node_modules/**,obj/**,bin/**,coverage/**
 " Use space as the leader key
@@ -256,8 +257,10 @@ let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 " Setup vim-airline
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline_skip_empty_sections = 1
 let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#current_first = 1
 " Use Deoplete for auto-completion
 let g:deoplete#enable_at_startup = 1
 " Setup Deoplete options
@@ -291,8 +294,8 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \  '*': ['remove_trailing_lines', 'trim_whitespace'],
 \  'markdown': [],
-\  'javascript': ['prettier_eslint', 'prettier', 'eslint'],
-\  'json': ['prettier', 'jq'],
+\  'javascript': ['prettier_eslint'],
+\  'json': ['jq', 'prettier'],
 \  'html': ['tidy'],
 \  'css': ['stylelint', 'prettier'],
 \  'scss': ['stylelint', 'prettier'],
@@ -308,7 +311,7 @@ let g:gundo_return_on_revert = 0
 let g:gundo_right = 1
 let g:gundo_preview_bottom = 1
 let g:gundo_preview_height = 25
-"  set options for signify
+" set options for signify
 let g:signify_vcs_list = [ 'git' ]
 let g:signify_realtime = 1
 let g:signify_cursorhold_normal = 0
