@@ -6,9 +6,9 @@
 
 # terminal emulator
 super + Return
-	st
+	alacritty
 
-# program launcher
+#program launcher
 super + @space
 	rofi -show run
 
