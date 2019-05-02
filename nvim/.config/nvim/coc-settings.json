@@ -1,0 +1,5 @@
+{
+  "tsserver.formatOnType": false,
+  "tsserver.reportStyleChecksAsWarnings": false,
+  "javascript.validate.enable": false
+}

@@ -40,6 +40,8 @@ set undodir=~/.vim-undodir     " store all undo history in ~/.vim-undodir
 set shell=/bin/sh              " use sh as the shell to spawn subprocesses
 set notimeout                  " disable timeout on partial key combos
 set hidden                     " hide buffer when switching with changes instead of error
+set scrolloff=4                " keep 4 context lines above/below the cursor when scrolling
+set termguicolors              " Enable showing true colors in terminal
 " setup ignore wildcards for everything
 set wildignore+=node_modules/**,obj/**,bin/**,coverage/**
 " Use space as the leader key
@@ -56,6 +58,8 @@ augroup custom_autocmds
   autocmd QuickFixCmdPost *grep* cwindow
   " Make all javascript files interpret as jsx
   autocmd  BufNew,BufEnter *.js set filetype=javascript.jsx
+  " Highlight colors and instances of keywords with coc.vim on CursorHold
+  autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup END
 hi def link MyTodo Todo
 " set :Todo to display all TODO and FIXME comments
@@ -151,21 +155,51 @@ nnoremap <Leader>fb :Buffers<CR>
 nnoremap <Leader>fm :Marks<CR>
 nnoremap <Leader>fs :Snippets<CR>
 " }}}
-" Map gd, gD, gr, gR to javascript utilities {{{
-nnoremap gd :TernDef<CR>
-nnoremap gD :TernDoc<CR>
-nnoremap gr :TernRename<CR>
-nnoremap gR :TernRefs<CR>
-" }}}
-" Deoplete tab-complete {{{
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-" }}}
-" Ultisnips expand if exists with <CR> {{{
-function! TryExpand()
-	call UltiSnips#ExpandSnippet()
-	return g:ulti_expand_res
+" Map <Leader>g? for goto-style mappings {{{
+nmap <Leader>gd <Plug>(coc-definition)
+nmap <Leader>gD :call <SID>show_documentation()<CR>
+nmap <Leader>gr <Plug>(coc-references)
+nmap <Leader>gR <Plug>(coc-rename)
+nmap <Leader>gt <Plug>(coc-type-definition)
+nmap <Leader>gi <Plug>(coc-implementation)
+nmap <Leader>ga <Plug>(coc-codeaction)
+nmap <Leader>gf <Plug>(coc-fix-current)
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
 endfunction
-inoremap <CR> <C-R>=TryExpand() == 1 ? "" : "\<lt>CR>"<CR>
+" }}}
+" coc.vim tab-complete {{{
+" Use tab for trigger completion with characters ahead and navigate {{{
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+" }}}
+" Use <cr> to confirm completion {{{
+" `<C-g>u` means break undo chain at current position
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" }}}
+" }}}
+" [NOTE: DISABLED] Ultisnips expand if exists with <CR> {{{
+" function! TryExpand()
+" 	call UltiSnips#ExpandSnippet()
+" 	return g:ulti_expand_res
+" endfunction
+" inoremap <CR> <C-R>=TryExpand() == 1 ? "" : "\<lt>CR>"<CR>
 " }}}
 " Remap K to split the line (opposite of J) {{{
 nnoremap K i<CR><ESC>
@@ -190,7 +224,8 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'mhinz/vim-signify'
 Plug 'w0rp/ale'
 Plug 'Konfekt/FastFold'
-Plug 'Raimondi/delimitMate'
+Plug 'tmsvg/pear-tree' " auto add closing braces etc.
+Plug 'AndrewRadev/tagalong.vim' " auto change matching html tags
 Plug 'matze/vim-move'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -209,19 +244,12 @@ Plug 'sjl/gundo.vim'
 " }}}
 " Snippets {{{
 Plug 'SirVer/ultisnips'
-Plug 'epilande/vim-react-snippets'
 Plug 'epilande/vim-es2015-snippets'
+Plug 'mlaursen/vim-react-snippets'
 Plug 'honza/vim-snippets'
 " }}}
-" Deoplete (auto-completion) {{{
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/context_filetype.vim'
-Plug 'Shougo/echodoc.vim'
-Plug 'Shougo/deoplete-clangx', { 'for': [ 'c', 'cpp', 'csharp', 'cs' ] }
-Plug 'zchee/deoplete-jedi', { 'for': [ 'python' ] }
-Plug 'sebastianmarkow/deoplete-rust', { 'for': [ 'rust' ] }
-Plug 'carlitux/deoplete-ternjs', { 'for': [ 'javascript', 'javascript.jsx' ], 'do': 'npm install -g tern' }
-Plug 'ternjs/tern_for_vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
+" coc.vim (auto-completion) {{{
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 " }}}
 " Syntax highlighting {{{
 Plug 'sheerun/vim-polyglot'
@@ -243,8 +271,8 @@ set background=dark
 " use ripgrep as the vimgrep backend
 set grepprg=rg\ --vimgrep
 " give me some background transparency
-highlight Normal ctermbg=none
-highlight NonText ctermbg=none
+highlight Normal ctermbg=none guibg=none
+highlight NonText ctermbg=none guibg=none
 " Set netrw to display folder structure as a tree by default
 let g:netrw_liststyle = 3
 " Setup Ultisnips trigger keys
@@ -252,28 +280,16 @@ let g:UltiSnipsExpandTrigger="<C-E>"
 let g:UltiSnipsListSnippets="<C-S>"
 let g:UltiSnipsJumpForwardTrigger="<CR>"
 let g:UltiSnipsJumpBackwardTrigger="<S-CR>"
-" Get delimitMate expand newlines and spaces
-let delimitMate_expand_cr = 1
-let delimitMate_expand_space = 1
+" Make pair tree smart open/close braces
+let g:pear_tree_smart_openers = 0
+let g:pear_tree_smart_closers = 0
+let g:pear_tree_smart_backspace = 0
 " Setup vim-airline
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#current_first = 1
-" Use Deoplete for auto-completion
-let g:deoplete#enable_at_startup = 1
-" Setup Deoplete options
-call deoplete#custom#option({
-      \ 'auto_refresh_delay': 5,
-      \ 'auto_complete_delay': 0,
-      \ 'async_timeout': 50,
-      \ 'smart_case': v:true,
-      \ })
-let g:deoplete#sources#ternjs#types = 1
-let g:deoplete#sources#ternjs#docs = 1
-let g:deoplete#sources#ternjs#case_insensitive = 1
-let g:deoplete#sources#ternjs#omit_object_prototype = 0
 " Use tern_for_vim with deoplete
 let g:tern#command = ["tern"]
 let g:tern#arguments = ["--persistent"]
