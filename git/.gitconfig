@@ -19,7 +19,9 @@
 [merge]
 	tool = meld
 [difftool "meld"]
-	path = ~/.config/git-diff-meld.sh
+  cmd = meld "$LOCAL" "$REMOTE"
+[mergetool "meld"]
+  cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output="$MERGED"
 [svn]
 	rmdir = true
 [fetch]
