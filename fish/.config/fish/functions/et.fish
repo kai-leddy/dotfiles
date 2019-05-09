@@ -1,3 +1,3 @@
 function et
-	nvim ~/.tmux.conf -u ~/.config/nvim/slim.vim $argv
+	nvim ~/.tmux.conf $argv
 end

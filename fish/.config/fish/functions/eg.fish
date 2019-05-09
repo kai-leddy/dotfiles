@@ -1,3 +1,3 @@
 function eg
-	nvim ~/.gitconfig -u ~/.config/nvim/slim.vim $argv
+	nvim ~/.gitconfig $argv
 end
