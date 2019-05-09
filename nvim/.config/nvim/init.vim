@@ -58,8 +58,6 @@ augroup custom_autocmds
   autocmd QuickFixCmdPost *grep* cwindow
   " Make all javascript files interpret as jsx
   autocmd  BufNew,BufEnter *.js set filetype=javascript.jsx
-  " Highlight colors and instances of keywords with coc.vim on CursorHold
-  autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup END
 hi def link MyTodo Todo
 " set :Todo to display all TODO and FIXME comments
@@ -254,7 +252,6 @@ Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
 " Syntax highlighting {{{
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/yajs.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
-"Plug 'jelera/vim-javascript-syntax', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
 Plug 'othree/es.next.syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
@@ -281,9 +278,9 @@ let g:UltiSnipsListSnippets="<C-S>"
 let g:UltiSnipsJumpForwardTrigger="<CR>"
 let g:UltiSnipsJumpBackwardTrigger="<S-CR>"
 " Make pair tree smart open/close braces
-let g:pear_tree_smart_openers = 0
-let g:pear_tree_smart_closers = 0
-let g:pear_tree_smart_backspace = 0
+let g:pear_tree_smart_openers = 1
+let g:pear_tree_smart_closers = 1
+let g:pear_tree_smart_backspace = 1
 " Setup vim-airline
 let g:airline_powerline_fonts = 1
 let g:airline_skip_empty_sections = 1
