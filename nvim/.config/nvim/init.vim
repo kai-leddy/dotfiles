@@ -256,6 +256,7 @@ Plug 'HerringtonDarkholme/yats.vim', { 'for': 'typescript' }
 Plug 'othree/es.next.syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': [ 'javascript', 'javascript.jsx' ] }
 Plug 'Quramy/tsuquyomi', { 'for': 'typescript' }
+Plug 'amadeus/vim-mjml'
 " }}}
 Plug 'ryanoasis/vim-devicons' " must stay at bottom to load after other plugins
 " }}}
