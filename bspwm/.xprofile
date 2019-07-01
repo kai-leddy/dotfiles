@@ -14,6 +14,7 @@ export LIBVA_DRIVER_NAME=iHD
 # start the light-locker daemon for screen locking with LightDM
 light-locker &
 mopidy &
+dropbox &
 
 # Handle window manager choice
 case $1 in
