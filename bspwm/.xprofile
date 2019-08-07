@@ -11,16 +11,17 @@ export SXHKD_SHELL='/usr/bin/sh'
 # Load the correct driver for hardware video acceleration
 export LIBVA_DRIVER_NAME=iHD
 
-# start the light-locker daemon for screen locking with LightDM
+# start services that are needed by all window managers
 light-locker &
 mopidy &
 dropbox &
+greenclip daemon &
+emacs --daemon
 
 # Handle window manager choice
 case $1 in
   bspwm)
      sxhkd -s /tmp/sxhkd.fifo &
-     greenclip daemon &
      compton -b
      wmname LG3D
      ;;
