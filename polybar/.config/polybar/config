@@ -1,5 +1,11 @@
 ; vim:ft=dosini
 
+; ############################
+; #                          #
+; #  VARIABLES AND SETTINGS  #
+; #                          #
+; ############################
+
 [colors]
   white = #FFF
   black = #000
@@ -18,42 +24,60 @@
   compositing-background = screen
   compositing-foreground = source
   compositing-border = over
+  ; default formats
+  format-foreground = ${colors.white}
+  format-padding = 2
+  format-margin = 0
 
-[global/wm]
-  margin-top = 0
-  margin-bottom = 0
+; ############################
+; #                          #
+; #     BAR DEFINITIONS      #
+; #                          #
+; ############################
 
 [bar/base]
-  width: 100%
-  height: 30
-  radius: 0
+  width = 70%
+  height = 40
+  radius = 8
+  offset-x = 15%
+  offset-y = 16
+  fixed-center = true
   background = ${colors.grey}
   foreground = ${colors.lightGrey}
   line-size = 2
-  border-size = 0
-  padding-left = 2
-  padding-right = 2
-  module-margin-left = 2
-  module-margin-right = 2
-  font-0 = "FontAwesome:pixelsize=12;4"
-  font-1 = fixed:pixelsize=10
-  font-2 = unifont:fontformat=truetype:size=8:antialias=false
-  font-3 = siji:pixelsize=10
-  modules-left = bspwm
-  tray-position = right
-  tray-detached = false
-  tray-padding = 2
+  padding = 1
+  font-0 = "FantasqueSansMono Nerd Font:pixelsize=14;2"
+  modules-center = bspwm
   wm-restack = bspwm
 
 [bar/main]
   inherit = bar/base
   monitor = ${env:MONITOR:eDP1}
-  modules-right = rootFs homeFs volume wlan battery temperature date
+  modules-left = rootFs homeFs temperature
+  modules-right = volume wlan battery date
+  tray-background = #00
+  tray-offset-x = 70%
+  tray-position = left
+  tray-detached = true
+  tray-maxsize = 24
+  tray-padding = 2
 
 [bar/external]
   inherit = bar/base
   monitor = ${env:MONITOR:HDMI1}
-  modules-right = volume wlan battery temperature date
+  bottom = true
+  modules-left = rootFs homeFs temperature
+  modules-right = volume wlan battery date
+
+[bar/external_extra]
+  inherit = bar/external
+  monitor = ${env:MONITOR:DP2}
+
+; ############################
+; #                          #
+; #    MODULE DEFINITIONS    #
+; #                          #
+; ############################
 
 [module/rootFs]
   type = internal/fs
@@ -76,27 +100,31 @@
 
   pin-workspaces = true
   enable-scroll = false
-  enable-click = false
+  enable-click = true
 
   label-focused = %name%
-  label-focused-background = ${colors.grey}
-  label-focused-foreground = ${colors.orange}
-  label-focused-padding = 1
+  label-focused-background = ${colors.orange}
+  label-focused-foreground = ${colors.black}
+  label-focused-padding = 2
+  label-focused-margin = 0
 
   label-urgent = %name%
   label-urgent-background = ${colors.red}
-  label-urgent-foreground = ${colors.white}
-  label-urgent-padding = 1
+  label-urgent-foreground = ${colors.black}
+  label-urgent-padding = 2
+  label-urgent-margin = 0
 
   label-empty = %name%
-  label-empty-background = ${colors.grey}
-  label-empty-foreground = ${colors.darkGrey}
-  label-empty-padding = 1
+  label-empty-background = ${colors.darkGrey}
+  label-empty-foreground = ${colors.black}
+  label-empty-padding = 2
+  label-empty-margin = 0
 
   label-occupied = %name%
-  label-occupied-background = ${colors.grey}
-  label-occupied-foreground = ${colors.white}
-  label-occupied-padding = 1
+  label-occupied-background = ${colors.lightGrey}
+  label-occupied-foreground = ${colors.black}
+  label-occupied-padding = 2
+  label-occupied-margin = 0
 
 [module/wlan]
   type = internal/network
