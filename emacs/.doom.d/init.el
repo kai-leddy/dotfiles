@@ -184,15 +184,7 @@
 (setq display-line-numbers-type 'relative) ; enable relative line numbers
 (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17))
 (setq company-idle-delay 0.25)
-
-;; add npm and yarn global modules to exec-path
-(setq npm-global-bin-path
-      (string-trim (shell-command-to-string "npm bin -g")))
-(setq yarn-global-bin-path
-      (string-trim (shell-command-to-string "yarn global bin")))
-
-(setq exec-path
-      (append exec-path (list npm-global-bin-path yarn-global-bin-path)))
+(setq scroll-margin 4)
 
 ;; enable eslint auto formatting for all JS buffers
 (add-hook! 'js2-mode-hook #'eslintd-fix-mode)

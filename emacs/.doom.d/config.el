@@ -40,6 +40,12 @@
 (def-package! react-snippets
   :defer t)
 
+(def-package! exec-path-from-shell
+  :init
+  (when (memq window-system '(mac ns x))
+    (exec-path-from-shell-initialize)
+    (exec-path-from-shell-copy-envs '("SSH_AGENT_PID" "SSH_AUTH_SOCK"))))
+
 ;; Setup org mode stuff
 (after! org
   (setq org-directory "~/Dropbox/org")
