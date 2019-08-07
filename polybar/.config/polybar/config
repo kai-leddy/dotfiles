@@ -40,7 +40,6 @@
   font-2 = unifont:fontformat=truetype:size=8:antialias=false
   font-3 = siji:pixelsize=10
   modules-left = bspwm
-  modules-center = mpd
   tray-position = right
   tray-detached = false
   tray-padding = 2
@@ -164,11 +163,6 @@
   animation-charging-4 = 
   animation-charging-foreground = ${colors.orange}
   animation-charging-framerate = 750
-
-[module/mpd]
-type = internal/mpd
-host = 127.0.0.1
-port = 6600
 
 [module/temperature]
   type = internal/temperature

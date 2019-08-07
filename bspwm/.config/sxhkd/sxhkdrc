@@ -43,7 +43,7 @@ XF86Audio{_,Mic}Mute
 
 # setup media keys for mpd
 XF86Audio{Play,Stop,Prev,Next}
-    mpc {toggle,stop,prev,next}
+    playerctl {play-pause,stop,previous,next}
 
 # Take screenshots with the printscreen button
 {_,shift + }Print

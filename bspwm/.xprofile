@@ -13,7 +13,6 @@ export LIBVA_DRIVER_NAME=iHD
 
 # start services that are needed by all window managers
 light-locker &
-mopidy &
 dropbox &
 greenclip daemon &
 emacs --daemon
