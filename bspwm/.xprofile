@@ -3,7 +3,7 @@
 # Log stdout and stderr to file
 exec &> /tmp/xprofile.log
 
-echo $1
+echo "$1"
 
 # Make bspwm & sxhkd play nice with(out) fish shell
 export SXHKD_SHELL='/usr/bin/sh'
@@ -15,6 +15,7 @@ export LIBVA_DRIVER_NAME=iHD
 light-locker &
 dropbox &
 greenclip daemon &
+eslint_d start
 emacs --daemon
 
 # Handle window manager choice
