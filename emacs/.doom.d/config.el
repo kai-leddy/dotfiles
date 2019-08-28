@@ -1,6 +1,11 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
 
 ;; Place your private configuration here
+(setq display-line-numbers-type 'relative) ; enable relative line numbers
+(setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17))
+(setq company-idle-delay 0.25)
+(setq scroll-margin 4)
+(setq flycheck-javascript-eslint-executable "eslint_d")
 
 ;; Random useful functions
 (defun +kai/toggle-prev-buffer ()
@@ -72,3 +77,6 @@
 (after! projectile
   (setq projectile-globally-ignored-directories
         (append '(".cache") projectile-globally-ignored-directories)))
+
+;; enable eslint auto formatting for all JS buffers
+(add-hook! 'js2-mode-hook #'eslintd-fix-mode)

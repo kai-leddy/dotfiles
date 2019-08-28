@@ -181,10 +181,3 @@
        ;; config. Use it as a reference for your own modules.
        (default +bindings +smartparens))
 
-(setq display-line-numbers-type 'relative) ; enable relative line numbers
-(setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17))
-(setq company-idle-delay 0.25)
-(setq scroll-margin 4)
-
-;; enable eslint auto formatting for all JS buffers
-(add-hook! 'js2-mode-hook #'eslintd-fix-mode)
