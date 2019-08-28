@@ -73,6 +73,13 @@
         "X" #'org-archive-all-done)
   )
 
+(after! ox-latex
+  ;(add-to-list 'org-latex-packages-alist '("" "minted"))
+  (setq org-latex-tables-booktabs t)
+  (setq org-latex-listings 'minted)
+  (setq org-latex-pdf-process
+        '("pdflatex -shell-escape -interaction nonstopmode -output-directory %o %f")))
+
 ;; make projectile not save node_module caches as projects
 (after! projectile
   (setq projectile-globally-ignored-directories
