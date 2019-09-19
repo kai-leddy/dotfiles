@@ -38,15 +38,15 @@
         ;; open an Eshell (no fish features, but better integration)
         :desc "Shell (eshell)" "s" #'eshell))
 
-(def-package! doom-themes
+(use-package! doom-themes
   :init
   (setq doom-theme 'doom-molokai))
 
-(def-package! react-snippets
+(use-package! react-snippets
   :defer t)
 
-(def-package! exec-path-from-shell
-  :init
+(use-package! exec-path-from-shell
+  :config
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-envs '("SSH_AGENT_PID" "SSH_AUTH_SOCK"))))
