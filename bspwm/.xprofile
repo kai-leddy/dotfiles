@@ -16,7 +16,6 @@ light-locker &
 dropbox &
 greenclip daemon &
 eslint_d start
-fish -c 'env emacs --daemon'
 
 # Handle window manager choice
 case $1 in
