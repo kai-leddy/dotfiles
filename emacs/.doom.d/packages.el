@@ -8,6 +8,6 @@
 
 (package! exec-path-from-shell)
 (package! react-snippets)
-(package! grip-mode)
+(package! vmd-mode)
 (package! evil-snipe :disable t)
 (package! evil-easymotion :disable t)

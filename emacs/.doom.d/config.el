@@ -51,12 +51,12 @@
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-envs '("SSH_AGENT_PID" "SSH_AUTH_SOCK"))))
 
-(use-package! grip-mode
-  :commands grip-mode
+(use-package! vmd-mode
+  :commands vmd-mode
   :init
   (map! :map markdown-mode-map
         (:localleader
-          "g" #'grip-mode)))
+          "v" #'vmd-mode)))
 
 ;; Setup org mode stuff
 (after! org
