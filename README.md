@@ -19,5 +19,4 @@ stow tmux
 stow vim
 stow alacritty
 stow polybar
-sudo stow pacman -t /etc/
 ```
