@@ -9,7 +9,11 @@ echo "$1"
 export SXHKD_SHELL='/usr/bin/sh'
 
 # Load the correct driver for hardware video acceleration
-export LIBVA_DRIVER_NAME=iHD
+# export LIBVA_DRIVER_NAME=iHD
+
+# start the ssh-agent and add keys
+eval $(ssh-agent)
+ssh-add ~/.ssh/id_rsa_personal
 
 # start services that are needed by all window managers
 light-locker &
