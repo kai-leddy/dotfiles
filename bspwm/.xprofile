@@ -8,6 +8,9 @@ echo "$1"
 # Make bspwm & sxhkd play nice with(out) fish shell
 export SXHKD_SHELL='/usr/bin/sh'
 
+# Fucking Java GUI applications...
+export _JAVA_AWT_WM_NONREPARENTING=1
+
 # Load the correct driver for hardware video acceleration
 # export LIBVA_DRIVER_NAME=iHD
 
