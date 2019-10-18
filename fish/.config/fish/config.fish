@@ -3,7 +3,6 @@ set -g theme_color_scheme dracula
 set -g theme_display_git yes
 set -g theme_display_git_untracked yes
 set -g theme_display_docker_machine yes
-set -g theme_display_nvm yes
 set -g theme_display_user ssh
 set -g theme_display_hostname ssh
 set -g theme_display_vi yes
