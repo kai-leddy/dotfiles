@@ -26,8 +26,20 @@ set -x FZF_DEFAULT_COMMAND 'fd --type file --color=always --follow --hidden --ex
 set -x FZF_ALT_C_COMMAND 'fd --type directory --color=always --follow --hidden --exclude .git . $dir'
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
+# Fucking Java GUI applications...
+set -x _JAVA_AWT_WM_NONREPARENTING 1
+
+# Setup env vars for building Android with React Native
+set -x ANDROID_HOME $HOME/Android/Sdk
+set -Ua fish_user_paths $ANDROID_HOME/emulator
+set -Ua fish_user_paths $ANDROID_HOME/tools
+set -Ua fish_user_paths $ANDROID_HOME/tools/bin
+set -Ua fish_user_paths $ANDROID_HOME/platform-tools
+
 # Setup env vars for other stuff
 set -x EDITOR emacs
 set -x VISUAL emacs
 set -Ua fish_user_paths $HOME/.emacs.d/bin
 
+# Use Jabba to manage JAVA SDK versions
+[ -s "/home/kai/.jabba/jabba.fish" ]; and source "/home/kai/.jabba/jabba.fish"
