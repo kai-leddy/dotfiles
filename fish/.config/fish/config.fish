@@ -41,5 +41,15 @@ set -x EDITOR emacs
 set -x VISUAL emacs
 set -Ua fish_user_paths $HOME/.emacs.d/bin
 
+# Magic to make using `-` on its own work
+abbr -a -- - 'cd -'
+# Git abbreviations
+abbr -a -g ga 'git add'
+abbr -a -g gc 'git commit'
+abbr -a -g gd 'git diff'
+abbr -a -g gl 'git lg'
+abbr -a -g gs 'git status'
+abbr -a -g gf 'git flow'
+
 # Use Jabba to manage JAVA SDK versions
 [ -s "/home/kai/.jabba/jabba.fish" ]; and source "/home/kai/.jabba/jabba.fish"
