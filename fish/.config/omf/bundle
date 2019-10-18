@@ -1,4 +1,9 @@
 package foreign-env
+package gi
+package git-flow
+package node-binpath
 package nvm
+package thefuck
+package yarn-binpath
 theme bobthefish
 theme default

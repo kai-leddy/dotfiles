@@ -27,10 +27,7 @@ set -x FZF_ALT_C_COMMAND 'fd --type directory --color=always --follow --hidden -
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 # Setup env vars for other stuff
-set -x GEM_HOME $HOME/.gem
-set -x GOPATH $HOME/go
 set -x EDITOR emacs
 set -x VISUAL emacs
-set -U fish_user_paths $HOME/.cargo/bin $HOME/.gem/bin $HOME/.gem/ruby/2.6.0/bin $GOPATH/bin (yarn global bin) $HOME/.emacs.d/bin
+set -Ua fish_user_paths $HOME/.emacs.d/bin
 
-thefuck --alias | source
