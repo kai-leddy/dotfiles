@@ -46,6 +46,11 @@
 (use-package! react-snippets
   :defer t)
 
+;; Make rjsx-mode work for .tsx files
+(use-package! rjsx-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . rjsx-mode)))
+
 (use-package! exec-path-from-shell
   :config
   (when (memq window-system '(mac ns x))
@@ -95,3 +100,15 @@
 
 ;; enable eslint auto formatting for all JS buffers
 (add-hook! 'js2-mode-hook #'eslintd-fix-mode)
+
+(add-hook! 'rjsx-mode-hook
+  (lambda ()
+    (when (string-equal "tsx" (file-name-extension buffer-file-name))
+      ;(setup-tide-mode)
+      (flycheck-select-checker 'tsx-tide)
+      ))
+  )
+
+(after! (flycheck tide rjsx-mode)
+  (flycheck-add-mode 'tsx-tide 'rjsx-mode)
+  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append))
