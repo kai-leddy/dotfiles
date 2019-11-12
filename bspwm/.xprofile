@@ -12,7 +12,7 @@ export SXHKD_SHELL='/usr/bin/sh'
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 # Load the correct driver for hardware video acceleration
-# export LIBVA_DRIVER_NAME=iHD
+export LIBVA_DRIVER_NAME=iHD
 
 # start the ssh-agent and add keys
 eval $(ssh-agent)
