@@ -36,7 +36,8 @@
         )
       (:prefix "o"
         ;; open an Eshell (no fish features, but better integration)
-        :desc "Shell (eshell)" "s" #'eshell))
+        :desc "Shell (eshell)" "s" #'eshell
+        :desc "Undo Tree" "u" #'undo-tree-visualize))
 
 (use-package! doom-themes
   :init
