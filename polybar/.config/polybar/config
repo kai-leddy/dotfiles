@@ -156,7 +156,7 @@
 [module/battery]
   type = internal/battery
   battery = BAT0
-  adapter = ADP1
+  adapter = AC
   full-at = 98
 
   format-charging = <animation-charging> <label-charging>
@@ -187,7 +187,8 @@
 [module/temperature]
   type = internal/temperature
   thermal-zone = 0
-  warn-temperature = 80
+  hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input
+  warn-temperature = 85
 
   format = <ramp> <label>
   format-warn = <ramp> <label-warn>
@@ -201,3 +202,4 @@
   ramp-1 = 
   ramp-2 = 
   ramp-foreground = ${colors.orange}
+  ramp-warn-foreground = ${colors.red}
