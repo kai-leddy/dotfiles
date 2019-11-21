@@ -64,14 +64,10 @@
 
 [bar/external]
   inherit = bar/base
-  monitor = ${env:MONITOR:DVI-I-1-1}
+  monitor = ${env:MONITOR:HDMI-1}
   bottom = true
-  modules-left = volume
-  modules-right = temperature battery date
-
-[bar/external_extra]
-  inherit = bar/external
-  monitor = ${env:MONITOR:DVI-I-2-2}
+  modules-left = temperature
+  modules-right = volume date
 
 ; ############################
 ; #                          #
@@ -125,7 +121,7 @@
 
   format-connected = %{F#0a81f5}%{F-} <label-connected>
   format-disconnected = %{F#0a81f5}%{F-} Disconnected
-  label-connected = %essid%
+  label-connected = %essid:0:10:...%
 
 [module/date]
   type = internal/date
@@ -165,7 +161,7 @@
   format-discharging = <ramp-capacity> <label-discharging>
   format-discharging-underline = ${colors.orange}
 
-  format-full-prefix = 
+  format-full = %{F#FF9000}%{F-} <label-full>
   format-full-prefix-foreground = ${colors.orange}
   format-full-underline = ${colors.orange}
 

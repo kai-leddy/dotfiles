@@ -1,5 +1,4 @@
-#!/usr/bin/env sh
-
+# -*- mode: conf-mode; -*-
 #
 # wm independent hotkeys
 #
@@ -18,11 +17,11 @@ super + Tab
 
 # clipboard history
 super + v
-  rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
+    rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
 
 # lock the screen with light-locker
 super + Escape
-	light-locker-command -l
+    light-locker-command -l
 
 # make bspwm & sxhkd reload its configuration files:
 super + ctrl + Escape
@@ -53,13 +52,17 @@ XF86Audio{Play,Stop,Prev,Next}
 # bspwm hotkeys
 #
 
-# quit bspwm normally
-super + alt + Escape
-	bspc quit
-
 # close and kill
 super + {_,shift + }w
 	bspc node -{c,k}
+
+# insert, kill or move a node to a receptacle
+super + r
+  bspc node -i
+super + shift + r
+  bspc node any.local.leaf.!window -k
+super + shift + y
+  bspc node focused.local -n any.leaf.!window
 
 # alternate between the tiled and monocle layout
 super + m
@@ -92,68 +95,68 @@ super + ctrl + {m,x,s,p}
 # focus the node in the given direction
 super + {h,j,k,l}
 	bspc node -f {west,south,north,east}
+
+# focus the monitor in the given direction
+super + ctrl + {h,j,k,l}
+	bspc monitor -f {west,south,north,east}
+
+# move the node in the given direction
 super + shift + {h,j,k,l}
 	bspc node -s {west,south,north,east} --follow
+
+# move the desktop in the given direction (across monitors)
+super + ctrl + shift + {h,j,k,l}
+	bspc desktop -m {west,south,north,east} --follow
 
 # focus the node for the given path jump
 super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
-# focus the next/previous node in the current desktop
-super + {_,shift + }c
-	bspc node -f {next,prev}.local
-
 # focus the next/previous desktop in the current monitor
 super + bracket{left,right}
 	bspc desktop -f {prev,next}.local
+
+# focus the next/previous monitor
+super + ctrl + bracket{left,right}
+	bspc monitor -f {prev,next}
 
 # focus the last node/desktop
 super + {apostrophe,BackSpace}
 	bspc {node,desktop} -f last
 
-# focus the older or newer node in the focus history
-super + {o,i}
-	bspc wm -h off; \
-	bspc node {older,newer} -f; \
-	bspc wm -h on
-
-# focus or send to the given desktop
+# focus the given desktop in the current monitor
 super + {1-9,0}
-	bspc desktop -f '{1-9,10}'
-super + shift +{1-9,0}
-	bspc node -d '{1-9,10}' --follow
+	bspc desktop -f 'focused:^{1-9,10}'
+# focus the given monitor
+super + ctrl + {1-9,0}
+	bspc monitor -f '^{1-9,10}'
+# send to the given desktop in the current monitor
+super + shift + {1-9,0}
+	bspc node -d 'focused:^{1-9,10}' --follow
 
 #
 # preselect
 #
 
 # preselect the direction
-super + ctrl + {h,j,k,l}
+super + alt + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
-super + ctrl + {1-9}
+super + alt + {1-9}
 	bspc node -o 0.{1-9}
 
 # cancel the preselection for the focused node
-super + ctrl + space
+super + alt + space
 	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
-super + ctrl + shift + space
+super + alt + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #
 # move/resize
 #
-
-# expand a window by moving one of its side outward
-super + alt + {h,j,k,l}
-	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
-
-# contract a window by moving one of its side inward
-super + alt + shift + {h,j,k,l}
-	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
 
 # move a floating window
 super + {Left,Down,Up,Right}

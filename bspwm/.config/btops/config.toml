@@ -1,0 +1,39 @@
+min = 1
+max = 10
+remove-empty = true
+append-when-occupied = true
+watch-config = true
+renamers = ["classified", "constant"]
+
+[names]
+constant = "new"
+
+[[names.classified]]
+"music" = ["Spotify", ""] # well done spotify *facepalm*
+
+[[names.classified]]
+"video" = ["YouTube", "mpv"]
+
+[[names.classified]]
+"code" = ["Emacs"]
+
+[[names.classified]]
+"android" = ["emulator", "avdmanager", "qemu"]
+
+[[names.classified]]
+"react" = ["React Native Debugger"]
+
+[[names.classified]]
+"games" = ["Steam"]
+
+[[names.classified]]
+"chat" = ["Slack", "hiri"]
+
+[[names.classified]]
+"firefox" = ["firefox", "firefoxdeveloperedition"]
+
+[[names.classified]]
+"chrome" = ["Chromium", "Chrome", "Google"]
+
+[[names.classified]]
+"term" = ["xterm", "st", "Alacritty", "URxvt"]
