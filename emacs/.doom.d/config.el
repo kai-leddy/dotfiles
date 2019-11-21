@@ -22,10 +22,16 @@
  ;; move lines up and down with meta+{j,k}
  :n "M-j" #'move-line-down
  :n "M-k" #'move-line-up
+ ;; change window with ctrl+{h,j,k,l}
+ :n "C-h" #'evil-window-left
+ :n "C-j" #'evil-window-down
+ :n "C-k" #'evil-window-up
+ :n "C-l" #'evil-window-right
  )
 
 ;; Additional leader mappings
 (map! :leader
+      :desc "Run shell command" "!" #'projectile-run-shell-command-in-root
       (:prefix "p"
         ;; Save multiple project buffers
         :desc "Save project files" "s" #'projectile-save-project-buffers
