@@ -22,12 +22,13 @@ ssh-add ~/.ssh/id_rsa_personal
 light-locker &
 dropbox &
 greenclip daemon &
-eslint_d start
+$(yarn global bin)/eslint_d start
 
 # Handle window manager choice
 case $1 in
   bspwm)
      sxhkd -s /tmp/sxhkd.fifo &
+     (sleep 2 && btops) &
      compton -b
      wmname LG3D
      ;;

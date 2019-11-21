@@ -1,8 +1,5 @@
 ;;; init.el -*- lexical-binding: t; -*-
-
-;; Before doing anything else, use `sh' for any modules running a shell
-(setq shell-file-name "sh")
-
+;;
 ;; Copy this file to ~/.doom.d/init.el or ~/.config/doom/init.el ('doom
 ;; quickstart' will do this for you). The `doom!' block below controls what
 ;; modules are enabled and in what order they will be loaded. Remember to run

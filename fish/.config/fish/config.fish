@@ -27,18 +27,19 @@ set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 # Fucking Java GUI applications...
 set -x _JAVA_AWT_WM_NONREPARENTING 1
+# Fucking SXHKD
+set -x SXHKD_SHELL '/usr/bin/sh'
+# Fucking Intel
+set -x LIBVA_DRIVER_NAME iHD
 
-# Setup env vars for building Android with React Native
-set -x ANDROID_HOME $HOME/Android/Sdk
-set -Ua fish_user_paths $ANDROID_HOME/emulator
-set -Ua fish_user_paths $ANDROID_HOME/tools
-set -Ua fish_user_paths $ANDROID_HOME/tools/bin
-set -Ua fish_user_paths $ANDROID_HOME/platform-tools
-
-# Setup env vars for other stuff
+# Setup env vars for various other stuff
 set -x EDITOR emacs
 set -x VISUAL emacs
-set -Ua fish_user_paths $HOME/.emacs.d/bin
+set -x ANDROID_HOME $HOME/Android/Sdk
+
+# Setup user PATH variables all at once (for performance)
+set -e fish_user_paths
+set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
 
 # Magic to make using `-` on its own work
 abbr -a -- - 'cd -'
