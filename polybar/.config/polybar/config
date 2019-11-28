@@ -47,6 +47,7 @@
   line-size = 2
   padding = 1
   font-0 = "FantasqueSansMono Nerd Font:pixelsize=14;2"
+  font-1 = "FantasqueSansMono Nerd Font:pixelsize=20;4"
   modules-center = bspwm
   wm-restack = bspwm
 
@@ -90,29 +91,46 @@
   enable-scroll = false
   enable-click = true
 
-  label-focused = %name%
+  label-focused = %icon%
+  label-focused-font = 2
   label-focused-background = ${colors.orange}
   label-focused-foreground = ${colors.black}
   label-focused-padding = 2
   label-focused-margin = 0
 
-  label-urgent = %name%
+  label-urgent = %icon%
+  label-urgent-font = 2
   label-urgent-background = ${colors.red}
   label-urgent-foreground = ${colors.black}
   label-urgent-padding = 2
   label-urgent-margin = 0
 
-  label-empty = %name%
+  label-empty = %icon%
+  label-empty-font = 2
   label-empty-background = ${colors.darkGrey}
-  label-empty-foreground = ${colors.black}
+  label-empty-foreground = ${colors.lightGrey}
   label-empty-padding = 2
   label-empty-margin = 0
 
-  label-occupied = %name%
+  label-occupied = %icon%
+  label-occupied-font = 2
   label-occupied-background = ${colors.lightGrey}
   label-occupied-foreground = ${colors.black}
   label-occupied-padding = 2
   label-occupied-margin = 0
+
+  ws-icon-default = 
+  ws-icon-0 = new;
+  ws-icon-1 = video;
+  ws-icon-2 = code;
+  ws-icon-3 = android;
+  ws-icon-4 = games;
+  ws-icon-5 = chat;
+  ws-icon-6 = files;
+  ws-icon-7 = firefox;
+  ws-icon-8 = chrome;
+  ws-icon-9 = term;
+  ws-icon-10 = music;
 
 [module/wlan]
   type = internal/network

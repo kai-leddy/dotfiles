@@ -9,25 +9,22 @@ renamers = ["classified", "constant"]
 constant = "new"
 
 [[names.classified]]
-"music" = ["Spotify", ""] # well done spotify *facepalm*
-
-[[names.classified]]
-"video" = ["YouTube", "mpv"]
+"video" = ["YouTube", "mpv", "qutebrowser"]
 
 [[names.classified]]
 "code" = ["Emacs"]
 
 [[names.classified]]
-"android" = ["emulator", "avdmanager", "qemu"]
-
-[[names.classified]]
-"react" = ["React Native Debugger"]
+"android" = ["Emulator", "qemu", "jetbrains-studio", "React Native Debugger"]
 
 [[names.classified]]
 "games" = ["Steam"]
 
 [[names.classified]]
 "chat" = ["Slack", "hiri"]
+
+[[names.classified]]
+"files" = ["Pcmanfm"]
 
 [[names.classified]]
 "firefox" = ["firefox", "firefoxdeveloperedition"]
@@ -37,3 +34,6 @@ constant = "new"
 
 [[names.classified]]
 "term" = ["xterm", "st", "Alacritty", "URxvt"]
+
+[[names.classified]]
+"music" = ["Spotify", ""] # well done spotify *facepalm*
