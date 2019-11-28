@@ -27,6 +27,9 @@
  :n "C-j" #'evil-window-down
  :n "C-k" #'evil-window-up
  :n "C-l" #'evil-window-right
+ ;; swap ' and ` to allow using ' to goto exact position
+ :n "'" #'evil-goto-mark
+ :n "`" #'evil-goto-mark-line
  )
 
 ;; Additional leader mappings

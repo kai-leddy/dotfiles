@@ -133,6 +133,9 @@ super + ctrl + {1-9,0}
 # send to the given desktop in the current monitor
 super + shift + {1-9,0}
 	bspc node -d 'focused:^{1-9,10}' --follow
+# move the current desktop to the given monitor
+super + ctrl + shift + {1-9,10}
+  bspc desktop -m '^{1-9,10}' --follow
 
 #
 # preselect
