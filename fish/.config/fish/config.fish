@@ -33,7 +33,7 @@ set -x SXHKD_SHELL '/usr/bin/sh'
 set -x LIBVA_DRIVER_NAME iHD
 
 # Setup env vars for various other stuff
-set -x EDITOR emacs
+set -x EDITOR nvim
 set -x VISUAL emacs
 set -x ANDROID_HOME $HOME/Android/Sdk
 

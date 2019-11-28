@@ -75,7 +75,7 @@ rofi.matching:                       fuzzy
 ! "Tokenize input string" Set from: Default
 ! rofi.tokenize:                       true
 ! "Monitor id to show on" Set from: Default
-rofi.m:                              -4
+rofi.m:                              -1
 ! "Margin between rows *DEPRECATED*" Set from: Default
 ! rofi.line-margin:                    2
 ! "Padding within rows *DEPRECATED*" Set from: Default
