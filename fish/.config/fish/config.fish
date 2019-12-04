@@ -41,6 +41,9 @@ set -x ANDROID_HOME $HOME/Android/Sdk
 set -e fish_user_paths
 set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
 
+# use lsd instead of ls
+alias ls lsd
+
 # Magic to make using `-` on its own work
 abbr -a -- - 'cd -'
 # Git abbreviations

@@ -62,7 +62,7 @@ super + r
 super + shift + r
   bspc node any.local.leaf.!window -k
 super + shift + y
-  bspc node focused.local -n any.leaf.!window
+  bspc node focused.local -n any.local.leaf.!window
 
 # alternate between the tiled and monocle layout
 super + m

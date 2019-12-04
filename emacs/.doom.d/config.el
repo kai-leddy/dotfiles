@@ -107,8 +107,9 @@
   (setq projectile-globally-ignored-directories
         (append '(".cache") projectile-globally-ignored-directories)))
 
-;; enable eslint auto formatting for all JS buffers
+;; enable eslint auto formatting for all JS & TS buffers
 (add-hook! 'js2-mode-hook #'eslintd-fix-mode)
+(add-hook! 'typescript-mode-hook #'eslintd-fix-mode)
 
 (add-hook! 'rjsx-mode-hook
   (lambda ()

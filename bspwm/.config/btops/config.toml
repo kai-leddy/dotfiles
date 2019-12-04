@@ -33,7 +33,7 @@ constant = "new"
 "chrome" = ["Chromium", "Chrome", "Google"]
 
 [[names.classified]]
-"term" = ["xterm", "st", "Alacritty", "URxvt"]
+"music" = ["Spotify", ""] # well done spotify *facepalm*
 
 [[names.classified]]
-"music" = ["Spotify", ""] # well done spotify *facepalm*
+"term" = ["xterm", "st", "Alacritty", "URxvt"]
