@@ -52,8 +52,8 @@
   :init
   (setq doom-theme 'doom-molokai))
 
-(use-package! react-snippets
-  :defer t)
+(use-package! react-snippets :after yasnippet)
+(use-package! jest-snippets :after yasnippet)
 
 ;; Make rjsx-mode work for .tsx files
 (use-package! rjsx-mode
