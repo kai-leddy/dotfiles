@@ -108,8 +108,13 @@
         (append '(".cache") projectile-globally-ignored-directories)))
 
 ;; enable eslint auto formatting for all JS & TS buffers
-(add-hook! 'js2-mode-hook #'eslintd-fix-mode)
 (add-hook! 'typescript-mode-hook #'eslintd-fix-mode)
+(add-hook! 'js2-mode-hook #'eslintd-fix-mode)
+
+;; overwrite prettier formatter to not send 'parser' cli option
+(set-formatter! 'prettier
+  '("prettier"
+    ("--stdin-filepath" "%s" buffer-file-name)))
 
 (add-hook! 'rjsx-mode-hook
   (lambda ()
