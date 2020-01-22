@@ -17,8 +17,9 @@
        ;;helm                 ; the *other* search engine for love and life
        ;;ido                  ; the other *other* search engine...
        (ivy                   ; a search engine for love and life
-        +fuzzy                ; enable fuzzy finding
+        ;;+fuzzy                ; enable fuzzy finding
         +icons                ; enable icons for files, buffers etc
+        +prescient            ; enable prescient for sorting of results
         +childframe)          ; use child window frames
 
        :ui
@@ -69,6 +70,10 @@
        term                   ; terminals in Emacs
        ;;vterm                ; another terminals in Emacs
 
+       :checkers
+       syntax              ; tasing you for every semicolon you forget
+       spell              ; tasing you for misspelling mispelling
+
        :tools
        ;;ansible
        ;;debugger             ; FIXME stepping through code, to help you add bugs
@@ -77,8 +82,6 @@
        ;;editorconfig         ; let someone else argue about tabs vs spaces
        ;;ein                  ; tame Jupyter notebooks with emacs
        eval                   ; run code, run (also, repls)
-       flycheck               ; tasing you for every semicolon you forget
-       flyspell               ; tasing you for misspelling mispelling
        ;;gist                 ; interacting with github gists
        lookup                 ; helps you navigate your code and documentation
        ;;lsp
@@ -97,7 +100,7 @@
        :lang
        ;;agda                 ; types of types of types of types...
        ;;assembly             ; assembly for fun or debugging
-       ;;cc                     ; C/C++/Obj-C madness
+       cc                     ; C/C++/Obj-C madness
        ;;clojure              ; java with a lisp
        ;;common-lisp          ; if you've seen one lisp, you've seen them all
        ;;coq                  ; proofs-as-programs
@@ -113,11 +116,11 @@
        ;;(haskell +intero)      ; a language that's lazier than I am
        ;;hy                   ; readability of scheme w/ speed of python
        ;;idris             ;
-       (java +meghanada)    ; the poster child for carpal tunnel syndrome
+       (java +eclim)    ; the poster child for carpal tunnel syndrome
        javascript             ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia                ; a better, faster MATLAB
        ;;kotlin               ; a better, slicker Java(Script)
-       latex                  ; writing papers in Emacs has never been so fun
+       (latex +latexmk)                  ; writing papers in Emacs has never been so fun
        ;;ledger               ; an accounting system in Emacs
        ;;lua                  ; one-based indices? one-based indices
        markdown               ; writing docs for people to ignore
@@ -141,7 +144,7 @@
        ;;racket               ; a DSL for DSLs
        ;;rest                 ; Emacs as a REST client
        ;;ruby                 ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       ;;rust                   ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       rust                   ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala                ; java, but good
        (sh +fish)             ; she sells (ba|z|fi)sh shells on the C xor
        ;;solidity             ; do you need a blockchain? No.

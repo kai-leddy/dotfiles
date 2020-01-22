@@ -75,7 +75,7 @@
 
 ;; Setup org mode stuff
 (after! org
-  (setq org-directory "~/Dropbox/org")
+  (setq org-directory "~/org")
   (setq org-agenda-files (list org-directory))
   (setq org-capture-templates
         '(("t" "Todo" entry
