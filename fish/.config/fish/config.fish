@@ -56,6 +56,8 @@ abbr -a -g gd 'git diff'
 abbr -a -g gl 'git lg'
 abbr -a -g gs 'git status'
 abbr -a -g gf 'git flow'
+abbr -a -g rndev 'adb shell input keyevent KEYCODE_MENU'
 
 # Use Jabba to manage JAVA SDK versions
-[ -s "/home/kai/.jabba/jabba.fish" ]; and source "/home/kai/.jabba/jabba.fish"
+[ -s "/home/kai/.jabba/jabba.fish" ]
+and source "/home/kai/.jabba/jabba.fish"
