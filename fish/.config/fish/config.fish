@@ -37,6 +37,9 @@ set -x EDITOR nvim
 set -x VISUAL emacs
 set -x ANDROID_HOME $HOME/Android/Sdk
 
+# Setup QMK global CLI tool
+set -x QMK_HOME $HOME/repos/qmk_firmware
+
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
 set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
