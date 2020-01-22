@@ -20,9 +20,9 @@ ssh-add ~/.ssh/id_rsa_personal
 
 # start services that are needed by all window managers
 light-locker &
-dropbox &
 greenclip daemon &
 $(yarn global bin)/eslint_d start
+(sleep 30 && dropbox) &
 
 # Handle window manager choice
 case $1 in

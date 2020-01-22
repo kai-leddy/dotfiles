@@ -9,9 +9,6 @@ renamers = ["classified", "constant"]
 constant = "new"
 
 [[names.classified]]
-"video" = ["YouTube", "mpv", "qutebrowser"]
-
-[[names.classified]]
 "code" = ["Emacs"]
 
 [[names.classified]]
@@ -31,6 +28,9 @@ constant = "new"
 
 [[names.classified]]
 "chrome" = ["Chromium", "Chrome", "Google"]
+
+[[names.classified]]
+"video" = ["YouTube", "mpv", "qutebrowser"]
 
 [[names.classified]]
 "music" = ["Spotify", ""] # well done spotify *facepalm*

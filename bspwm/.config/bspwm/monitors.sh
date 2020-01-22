@@ -5,7 +5,7 @@ killall polybar
 
 # put monitors in the order I want for iterating in
 # including those which should never exist, just in case
-bspc wm --reorder-monitors HDMI-1 eDP-1 DP-1
+bspc wm --reorder-monitors HDMI-2 DP-1 eDP-1
 
 mapfile -t monitors < <(xrandr | grep ' connected' | awk '{print $1}')
 monitor_count=${#monitors[@]}
