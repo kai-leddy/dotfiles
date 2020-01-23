@@ -1,6 +1,5 @@
 package foreign-env
 package gi
-package git-flow
 package node-binpath
 package nvm
 package thefuck
