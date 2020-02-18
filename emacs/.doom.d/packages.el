@@ -11,6 +11,7 @@
 
 (package! exec-path-from-shell)
 (package! vmd-mode)
+(package! emojify)
 (package! react-snippets)
 (package! jest-snippets :recipe
   (:host github

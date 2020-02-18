@@ -43,6 +43,10 @@
         ;; save multiple open buffers
         :desc "Save some buffers" "s" #'save-some-buffers
         )
+      (:prefix "i"
+        ;; insert an emoji
+        :desc "Emoji" "e" #'emojify-insert-emoji
+        )
       (:prefix "o"
         ;; open an Eshell (no fish features, but better integration)
         :desc "Shell (eshell)" "s" #'eshell
@@ -110,6 +114,12 @@
 ;; enable eslint auto formatting for all JS & TS buffers
 (add-hook! 'typescript-mode-hook #'eslintd-fix-mode)
 (add-hook! 'js2-mode-hook #'eslintd-fix-mode)
+
+;; try to get magit-todos to work with magit-gitflow (UNTESTED)
+(add-hook! 'magit-gitflow-mode-hook #'magit-todos-mode)
+
+;; enable emojis everywhere :tada:
+(add-hook! 'after-init-hook #'global-emojify-mode)
 
 ;; overwrite prettier formatter to not send 'parser' cli option
 (set-formatter! 'prettier
