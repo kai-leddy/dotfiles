@@ -3,6 +3,9 @@
 # kill polybar instances so they can be restarted on correct monitors
 killall polybar
 
+# get the current hwmon path for CPU temp
+export TEMP_PATH=$(find /sys/devices/platform/coretemp.0/hwmon/hwmon*/temp1_input)
+
 # put monitors in the order I want for iterating in
 # including those which should never exist, just in case
 bspc wm --reorder-monitors HDMI-2 DP-1 eDP-1

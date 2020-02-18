@@ -201,7 +201,7 @@
 [module/temperature]
   type = internal/temperature
   thermal-zone = 0
-  hwmon-path = /sys/devices/platform/coretemp.0/hwmon/hwmon4/temp1_input
+  hwmon-path = ${env:TEMP_PATH:}
   warn-temperature = 85
 
   format = <ramp> <label>
