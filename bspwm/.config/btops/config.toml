@@ -18,7 +18,13 @@ constant = "new"
 "games" = ["Steam"]
 
 [[names.classified]]
-"chat" = ["Slack", "hiri"]
+"chat-work" = ["Slack", "hiri"]
+
+[[names.classified]]
+"chat" = ["WhatsApp", "Caprine"]
+
+[[names.classified]]
+"meeting" = ["zoom"]
 
 [[names.classified]]
 "files" = ["Pcmanfm"]

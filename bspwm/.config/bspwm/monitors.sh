@@ -8,7 +8,7 @@ export TEMP_PATH=$(find /sys/devices/platform/coretemp.0/hwmon/hwmon*/temp1_inpu
 
 # put monitors in the order I want for iterating in
 # including those which should never exist, just in case
-bspc wm --reorder-monitors HDMI-2 DP-1 eDP-1
+bspc wm --reorder-monitors DP-1 HDMI-2 eDP-1
 
 mapfile -t monitors < <(xrandr | grep ' connected' | awk '{print $1}')
 monitor_count=${#monitors[@]}

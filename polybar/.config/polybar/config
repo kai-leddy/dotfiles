@@ -125,12 +125,14 @@
   ws-icon-2 = code;
   ws-icon-3 = android;
   ws-icon-4 = games;
-  ws-icon-5 = chat;
-  ws-icon-6 = files;
-  ws-icon-7 = firefox;
-  ws-icon-8 = chrome;
-  ws-icon-9 = term;
-  ws-icon-10 = music;
+  ws-icon-5 = chat;
+  ws-icon-6 = chat-work;
+  ws-icon-7 = files;
+  ws-icon-8 = firefox;
+  ws-icon-9 = chrome;
+  ws-icon-10 = term;
+  ws-icon-11 = music;
+  ws-icon-12 = meeting;
 
 [module/wlan]
   type = internal/network
