@@ -31,6 +31,8 @@ set -x _JAVA_AWT_WM_NONREPARENTING 1
 set -x SXHKD_SHELL '/usr/bin/sh'
 # Fucking Intel
 set -x LIBVA_DRIVER_NAME iHD
+# Fucking slow make builds
+set -x MAKEFLAGS '-j 8'
 
 # Setup env vars for various other stuff
 set -x EDITOR nvim
@@ -42,7 +44,7 @@ set -x QMK_HOME $HOME/repos/qmk_firmware
 
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
+set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools (ruby -e 'puts Gem.user_dir')/bin
 
 # use lsd instead of ls
 alias ls lsd
@@ -51,12 +53,18 @@ alias ls lsd
 abbr -a -- - 'cd -'
 # Git abbreviations
 abbr -a -g ga 'git add'
+abbr -a -g gb 'git branch'
 abbr -a -g gc 'git commit'
+abbr -a -g gco 'git checkout'
 abbr -a -g gd 'git diff'
 abbr -a -g gl 'git lg'
 abbr -a -g gs 'git status'
 abbr -a -g gf 'git flow'
 abbr -a -g rndev 'adb shell input keyevent KEYCODE_MENU'
+
+# QMK abbreviations
+abbr -a -g qc 'qmk compile'
+abbr -a -g qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 
 # Use Jabba to manage JAVA SDK versions
 [ -s "/home/kai/.jabba/jabba.fish" ]
