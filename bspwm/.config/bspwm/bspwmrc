@@ -19,5 +19,5 @@ bspc rule -a Peek state=floating
 bspc rule -a Emacs state=tiled
 
 # Setup Monitors
-autorandr -c
+#autorandr -c
 bash ~/.config/bspwm/monitors.sh
