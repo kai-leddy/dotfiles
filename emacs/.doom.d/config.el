@@ -3,6 +3,7 @@
 ;; Place your private configuration here
 (setq display-line-numbers-type 'relative) ; enable relative line numbers
 (setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17))
+(setq doom-big-font-increment 4) ; big-font mode doesn't need to be THAT big
 (setq company-idle-delay 0.25)
 (setq scroll-margin 4)
 (setq flycheck-javascript-eslint-executable "eslint_d")
