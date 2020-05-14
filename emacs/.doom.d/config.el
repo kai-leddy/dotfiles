@@ -7,6 +7,7 @@
 (setq company-idle-delay 0.25)
 (setq scroll-margin 4)
 (setq flycheck-javascript-eslint-executable "eslint_d")
+(setq rustic-lsp-server 'rust-analyzer)
 
 ;; Random useful functions
 (defun +kai/toggle-prev-buffer ()
@@ -113,8 +114,9 @@
         (append '(".cache") projectile-globally-ignored-directories)))
 
 ;; enable eslint auto formatting for all JS & TS buffers
-(add-hook! 'typescript-mode-hook #'eslintd-fix-mode)
-(add-hook! 'js2-mode-hook #'eslintd-fix-mode)
+(add-hook!
+ '(typescript-mode-hook js2-mode-hook rjsx-mode-hook)
+ #'eslintd-fix-mode)
 
 ;; try to get magit-todos to work with magit-gitflow (UNTESTED)
 (add-hook! 'magit-gitflow-mode-hook #'magit-todos-mode)
@@ -127,14 +129,7 @@
   '("prettier"
     ("--stdin-filepath" "%s" buffer-file-name)))
 
-(add-hook! 'rjsx-mode-hook
-  (lambda ()
-    (when (string-equal "tsx" (file-name-extension buffer-file-name))
-      ;(setup-tide-mode)
-      (flycheck-select-checker 'tsx-tide)
-      ))
-  )
-
-(after! (flycheck tide rjsx-mode)
-  (flycheck-add-mode 'tsx-tide 'rjsx-mode)
-  (flycheck-add-next-checker 'tsx-tide 'javascript-eslint 'append))
+(after! (flycheck rjsx-mode typescript-mode js2-mode)
+  (set-next-checker! 'rjsx-mode 'lsp 'javascript-eslint 'append)
+  (set-next-checker! 'js2-mode 'lsp 'javascript-eslint 'append)
+  (set-next-checker! 'typescript-mode 'lsp 'javascript-eslint 'append))

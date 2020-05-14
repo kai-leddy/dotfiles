@@ -100,7 +100,7 @@
        (eval +overlay)                   ; run code, run (also, repls)
        ;;gist                 ; interacting with github gists
        lookup                 ; helps you navigate your code and documentation
-       ;;lsp
+       lsp
        ;;macos                ; MacOS-specific commands
        magit                  ; a git porcelain for Emacs
        ;;make                   ; run make tasks from Emacs
@@ -134,9 +134,9 @@
        ;;(haskell +dante)      ; a language that's lazier than I am
        ;;hy                   ; readability of scheme w/ speed of python
        ;;idris             ;
-       json              ; At least it ain't XML
+       (json +lsp)              ; At least it ain't XML
        (java +eclim)    ; the poster child for carpal tunnel syndrome
-       javascript             ; all(hope(abandon(ye(who(enter(here))))))
+       (javascript +lsp)             ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia                ; a better, faster MATLAB
        ;;kotlin               ; a better, slicker Java(Script)
        (latex +latexmk)                  ; writing papers in Emacs has never been so fun
@@ -159,7 +159,7 @@
        ;;rest                 ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ruby                 ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       rust                   ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust +lsp)                   ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala                ; java, but good
        ;;scheme            ; a fully conniving family of lisps
        (sh +fish)             ; she sells {ba,z,fi}sh shells on the C xor
@@ -167,8 +167,8 @@
        ;;solidity             ; do you need a blockchain? No.
        ;;swift                ; who asked for emoji variables?
        ;;terra                ; Earth and Moon in alignment for performance.
-       web                    ; the tubes
-       yaml              ; JSON, but readable
+       (web +lsp)                    ; the tubes
+       (yaml +lsp)           ; JSON, but readable
 
        :email
        ;;(mu4e +gmail)        ; WIP
