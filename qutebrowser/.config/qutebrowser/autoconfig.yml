@@ -14,3 +14,11 @@ settings:
         M: spawn mpv {url}
   content.notifications:
     https://www.youtube.com: false
+  qt.args:
+    global:
+    - ignore-gpu-blacklist
+    - enable-gpu-rasterization
+    - enable-native-gpu-memory-buffers
+    - num-raster-threads=4
+  qt.force_platform:
+    global: null
