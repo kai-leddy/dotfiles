@@ -7,9 +7,8 @@
 ;; (package! builtin-package :disable t)
 
 (package! evil-snipe :disable t)
-(package! evil-easymotion :disable t)
+;; (package! evil-easymotion :disable t)
 
-(package! exec-path-from-shell)
 (package! vmd-mode)
 (package! emojify)
 (package! react-snippets)

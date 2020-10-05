@@ -80,14 +80,14 @@
        vc                     ; version-control and Emacs, sitting in a tree
 
        :term
-       ;;eshell            ; the elisp shell that works everywhere
+       eshell            ; the elisp shell that works everywhere
        ;;shell             ; simple shell REPL for Emacs
        ;;term              ; basic terminal emulator for Emacs
        ;;vterm             ; the best terminal emulation in Emacs
 
        :checkers
        syntax                 ; tasing you for every semicolon you forget
-       spell                  ; tasing you for misspelling mispelling
+       ;;(spell +hunspell)                  ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
@@ -108,7 +108,7 @@
        ;;pdf                    ; pdf enhancements
        ;;prodigy              ; FIXME managing external services & code builders
        rgb                    ; creating color strings
-       ;;terraform            ; infrastructure as code
+       terraform            ; infrastructure as code
        ;;tmux                 ; an API for interacting with tmux
        ;;upload               ; map local to remote projects via ssh/ftp
 

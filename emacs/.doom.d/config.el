@@ -1,13 +1,16 @@
 ;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here
-(setq display-line-numbers-type 'relative) ; enable relative line numbers
-(setq doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17))
-(setq doom-big-font-increment 4) ; big-font mode doesn't need to be THAT big
-(setq company-idle-delay 0.25)
-(setq scroll-margin 4)
-(setq flycheck-javascript-eslint-executable "eslint_d")
-(setq rustic-lsp-server 'rust-analyzer)
+;; Global variables for configuration
+(setq display-line-numbers-type 'relative ; enable relative line numbers
+      doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17)
+      doom-big-font-increment 4 ; big-font mode doesn't need to be THAT big
+      scroll-margin 4
+      company-minimum-prefix-length 1 ; recommended for lsp-mode
+      company-idle-delay 0.0 ; recommended for lsp-mode
+      flycheck-javascript-eslint-executable "eslint_d"
+      rustic-lsp-server 'rust-analyzer
+      prescient-filter-method '(literal fuzzy)
+      projectile-track-known-projects-automatically nil)
 
 ;; Random useful functions
 (defun +kai/toggle-prev-buffer ()
@@ -66,12 +69,6 @@
   :init
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . rjsx-mode)))
 
-(use-package! exec-path-from-shell
-  :config
-  (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize)
-    (exec-path-from-shell-copy-envs '("SSH_AGENT_PID" "SSH_AUTH_SOCK"))))
-
 (use-package! vmd-mode
   :commands vmd-mode
   :init
@@ -123,6 +120,15 @@
 
 ;; enable emojis everywhere :tada:
 (add-hook! 'after-init-hook #'global-emojify-mode)
+
+;; Disable auto formatting of yaml for helm charts
+(add-hook! 'yaml-mode-hook
+  (when (locate-dominating-file default-directory "Chart.yaml")
+      (setq +format-with :none)))
+
+;; Disable auto formatting when using markdown vmd-mode
+(add-hook! 'vmd-mode-hook
+  (setq +format-with (if vmd-mode :none nil)))
 
 ;; overwrite prettier formatter to not send 'parser' cli option
 (set-formatter! 'prettier
