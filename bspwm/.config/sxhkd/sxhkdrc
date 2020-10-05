@@ -24,7 +24,7 @@ super + Escape
     light-locker-command -l
 
 # make bspwm & sxhkd reload its configuration files:
-super + ctrl + Escape
+super + backslash
     bash ~/.config/bspwm/bspwmrc; \
     pkill -USR1 -x sxhkd
 
@@ -43,6 +43,10 @@ XF86Audio{_,Mic}Mute
 # setup media keys for mpd
 XF86Audio{Play,Stop,Prev,Next}
     playerctl {play-pause,stop,previous,next}
+
+# remap tools to play/pause on integrated keyboard
+XF86Tools
+    playerctl play-pause
 
 # Take screenshots with the printscreen button
 {_,shift + }Print
