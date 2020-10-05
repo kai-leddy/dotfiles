@@ -1,3 +1,3 @@
 function eb
-	nvim ~/.config/bspwm/bspwmrc $argv
+    $EDITOR ~/.config/bspwm/bspwmrc $argv
 end

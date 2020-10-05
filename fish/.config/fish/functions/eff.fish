@@ -1,3 +1,3 @@
 function eff
-	nvim ~/.config/fish/functions/ $argv
+    $EDITOR ~/.config/fish/functions/ $argv
 end

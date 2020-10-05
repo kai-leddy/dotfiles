@@ -1,3 +1,3 @@
 function eg
-	nvim ~/.gitconfig $argv
+    $EDITOR ~/.gitconfig $argv
 end

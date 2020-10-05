@@ -1,3 +1,3 @@
 function es
-	nvim ~/.config/sxhkd/sxhkdrc $argv
+    $EDITOR ~/.config/sxhkd/sxhkdrc $argv
 end

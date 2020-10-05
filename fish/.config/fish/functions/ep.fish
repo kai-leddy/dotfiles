@@ -1,3 +1,3 @@
 function ep
-	nvim ~/.config/polybar/config $argv
+    $EDITOR ~/.config/polybar/config $argv
 end

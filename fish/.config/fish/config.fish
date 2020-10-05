@@ -35,8 +35,8 @@ set -x LIBVA_DRIVER_NAME iHD
 set -x MAKEFLAGS '-j 8'
 
 # Setup env vars for various other stuff
-set -x EDITOR nvim
-set -x VISUAL emacs
+set -x EDITOR emacsclient
+set -x VISUAL emacsclient
 set -x ANDROID_HOME $HOME/Android/Sdk
 
 # Setup QMK global CLI tool
