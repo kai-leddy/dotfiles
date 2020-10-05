@@ -9,19 +9,19 @@
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %<(50,trunc)%s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
 	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 [core]
-	editor = nvim 
+	editor = emacsclient
 	excludesfile = /home/kai/.gitignore_global
 [diff]
 	indentHeuristic = true
-	tool = meld
+	#tool = meld
 [pull]
 	rebase = true
-[merge]
-	tool = meld
-[difftool "meld"]
-  cmd = meld "$LOCAL" "$REMOTE"
-[mergetool "meld"]
-  cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output="$MERGED"
+#[merge]
+#	tool = meld
+#[difftool "meld"]
+#  cmd = meld "$LOCAL" "$REMOTE"
+#[mergetool "meld"]
+#  cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output="$MERGED"
 [svn]
 	rmdir = true
 [fetch]
