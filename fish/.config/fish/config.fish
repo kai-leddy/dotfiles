@@ -3,6 +3,7 @@ set -g theme_color_scheme dracula
 set -g theme_display_git yes
 set -g theme_display_git_untracked yes
 set -g theme_display_docker_machine yes
+set -g theme_display_k8s_context no
 set -g theme_display_user ssh
 set -g theme_display_hostname ssh
 set -g theme_display_vi yes
@@ -42,9 +43,12 @@ set -x ANDROID_HOME $HOME/Android/Sdk
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
 
+# Setup Google cloud credentials properly
+set -x GOOGLE_APPLICATION_CREDENTIALS $HOME/.config/gcloud/legacy_credentials/kai.leddy@azuri-technologies.com/adc.json
+
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools (ruby -e 'puts Gem.user_dir')/bin
+set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools (ruby -e 'puts Gem.user_dir')/bin (go env GOPATH)/bin $HOME/.local/bin
 
 # use lsd instead of ls
 alias ls lsd
