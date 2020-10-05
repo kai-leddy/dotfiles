@@ -66,6 +66,10 @@ abbr -a -g rndev 'adb shell input keyevent KEYCODE_MENU'
 abbr -a -g qc 'qmk compile'
 abbr -a -g qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 
+# Bindings for copying and pasting to clipboard in normal mode
+bind yy fish_clipboard_copy
+bind p fish_clipboard_paste
+
 # Use Jabba to manage JAVA SDK versions
 [ -s "/home/kai/.jabba/jabba.fish" ]
 and source "/home/kai/.jabba/jabba.fish"
