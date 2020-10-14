@@ -1,17 +1,19 @@
 # this is heavily based on hlissner's config at
 # https://github.com/hlissner/dotfiles
 
-hostname: 
-{ pkgs, options, lib, config, ... }:
-{
-# TODO: use flakes instead of fetchTarball
+hostname:
+{ pkgs, options, lib, config, ... }: {
+  # TODO: use flakes instead of fetchTarball
   imports = [
     "${./hosts}/${hostname}"
-(import "${builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-20.03.tar.gz}/nixos")
-./modules/bspwm.nix
-./modules/emacs.nix
-./modules/fish.nix
-];
+    (import "${
+        builtins.fetchTarball
+        "https://github.com/nix-community/home-manager/archive/release-20.03.tar.gz"
+      }/nixos")
+    ./modules/bspwm.nix
+    ./modules/emacs.nix
+    ./modules/fish.nix
+  ];
 
   networking.hostName = hostname; # Define your hostname.
 
@@ -30,9 +32,7 @@ hostname:
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   # TODO: create an alias for this? or use home-manager user installed packages
-  environment.systemPackages = with pkgs; [
-    wget vim git alacritty firefox
-  ];
+  environment.systemPackages = with pkgs; [ wget vim git alacritty firefox ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # TODO: parameterize the username
@@ -40,10 +40,9 @@ hostname:
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
-home-manager.useUserPackages = true;
-home-manager.useGlobalPkgs = true;
-home-manager.users.kai = {};
-
+  home-manager.useUserPackages = true;
+  home-manager.useGlobalPkgs = true;
+  home-manager.users.kai = { };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
