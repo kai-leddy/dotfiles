@@ -25,6 +25,8 @@ in {
     displayManager.lightdm = { enable = true; };
   };
 
+  services.picom.enable = true;
+
   environment.systemPackages = with pkgs; [ btops polybar rofi ];
 
   fonts.fonts =
