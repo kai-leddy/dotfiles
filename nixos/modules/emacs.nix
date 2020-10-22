@@ -1,7 +1,6 @@
 { pkgs, options, lib, config, ... }:
 
-let unstable = import <unstable> { config = config.nixpkgs.config; };
-in {
+{
   # TODO: use Emacs 28 emacsGcc from the overlay
   environment.systemPackages = with pkgs; [
     # Required for doom emacs to work properly

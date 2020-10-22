@@ -48,7 +48,8 @@ set -x GOOGLE_APPLICATION_CREDENTIALS $HOME/.config/gcloud/legacy_credentials/ka
 
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools (ruby -e 'puts Gem.user_dir')/bin (go env GOPATH)/bin $HOME/.local/bin
+set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools $HOME/.local/bin
+# set -U fish_user_paths (ruby -e 'puts Gem.user_dir')/bin (go env GOPATH)/bin
 
 # use lsd instead of ls
 alias ls lsd
