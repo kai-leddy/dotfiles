@@ -8,7 +8,6 @@ hostname:
   # TODO: use flakes instead of fetchTarball
   imports = [
     "${./hosts}/${hostname}"
-    ./user.nix
     (import "${
         builtins.fetchTarball
         "https://github.com/nix-community/home-manager/archive/release-20.03.tar.gz"
@@ -45,6 +44,7 @@ hostname:
   # $ nix search wget
   # TODO: create an alias for this? or use home-manager user installed packages
   environment.systemPackages = with pkgs; [
+    curl
     wget
     vim
     git
@@ -52,7 +52,14 @@ hostname:
     firefox
     tree
     killall
+    stow
   ];
+
+  # setup user account
+  users.users.kai = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+  };
 
   # enable graphical session for home-manager to use
   services.xserver.enable = true;
