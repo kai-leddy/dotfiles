@@ -1,7 +1,9 @@
 # this is heavily based on hlissner's config at
 # https://github.com/hlissner/dotfiles
 
-# TODO: make more of my config/ dotfiles nix expressions
+# TODO: upgrade to 20.09
+# TODO: after some usage, consider converting nixos config to a flake
+# TODO: after some usage, consider converting to home-manager
 
 hostname:
 { pkgs, options, lib, config, ... }: {
