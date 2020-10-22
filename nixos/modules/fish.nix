@@ -13,6 +13,7 @@
     ripgrep
     fd
     lsd
-    thefuck
   ];
+
+  programs.thefuck.enable = true;
 }

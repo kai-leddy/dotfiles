@@ -24,3 +24,4 @@ done
 
 # re-initialise the wallpaper to force tiling instead of stretching
 feh --bg-fill ~/.config/wallpaper
+betterlockscreen -u ~/.config/wallpaper

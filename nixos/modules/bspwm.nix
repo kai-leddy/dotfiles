@@ -4,13 +4,19 @@ let
   btops = pkgs.callPackage ../pkgs/btops { };
   fantasque-nerdfont = pkgs.callPackage ../pkgs/fantasque-nerdfont.nix { };
 in {
-  services.xserver = {
-    windowManager.bspwm = { enable = true; };
-  };
+  services.xserver.windowManager.bspwm.enable = true;
 
   services.picom.enable = true;
 
-  environment.systemPackages = with pkgs; [ btops polybar rofi ];
+  environment.systemPackages = with pkgs; [
+    btops
+    polybar
+    rofi
+    dunst
+    feh
+    # TODO: enable the systemd service for betterlockscreen on suspend
+    betterlockscreen
+  ];
 
   fonts.fonts = [
     # TODO: parameterize this as various modules depend on the font

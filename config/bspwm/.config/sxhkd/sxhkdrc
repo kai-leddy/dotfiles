@@ -19,9 +19,9 @@ super + Tab
 super + v
     rofi -modi "clipboard:greenclip print" -show clipboard -run-command '{cmd}'
 
-# lock the screen with light-locker
+# lock the screen with betterlockscreen
 super + Escape
-    light-locker-command -l
+    betterlockscreen -l blur
 
 # make bspwm & sxhkd reload its configuration files:
 super + backslash

@@ -42,7 +42,8 @@ hostname:
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # TODO: create an alias for this? or use home-manager user installed packages
+  # TODO: create an alias for this
+  # TODO: select these per-host
   environment.systemPackages = with pkgs; [
     curl
     wget
@@ -53,7 +54,14 @@ hostname:
     tree
     killall
     stow
+    nethack
+    qutebrowser
+    mpv
+    flameshot
   ];
+
+  # for viewing pdfs and such
+  programs.evince.enable = true;
 
   # setup user account
   users.users.kai = {
