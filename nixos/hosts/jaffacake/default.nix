@@ -31,10 +31,9 @@ in
     xkbOptions = "altwin:swap_lalt_lwin"; # swap alt and win keys
   };
 
-  environment.systemPackages = [
+  environment.systemPackages = with pkgs; [
     brightnessctl # for changing brightness
   ];
-
 
   # TODO: throttled config, work apps, autorandr,
   # audio?, btops?, hibernation, sleep/hibernate on lid close,
