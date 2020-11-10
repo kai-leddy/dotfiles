@@ -14,6 +14,7 @@
 
     # Module dependencies
     nixfmt # :lang nix
+    rnix-lsp # :lang nix
     nodePackages.javascript-typescript-langserver # :lang javascript
   ];
 
