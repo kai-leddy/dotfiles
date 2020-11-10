@@ -14,11 +14,18 @@ in {
     rofi
     dunst
     feh
+    alacritty
+    firefox
+    qutebrowser
+    mpv
+    flameshot
     betterlockscreen
   ];
 
+  # for viewing pdfs and such
+  programs.evince.enable = true;
+
   fonts.fonts = [
-    # TODO: parameterize this as various modules depend on the font
     # (pkgs.unstable.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
     fantasque-nerdfont # custom derivation due to issues with above v2.1.0
   ];

@@ -29,8 +29,8 @@ $(yarn global bin)/eslint_d start
 case $1 in
   bspwm)
      sxhkd -s /tmp/sxhkd.fifo &
-     (sleep 2 && btops) &
-     compton -b
+     (sleep 5 && btops) &
+     picom -b
      wmname LG3D
      ;;
 esac

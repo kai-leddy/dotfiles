@@ -10,10 +10,6 @@ hostname:
   # TODO: use flakes instead of fetchTarball
   imports = [
     "${./hosts}/${hostname}"
-    (import "${
-        builtins.fetchTarball
-        "https://github.com/nix-community/home-manager/archive/release-20.03.tar.gz"
-      }/nixos")
     ./modules/bspwm.nix
     ./modules/emacs.nix
     ./modules/fish.nix
@@ -21,7 +17,7 @@ hostname:
 
   networking.hostName = hostname; # Define your hostname.
 
-  nix.autoOptimiseStore = true;
+  nix.autoOptimiseStore = true; # does what it says on the tin
 
   # add unstable repo to pkgs with `unstable.` prefix
   nixpkgs.config = {
@@ -34,36 +30,11 @@ hostname:
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_GB.UTF-8";
-  console = {
-    font = "Lat2-Terminus16";
-    keyMap = "us";
-  };
-
-  # Set your time zone.
   time.timeZone = "Europe/London";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # TODO: create an alias for this
-  # TODO: select these per-host
-  environment.systemPackages = with pkgs; [
-    curl
-    wget
-    vim
-    git
-    alacritty
-    firefox
-    tree
-    killall
-    stow
-    nethack
-    qutebrowser
-    mpv
-    flameshot
-  ];
-
-  # for viewing pdfs and such
-  programs.evince.enable = true;
+  environment.systemPackages = with pkgs; [ curl wget vim git stow ];
 
   # setup user account
   users.users.kai = {
@@ -71,9 +42,13 @@ hostname:
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
 
-  # enable graphical session for home-manager to use
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
+  services.xserver = {
+    enable = true; # use graphical session
+    layout = "gb"; # use gb layout keyboard
+    xkbOptions = "caps:escape"; # use caps as escape key
+
+    displayManager.lightdm.enable = true;
+  };
 
   # don't require sudo password for users in wheel group
   security.sudo.wheelNeedsPassword = false;

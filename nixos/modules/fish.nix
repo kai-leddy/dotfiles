@@ -4,7 +4,6 @@
   users.users.kai.shell = pkgs.fish;
 
   environment.systemPackages = with pkgs; [
-    git
     tree
     bat
     killall
