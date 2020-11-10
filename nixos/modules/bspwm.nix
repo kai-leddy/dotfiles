@@ -14,7 +14,6 @@ in {
     rofi
     dunst
     feh
-    # TODO: enable the systemd service for betterlockscreen on suspend
     betterlockscreen
   ];
 
@@ -24,4 +23,19 @@ in {
     fantasque-nerdfont # custom derivation due to issues with above v2.1.0
   ];
 
+  # Define systemd service for betterlockscreen to run on suspend
+  systemd.services.betterlockscreen = {
+    enable = true;
+    description = "Locks screen when going to sleep/suspend";
+    environment = { DISPLAY = ":0"; };
+    wantedBy = [ "sleep.target" "suspend.target" ];
+    before = [ "sleep.target" "suspend.target" ];
+    serviceConfig = {
+      User = "kai";
+      Type = "simple";
+      ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen -l blur";
+      ExecStartPost = "${pkgs.coreutils}/bin/sleep 1";
+      TimeoutSec = "infinity";
+    };
+  };
 }
