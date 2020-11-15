@@ -6,7 +6,9 @@
 # TODO: after some usage, consider converting to home-manager
 
 hostname:
-{ pkgs, options, lib, config, ... }: {
+{ pkgs, options, lib, config, ... }:
+
+with lib; {
   imports = [ "${./hosts}/${hostname}" ./modules ];
 
   networking.hostName = hostname; # Define your hostname.
@@ -34,6 +36,11 @@ hostname:
   users.users.kai = {
     isNormalUser = true;
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+  };
+
+  services.xserver = mkIf config.services.xserver.enable {
+    layout = "gb"; # use gb layout keyboard
+    xkbOptions = "caps:escape"; # use caps as escape key
   };
 
   # for viewing pdfs and such

@@ -31,7 +31,6 @@ in {
 
     desktop = {
       enable = true;
-      capsEscape = true;
       bspwm.enable = true;
     };
 

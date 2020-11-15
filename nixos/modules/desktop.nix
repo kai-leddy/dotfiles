@@ -8,21 +8,11 @@ in {
   options.modules.desktop = {
     enable = mkEnableOption "desktop module";
     bspwm.enable = mkEnableOption "bspwm";
-
-    # TODO: move keyboard options to their own module
-    capsEscape = mkOption {
-      type = types.bool;
-      default = true;
-      description = "Whether to use CapsLock as Escape";
-    };
   };
 
   config = mkIf cfg.enable {
     services.xserver = {
       enable = true; # use graphical session
-      layout = "gb"; # use gb layout keyboard
-      xkbOptions = mkIf cfg.capsEscape "caps:escape"; # use caps as escape key
-
       displayManager.lightdm.enable = true;
       windowManager.bspwm.enable = cfg.bspwm.enable;
     };
