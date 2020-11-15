@@ -7,12 +7,7 @@
 
 hostname:
 { pkgs, options, lib, config, ... }: {
-  imports = [
-    "${./hosts}/${hostname}"
-    ./modules/bspwm.nix
-    ./modules/emacs.nix
-    ./modules/fish.nix
-  ];
+  imports = [ "${./hosts}/${hostname}" ./modules ];
 
   networking.hostName = hostname; # Define your hostname.
 
@@ -33,7 +28,7 @@ hostname:
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ curl wget vim git stow ];
+  environment.systemPackages = with pkgs; [ curl vim git ];
 
   # setup user account
   users.users.kai = {
@@ -41,13 +36,15 @@ hostname:
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
 
-  services.xserver = {
-    enable = true; # use graphical session
-    layout = "gb"; # use gb layout keyboard
-    xkbOptions = "caps:escape"; # use caps as escape key
+  # for viewing pdfs and such
+  programs.evince.enable = true;
 
-    displayManager.lightdm.enable = true;
-  };
+  fonts.fonts =
+    let fantasque-nerdfont = pkgs.callPackage ./pkgs/fantasque-nerdfont.nix { };
+    in [
+      # (pkgs.unstable.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+      fantasque-nerdfont # custom derivation due to issues with above v2.1.0
+    ];
 
   # don't require sudo password for users in wheel group
   security.sudo.wheelNeedsPassword = false;

@@ -7,8 +7,7 @@
 let
   nixos-hardware =
     builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git"; };
-in
-{
+in {
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -16,26 +15,39 @@ in
     "${nixos-hardware}/lenovo/thinkpad/t490"
   ];
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp0s31f6.useDHCP = true;
-  networking.interfaces.wlp0s20f3.useDHCP = true;
+  modules = {
+    laptop = {
+      enable = true;
+      swapAltWin = true;
+      networkmanager.enable = true;
+    };
 
-  # use network-manager for handling wifi and ethernet
-  networking.networkmanager.enable = true;
+    shell = {
+      fish.enable = true;
+      thefuck.enable = true;
+    };
 
-  services.xserver = {
-    libinput.enable = true; # enable touchpad
-    xkbOptions = "altwin:swap_lalt_lwin"; # swap alt and win keys
+    emacs.enable = true;
+
+    desktop = {
+      enable = true;
+      capsEscape = true;
+      bspwm.enable = true;
+    };
+
+    apps = {
+      flameshot.enable = true;
+      # mpv.enable = true
+    };
+
+    browsers = {
+      firefox.enable = true;
+      # qutebrowser.enable = true;
+    };
   };
-
-  environment.systemPackages = with pkgs; [
-    brightnessctl # for changing brightness
-  ];
 
   # TODO: throttled config, work apps, autorandr,
   # audio?, btops?, hibernation, sleep/hibernate on lid close,
   # redox keyboard config, touchpad config, project w/ shell.nix
+  # .xprofile still useful? convert it to nix config?
 }
