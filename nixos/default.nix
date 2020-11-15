@@ -7,7 +7,6 @@
 
 hostname:
 { pkgs, options, lib, config, ... }: {
-  # TODO: use flakes instead of fetchTarball
   imports = [
     "${./hosts}/${hostname}"
     ./modules/bspwm.nix
