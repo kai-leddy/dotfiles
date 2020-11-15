@@ -20,8 +20,13 @@ in {
     services.picom.enable = true;
 
     environment.systemPackages = with pkgs;
-      [ betterlockscreen feh alacritty ]
-      ++ (if cfg.bspwm.enable then [ btops polybar rofi dunst ] else [ ]);
+      [ betterlockscreen feh alacritty ] ++ (if cfg.bspwm.enable then [
+        (polybar.override { pulseSupport = config.modules.audio.enable; })
+        btops
+        rofi
+        dunst
+      ] else
+        [ ]);
 
     # Define systemd service for betterlockscreen to run on suspend
     systemd.services.betterlockscreen = {

@@ -32,10 +32,11 @@ with lib; {
   # $ nix search wget
   environment.systemPackages = with pkgs; [ curl vim git ];
 
+  # TODO: username in some sort of variable
   # setup user account
   users.users.kai = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" ];
   };
 
   services.xserver = mkIf config.services.xserver.enable {
@@ -43,9 +44,11 @@ with lib; {
     xkbOptions = "caps:escape"; # use caps as escape key
   };
 
+  # TODO: move this to apps.nix
   # for viewing pdfs and such
   programs.evince.enable = true;
 
+  # TODO: some sort of fonts.nix maybe?
   fonts.fonts =
     let fantasque-nerdfont = pkgs.callPackage ./pkgs/fantasque-nerdfont.nix { };
     in [

@@ -8,5 +8,6 @@
     ./shell.nix
     ./apps.nix
     ./browsers.nix
+    ./audio.nix
   ];
 }

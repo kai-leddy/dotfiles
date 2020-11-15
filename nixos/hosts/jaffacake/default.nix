@@ -29,6 +29,8 @@ in {
 
     emacs.enable = true;
 
+    audio.enable = true;
+
     desktop = {
       enable = true;
       bspwm.enable = true;
@@ -36,6 +38,7 @@ in {
 
     apps = {
       flameshot.enable = true;
+      spotify.enable = true;
       # mpv.enable = true
     };
 
@@ -49,4 +52,5 @@ in {
   # audio?, btops?, hibernation, sleep/hibernate on lid close,
   # redox keyboard config, touchpad config, project w/ shell.nix
   # .xprofile still useful? convert it to nix config?
+  # ssh-agent setup?
 }
