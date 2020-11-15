@@ -19,6 +19,13 @@ in {
 
     services.picom.enable = true;
 
+    environment.variables = mkIf cfg.bspwm.enable {
+      # less java nonsense with tiling WMs
+      _JAVA_AWT_WM_NONREPARENTING = "1";
+      # faster sxhkd when its not running user shell (fish)
+      SXHKD_SHELL = "/bin/sh";
+    };
+
     environment.systemPackages = with pkgs;
       [ betterlockscreen feh alacritty ] ++ (if cfg.bspwm.enable then [
         (polybar.override { pulseSupport = config.modules.audio.enable; })

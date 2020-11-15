@@ -30,8 +30,6 @@ set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -x _JAVA_AWT_WM_NONREPARENTING 1
 # Fucking SXHKD
 set -x SXHKD_SHELL '/usr/bin/sh'
-# Fucking Intel
-set -x LIBVA_DRIVER_NAME iHD
 # Fucking slow make builds
 set -x MAKEFLAGS '-j 8'
 

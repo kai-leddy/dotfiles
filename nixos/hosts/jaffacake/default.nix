@@ -48,9 +48,15 @@ in {
     };
   };
 
-  # TODO: throttled config, work apps, autorandr,
-  # audio?, btops?, hibernation, sleep/hibernate on lid close,
-  # redox keyboard config, touchpad config, project w/ shell.nix
-  # .xprofile still useful? convert it to nix config?
-  # ssh-agent setup?
+  # TODO: throttled config
+  # TODO: work apps
+  # TODO: autorandr,
+  # TODO: btops needs a service
+  # TODO: setup hibernation
+  # TODO: sleep/hibernate on lid close,
+  # TODO: make sure redox keyboard config works
+  # TODO: setup any project w/ shell.nix
+  # TODO: seutp greenclip for rofi
+  # TODO: ssh-agent automated setup?
+  # TODO: lightdm theme
 }

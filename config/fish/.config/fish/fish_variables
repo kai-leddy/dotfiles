@@ -1,6 +1,5 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
-SETUVAR --export LIBVA_DRIVER_NAME:iHD
 SETUVAR __fish_init_2_3_0:\x1d
 SETUVAR __fish_init_3_x:\x1d
 SETUVAR __fish_initialized:3100
