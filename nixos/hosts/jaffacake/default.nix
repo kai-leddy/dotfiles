@@ -50,8 +50,7 @@ in {
 
   # TODO: throttled config
   # TODO: work apps
-  # TODO: autorandr,
-  # TODO: btops needs a service
+  # TODO: autorandr
   # TODO: setup hibernation
   # TODO: sleep/hibernate on lid close,
   # TODO: make sure redox keyboard config works

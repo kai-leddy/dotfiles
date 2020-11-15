@@ -15,5 +15,8 @@ in {
       (mkIf cfg.flameshot.enable flameshot)
       (mkIf cfg.spotify.enable spotify)
     ];
+
+    # for viewing pdfs and such
+    programs.evince.enable = config.modules.desktop.enable;
   };
 }

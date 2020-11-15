@@ -21,3 +21,4 @@ bspc rule -a Emacs state=tiled
 # Setup Monitors
 #autorandr -c
 bash ~/.config/bspwm/monitors.sh
+btops &

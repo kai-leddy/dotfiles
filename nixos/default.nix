@@ -44,10 +44,6 @@ with lib; {
     xkbOptions = "caps:escape"; # use caps as escape key
   };
 
-  # TODO: move this to apps.nix
-  # for viewing pdfs and such
-  programs.evince.enable = true;
-
   # TODO: some sort of fonts.nix maybe?
   fonts.fonts =
     let fantasque-nerdfont = pkgs.callPackage ./pkgs/fantasque-nerdfont.nix { };
