@@ -18,6 +18,7 @@ in {
     };
 
     services.picom.enable = true;
+    services.greenclip.enable = true;
 
     environment.variables = mkIf cfg.bspwm.enable {
       # less java nonsense with tiling WMs
@@ -27,7 +28,7 @@ in {
     };
 
     environment.systemPackages = with pkgs;
-      [ betterlockscreen feh alacritty ] ++ (if cfg.bspwm.enable then [
+      [ betterlockscreen feh alacritty pcmanfm ] ++ (if cfg.bspwm.enable then [
         (polybar.override { pulseSupport = config.modules.audio.enable; })
         btops
         rofi

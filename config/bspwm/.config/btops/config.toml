@@ -30,7 +30,7 @@ constant = "new"
 "files" = ["Pcmanfm"]
 
 [[names.classified]]
-"firefox" = ["firefox", "firefoxdeveloperedition"]
+"firefox" = ["Firefox", "Firefox Developer Edition", "Navigator"]
 
 [[names.classified]]
 "chrome" = ["Chromium", "Chrome", "Google"]

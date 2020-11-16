@@ -57,8 +57,8 @@ in {
   # TODO: sleep/hibernate on lid close,
   # TODO: auto nix garbage collection older than 7d
   # TODO: setup any project w/ shell.nix
-  # TODO: seutp greenclip for rofi
-  # TODO: ssh-agent automated setup?
+  # TODO: direnv & (nix-direnv / lorri)
+  # TODO: repos from Arch partition
   # TODO: lightdm theme
   # TODO: grub theme
 }
