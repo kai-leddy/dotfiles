@@ -8,6 +8,7 @@ in {
     swapAltWin = mkEnableOption "swapping LAlt & LWin keys";
     networkmanager.enable = mkEnableOption "networkmanager";
     autorandr.enable = mkEnableOption "autorandr";
+    hibernate.enable = mkEnableOption "hibernate";
   };
 
   config = mkIf cfg.enable {
@@ -24,6 +25,11 @@ in {
       enable = true;
       defaultTarget = "horizontal";
     };
+
+    services.logind.lidSwitch =
+      mkIf cfg.hibernate.enable "suspend-then-hibernate";
+    systemd.sleep.extraConfig =
+      mkIf cfg.hibernate.enable "HibernateDelaySec=1200";
 
     environment.systemPackages = with pkgs;
       [

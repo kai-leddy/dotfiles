@@ -25,6 +25,7 @@ in {
       swapAltWin = true;
       networkmanager.enable = true;
       autorandr.enable = true;
+      hibernate.enable = true;
     };
 
     shell = {
@@ -56,8 +57,6 @@ in {
     };
   };
 
-  # TODO: setup hibernation
-  # TODO: sleep/hibernate on lid close,
   # TODO: auto nix garbage collection older than 7d
   # TODO: setup any project w/ shell.nix
   # TODO: direnv & (nix-direnv / lorri)

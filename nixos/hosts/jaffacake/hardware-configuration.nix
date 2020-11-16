@@ -35,7 +35,8 @@
     fsType = "vfat";
   };
 
-  swapDevices = [ ];
+  swapDevices =
+    [{ device = "/dev/disk/by-uuid/6765a714-9b27-4dfa-9195-3ca389275774"; }];
 
   nix.maxJobs = 8;
 
