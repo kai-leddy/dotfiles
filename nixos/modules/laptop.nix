@@ -5,8 +5,9 @@ let cfg = config.modules.laptop;
 in {
   options.modules.laptop = {
     enable = mkEnableOption "laptop module";
-    networkmanager.enable = mkEnableOption "networkmanager";
     swapAltWin = mkEnableOption "swapping LAlt & LWin keys";
+    networkmanager.enable = mkEnableOption "networkmanager";
+    autorandr.enable = mkEnableOption "autorandr";
   };
 
   config = mkIf cfg.enable {
@@ -16,6 +17,12 @@ in {
     services.xserver = {
       libinput.enable = true; # enable touchpad
       xkbOptions = mkIf cfg.swapAltWin "altwin:swap_lalt_lwin";
+    };
+
+    # autorandr for auto switching display config
+    services.autorandr = mkIf cfg.autorandr.enable {
+      enable = true;
+      defaultTarget = "horizontal";
     };
 
     environment.systemPackages = with pkgs;

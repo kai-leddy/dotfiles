@@ -7,6 +7,8 @@ in {
     mpv.enable = mkEnableOption "mpv";
     flameshot.enable = mkEnableOption "flameshot";
     spotify.enable = mkEnableOption "spotify";
+    slack.enable = mkEnableOption "slack";
+    zoom.enable = mkEnableOption "zoom";
   };
 
   config = {
@@ -14,6 +16,8 @@ in {
       (mkIf cfg.mpv.enable mpv)
       (mkIf cfg.flameshot.enable flameshot)
       (mkIf cfg.spotify.enable spotify)
+      (mkIf cfg.slack.enable slack)
+      (mkIf cfg.zoom.enable zoom-us)
     ];
 
     # for viewing pdfs and such

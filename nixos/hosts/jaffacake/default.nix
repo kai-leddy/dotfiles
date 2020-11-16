@@ -20,6 +20,7 @@ in {
       enable = true;
       swapAltWin = true;
       networkmanager.enable = true;
+      autorandr.enable = true;
     };
 
     shell = {
@@ -40,6 +41,8 @@ in {
       flameshot.enable = true;
       spotify.enable = true;
       # mpv.enable = true
+      slack.enable = true;
+      zoom.enable = true;
     };
 
     browsers = {
