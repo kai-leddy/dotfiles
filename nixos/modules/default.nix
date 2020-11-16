@@ -9,5 +9,6 @@
     ./apps.nix
     ./browsers.nix
     ./audio.nix
+    ./keyboards.nix
   ];
 }

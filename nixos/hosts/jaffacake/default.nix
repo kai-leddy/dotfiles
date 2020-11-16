@@ -47,18 +47,18 @@ in {
 
     browsers = {
       firefox.enable = true;
+      firefox-dev.enable = true;
       # qutebrowser.enable = true;
     };
   };
 
   # TODO: throttled config
-  # TODO: work apps
-  # TODO: autorandr
   # TODO: setup hibernation
   # TODO: sleep/hibernate on lid close,
-  # TODO: make sure redox keyboard config works
+  # TODO: auto nix garbage collection older than 7d
   # TODO: setup any project w/ shell.nix
   # TODO: seutp greenclip for rofi
   # TODO: ssh-agent automated setup?
   # TODO: lightdm theme
+  # TODO: grub theme
 }

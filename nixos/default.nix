@@ -39,15 +39,11 @@ with lib; {
     extraGroups = [ "wheel" ];
   };
 
-  services.xserver = mkIf config.services.xserver.enable {
-    layout = "gb"; # use gb layout keyboard
-    xkbOptions = "caps:escape"; # use caps as escape key
-  };
-
   # TODO: some sort of fonts.nix maybe?
-  fonts.fonts =
-    let fantasque-nerdfont = pkgs.callPackage ./pkgs/fantasque-nerdfont.nix { };
+  fonts.fonts = with pkgs;
+    let fantasque-nerdfont = callPackage ./pkgs/fantasque-nerdfont.nix { };
     in [
+      corefonts
       # (pkgs.unstable.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
       fantasque-nerdfont # custom derivation due to issues with above v2.1.0
     ];
