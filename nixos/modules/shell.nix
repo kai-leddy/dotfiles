@@ -10,7 +10,12 @@ in {
 
   config = {
     # setup fish
-    programs.fish.enable = cfg.fish.enable;
+    programs.fish = mkIf cfg.fish.enable {
+      enable = true;
+      promptInit = ''
+        any-nix-shell fish --info-right | source
+      '';
+    };
     users.users.kai.shell = mkIf cfg.fish.enable pkgs.fish;
 
     # setup thefuck
@@ -25,6 +30,7 @@ in {
       ripgrep
       fd
       lsd
+      (mkIf cfg.fish.enable unstable.any-nix-shell)
     ];
   };
 }

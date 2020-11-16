@@ -29,14 +29,13 @@ set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 # Fucking Java GUI applications...
 set -x _JAVA_AWT_WM_NONREPARENTING 1
 # Fucking SXHKD
-set -x SXHKD_SHELL '/usr/bin/sh'
+set -x SXHKD_SHELL '/bin/sh'
 # Fucking slow make builds
 set -x MAKEFLAGS '-j 8'
 
 # Setup env vars for various other stuff
 set -x EDITOR emacsclient
 set -x VISUAL emacsclient
-set -x ANDROID_HOME $HOME/Android/Sdk
 
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
@@ -46,8 +45,7 @@ set -x GOOGLE_APPLICATION_CREDENTIALS $HOME/.config/gcloud/legacy_credentials/ka
 
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools $HOME/.local/bin
-# set -U fish_user_paths (ruby -e 'puts Gem.user_dir')/bin (go env GOPATH)/bin
+set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin
 
 # use lsd instead of ls
 alias ls lsd
@@ -72,7 +70,3 @@ abbr -a -g qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
 bind p fish_clipboard_paste
-
-# Use Jabba to manage JAVA SDK versions
-[ -s "/home/kai/.jabba/jabba.fish" ]
-and source "/home/kai/.jabba/jabba.fish"

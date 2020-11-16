@@ -10,6 +10,6 @@ in {
 
     users.users.kai.extraGroups = [ "audio" ];
 
-    environment.systemPackages = with pkgs; [ pulsemixer ];
+    environment.systemPackages = with pkgs; [ pulsemixer playerctl ];
   };
 }
