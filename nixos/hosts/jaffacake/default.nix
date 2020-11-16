@@ -15,6 +15,10 @@ in {
     "${nixos-hardware}/lenovo/thinkpad/t490"
   ];
 
+  # setup thinkfan and throttled (the default fan curve is pathetic)
+  services.thinkfan.enable = true;
+  services.throttled.enable = true;
+
   modules = {
     laptop = {
       enable = true;
@@ -52,13 +56,11 @@ in {
     };
   };
 
-  # TODO: throttled config
   # TODO: setup hibernation
   # TODO: sleep/hibernate on lid close,
   # TODO: auto nix garbage collection older than 7d
   # TODO: setup any project w/ shell.nix
   # TODO: direnv & (nix-direnv / lorri)
-  # TODO: repos from Arch partition
   # TODO: lightdm theme
   # TODO: grub theme
 }
