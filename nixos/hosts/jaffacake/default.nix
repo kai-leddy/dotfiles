@@ -13,11 +13,9 @@ in {
     ./hardware-configuration.nix
     # use the nixos-hardware config for t490
     "${nixos-hardware}/lenovo/thinkpad/t490"
+    # sort out the thermal nonsense on these T490s
+    ./thermal.nix
   ];
-
-  # setup thinkfan and throttled (the default fan curve is pathetic)
-  services.thinkfan.enable = true;
-  services.throttled.enable = true;
 
   modules = {
     laptop = {
@@ -31,6 +29,7 @@ in {
     shell = {
       fish.enable = true;
       thefuck.enable = true;
+      direnv.enable = true;
     };
 
     emacs.enable = true;
@@ -53,13 +52,13 @@ in {
     browsers = {
       firefox.enable = true;
       firefox-dev.enable = true;
-      # qutebrowser.enable = true;
+      qutebrowser.enable = true;
     };
   };
 
   # TODO: auto nix garbage collection older than 7d
   # TODO: setup any project w/ shell.nix
-  # TODO: direnv & (nix-direnv / lorri)
   # TODO: lightdm theme
   # TODO: grub theme
+  # TODO: login with fingerprint sensor?
 }

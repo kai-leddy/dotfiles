@@ -6,6 +6,7 @@ in {
   options.modules.shell = {
     fish.enable = mkEnableOption "fish shell";
     thefuck.enable = mkEnableOption "thefuck";
+    direnv.enable = mkEnableOption "direnv";
   };
 
   config = {
@@ -14,7 +15,10 @@ in {
       enable = true;
       promptInit = ''
         any-nix-shell fish --info-right | source
-      '';
+      '' + (if cfg.direnv.enable then ''
+        eval (direnv hook fish)
+      '' else
+        "");
     };
     users.users.kai.shell = mkIf cfg.fish.enable pkgs.fish;
 
@@ -31,6 +35,15 @@ in {
       fd
       lsd
       (mkIf cfg.fish.enable unstable.any-nix-shell)
+      (mkIf cfg.direnv.enable direnv)
+      (mkIf cfg.direnv.enable nix-direnv)
     ];
+
+    # dont garbage collect direnvs
+    nix.extraOptions = mkIf cfg.direnv.enable ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
+    environment.pathsToLink = mkIf cfg.direnv.enable [ "/share/nix-direnv" ];
   };
 }
