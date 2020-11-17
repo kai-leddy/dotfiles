@@ -16,6 +16,7 @@ in {
       promptInit = ''
         any-nix-shell fish --info-right | source
       '' + (if cfg.direnv.enable then ''
+        set -x DIRENV_LOG_FORMAT ""
         eval (direnv hook fish)
       '' else
         "");
