@@ -27,3 +27,8 @@ tags
 # ignore tern_for_vim project files
 .tern-project
 .tern-port
+
+# don't commit my nix files
+shell.nix
+.direnv/
+.envrc
