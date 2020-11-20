@@ -5,6 +5,7 @@
     ./laptop.nix
     ./desktop.nix
     ./emacs.nix
+    ./development.nix
     ./shell.nix
     ./apps.nix
     ./browsers.nix

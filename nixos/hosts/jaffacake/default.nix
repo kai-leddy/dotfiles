@@ -34,6 +34,8 @@ in {
 
     emacs.enable = true;
 
+    development = { android.enable = true; };
+
     audio.enable = true;
 
     desktop = {

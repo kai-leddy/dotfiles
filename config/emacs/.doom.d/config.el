@@ -121,10 +121,11 @@
 ;; enable emojis everywhere :tada:
 (add-hook! 'after-init-hook #'global-emojify-mode)
 
-;; Disable auto formatting of yaml for helm charts
-(add-hook! 'yaml-mode-hook
-  (when (locate-dominating-file default-directory "Chart.yaml")
-      (setq +format-with :none)))
+;; Disable auto formatting (& LSP) of yaml for helm charts
+(setq-hook! 'yaml-mode-hook
+  +format-with (if (locate-dominating-file default-directory "Chart.yaml") :none nil)
+  +format-with-lsp (if (locate-dominating-file default-directory "Chart.yaml") nil t)
+  lsp-managed-mode (if (locate-dominating-file default-directory "Chart.yaml") nil t))
 
 ;; Disable auto formatting when using markdown vmd-mode
 (add-hook! 'vmd-mode-hook
