@@ -49,6 +49,7 @@ in {
       # mpv.enable = true
       slack.enable = true;
       zoom.enable = true;
+      libreoffice.enable = true;
     };
 
     browsers = {
@@ -59,7 +60,6 @@ in {
   };
 
   # TODO: auto nix garbage collection older than 7d
-  # TODO: setup any project w/ shell.nix
   # TODO: lightdm theme
   # TODO: grub theme
   # TODO: login with fingerprint sensor?

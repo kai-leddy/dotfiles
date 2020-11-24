@@ -9,6 +9,7 @@ in {
     spotify.enable = mkEnableOption "spotify";
     slack.enable = mkEnableOption "slack";
     zoom.enable = mkEnableOption "zoom";
+    libreoffice.enable = mkEnableOption "libreoffice";
   };
 
   config = {
@@ -18,6 +19,7 @@ in {
       (mkIf cfg.spotify.enable spotify)
       (mkIf cfg.slack.enable slack)
       (mkIf cfg.zoom.enable zoom-us)
+      (mkIf cfg.libreoffice.enable libreoffice)
     ];
 
     # for viewing pdfs and such
