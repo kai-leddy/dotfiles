@@ -19,7 +19,6 @@ in {
 
       # Module dependencies
       nixfmt # :lang nix
-      nodePackages.javascript-typescript-langserver # :lang javascript
     ];
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
