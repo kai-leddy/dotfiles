@@ -6,6 +6,7 @@ in {
   options.modules.development = {
     android.enable = mkEnableOption "android dev stuff";
     docker.enable = mkEnableOption "docker dev stuff";
+    kubernetes.enable = mkEnableOption "kubernetes gcloud stuff";
   };
 
   config = {
@@ -21,5 +22,8 @@ in {
     ];
 
     virtualisation.docker.enable = cfg.docker.enable;
+
+    environment.systemPackages = with pkgs;
+      mkIf cfg.kubernetes.enable [ google-cloud-sdk kubectl kubernetes-helm ];
   };
 }

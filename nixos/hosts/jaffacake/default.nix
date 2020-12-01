@@ -37,6 +37,7 @@ in {
     development = {
       android.enable = true;
       docker.enable = true;
+      kubernetes.enable = true;
     };
 
     audio.enable = true;
