@@ -30,7 +30,7 @@ with lib; {
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [ curl vim git ];
+  environment.systemPackages = with pkgs; [ curl vim git unzip ];
 
   # TODO: username in some sort of variable
   # setup user account

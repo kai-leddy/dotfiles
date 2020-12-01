@@ -34,7 +34,10 @@ in {
 
     emacs.enable = true;
 
-    development = { android.enable = true; };
+    development = {
+      android.enable = true;
+      docker.enable = true;
+    };
 
     audio.enable = true;
 
@@ -55,7 +58,6 @@ in {
     browsers = {
       firefox.enable = true;
       firefox-dev.enable = true;
-      qutebrowser.enable = true;
     };
   };
 

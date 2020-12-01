@@ -19,6 +19,7 @@ in {
 
       # Module dependencies
       nixfmt # :lang nix
+      nodejs_latest # needed for installing language servers
     ];
 
     fonts.fonts = [ pkgs.emacs-all-the-icons-fonts ];
