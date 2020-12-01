@@ -35,6 +35,7 @@ in {
       ripgrep
       fd
       lsd
+      pigz
       (mkIf cfg.fish.enable unstable.any-nix-shell)
       (mkIf cfg.direnv.enable direnv)
       (mkIf cfg.direnv.enable nix-direnv)
