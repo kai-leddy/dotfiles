@@ -24,6 +24,11 @@ in {
     virtualisation.docker.enable = cfg.docker.enable;
 
     environment.systemPackages = with pkgs;
-      mkIf cfg.kubernetes.enable [ google-cloud-sdk kubectl kubernetes-helm ];
+      mkIf cfg.kubernetes.enable [
+        google-cloud-sdk
+        kubectl
+        kubectx
+        kubernetes-helm
+      ];
   };
 }
