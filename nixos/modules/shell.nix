@@ -29,7 +29,6 @@ in {
     environment.systemPackages = with pkgs; [
       tree
       bat
-      killall
       neofetch
       fzf
       ripgrep
