@@ -54,11 +54,13 @@ in {
       slack.enable = true;
       zoom.enable = true;
       libreoffice.enable = true;
+      discord.enable = true;
     };
 
     browsers = {
       firefox.enable = true;
       firefox-dev.enable = true;
+      # qutebrowser.enable = true;
     };
   };
 

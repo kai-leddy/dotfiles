@@ -10,6 +10,7 @@ in {
     slack.enable = mkEnableOption "slack";
     zoom.enable = mkEnableOption "zoom";
     libreoffice.enable = mkEnableOption "libreoffice";
+    discord.enable = mkEnableOption "discord";
   };
 
   config = {
@@ -20,6 +21,7 @@ in {
       (mkIf cfg.slack.enable slack)
       (mkIf cfg.zoom.enable zoom-us)
       (mkIf cfg.libreoffice.enable libreoffice)
+      (mkIf cfg.discord.enable discord)
     ];
 
     # for viewing pdfs and such
