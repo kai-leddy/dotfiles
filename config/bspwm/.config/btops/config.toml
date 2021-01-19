@@ -21,7 +21,7 @@ constant = "new"
 "chat-work" = ["Slack", "hiri"]
 
 [[names.classified]]
-"chat" = ["WhatsApp", "Caprine"]
+"chat" = ["discord", "WhatsApp", "Caprine"]
 
 [[names.classified]]
 "meeting" = ["zoom"]
