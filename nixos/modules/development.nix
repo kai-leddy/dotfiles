@@ -29,6 +29,7 @@ in {
         kubectl
         kubectx
         kubernetes-helm
+        (mkIf cfg.android.enable scrcpy)
       ];
   };
 }

@@ -50,7 +50,7 @@ in {
     apps = {
       flameshot.enable = true;
       spotify.enable = true;
-      # mpv.enable = true
+      mpv.enable = true;
       slack.enable = true;
       zoom.enable = true;
       libreoffice.enable = true;

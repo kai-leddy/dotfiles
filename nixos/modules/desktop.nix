@@ -33,6 +33,7 @@ in {
         btops
         rofi
         dunst
+        killall # my polybar scripts need it
       ] else
         [ ]);
 

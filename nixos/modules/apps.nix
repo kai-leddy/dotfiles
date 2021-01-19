@@ -21,7 +21,7 @@ in {
       (mkIf cfg.slack.enable slack)
       (mkIf cfg.zoom.enable zoom-us)
       (mkIf cfg.libreoffice.enable libreoffice)
-      (mkIf cfg.discord.enable discord)
+      (mkIf cfg.discord.enable unstable.discord)
     ];
 
     # for viewing pdfs and such
