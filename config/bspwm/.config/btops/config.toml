@@ -27,6 +27,9 @@ constant = "new"
 "meeting" = ["zoom"]
 
 [[names.classified]]
+"todo" = ["Todoist"]
+
+[[names.classified]]
 "files" = ["Pcmanfm"]
 
 [[names.classified]]

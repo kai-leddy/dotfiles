@@ -55,6 +55,7 @@ in {
       zoom.enable = true;
       libreoffice.enable = true;
       discord.enable = true;
+      todoist.enable = true;
     };
 
     browsers = {

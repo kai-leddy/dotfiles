@@ -11,18 +11,22 @@ in {
     zoom.enable = mkEnableOption "zoom";
     libreoffice.enable = mkEnableOption "libreoffice";
     discord.enable = mkEnableOption "discord";
+    todoist.enable = mkEnableOption "todoist";
   };
 
   config = {
-    environment.systemPackages = with pkgs; [
-      (mkIf cfg.mpv.enable mpv)
-      (mkIf cfg.flameshot.enable flameshot)
-      (mkIf cfg.spotify.enable spotify)
-      (mkIf cfg.slack.enable slack)
-      (mkIf cfg.zoom.enable zoom-us)
-      (mkIf cfg.libreoffice.enable libreoffice)
-      (mkIf cfg.discord.enable unstable.discord)
-    ];
+    environment.systemPackages = with pkgs;
+      let todoist = callPackage ../pkgs/todoist.nix { };
+      in [
+        (mkIf cfg.mpv.enable unstable.mpv)
+        (mkIf cfg.flameshot.enable flameshot)
+        (mkIf cfg.spotify.enable spotify)
+        (mkIf cfg.slack.enable slack)
+        (mkIf cfg.zoom.enable zoom-us)
+        (mkIf cfg.libreoffice.enable libreoffice)
+        (mkIf cfg.discord.enable unstable.discord)
+        (mkIf cfg.todoist.enable todoist)
+      ];
 
     # for viewing pdfs and such
     programs.evince.enable = config.modules.desktop.enable;

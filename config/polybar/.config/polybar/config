@@ -133,6 +133,7 @@
   ws-icon-10 = term;
   ws-icon-11 = music;
   ws-icon-12 = meeting;
+  ws-icon-13 = todo;
 
 [module/wlan]
   type = internal/network
