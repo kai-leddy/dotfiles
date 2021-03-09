@@ -38,6 +38,7 @@ in {
       android.enable = true;
       docker.enable = true;
       kubernetes.enable = true;
+      # TODO: Add NodeJS, prettier, VMD etc globally
     };
 
     audio.enable = true;

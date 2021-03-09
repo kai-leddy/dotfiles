@@ -36,6 +36,7 @@ in {
       lsd
       pigz
       jq
+      gnupg
       unstable.tealdeer
       (mkIf cfg.fish.enable unstable.any-nix-shell)
       (mkIf cfg.direnv.enable direnv)
