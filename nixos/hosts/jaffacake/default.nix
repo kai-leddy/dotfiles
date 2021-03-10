@@ -32,9 +32,8 @@ in {
       direnv.enable = true;
     };
 
-    emacs.enable = true;
-
     development = {
+      emacs.enable = true;
       android.enable = true;
       docker.enable = true;
       kubernetes.enable = true;
