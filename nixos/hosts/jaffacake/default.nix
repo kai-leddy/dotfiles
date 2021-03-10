@@ -40,6 +40,7 @@ in {
       # TODO: Add NodeJS, prettier, VMD etc globally
     };
 
+    # TODO: move this into a "common" module with garbage collection etc
     audio.enable = true;
 
     desktop = {
