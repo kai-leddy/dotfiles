@@ -9,27 +9,27 @@ in {
     kubernetes.enable = mkEnableOption "kubernetes gcloud stuff";
   };
 
-  config = {
-    # install adb and udev rules for devices
-    programs.adb.enable = cfg.android.enable;
-    services.udev.packages = with pkgs;
-      mkIf cfg.android.enable [ android-udev-rules ];
-
-    # give user permissions for stuff
-    users.users.kai.extraGroups = [
-      (mkIf cfg.android.enable "adbusers")
-      (mkIf cfg.docker.enable "docker")
-    ];
-
-    virtualisation.docker.enable = cfg.docker.enable;
-
-    environment.systemPackages = with pkgs;
-      mkIf cfg.kubernetes.enable [
+  config = mkMerge [
+    (mkIf cfg.android.enable {
+      # install adb, permissions and udev rules for devices
+      programs.adb.enable = true;
+      services.udev.packages = with pkgs; [ android-udev-rules ];
+      users.users.kai.extraGroups = [ "adbusers" ];
+      # add scrcpy for screen sharing
+      environment.systemPackages = with pkgs; [ scrcpy ];
+    })
+    (mkIf cfg.docker.enable {
+      # enable virtualisations and permissions
+      virtualisation.docker.enable = true;
+      users.users.kai.extraGroups = [ "docker" ];
+    })
+    (mkIf cfg.kubernetes.enable {
+      environment.systemPackages = with pkgs; [
         google-cloud-sdk
         kubectl
         kubectx
         kubernetes-helm
-        (mkIf cfg.android.enable scrcpy)
       ];
-  };
+    })
+  ];
 }

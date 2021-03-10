@@ -69,5 +69,4 @@ in {
   # TODO: auto nix garbage collection older than 7d
   # TODO: lightdm theme
   # TODO: grub theme
-  # TODO: login with fingerprint sensor?
 }

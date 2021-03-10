@@ -3,7 +3,6 @@
 
 # TODO: upgrade to 20.09
 # TODO: after some usage, consider converting nixos config to a flake
-# TODO: after some usage, consider converting to home-manager
 
 hostname:
 { pkgs, options, lib, config, ... }:

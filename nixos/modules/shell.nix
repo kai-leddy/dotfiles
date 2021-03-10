@@ -9,45 +9,48 @@ in {
     direnv.enable = mkEnableOption "direnv";
   };
 
-  config = {
-    # setup fish
-    programs.fish = mkIf cfg.fish.enable {
-      enable = true;
-      promptInit = ''
-        any-nix-shell fish --info-right | source
-      '' + (if cfg.direnv.enable then ''
-        set -x DIRENV_LOG_FORMAT ""
-        eval (direnv hook fish)
-      '' else
-        "");
-    };
-    users.users.kai.shell = mkIf cfg.fish.enable pkgs.fish;
+  config = mkMerge [
+    {
+      # setup thefuck
+      programs.thefuck.enable = cfg.thefuck.enable;
 
-    # setup thefuck
-    programs.thefuck.enable = cfg.thefuck.enable;
-
-    environment.systemPackages = with pkgs; [
-      tree
-      bat
-      neofetch
-      fzf
-      ripgrep
-      fd
-      lsd
-      pigz
-      jq
-      gnupg
-      unstable.tealdeer
-      (mkIf cfg.fish.enable unstable.any-nix-shell)
-      (mkIf cfg.direnv.enable direnv)
-      (mkIf cfg.direnv.enable nix-direnv)
-    ];
-
-    # dont garbage collect direnvs
-    nix.extraOptions = mkIf cfg.direnv.enable ''
-      keep-outputs = true
-      keep-derivations = true
-    '';
-    environment.pathsToLink = mkIf cfg.direnv.enable [ "/share/nix-direnv" ];
-  };
+      environment.systemPackages = with pkgs; [
+        tree
+        bat
+        neofetch
+        fzf
+        ripgrep
+        fd
+        lsd
+        pigz
+        jq
+        gnupg
+        unstable.tealdeer
+      ];
+    }
+    (mkIf cfg.fish.enable {
+      # setup fish
+      programs.fish = {
+        enable = true;
+        promptInit = ''
+          any-nix-shell fish --info-right | source
+        '' + (if cfg.direnv.enable then ''
+          set -x DIRENV_LOG_FORMAT ""
+          eval (direnv hook fish)
+        '' else
+          "");
+      };
+      users.users.kai.shell = pkgs.fish;
+      environment.systemPackages = with pkgs; [ unstable.any-nix-shell ];
+    })
+    (mkIf cfg.direnv.enable {
+      environment.systemPackages = with pkgs; [ direnv nix-direnv ];
+      # dont garbage collect direnvs
+      nix.extraOptions = ''
+        keep-outputs = true
+        keep-derivations = true
+      '';
+      environment.pathsToLink = [ "/share/nix-direnv" ];
+    })
+  ];
 }

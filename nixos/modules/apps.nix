@@ -28,7 +28,7 @@ in {
         (mkIf cfg.todoist.enable todoist)
       ];
 
-    # for viewing pdfs and such
+    # for viewing pdfs and such (only if in graphical env)
     programs.evince.enable = config.modules.desktop.enable;
   };
 }
