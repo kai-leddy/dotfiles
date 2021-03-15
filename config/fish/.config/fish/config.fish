@@ -1,3 +1,6 @@
+# TODO: Swap from omf to fisher
+# TODO: Swap from bobthefish to tide https://github.com/IlanCosman/tide
+
 # Settings for the 'bobthefish' theme
 set -g theme_color_scheme dracula
 set -g theme_display_git yes
