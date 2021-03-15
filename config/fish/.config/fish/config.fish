@@ -42,9 +42,6 @@ set -x VISUAL emacsclient
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
 
-# Setup Google cloud credentials properly
-set -x GOOGLE_APPLICATION_CREDENTIALS $HOME/.config/gcloud/legacy_credentials/kai.leddy@azuri-technologies.com/adc.json
-
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
 set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin
