@@ -3,12 +3,14 @@ set -g theme_color_scheme dracula
 set -g theme_display_git yes
 set -g theme_display_git_untracked yes
 set -g theme_display_docker_machine yes
-set -g theme_display_k8s_context no
+set -g theme_display_k8s_context yes
+set -g theme_display_k8s_namespace no
 set -g theme_display_user ssh
 set -g theme_display_hostname ssh
 set -g theme_display_vi yes
 set -g theme_display_date yes
 set -g theme_display_cmd_duration yes
+set -g theme_display_nix yes
 set -g theme_title_display_process yes
 set -g theme_title_display_path yes
 set -g theme_title_use_abbreviated_path yes
