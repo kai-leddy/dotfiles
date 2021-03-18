@@ -14,6 +14,9 @@ in {
       # setup thefuck
       programs.thefuck.enable = cfg.thefuck.enable;
 
+      # enable GPG agent properly
+      programs.gnupg.agent.enable = true;
+
       environment.systemPackages = with pkgs; [
         tree
         bat
