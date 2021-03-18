@@ -1,0 +1,222 @@
+; vim:ft=dosini
+
+; ############################
+; #                          #
+; #  VARIABLES AND SETTINGS  #
+; #                          #
+; ############################
+
+[colors]
+  white = #FFF
+  black = #000
+  darkGrey = #222
+  grey = #444
+  lightGrey = #DFDFDF
+  red = #F00
+  green = #55aa55
+  blue = #0a81f5
+  yellow = #FFB52A
+  orange = #FF9000
+  pink = #FF00AA
+
+[settings]
+  screenchange-reload = true
+  compositing-background = screen
+  compositing-foreground = source
+  compositing-border = over
+  ; default formats
+  format-foreground = ${colors.white}
+  format-padding = 2
+  format-margin = 0
+
+; ############################
+; #                          #
+; #     BAR DEFINITIONS      #
+; #                          #
+; ############################
+
+[bar/base]
+  width = 70%
+  height = 40
+  radius = 8
+  offset-x = 15%
+  offset-y = 16
+  fixed-center = true
+  background = ${colors.grey}
+  foreground = ${colors.lightGrey}
+  line-size = 2
+  padding = 1
+  font-0 = "FantasqueSansMono Nerd Font:pixelsize=14;2"
+  font-1 = "FantasqueSansMono Nerd Font:pixelsize=20;4"
+  modules-center = bspwm
+  wm-restack = bspwm
+
+[bar/main]
+  inherit = bar/base
+  monitor = ${env:MONITOR:eDP-1}
+  modules-left = volume wlan
+  modules-right = rootFs temperature battery date
+  tray-background = #00
+  tray-offset-x = 70%
+  tray-position = left
+  tray-detached = true
+  tray-maxsize = 24
+  tray-padding = 2
+
+[bar/external]
+  inherit = bar/base
+  monitor = ${env:MONITOR:HDMI-1}
+  bottom = true
+  modules-left = temperature
+  modules-right = volume date
+
+; ############################
+; #                          #
+; #    MODULE DEFINITIONS    #
+; #                          #
+; ############################
+
+[module/rootFs]
+  type = internal/fs
+  interval = 25
+
+  mount-0 = /
+
+  label-mounted = %{F#0a81f5}%{F-} %percentage_used%%
+
+[module/bspwm]
+  type = internal/bspwm
+
+  pin-workspaces = true
+  enable-scroll = false
+  enable-click = true
+
+  label-focused = %icon%
+  label-focused-font = 2
+  label-focused-background = ${colors.orange}
+  label-focused-foreground = ${colors.black}
+  label-focused-padding = 2
+  label-focused-margin = 0
+
+  label-urgent = %icon%
+  label-urgent-font = 2
+  label-urgent-background = ${colors.red}
+  label-urgent-foreground = ${colors.black}
+  label-urgent-padding = 2
+  label-urgent-margin = 0
+
+  label-empty = %icon%
+  label-empty-font = 2
+  label-empty-background = ${colors.darkGrey}
+  label-empty-foreground = ${colors.lightGrey}
+  label-empty-padding = 2
+  label-empty-margin = 0
+
+  label-occupied = %icon%
+  label-occupied-font = 2
+  label-occupied-background = ${colors.lightGrey}
+  label-occupied-foreground = ${colors.black}
+  label-occupied-padding = 2
+  label-occupied-margin = 0
+
+  ws-icon-default = 
+  ws-icon-0 = new;
+  ws-icon-1 = video;
+  ws-icon-2 = code;
+  ws-icon-3 = android;
+  ws-icon-4 = games;
+  ws-icon-5 = chat;
+  ws-icon-6 = chat-work;
+  ws-icon-7 = files;
+  ws-icon-8 = firefox;
+  ws-icon-9 = chrome;
+  ws-icon-10 = term;
+  ws-icon-11 = music;
+  ws-icon-12 = meeting;
+  ws-icon-13 = todo;
+
+[module/wlan]
+  type = internal/network
+  interface = wlp0s20f3
+  interval = 3.0
+
+  format-connected = %{F#0a81f5}%{F-} <label-connected>
+  format-disconnected = %{F#0a81f5}%{F-} Disconnected
+  label-connected = %essid:0:10:...%
+
+[module/date]
+  type = internal/date
+  interval = 5
+
+  date =
+  time = %H:%M
+
+  format-prefix = %{F#0a81f5}%{F-}
+  format-prefix-foreground = ${colors.lightGrey}
+
+  label = %date% %time%
+
+[module/volume]
+  type = internal/pulseaudio
+
+  format-volume = <ramp-volume> <label-volume>
+  ramp-volume-0 = %{F#0a81f5}%{F-}
+  ramp-volume-1 = %{F#0a81f5}%{F-}
+  ramp-volume-2 = %{F#0a81f5}%{F-}
+  ramp-headphones-0 = %{F#0a81f5}%{F-}
+  ramp-headphones-1 = %{F#0a81f5}%{F-}
+  format-muted = <label-muted>
+  label-muted = %{F#0a81f5}%{F-} muted
+  label-volume-foreground = ${colors.white}
+  label-muted-foreground = ${colors.white}
+
+[module/battery]
+  type = internal/battery
+  battery = BAT0
+  adapter = AC
+  full-at = 98
+
+  format-charging = <animation-charging> <label-charging>
+  format-charging-underline = ${colors.orange}
+
+  format-discharging = <ramp-capacity> <label-discharging>
+  format-discharging-underline = ${colors.orange}
+
+  format-full = %{F#FF9000}%{F-} <label-full>
+  format-full-prefix-foreground = ${colors.orange}
+  format-full-underline = ${colors.orange}
+
+  ramp-capacity-0 = 
+  ramp-capacity-1 = 
+  ramp-capacity-2 = 
+  ramp-capacity-3 = 
+  ramp-capacity-4 = 
+  ramp-capacity-foreground = ${colors.orange}
+
+  animation-charging-0 = 
+  animation-charging-1 = 
+  animation-charging-2 = 
+  animation-charging-3 = 
+  animation-charging-4 = 
+  animation-charging-foreground = ${colors.orange}
+  animation-charging-framerate = 750
+
+[module/temperature]
+  type = internal/temperature
+  thermal-zone = 0
+  hwmon-path = ${env:TEMP_PATH:}
+  warn-temperature = 85
+
+  format = <ramp> <label>
+  format-warn = <ramp> <label-warn>
+  format-warn-underline = ${colors.red}
+
+  label = %temperature-c%
+  label-warn = %temperature-c%
+  label-warn-foreground = ${colors.red}
+
+  ramp-0 = 
+  ramp-1 = 
+  ramp-2 = 
+  ramp-foreground = ${colors.orange}
+  ramp-warn-foreground = ${colors.red}
