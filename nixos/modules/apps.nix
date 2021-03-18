@@ -12,6 +12,7 @@ in {
     libreoffice.enable = mkEnableOption "libreoffice";
     discord.enable = mkEnableOption "discord";
     todoist.enable = mkEnableOption "todoist";
+    espanso.enable = mkEnableOption "espanso";
   };
 
   config = {
@@ -30,5 +31,7 @@ in {
 
     # for viewing pdfs and such (only if in graphical env)
     programs.evince.enable = config.modules.desktop.enable;
+
+    services.espanso.enable = cfg.espanso.enable;
   };
 }
