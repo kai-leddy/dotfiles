@@ -47,7 +47,7 @@ set -x QMK_HOME $HOME/repos/qmk_firmware
 
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin
+set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin $HOME/.linkerd2/bin
 
 # use lsd instead of ls
 alias ls lsd
