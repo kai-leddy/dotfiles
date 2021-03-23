@@ -28,6 +28,18 @@ super + backslash
     bash ~/.config/bspwm/bspwmrc; \
     pkill -USR1 -x sxhkd
 
+# zoom.us global mute/unmute macro
+super + @z
+    current_window=$(xdo id); \
+    xdo activate -a "Zoom Meeting"; \
+    xdo key_release -k 133; \
+    xdo key_press -k 64; \
+    xdo key_press -k 38; \
+    xdo key_release -k 38; \
+    xdo key_release -k 64; \
+    xdo key_press -k 133; \
+    xdo activate $current_window
+
 # manage brightness with fn keys
 XF86MonBrightness{Down,Up}
     brightnessctl set {-,+}10%

@@ -59,6 +59,7 @@ in {
         rofi
         dunst
         killall # my polybar scripts need it
+        xdo # used for some macro keybinds
       ];
     })
   ]);
