@@ -19,6 +19,8 @@
 
 ## Nix shell boilerplates
 
+- [ ] TODO: add more shell.nix examples for more project types
+
 ### Kubernetes, Helm, GCloud
 
 ``` nix

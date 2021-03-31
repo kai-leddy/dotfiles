@@ -57,8 +57,8 @@ in {
       libreoffice.enable = true;
       discord.enable = true;
       todoist.enable = true;
-      # TODO: try out espanso - https://espanso.org/
-      espanso.enable = false;
+      espanso.enable = true; # TODO: setup some custom expansions
+      peek.enable = true;
     };
 
     browsers = {

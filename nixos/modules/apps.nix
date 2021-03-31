@@ -13,6 +13,7 @@ in {
     discord.enable = mkEnableOption "discord";
     todoist.enable = mkEnableOption "todoist";
     espanso.enable = mkEnableOption "espanso";
+    peek.enable = mkEnableOption "peek";
   };
 
   config = {
@@ -27,6 +28,7 @@ in {
         (mkIf cfg.libreoffice.enable libreoffice)
         (mkIf cfg.discord.enable unstable.discord)
         (mkIf cfg.todoist.enable todoist)
+        (mkIf cfg.peek.enable peek)
       ];
 
     # for viewing pdfs and such (only if in graphical env)
