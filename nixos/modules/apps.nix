@@ -26,7 +26,11 @@ in {
         (mkIf cfg.slack.enable slack)
         (mkIf cfg.zoom.enable zoom-us)
         (mkIf cfg.libreoffice.enable libreoffice)
-        (mkIf cfg.discord.enable unstable.discord)
+        (mkIf cfg.discord.enable (unstable.discord.overrideAttrs (_: {
+          # always use latest discord or it refuses to open
+          src = fetchTarball
+            "https://discord.com/api/download?platform=linux&format=tar.gz";
+        })))
         (mkIf cfg.todoist.enable todoist)
         (mkIf cfg.peek.enable peek)
       ];
