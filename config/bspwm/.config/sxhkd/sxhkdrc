@@ -37,7 +37,6 @@ super + @z
     xdo key_press -k 38; \
     xdo key_release -k 38; \
     xdo key_release -k 64; \
-    xdo key_press -k 133; \
     xdo activate $current_window
 
 # manage brightness with fn keys
