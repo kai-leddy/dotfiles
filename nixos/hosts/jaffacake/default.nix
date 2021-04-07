@@ -57,7 +57,7 @@ in {
       libreoffice.enable = true;
       discord.enable = true;
       todoist.enable = true;
-      espanso.enable = true; # TODO: setup some custom expansions
+      espanso.enable = true;
       peek.enable = true;
     };
 
