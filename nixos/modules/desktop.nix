@@ -62,10 +62,13 @@ in {
         xdo # used for some macro keybinds
       ];
 
+      # TODO: get a better dunst theme setup
+
       # these are both here to just make dunst work properly
       services.dbus.packages = with pkgs; [ dunst ];
-      systemd.services.dunst = {
+      systemd.user.services.dunst = {
         enable = true;
+        description = "Dunst notification manager";
         serviceConfig.ExecStart = "${pkgs.dunst}/bin/dunst";
       };
     })
