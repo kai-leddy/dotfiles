@@ -20,6 +20,7 @@
 ## Nix shell boilerplates
 
 - [ ] TODO: add more shell.nix examples for more project types
+- [ ] TODO: make these separate files in an examples/ folder
 
 ### Kubernetes, Helm, GCloud
 

@@ -71,4 +71,7 @@ in {
   # TODO: auto nix garbage collection older than 7d
   # TODO: lightdm theme
   # TODO: grub theme
+  # TODO: add calendar view etc to desktop via Conky?
+  # TODO: Guake style popup terminal?
+  # TODO: Consider going full NixOS and using home-manager
 }
