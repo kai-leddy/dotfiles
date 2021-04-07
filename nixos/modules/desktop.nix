@@ -61,6 +61,13 @@ in {
         killall # my polybar scripts need it
         xdo # used for some macro keybinds
       ];
+
+      # these are both here to just make dunst work properly
+      services.dbus.packages = with pkgs; [ dunst ];
+      systemd.services.dunst = {
+        enable = true;
+        serviceConfig.ExecStart = "${pkgs.dunst}/bin/dunst";
+      };
     })
   ]);
 }
