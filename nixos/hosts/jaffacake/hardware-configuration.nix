@@ -18,9 +18,10 @@
       enable = true; # use grub
       efiSupport = true; # with support for efi
       device = "nodev"; # not in the efi partition
+      useOSProber = true; # auto-detect other OSes
     };
     efi = {
-      canTouchEfiVariables = false; # dont change bootloader
+      canTouchEfiVariables = true; # set grub as default bootloader
       efiSysMountPoint = "/boot/efi"; # efi is mounted here
     };
   };

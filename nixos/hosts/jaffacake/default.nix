@@ -74,4 +74,5 @@ in {
   # TODO: add calendar view etc to desktop via Conky?
   # TODO: Guake style popup terminal?
   # TODO: Consider going full NixOS and using home-manager
+  # TODO: Switch to NixOS unstable
 }
