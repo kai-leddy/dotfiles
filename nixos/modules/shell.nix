@@ -35,6 +35,7 @@ in {
       # setup fish
       programs.fish = {
         enable = true;
+        # TODO: change fish prompt and use double-line prompt
         promptInit = ''
           any-nix-shell fish | source
         '' + (if cfg.direnv.enable then ''
