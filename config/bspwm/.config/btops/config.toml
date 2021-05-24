@@ -33,13 +33,13 @@ constant = "new"
 "files" = ["Pcmanfm"]
 
 [[names.classified]]
+"video" = ["YouTube", "mpv", "qutebrowser"]
+
+[[names.classified]]
 "firefox" = ["Firefox", "Firefox Developer Edition", "Navigator"]
 
 [[names.classified]]
 "chrome" = ["Chromium", "Chrome", "Google"]
-
-[[names.classified]]
-"video" = ["YouTube", "mpv", "qutebrowser"]
 
 [[names.classified]]
 "music" = ["Spotify", ""] # well done spotify *facepalm*
