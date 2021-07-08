@@ -110,10 +110,14 @@
   (setq projectile-globally-ignored-directories
         (append '(".cache") projectile-globally-ignored-directories)))
 
-;; enable eslint auto formatting for all JS & TS buffers
+;; enable eslint auto fixing for all JS & TS buffers
 (add-hook!
  '(typescript-mode-hook js2-mode-hook rjsx-mode-hook)
  #'eslintd-fix-mode)
+;; disable LSP formatting for all JS & TS buffers (let prettier do it)
+(setq-hook!
+ '(typescript-mode-hook js2-mode-hook rjsx-mode-hook)
+ +format-with-lsp nil)
 
 ;; try to get magit-todos to work with magit-gitflow (UNTESTED)
 (add-hook! 'magit-gitflow-mode-hook #'magit-todos-mode)
@@ -140,3 +144,6 @@
   (set-next-checker! 'rjsx-mode 'lsp 'javascript-eslint 'append)
   (set-next-checker! 'js2-mode 'lsp 'javascript-eslint 'append)
   (set-next-checker! 'typescript-mode 'lsp 'javascript-eslint 'append))
+
+;; fix format-all not respecting the .envrc environment
+(after! format-all (advice-add 'format-all-buffer :around #'envrc-propagate-environment))
