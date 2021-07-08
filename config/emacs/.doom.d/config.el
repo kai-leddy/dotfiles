@@ -9,7 +9,7 @@
       company-idle-delay 0.0 ; recommended for lsp-mode
       flycheck-javascript-eslint-executable "eslint_d"
       rustic-lsp-server 'rust-analyzer
-      prescient-filter-method '(literal fuzzy)
+      ;; prescient-filter-method '(literal fuzzy)
       projectile-track-known-projects-automatically nil)
 
 ;; Random useful functions
