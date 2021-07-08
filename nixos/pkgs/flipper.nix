@@ -41,13 +41,13 @@ let
   ];
 in with lib;
 stdenv.mkDerivation rec {
-  version = "0.82.2";
+  version = "0.94.1";
   pname = "flipper";
 
   src = fetchzip {
     url =
       "https://github.com/facebook/flipper/releases/download/v${version}/Flipper-linux.zip";
-    sha256 = "0ml82dwbl44xv22sw22c6a95jczc5y94pqnyll5rc16a079wlffr";
+    sha256 = "01y00imsh50jc99cifvx8nc0hdfgz7lzav83cp160gzmq7zjqp1c";
     stripRoot = false;
   };
 
