@@ -161,19 +161,19 @@ mod4 + ctrl + shift + {1-9}
 #
 
 # preselect the direction
-mod4 + alt + {h,j,k,l}
+mod4 + mod1 + {h,j,k,l}
 	bspc node -p {west,south,north,east}
 
 # preselect the ratio
-mod4 + alt + {1-9}
+mod4 + mod1 + {1-9}
 	bspc node -o 0.{1-9}
 
 # cancel the preselection for the focused node
-mod4 + alt + space
+mod4 + mod1 + space
 	bspc node -p cancel
 
 # cancel the preselection for the focused desktop
-mod4 + alt + shift + space
+mod4 + mod1 + shift + space
 	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
 
 #

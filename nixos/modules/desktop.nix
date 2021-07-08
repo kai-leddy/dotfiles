@@ -25,6 +25,7 @@ in {
         feh
         alacritty
         pcmanfm
+        qalculate-gtk
       ];
 
       # Define systemd service for betterlockscreen to run on suspend

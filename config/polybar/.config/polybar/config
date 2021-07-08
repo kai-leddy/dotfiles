@@ -54,8 +54,8 @@
 [bar/main]
   inherit = bar/base
   monitor = ${env:MONITOR:eDP-1}
-  modules-left = volume wlan
-  modules-right = rootFs temperature battery date
+  modules-left = temperature battery wlan
+  modules-right = rootFs volume date
   tray-background = #00
   tray-offset-x = 70%
   tray-position = left
@@ -148,13 +148,11 @@
   type = internal/date
   interval = 5
 
-  date =
+  date = %d %h
   time = %H:%M
 
-  format-prefix = %{F#0a81f5}%{F-}
-  format-prefix-foreground = ${colors.lightGrey}
-
-  label = %date% %time%
+  label = %{F#0a81f5}%{F-} %date%   %{F#0a81f5}%{F-} %time%
+  label-foreground = ${colors.lightGrey}
 
 [module/volume]
   type = internal/pulseaudio

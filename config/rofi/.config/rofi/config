@@ -71,7 +71,7 @@ rofi.font:                           fantasquesansmono nerd font 15
 ! "Set the modi to combine in combi mode" Set from: Default
 rofi.combi-modi:                     window,run,ssh
 ! "Set the matching algorithm. (normal, regex, glob, fuzzy)" Set from: Default
-rofi.matching:                       fuzzy
+rofi.matching:                       regex
 ! "Tokenize input string" Set from: Default
 ! rofi.tokenize:                       true
 ! "Monitor id to show on" Set from: Default
