@@ -54,8 +54,8 @@
 [bar/main]
   inherit = bar/base
   monitor = ${env:MONITOR:eDP-1}
-  modules-left = temperature battery wlan
-  modules-right = rootFs volume date
+  modules-left = temperature volume battery
+  modules-right = rootFs wlan date
   tray-background = #00
   tray-offset-x = 70%
   tray-position = left
@@ -67,14 +67,16 @@
   inherit = bar/base
   monitor = ${env:MONITOR:HDMI-1}
   bottom = true
-  modules-left = temperature
-  modules-right = volume date
+  modules-left = temperature volume
+  modules-right = date
 
 ; ############################
 ; #                          #
 ; #    MODULE DEFINITIONS    #
 ; #                          #
 ; ############################
+
+; TODO: tidy this shit up - actually use color variables etc
 
 [module/rootFs]
   type = internal/fs
@@ -144,6 +146,10 @@
   format-disconnected = %{F#0a81f5}%{F-} Disconnected
   label-connected = %essid:0:10:...%
 
+  format-disconnected-underline = ${colors.red}
+
+; TODO: separate this into date/time modules
+; TODO: show `cal -3` on clicking the calendar module
 [module/date]
   type = internal/date
   interval = 5
@@ -158,13 +164,14 @@
   type = internal/pulseaudio
 
   format-volume = <ramp-volume> <label-volume>
-  ramp-volume-0 = %{F#0a81f5}%{F-}
-  ramp-volume-1 = %{F#0a81f5}%{F-}
-  ramp-volume-2 = %{F#0a81f5}%{F-}
-  ramp-headphones-0 = %{F#0a81f5}%{F-}
-  ramp-headphones-1 = %{F#0a81f5}%{F-}
+  ramp-volume-0 = %{F#FF9000}%{F-}
+  ramp-volume-1 = %{F#FF9000}%{F-}
+  ramp-volume-2 = %{F#FF9000}%{F-}
+  ; TODO: why don't these headphones icons work?
+  ramp-headphones-0 = %{F#FF9000}%{F-}
+  ramp-headphones-1 = %{F#FF9000}%{F-}
   format-muted = <label-muted>
-  label-muted = %{F#0a81f5}%{F-} muted
+  label-muted = %{F#FF9000}%{F-} muted
   label-volume-foreground = ${colors.white}
   label-muted-foreground = ${colors.white}
 
