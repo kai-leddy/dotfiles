@@ -1,7 +1,7 @@
 [color]
 	ui = true
 [user]
-	email = epickaimail@gmail.com
+	email = kai.leddy@azuri-technologies.com
 	name = Kai Leddy
 [push]
 	default = simple
@@ -13,16 +13,27 @@
 	excludesfile = /home/kai/.gitignore_global
 [diff]
 	indentHeuristic = true
-	#tool = meld
 [pull]
 	rebase = true
-#[merge]
-#	tool = meld
-#[difftool "meld"]
-#  cmd = meld "$LOCAL" "$REMOTE"
-#[mergetool "meld"]
-#  cmd = meld "$LOCAL" "$BASE" "$REMOTE" --output="$MERGED"
 [svn]
 	rmdir = true
 [fetch]
 	prune = true
+
+# Setup delta for diffs
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[delta]
+    syntax-theme = Monokai Extended
+	line-numbers = true
+    navigate = true
+	pager = bat
+	# styling
+	file-decoration-style = ""
+	hunk-header-style = "file syntax"
+	hunk-header-file-style = "cyan"
+[interactive]
+    diffFilter = delta --color-only

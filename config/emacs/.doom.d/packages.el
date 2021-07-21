@@ -7,6 +7,7 @@
 ;; (package! builtin-package :disable t)
 
 (package! evil-snipe :disable t)
+(package! magit-gitflow :disable t)
 ;; (package! evil-easymotion :disable t)
 
 (package! vmd-mode)
@@ -17,3 +18,4 @@
   (:host github
    :repo "sei40kr/jest-snippets"
    :files ("*.el" "snippets")))
+(package! magit-delta)

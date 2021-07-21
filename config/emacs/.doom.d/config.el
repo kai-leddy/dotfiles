@@ -64,6 +64,11 @@
 (use-package! react-snippets :after yasnippet)
 (use-package! jest-snippets :after yasnippet)
 
+;; Setup magit to use delta for diffs - DISABLED BECAUSE BROKEN
+;; (use-package! magit-delta
+;;   :if (executable-find "delta")
+;;   :hook (magit-mode . magit-delta-mode))
+
 ;; Make rjsx-mode work for .tsx files
 (use-package! rjsx-mode
   :init
@@ -120,7 +125,7 @@
  +format-with-lsp nil)
 
 ;; try to get magit-todos to work with magit-gitflow (UNTESTED)
-(add-hook! 'magit-gitflow-mode-hook #'magit-todos-mode)
+(add-hook! 'magit-mode-hook #'magit-todos-mode)
 
 ;; enable emojis everywhere :tada:
 (add-hook! 'after-init-hook #'global-emojify-mode)

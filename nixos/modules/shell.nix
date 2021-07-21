@@ -28,6 +28,7 @@ in {
         jq
         gnupg
         unstable.tealdeer
+        unstable.delta
       ];
     }
     (mkIf cfg.fish.enable {
