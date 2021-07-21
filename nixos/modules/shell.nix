@@ -18,7 +18,6 @@ in {
       programs.gnupg.agent.enable = true;
 
       environment.systemPackages = with pkgs; [
-        tree
         bat
         neofetch
         fzf
