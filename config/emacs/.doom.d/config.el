@@ -3,6 +3,7 @@
 ;; Global variables for configuration
 (setq display-line-numbers-type 'relative ; enable relative line numbers
       doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17)
+      doom-unicode-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17)
       doom-big-font-increment 2 ; big-font mode doesn't need to be THAT big
       scroll-margin 4
       company-minimum-prefix-length 1 ; recommended for lsp-mode
