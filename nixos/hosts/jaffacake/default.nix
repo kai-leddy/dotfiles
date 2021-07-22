@@ -17,6 +17,8 @@ in {
     ./thermal.nix
   ];
 
+  # TODO: can we auto stow/unstow dotfiles for these options?
+
   modules = {
     laptop = {
       enable = true;
@@ -37,7 +39,7 @@ in {
       android.enable = true;
       docker.enable = true;
       kubernetes.enable = true;
-      # TODO: Add NodeJS, prettier, VMD etc globally
+      # TODO: Add NodeJS, python, prettier, VMD etc globally
     };
 
     # TODO: move this into a "common" module with garbage collection etc
@@ -73,6 +75,5 @@ in {
   # TODO: grub theme
   # TODO: add calendar view etc to desktop via Conky?
   # TODO: Guake style popup terminal?
-  # TODO: Consider going full NixOS and using home-manager
-  # TODO: Switch to NixOS unstable
+  # TODO: Switch to NixOS unstable & pin version with flakes
 }
