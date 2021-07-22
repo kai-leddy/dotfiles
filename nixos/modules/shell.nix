@@ -29,6 +29,7 @@ in {
         gnupg
         unstable.tealdeer
         unstable.delta
+        unstable.zoxide
       ];
     }
     (mkIf cfg.fish.enable {
@@ -38,6 +39,7 @@ in {
         # TODO: change fish prompt and use double-line prompt
         promptInit = ''
           any-nix-shell fish | source
+          zoxide init fish | source
         '' + (if cfg.direnv.enable then ''
           set -x DIRENV_LOG_FORMAT ""
           eval (direnv hook fish)
