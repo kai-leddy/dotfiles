@@ -14,11 +14,14 @@ in {
     todoist.enable = mkEnableOption "todoist";
     espanso.enable = mkEnableOption "espanso";
     peek.enable = mkEnableOption "peek";
+    myki.enable = mkEnableOption "myki";
   };
 
   config = {
     environment.systemPackages = with pkgs;
-      let todoist = callPackage ../pkgs/todoist.nix { };
+      let
+        todoist = callPackage ../pkgs/todoist.nix { };
+        myki = callPackage ../pkgs/myki.nix { };
       in [
         (mkIf cfg.mpv.enable unstable.mpv)
         (mkIf cfg.flameshot.enable flameshot)
@@ -33,11 +36,14 @@ in {
         })))
         (mkIf cfg.todoist.enable todoist)
         (mkIf cfg.peek.enable peek)
+        (mkIf cfg.myki.enable myki)
       ];
 
     # for viewing pdfs and such (only if in graphical env)
     programs.evince.enable = config.modules.desktop.enable;
 
     services.espanso.enable = cfg.espanso.enable;
+
+    services.gnome3.gnome-keyring.enable = cfg.myki.enable;
   };
 }

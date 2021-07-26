@@ -61,6 +61,7 @@ in {
       todoist.enable = true;
       espanso.enable = true;
       peek.enable = true;
+      myki.enable = true;
     };
 
     browsers = {
@@ -69,7 +70,6 @@ in {
       # qutebrowser.enable = true;
     };
   };
-
   # TODO: auto nix garbage collection older than 7d
   # TODO: lightdm theme
   # TODO: grub theme
