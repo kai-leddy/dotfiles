@@ -1,8 +1,7 @@
 # this is heavily based on hlissner's config at
 # https://github.com/hlissner/dotfiles
 
-# TODO: upgrade to 20.09
-# TODO: after some usage, consider converting nixos config to a flake
+# TODO: convert nixos config to a flake
 
 hostname:
 { pkgs, options, lib, config, ... }:

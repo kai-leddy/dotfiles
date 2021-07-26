@@ -10,24 +10,19 @@
   # use thinkfan to actually use the fans (thanks again Lenovo)
   services.thinkfan = {
     enable = true;
-    fan = ''
-      fans:
-        - tpacpi: /proc/acpi/ibm/fan
-    '';
-    sensors = ''
-      sensors:
-        - hwmon: /sys/devices/platform/coretemp.0/hwmon
-          indices: [1, 2, 3, 4, 5]
-
-        #- hwmon: /sys/devices/virtual/thermal/thermal_zone0/hwmon0
-        #  indices: [1]
-        #  optional: true
-    '';
-    levels = ''
-      levels:
-        - [0,     0,      50]
-        - ["level auto",     45,     85]
-        - ["level disengaged",   80,     255]
-    '';
+    fans = [{
+      type = "tpacpi";
+      query = "/proc/acpi/ibm/fan";
+    }];
+    sensors = [{
+      type = "hwmon";
+      query = "/sys/devices/platform/coretemp.0/hwmon";
+      indices = [ 1 2 3 4 5 ];
+    }];
+    levels = [ # [LEVEL LOW HIGH]
+      [ 0 0 50 ]
+      [ "level auto" 45 85 ]
+      [ "level full-speed" 80 255 ]
+    ];
   };
 }

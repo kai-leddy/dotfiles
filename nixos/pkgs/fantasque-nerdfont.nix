@@ -3,7 +3,7 @@
 # has outstanding issues with the font-width of various glyphs.
 # https://github.com/ryanoasis/nerd-fonts/issues/442
 
-{ stdenv, fetchzip }:
+{ stdenv, lib, fetchzip }:
 
 let
   repo = "https://github.com/ryanoasis/nerd-fonts";
@@ -22,7 +22,7 @@ in stdenv.mkDerivation {
     install --target $out/share/fonts/truetype -D $src/*.ttf
   '';
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Nerdfont version of Fantasque Sans Mono";
     homepage = repo;
     license = licenses.mit;

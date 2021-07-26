@@ -1,4 +1,4 @@
-{ stdenv, fetchFromGitHub, buildGoPackage }:
+{ lib, fetchFromGitHub, buildGoPackage }:
 
 buildGoPackage {
   pname = "btops";
@@ -14,7 +14,7 @@ buildGoPackage {
 
   goDeps = ./deps.nix;
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description =
       "bspwm desktop management that supports dynamic appending, removing and renaming";
     homepage = "https://github.com/cmschuetz/btops";

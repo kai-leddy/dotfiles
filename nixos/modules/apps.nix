@@ -44,6 +44,6 @@ in {
 
     services.espanso.enable = cfg.espanso.enable;
 
-    services.gnome3.gnome-keyring.enable = cfg.myki.enable;
+    services.gnome.gnome-keyring.enable = cfg.myki.enable;
   };
 }
