@@ -1,1 +1,0 @@
-/home/kai/.fzf/shell/key-bindings.fish

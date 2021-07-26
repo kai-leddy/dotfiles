@@ -12,8 +12,8 @@
 1. reboot and login as <user>
 1. cd into the config folder `cd ~/dotfiles/config`
 1. stow all relevant config dotfiles with `ls | xargs stow -t ~`
-1. install oh-my-fish with `curl -L https://get.oh-my.fish | fish`
-1. install oh-my-fish plugins with `omf install`
+1. install fisher with `curl -sL https://git.io/fisher | source && fisher install jorgebucaran/fisher`
+1. install fisher plugins with `fisher install`
 1. install doom emacs by following their guide
 1. setup a wallpaper at `~/.config/wallpaper` or the **LOCK SCREEN WONT WORK**
 

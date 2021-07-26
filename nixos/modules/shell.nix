@@ -29,7 +29,6 @@ in {
         gnupg
         unstable.tealdeer
         unstable.delta
-        unstable.zoxide
       ];
     }
     (mkIf cfg.fish.enable {
@@ -40,6 +39,7 @@ in {
         promptInit = ''
           any-nix-shell fish | source
           zoxide init fish | source
+          starship init fish | source
         '' + (if cfg.direnv.enable then ''
           set -x DIRENV_LOG_FORMAT ""
           eval (direnv hook fish)
@@ -47,7 +47,11 @@ in {
           "");
       };
       users.users.kai.shell = pkgs.fish;
-      environment.systemPackages = with pkgs; [ unstable.any-nix-shell ];
+      environment.systemPackages = with pkgs; [
+        unstable.any-nix-shell
+        unstable.zoxide
+        unstable.starship
+      ];
     })
     (mkIf cfg.direnv.enable {
       environment.systemPackages = with pkgs; [ direnv nix-direnv ];
