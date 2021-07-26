@@ -22,3 +22,6 @@ bspc rule -a Emacs state=tiled
 #autorandr -c
 bash ~/.config/bspwm/monitors.sh
 btops &
+
+# fix espanso bug
+systemctl --user restart espanso.service
