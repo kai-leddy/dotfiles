@@ -89,5 +89,6 @@ added_style = "bright-black bg:bright-yellow"
 deleted_style = "red bg:bright-yellow"
 
 [git_status]
+deleted = "x"
 format = "[ $all_status$ahead_behind ]($style)"
 style = "bold red bg:bright-yellow"
