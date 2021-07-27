@@ -20,75 +20,75 @@ $python\
 success_symbol = "[✓](bold green bg:black)"
 error_symbol = "[✗](bold red bg:black)"
 vicmd_symbol = "[](bright-white bg:black)"
-format = "[$symbol](black)"
+format = "[$symbol ](bg:black)"
 
 [cmd_duration]
 min_time = 0
-format = "[ $duration]($style)"
+format = "([$duration ]($style))"
 style = "bold yellow bg:black"
 
 [status]
 disabled = false
-format = "[ $status]($style)"
+format = "([$status ]($style))"
 style = "bold red bg:black"
 
 [jobs]
 symbol = "省"
-format = "[](purple)[$symbol$number]($style)[](purple)"
+format = "([](purple)[$symbol$number]($style)[](purple))"
 style = "white bg:purple"
 
 [directory]
 truncate_to_repo = true
 truncation_length = 3
-format = "[](bright-black)[  $path]($style)[](bright-black)"
+format = "([](bright-black)[  $path]($style)[](bright-black))"
 style = "bright-cyan bg:bright-black"
 
 [nix_shell]
 symbol = ""
-format = "[](cyan)[$symbol $state]($style)[](cyan)"
+format = "([](cyan)[$symbol $state]($style)[](cyan))"
 style = "black bg:cyan"
 
 [nodejs]
-format = "[](green)[$symbol$version]($style)[](green)"
+format = "([](green)[$symbol$version]($style)[](green))"
 version_format = "$raw"
 style = "black bg:green"
 not_capable_style = "red bg:green"
 
 [terraform]
 symbol = "[TF](bold $style)"
-format = "[](blue)[$symbol $workspace]($style)[](blue)"
+format = "([](blue)[$symbol $workspace]($style)[](blue))"
 style = "white bg:blue"
 
 [kubernetes]
 disabled = false
 symbol = "ﴱ"
-format = '[](bright-red)[$symbol $context( \[$namespace\])]($style)[](bright-red)'
+format = '([](bright-red)[$symbol $context( \[$namespace\])]($style)[](bright-red))'
 style = "black bg:bright-red"
 context_aliases = { kind-kind = "kind" }
 
 [rust]
 version_format = "$raw"
-format = "[](bright-black)[$symbol$version]($style)[](bright-black)"
+format = "([](bright-black)[$symbol$version]($style)[](bright-black))"
 style = "red bg:bright-black"
 
 [python]
 version_format = "$raw"
-format = "[](yellow)[$symbol$version]($style)[](yellow)"
+format = "([](yellow)[$symbol$version]($style)[](yellow))"
 style = "black bg:yellow"
 
 [git_branch]
 symbol = ""
 truncation_length = 32
-format = "[$symbol $branch]($style)"
+format = "([$symbol $branch]($style))"
 style = "black bg:bright-yellow"
 
 [git_metrics]
 disabled = false
-format = '[ ](bg:bright-yellow)[+$added]($added_style)[-$deleted]($deleted_style)'
+format = "([ ](bg:bright-yellow)[+$added]($added_style)[-$deleted]($deleted_style))"
 added_style = "bright-black bg:bright-yellow"
 deleted_style = "red bg:bright-yellow"
 
 [git_status]
 deleted = "x"
-format = "[ $all_status$ahead_behind ]($style)"
+format = "([ $all_status$ahead_behind ]($style))"
 style = "bold red bg:bright-yellow"
