@@ -50,6 +50,8 @@ in {
         kubectx
         kubernetes-helm
       ];
+      # NOTE: we use older versions of k8s that do not support unified cgroups yet
+      boot.kernelParams = [ "systemd.unified_cgroup_hierarchy=0" ];
     })
   ];
 }
