@@ -141,11 +141,6 @@
 (add-hook! 'vmd-mode-hook
   (setq +format-with (if vmd-mode :none nil)))
 
-;; overwrite prettier formatter to not send 'parser' cli option
-(set-formatter! 'prettier
-  '("prettier"
-    ("--stdin-filepath" "%s" buffer-file-name)))
-
 (after! (flycheck rjsx-mode typescript-mode js2-mode)
   (set-next-checker! 'rjsx-mode 'lsp 'javascript-eslint 'append)
   (set-next-checker! 'js2-mode 'lsp 'javascript-eslint 'append)
