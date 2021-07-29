@@ -116,6 +116,10 @@
   (setq projectile-globally-ignored-directories
         (append '(".cache") projectile-globally-ignored-directories)))
 
+;; fix regex matching when using counsel-rg for project search
+(after! ivy-prescient
+  (setf (alist-get 'counsel-rg ivy-re-builders-alist) #'ivy--regex-plus))
+
 ;; enable eslint auto fixing for all JS & TS buffers
 (add-hook!
  '(typescript-mode-hook js2-mode-hook rjsx-mode-hook)
