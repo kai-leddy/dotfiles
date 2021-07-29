@@ -42,21 +42,21 @@
 (map! :leader
       :desc "Run shell command" "!" #'projectile-run-shell-command-in-root
       (:prefix "p"
-        ;; Save multiple project buffers
-        :desc "Save project files" "s" #'projectile-save-project-buffers
-        )
+       ;; Save multiple project buffers
+       :desc "Save project files" "s" #'projectile-save-project-buffers
+       )
       (:prefix "b"
-        ;; save multiple open buffers
-        :desc "Save some buffers" "s" #'save-some-buffers
-        )
+       ;; save multiple open buffers
+       :desc "Save some buffers" "s" #'save-some-buffers
+       )
       (:prefix "i"
-        ;; insert an emoji
-        :desc "Emoji" "e" #'emojify-insert-emoji
-        )
+       ;; insert an emoji
+       :desc "Emoji" "e" #'emojify-insert-emoji
+       )
       (:prefix "o"
-        ;; open an Eshell (no fish features, but better integration)
-        :desc "Shell (eshell)" "s" #'eshell
-        :desc "Undo Tree" "u" #'undo-tree-visualize))
+       ;; open an Eshell (no fish features, but better integration)
+       :desc "Shell (eshell)" "s" #'eshell
+       :desc "Undo Tree" "u" #'undo-tree-visualize))
 
 (use-package! doom-themes
   :init
@@ -80,7 +80,7 @@
   :init
   (map! :map markdown-mode-map
         (:localleader
-          "v" #'vmd-mode)))
+         "v" #'vmd-mode)))
 
 ;; Setup org mode stuff
 (after! org
@@ -105,7 +105,7 @@
   )
 
 (after! ox-latex
-  ;(add-to-list 'org-latex-packages-alist '("" "minted"))
+                                        ;(add-to-list 'org-latex-packages-alist '("" "minted"))
   (setq org-latex-tables-booktabs t)
   (setq org-latex-listings 'minted)
   (setq org-latex-pdf-process
@@ -126,8 +126,8 @@
  #'eslintd-fix-mode)
 ;; disable LSP formatting for all JS & TS buffers (let prettier do it)
 (setq-hook!
- '(typescript-mode-hook js2-mode-hook rjsx-mode-hook)
- +format-with-lsp nil)
+    '(typescript-mode-hook js2-mode-hook rjsx-mode-hook)
+  +format-with-lsp nil)
 
 ;; try to get magit-todos to work with magit-gitflow (UNTESTED)
 (add-hook! 'magit-mode-hook #'magit-todos-mode)
