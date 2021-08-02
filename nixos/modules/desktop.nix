@@ -21,7 +21,20 @@ in {
       services.greenclip.enable = true;
 
       environment.systemPackages = with pkgs; [
-        betterlockscreen
+        # NOTE: this is temporary to fix a bug - will switch to 4.0.0 when released
+        (betterlockscreen.overrideAttrs (_:
+          let
+            version = "3.2.0";
+            sha256 = "1jy8rx6syh1d2brh9mgcm9padac2ph7h3ylji262zm3hgd605qsh";
+          in {
+            inherit version;
+            src = fetchFromGitHub {
+              owner = "pavanjadhaw";
+              repo = "betterlockscreen";
+              rev = version;
+              inherit sha256;
+            };
+          }))
         feh
         alacritty
         pcmanfm
@@ -37,7 +50,7 @@ in {
         before = [ "sleep.target" "suspend.target" ];
         serviceConfig = {
           User = "kai";
-          Type = "simple";
+          Type = "forking";
           ExecStart = "${pkgs.betterlockscreen}/bin/betterlockscreen -l blur";
           ExecStartPost = "${pkgs.coreutils}/bin/sleep 1";
           TimeoutSec = "infinity";

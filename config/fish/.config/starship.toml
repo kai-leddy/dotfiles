@@ -45,7 +45,7 @@ style = "bright-cyan bg:bright-black"
 
 [nix_shell]
 symbol = ""
-format = "([](cyan)[$symbol $state]($style)[](cyan))"
+format = "[](cyan)[$symbol $state]($style)[](cyan)"
 style = "black bg:cyan"
 
 [nodejs]
