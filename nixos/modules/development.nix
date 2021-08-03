@@ -40,6 +40,7 @@ in {
     })
     (mkIf cfg.docker.enable {
       # enable virtualisations and permissions
+      # TODO: swap to using podman & buildah
       virtualisation.docker.enable = true;
       users.users.kai.extraGroups = [ "docker" ];
     })
