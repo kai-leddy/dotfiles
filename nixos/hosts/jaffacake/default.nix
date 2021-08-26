@@ -20,6 +20,11 @@ in {
   # TODO: can we auto stow/unstow dotfiles for these options?
 
   modules = {
+    common = {
+      audio.enable = true;
+      flakes.enable = true;
+    };
+
     laptop = {
       enable = true;
       swapAltWin = true;
@@ -41,9 +46,6 @@ in {
       kubernetes.enable = true;
       # TODO: Add NodeJS, python, prettier, VMD etc globally
     };
-
-    # TODO: move this into a "common" module with garbage collection etc
-    audio.enable = true;
 
     desktop = {
       enable = true;

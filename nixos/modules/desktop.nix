@@ -55,7 +55,9 @@ in {
       };
 
       environment.systemPackages = with pkgs; [
-        (polybar.override { pulseSupport = config.modules.audio.enable; })
+        (polybar.override {
+          pulseSupport = config.modules.common.audio.enable;
+        })
         btops
         rofi
         dunst
