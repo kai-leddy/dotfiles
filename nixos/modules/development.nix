@@ -1,7 +1,18 @@
 { config, lib, pkgs, ... }:
 
 with lib;
-let cfg = config.modules.development;
+let
+  cfg = config.modules.development;
+
+  unstableWithEmacs = import (fetchTarball
+    "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {
+      overlays = [
+        (import (builtins.fetchTarball {
+          url =
+            "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+        }))
+      ];
+    };
 in {
   options.modules.development = {
     emacs.enable = mkEnableOption "emacs dev environment";
@@ -12,10 +23,14 @@ in {
 
   config = mkMerge [
     (mkIf cfg.emacs.enable {
-      # TODO: use Emacs 28 emacsGcc from the overlay
+      services.emacs = {
+        enable = true;
+        defaultEditor = true;
+        package = unstableWithEmacs.emacsGcc;
+      };
+
       environment.systemPackages = with pkgs; [
         # Required for doom emacs to work properly
-        unstable.emacs # 27.1
         git
         ripgrep
 

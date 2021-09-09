@@ -7,7 +7,11 @@
       doom-big-font-increment 2 ; big-font mode doesn't need to be THAT big
       scroll-margin 4
       company-minimum-prefix-length 1 ; recommended for lsp-mode
-      company-idle-delay 0.0 ; recommended for lsp-mode
+      company-idle-delay 0 ; recommended for lsp-mode
+      lsp-idle-delay 0.1
+      +lsp-company-backends '(:separate company-yasnippet company-capf)
+      gcmh-high-cons-threshold (* 64 1024 1024) ; GC more stuff
+      gcmh-idle-delay 5 ; GC less often
       flycheck-javascript-eslint-executable "eslint_d"
       rustic-lsp-server 'rust-analyzer
       ;; prescient-filter-method '(literal fuzzy regex)

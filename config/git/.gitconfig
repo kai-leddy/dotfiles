@@ -37,3 +37,5 @@
 	hunk-header-file-style = "cyan"
 [interactive]
     diffFilter = delta --color-only
+[init]
+	defaultBranch = main

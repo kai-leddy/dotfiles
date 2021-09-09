@@ -11,7 +11,15 @@ with lib; {
 
   networking.hostName = hostname; # Define your hostname.
 
-  nix.autoOptimiseStore = true; # does what it says on the tin
+  nix = {
+    autoOptimiseStore = true; # does what it says on the tin
+    # use cachix for community packages
+    binaryCaches =
+      [ "https://cache.nixos.org/" "https://nix-community.cachix.org" ];
+    binaryCachePublicKeys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+  };
 
   # add unstable repo to pkgs with `unstable.` prefix
   nixpkgs.config = {

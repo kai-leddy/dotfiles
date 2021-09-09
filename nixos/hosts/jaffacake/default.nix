@@ -22,7 +22,7 @@ in {
   modules = {
     common = {
       audio.enable = true;
-      flakes.enable = true;
+      flakes.enable = false;
     };
 
     laptop = {
