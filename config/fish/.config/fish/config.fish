@@ -58,6 +58,9 @@ abbr -a -g kp 'kubectl port-forward'
 abbr -a -g kr 'kubectl rollout restart'
 abbr -a -g kt 'kubectl top pods'
 abbr -a -g ktn 'kubectl top nodes'
+abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
+abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
+abbr -a -g tu 'tilt up'
 
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
