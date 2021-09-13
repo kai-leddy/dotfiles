@@ -48,7 +48,6 @@ in {
     (mkIf cfg.android.enable {
       # install adb, permissions and udev rules for devices
       programs.adb.enable = true;
-      services.udev.packages = with pkgs; [ android-udev-rules ];
       users.users.kai.extraGroups = [ "adbusers" ];
       # add scrcpy for screen sharing
       environment.systemPackages = with pkgs; [ scrcpy ];
