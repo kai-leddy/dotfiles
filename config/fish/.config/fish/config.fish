@@ -62,6 +62,19 @@ abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
 abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
 abbr -a -g tu 'tilt up'
 
+# Terraform abbreviations
+abbr -a -g ti 'terraform init'
+abbr -a -g twl 'terraform workspace list'
+abbr -a -g tws 'terraform workspace select'
+abbr -a -g tp 'terraform plan'
+abbr -a -g ta 'terraform apply'
+abbr -a -g td 'terraform destroy'
+abbr -a -g ts 'terraform state'
+abbr -a -g tsl 'terraform state list'
+
+# Emacsclient abbrev
+abbr -a -g ec emacsclient
+
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
 bind p fish_clipboard_paste
