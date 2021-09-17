@@ -19,3 +19,6 @@
    :repo "sei40kr/jest-snippets"
    :files ("*.el" "snippets")))
 (package! magit-delta)
+
+;; Testing out TabNine code completion engine
+(package! company-tabnine)
