@@ -25,7 +25,6 @@ in {
     (mkIf cfg.emacs.enable {
       services.emacs = {
         enable = true;
-        defaultEditor = true;
         package = unstableWithEmacs.emacsGcc;
       };
 

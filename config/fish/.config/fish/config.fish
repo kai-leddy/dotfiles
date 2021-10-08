@@ -12,8 +12,8 @@ set -x SXHKD_SHELL /bin/sh
 set -x MAKEFLAGS '-j 8'
 
 # Setup env vars for various other stuff
-set -x EDITOR emacsclient
-set -x VISUAL emacsclient
+set -x EDITOR 'emacsclient --tty'
+set -x VISUAL 'emacsclient --tty'
 
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
@@ -73,7 +73,7 @@ abbr -a -g ts 'terraform state'
 abbr -a -g tsl 'terraform state list'
 
 # Emacsclient abbrev
-abbr -a -g ec emacsclient
+abbr -a -g ec 'emacsclient --create-frame'
 
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
