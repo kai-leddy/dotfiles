@@ -70,7 +70,7 @@
 (use-package! company-tabnine
   :ensure t
   :init
-  (add-to-list 'company-backends #'company-tabnine))
+  (setq +lsp-company-backends '(:separate company-yasnippet company-tabnine company-capf)))
 
 (use-package! react-snippets :after yasnippet)
 (use-package! jest-snippets :after yasnippet)
