@@ -73,7 +73,7 @@ abbr -a -g ts 'terraform state'
 abbr -a -g tsl 'terraform state list'
 
 # Emacsclient abbrev
-abbr -a -g ec 'emacsclient --create-frame'
+abbr -a -g ec 'emacsclient --tty'
 
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
