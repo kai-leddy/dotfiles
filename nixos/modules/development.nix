@@ -25,7 +25,7 @@ in {
     (mkIf cfg.emacs.enable {
       services.emacs = {
         enable = true;
-        package = unstableWithEmacs.emacsGcc;
+        package = unstableWithEmacs.emacsPgtkGcc;
       };
 
       environment.systemPackages = with pkgs; [
