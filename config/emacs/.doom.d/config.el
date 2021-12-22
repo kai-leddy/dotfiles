@@ -17,6 +17,10 @@
       ;; prescient-filter-method '(literal fuzzy regex)
       projectile-track-known-projects-automatically nil)
 
+;; custom mode definitions for filenames
+(appendq! auto-mode-alist
+          '(("Tiltfile" . python-mode)))
+
 ;; Random useful functions
 (defun +kai/toggle-prev-buffer ()
   "Toggle between the current and previous buffer"
@@ -141,10 +145,16 @@
 (add-hook! 'after-init-hook #'global-emojify-mode)
 
 ;; Disable auto formatting (& LSP) of yaml for helm charts
-(setq-hook! 'yaml-mode-hook
-  +format-with (if (locate-dominating-file default-directory "Chart.yaml") :none nil)
-  +format-with-lsp (if (locate-dominating-file default-directory "Chart.yaml") nil t)
-  lsp-managed-mode (if (locate-dominating-file default-directory "Chart.yaml") nil t))
+(add-hook! 'yaml-mode-hook
+  (let ((is-helm-yaml (locate-dominating-file default-directory "Chart.yaml")))
+    (when is-helm-yaml
+      (add-hook! 'lsp-mode-hook :local
+        (setq
+         +format-with :none
+         lsp-managed-mode nil
+         )
+        (lsp-managed-mode -1)
+        ))))
 
 ;; Disable auto formatting when using markdown vmd-mode
 (add-hook! 'vmd-mode-hook
