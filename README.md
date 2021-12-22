@@ -2,7 +2,7 @@
 
 ## Install instructions (-ish)
 
-1. checkout to `/home/<user>/dotfiles` 
+1. checkout to `/home/<user>/dotfiles`
 1. create a config in `nixos/hosts/` for the host
 1. replace `/etc/nixos/configuration.nix` with `import /home/<user>/dotfiles/nixos "hostname"`
 1. add the unstable channel with `nix-channel --add https://nixos.org/channels/nixpkgs-unstable unstable`
@@ -16,50 +16,3 @@
 1. install fisher plugins with `fisher install`
 1. install doom emacs by following their guide
 1. setup a wallpaper at `~/.config/wallpaper` or the **LOCK SCREEN WONT WORK**
-
-## Nix shell boilerplates
-
-- [ ] TODO: add more shell.nix examples for more project types
-- [ ] TODO: make these separate files in an examples/ folder
-
-### Kubernetes, Helm, GCloud
-
-``` nix
-{ pkgs ? import <nixpkgs> { } }:
-
-with pkgs;
-
-mkShell {
-  buildInputs = [ google-cloud-sdk kubernetes-helm kubectl ];
-}
-```
-
-### Terraform
-
-``` nix
-{ pkgs ? import <nixpkgs> { } }:
-
-with pkgs;
-
-mkShell {
-  buildInputs = [
-    ((terraform.withPlugins (plugins: [
-      plugins.google
-      plugins.helm
-      plugins.kubernetes
-    ])).overrideAttrs (_:
-      let
-        version = "0.12.28";
-        sha256 = "05ymr6vc0sqh1sia0qawhz0mag8jdrq157mbj9bkdpsnlyv209p3";
-      in {
-        name = "terraform-${version}";
-        src = fetchFromGitHub {
-          owner = "hashicorp";
-          repo = "terraform";
-          rev = "v${version}";
-          inherit sha256;
-        };
-      }))
-  ];
-}
-```
