@@ -45,6 +45,9 @@ with lib; {
     extraGroups = [ "wheel" ];
   };
 
+  # Use Cloudflare DNS servers (more reliable than local router)
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
+
   # TODO: some sort of fonts.nix maybe?
   fonts.fonts = with pkgs;
     let fantasque-nerdfont = callPackage ./pkgs/fantasque-nerdfont.nix { };
@@ -52,6 +55,7 @@ with lib; {
       corefonts
       # (pkgs.unstable.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
       fantasque-nerdfont # custom derivation due to issues with above v2.1.0
+      roboto
     ];
 
   # don't require sudo password for users in wheel group
