@@ -12,6 +12,7 @@ with lib; {
   networking.hostName = hostname; # Define your hostname.
 
   nix = {
+    trustedUsers = [ "root" "kai" ];
     autoOptimiseStore = true; # does what it says on the tin
     # use cachix for community packages
     binaryCaches =
