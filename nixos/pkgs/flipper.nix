@@ -9,6 +9,7 @@
 , libpulseaudio, at-spi2-atk, at-spi2-core }:
 
 let
+  # TODO: Use Autopatchelf instead of this
   libPath = lib.makeLibraryPath [
     stdenv.cc.cc
     atk
