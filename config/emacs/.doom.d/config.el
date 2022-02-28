@@ -2,9 +2,10 @@
 
 ;; Global variables for configuration
 (setq display-line-numbers-type 'relative ; enable relative line numbers
-      doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17)
-      doom-unicode-font (font-spec :family "FantasqueSansMono Nerd Font" :size 17)
+      doom-font (font-spec :family "FantasqueSansMono Nerd Font" :size 16)
+      doom-unicode-font (font-spec :family "FantasqueSansMono Nerd Font" :size 16)
       doom-big-font-increment 2 ; big-font mode doesn't need to be THAT big
+      ns-use-thin-smoothing t ; better anti-aliasing on MacOS
       scroll-margin 4
       company-minimum-prefix-length 1 ; recommended for lsp-mode
       company-idle-delay 0 ; recommended for lsp-mode

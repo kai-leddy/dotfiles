@@ -12,15 +12,23 @@ set -x SXHKD_SHELL /bin/sh
 set -x MAKEFLAGS '-j 8'
 
 # Setup env vars for various other stuff
-set -x EDITOR 'emacsclient --tty'
-set -x VISUAL 'emacsclient --tty'
+set -x EDITOR emacsclient --tty
+set -x VISUAL emacsclient --tty
 
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
 
+# Setup nvm
+set -U nvm_default_version v16.14.0
+
+# Setup Android development variables
+set -x ANDROID_HOME $HOME/Library/Android/sdk
+set -l android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
+alias emu '$ANDROID_HOME/emulator/emulator'
+
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin $HOME/.linkerd2/bin
+set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin $HOME/.linkerd2/bin /opt/homebrew/bin $android_path
 
 # use lsd instead of ls
 alias ls lsd
@@ -45,22 +53,22 @@ abbr -a -g gs 'git status'
 abbr -a -g gf 'git flow'
 
 # Kubernetes abbreviations
-abbr -a -g k kubectl
-abbr -a -g kg 'kubectl get'
-abbr -a -g kga 'kubectl get --all-namespaces'
-abbr -a -g kgp 'kubectl get pods'
-abbr -a -g kgl 'kubectl get pods --show-labels'
-abbr -a -g kd 'kubectl describe'
-abbr -a -g kdp 'kubectl describe pods'
-abbr -a -g ke 'kubectl exec -it'
-abbr -a -g kl 'kubectl logs'
-abbr -a -g kp 'kubectl port-forward'
-abbr -a -g kr 'kubectl rollout restart'
-abbr -a -g kt 'kubectl top pods'
-abbr -a -g ktn 'kubectl top nodes'
-abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
-abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
-abbr -a -g tu 'tilt up'
+# abbr -a -g k kubectl
+# abbr -a -g kg 'kubectl get'
+# abbr -a -g kga 'kubectl get --all-namespaces'
+# abbr -a -g kgp 'kubectl get pods'
+# abbr -a -g kgl 'kubectl get pods --show-labels'
+# abbr -a -g kd 'kubectl describe'
+# abbr -a -g kdp 'kubectl describe pods'
+# abbr -a -g ke 'kubectl exec -it'
+# abbr -a -g kl 'kubectl logs'
+# abbr -a -g kp 'kubectl port-forward'
+# abbr -a -g kr 'kubectl rollout restart'
+# abbr -a -g kt 'kubectl top pods'
+# abbr -a -g ktn 'kubectl top nodes'
+# abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
+# abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
+# abbr -a -g tu 'tilt up'
 
 # Terraform abbreviations
 abbr -a -g ti 'terraform init'
@@ -78,3 +86,12 @@ abbr -a -g ec 'emacsclient --tty'
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
 bind p fish_clipboard_paste
+
+# Enable AWS CLI autocompletion: github.com/aws/aws-cli/issues/1079
+complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
+
+# setup various shell extensions
+thefuck --alias | source
+starship init fish | source
+zoxide init fish | source
+direnv hook fish | source

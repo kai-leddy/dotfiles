@@ -5,6 +5,7 @@ format = """
 [█](black)$character$status$cmd_duration[](black)\
 $jobs\
 $kubernetes\
+$aws\
 $directory\
 ([](bright-yellow)$git_branch$git_metrics$git_status[](bright-yellow))\
 $line_break\
@@ -44,6 +45,7 @@ format = "([](bright-black)[  $path]($style)[](bright-black))"
 style = "bright-cyan bg:bright-black"
 
 [nix_shell]
+disabled = true
 symbol = ""
 format = "[](cyan)[$symbol $state]($style)[](cyan)"
 style = "black bg:cyan"
@@ -60,11 +62,17 @@ format = "([](blue)[$symbol $workspace]($style)[](blue))"
 style = "white bg:blue"
 
 [kubernetes]
-disabled = false
+disabled = true
 symbol = "ﴱ"
 format = '([](bright-red)[$symbol $context( \[$namespace\])]($style)[](bright-red))'
 style = "black bg:bright-red"
 context_aliases = { kind-kind = "kind" }
+
+[aws]
+disabled = false
+symbol = ""
+format = '([](bright-red)[$symbol $profile( \[$duration\])]($style)[](bright-red))'
+style = "black bg:bright-red"
 
 [rust]
 version_format = "$raw"
