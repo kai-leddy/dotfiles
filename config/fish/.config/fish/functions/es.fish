@@ -1,3 +1,3 @@
-function es
-    $EDITOR ~/.config/sxhkd/sxhkdrc $argv
+function ef
+    $EDITOR ~/.config/starship.toml $argv
 end
