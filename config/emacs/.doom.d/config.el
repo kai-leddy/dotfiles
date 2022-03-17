@@ -169,3 +169,12 @@
 
 ;; fix format-all not respecting the .envrc environment
 (after! format-all (advice-add 'format-all-buffer :around #'envrc-propagate-environment))
+
+;; Setup Clangd as the LSP for C/C++/Obj-C code
+(setq lsp-clients-clangd-args '("-j=3"
+                                "--background-index"
+                                "--clang-tidy"
+                                "--completion-style=detailed"
+                                "--header-insertion=never"
+                                "--header-insertion-decorators=0"))
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))

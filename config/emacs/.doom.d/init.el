@@ -99,9 +99,9 @@
        ;;ein                  ; tame Jupyter notebooks with emacs
        (eval +overlay)                   ; run code, run (also, repls)
        ;;gist                 ; interacting with github gists
-       lookup                 ; helps you navigate your code and documentation
+       (lookup +docsets)                 ; helps you navigate your code and documentation
        lsp
-       ;;macos                ; MacOS-specific commands
+       macos                ; MacOS-specific commands
        magit                  ; a git porcelain for Emacs
        ;;make                   ; run make tasks from Emacs
        ;;pass                 ; password manager for nerds
@@ -114,7 +114,7 @@
 
        :lang
        ;;agda                 ; types of types of types of types...
-       cc                     ; C/C++/Obj-C madness
+       (cc +lsp)                     ; C/C++/Obj-C madness
        ;;clojure              ; java with a lisp
        ;;common-lisp          ; if you've seen one lisp, you've seen them all
        ;;coq                  ; proofs-as-programs
@@ -135,7 +135,7 @@
        ;;hy                   ; readability of scheme w/ speed of python
        ;;idris             ;
        (json +lsp)              ; At least it ain't XML
-       (java +eclim)    ; the poster child for carpal tunnel syndrome
+       (java +lsp)    ; the poster child for carpal tunnel syndrome
        (javascript +lsp)             ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia                ; a better, faster MATLAB
        ;;kotlin               ; a better, slicker Java(Script)
@@ -146,11 +146,11 @@
        ;;lua                  ; one-based indices? one-based indices
        markdown               ; writing docs for people to ignore
        ;;nim                  ; python + lisp at the speed of c
-       nix                  ; I hereby declare "nix geht mehr!"
+       ;;nix                  ; I hereby declare "nix geht mehr!"
        ;;ocaml                ; an objective camel
        ;;org                   ; organize your plain life in plain text
        ;;perl                 ; write code no one else can comprehend
-       ;;php                  ; perl's insecure younger brother
+       php                  ; perl's insecure younger brother
        ;;plantuml             ; diagrams for confusing people more
        ;;purescript           ; javascript, but functional
        (python +lsp)                 ; beautiful is better than ugly
@@ -165,7 +165,7 @@
        (sh +fish)             ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity             ; do you need a blockchain? No.
-       ;;swift                ; who asked for emoji variables?
+       swift                ; who asked for emoji variables?
        ;;terra                ; Earth and Moon in alignment for performance.
        (web +lsp)                    ; the tubes
        (yaml +lsp)           ; JSON, but readable
