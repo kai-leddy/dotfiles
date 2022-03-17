@@ -3,39 +3,40 @@
 [user]
 	email = epickaimail@gmail.com
 	name = Kai Leddy
-[push]
-	default = simple
-[alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %<(50,trunc)%s %Cgreen(%cr)%C(bold blue)<%an>%Creset' --abbrev-commit
-	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 [core]
 	editor = emacsclient
 	excludesfile = ~/.gitignore_global
-[diff]
-	indentHeuristic = true
-[pull]
-	rebase = true
-[svn]
-	rmdir = true
-[fetch]
-	prune = true
-
-# Setup delta for diffs
-[pager]
-    diff = delta
-    log = delta
-    reflog = delta
-    show = delta
-[delta]
-    syntax-theme = Monokai Extended
-	line-numbers = true
-    navigate = true
-	pager = bat
-	# styling
-	file-decoration-style = ""
-	hunk-header-style = "file syntax"
-	hunk-header-file-style = "cyan"
-[interactive]
-    diffFilter = delta --color-only
+	pager = delta
 [init]
 	defaultBranch = main
+[push]
+	default = current
+	followTags = true
+[pull]
+	rebase = true
+[fetch]
+	prune = true
+	pruneTags = true
+[diff]
+	algorithm = histogram
+	indentHeuristic = true
+	colorMoved = default
+[delta]
+	syntax-theme = Monokai Extended
+	line-numbers = true
+	navigate = true
+	side-by-side = false
+	pager = less -RS
+	# styling
+	file-decoration-style = ""
+	hunk-header-style = "syntax"
+	hunk-header-file-style = "cyan"
+[interactive]
+	diffFilter = delta --color-only
+[merge]
+	conflictstyle = diff3
+[pretty]
+	loggraph = "format:'%Cred%h%Creset -%C(yellow)%d%Creset %<(50,trunc)%s %Cgreen(%cr)%C(bold blue)<%an>%Creset'"
+[alias]
+	lg = log --color --graph --pretty=loggraph --abbrev-commit
+	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
