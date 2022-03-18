@@ -80,11 +80,6 @@
 (use-package! react-snippets :after yasnippet)
 (use-package! jest-snippets :after yasnippet)
 
-;; Setup magit to use delta for diffs - DISABLED BECAUSE BROKEN
-;; (use-package! magit-delta
-;;   :if (executable-find "delta")
-;;   :hook (magit-mode . magit-delta-mode))
-
 (use-package! vmd-mode
   :commands vmd-mode
   :init

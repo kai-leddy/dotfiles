@@ -18,7 +18,6 @@
   (:host github
    :repo "sei40kr/jest-snippets"
    :files ("*.el" "snippets")))
-(package! magit-delta)
 (package! nvm)
 
 ;; Testing out TabNine code completion engine
