@@ -28,7 +28,7 @@ alias emu '$ANDROID_HOME/emulator/emulator'
 
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin $HOME/.linkerd2/bin /opt/homebrew/bin $android_path
+set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin $HOME/.linkerd2/bin /opt/homebrew/bin $android_path $HOME/.composer/vendor/bin
 
 # use lsd instead of ls
 alias ls lsd
