@@ -13,7 +13,6 @@
 (package! vmd-mode)
 (package! emojify)
 (package! react-snippets)
-(package! eslintd-fix)
 (package! jest-snippets :recipe
   (:host github
    :repo "sei40kr/jest-snippets"

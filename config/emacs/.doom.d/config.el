@@ -13,7 +13,6 @@
       +lsp-company-backends '(:separate company-yasnippet company-capf)
       gcmh-high-cons-threshold (* 64 1024 1024) ; GC more stuff
       gcmh-idle-delay 5 ; GC less often
-      flycheck-javascript-eslint-executable "eslint_d"
       rustic-lsp-server 'rust-analyzer
       ;; prescient-filter-method '(literal fuzzy regex)
       projectile-track-known-projects-automatically nil)
@@ -125,10 +124,6 @@
 (after! ivy-prescient
   (setf (alist-get 'counsel-rg ivy-re-builders-alist) #'ivy--regex-plus))
 
-;; enable eslint auto fixing for all JS & TS buffers
-(add-hook!
- '(typescript-mode-hook js2-mode-hook rjsx-mode-hook typescript-tsx-mode-hook)
- #'eslintd-fix-mode)
 ;; disable LSP formatting for all JS & TS buffers (let prettier do it)
 (setq-hook!
     '(typescript-mode-hook js2-mode-hook rjsx-mode-hook typescript-tsx-mode-hook)
@@ -155,12 +150,6 @@
 ;; Disable auto formatting when using markdown vmd-mode
 (add-hook! 'vmd-mode-hook
   (setq +format-with (if vmd-mode :none nil)))
-
-(after! (flycheck rjsx-mode typescript-tsx-mode typescript-mode js2-mode)
-  (set-next-checker! 'rjsx-mode 'lsp 'javascript-eslint 'append)
-  (set-next-checker! 'typescript-tsx-mode 'lsp 'javascript-eslint 'append)
-  (set-next-checker! 'js2-mode 'lsp 'javascript-eslint 'append)
-  (set-next-checker! 'typescript-mode 'lsp 'javascript-eslint 'append))
 
 ;; fix format-all not respecting the .envrc environment
 (after! format-all (advice-add 'format-all-buffer :around #'envrc-propagate-environment))
