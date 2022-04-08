@@ -70,12 +70,6 @@
   :init
   (setq doom-theme 'doom-molokai))
 
-;; Testing out TabNine code completion engine
-(use-package! company-tabnine
-  :ensure t
-  :init
-  (setq +lsp-company-backends '(:separate company-yasnippet company-tabnine company-capf)))
-
 (use-package! react-snippets :after yasnippet)
 (use-package! jest-snippets :after yasnippet)
 
