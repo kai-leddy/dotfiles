@@ -159,6 +159,14 @@
                                 "--header-insertion-decorators=0"))
 (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
+;; Setup Java LSP for Android development
+(setq lsp-java-save-actions-organize-imports t
+      lsp-java-completion-import-order
+      ["javax" "java" "org" "net" "junit" "gov" "com" "libcore" "dalvik" "com.android" "androidx" "android"
+      "#javax" "#java" "#org" "#net" "#junit" "#gov" "#com" "#libcore" "#dalvik" "#com.android" "#androidx" "#android"]
+      lsp-java-format-settings-url "file:///Users/kai.leddy/android-formatting.xml"
+      lsp-java-format-settings-profile "Android")
+
 ;;; Setup for Github Copilot
 ;; accept completion from copilot and fallback to company
 (defun my-tab ()
