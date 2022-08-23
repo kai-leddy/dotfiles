@@ -15,6 +15,7 @@ $nodejs\
 $terraform\
 $rust\
 $python\
+$ruby\
 [](bright-black)[](bright-red)[](bright-green)[](bright-yellow)[](bright-cyan) """
 
 [character]
@@ -83,6 +84,12 @@ style = "red bg:bright-black"
 version_format = "$raw"
 format = "([](yellow)[$symbol$version]($style)[](yellow))"
 style = "black bg:yellow"
+
+[ruby]
+version_format = "$raw"
+symbol = " "
+format = "([](red)[$symbol$version]($style)[](red))"
+style = "black bg:red"
 
 [git_branch]
 symbol = ""
