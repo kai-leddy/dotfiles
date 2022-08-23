@@ -18,3 +18,7 @@
    :repo "sei40kr/jest-snippets"
    :files ("*.el" "snippets")))
 (package! nvm)
+
+;;; NOTE: testing out Github Copilot plugin
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
