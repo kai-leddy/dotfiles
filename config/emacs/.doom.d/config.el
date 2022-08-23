@@ -15,7 +15,9 @@
       gcmh-idle-delay 5 ; GC less often
       rustic-lsp-server 'rust-analyzer
       ;; prescient-filter-method '(literal fuzzy regex)
-      projectile-track-known-projects-automatically nil)
+      projectile-track-known-projects-automatically nil
+      ;; enable gravatars in git commits
+      magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
 
 ;; custom mode definitions for filenames
 (appendq! auto-mode-alist
