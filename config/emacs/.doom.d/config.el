@@ -75,12 +75,12 @@
 (use-package! react-snippets :after yasnippet)
 (use-package! jest-snippets :after yasnippet)
 
-(use-package! vmd-mode
-  :commands vmd-mode
+(use-package! emacs-livedown
+  :commands livedown-preview livedown-kill
   :init
   (map! :map markdown-mode-map
         (:localleader
-         "v" #'vmd-mode)))
+         "l" #'livedown-preview)))
 
 ;; Setup org mode stuff
 (after! org
@@ -142,10 +142,6 @@
          )
         (lsp-managed-mode -1)
         ))))
-
-;; Disable auto formatting when using markdown vmd-mode
-(add-hook! 'vmd-mode-hook
-  (setq +format-with (if vmd-mode :none nil)))
 
 ;; fix format-all not respecting the .envrc environment
 (after! format-all (advice-add 'format-all-buffer :around #'envrc-propagate-environment))
