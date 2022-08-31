@@ -15,6 +15,9 @@ set -x MAKEFLAGS '-j 8'
 set -x EDITOR emacsclient --tty
 set -x VISUAL emacsclient --tty
 
+# Make emacs LSP faster
+set -x LSP_USE_PLISTS true
+
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
 
@@ -26,13 +29,9 @@ set -x ANDROID_HOME $HOME/Library/Android/sdk
 set -l android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
 alias emu '$ANDROID_HOME/emulator/emulator'
 
-# Get paths for Ruby and Gems (system Ruby)
-set -l ruby_path /opt/homebrew/opt/ruby/bin
-set -l gem_path ($ruby_path/gem environment gemdir)
-
 # Setup user PATH variables all at once (for performance)
 set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin $HOME/.linkerd2/bin /opt/homebrew/bin /opt/homebrew/sbin $ruby_path $gem_path $android_path $HOME/.composer/vendor/bin $HOME/.mint/bin
+set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin $HOME/.linkerd2/bin /opt/homebrew/bin /opt/homebrew/sbin $android_path $HOME/.composer/vendor/bin $HOME/.mint/bin
 
 # use lsd instead of ls
 alias ls lsd
@@ -99,4 +98,4 @@ thefuck --alias | source
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
-rvm default
+status --is-interactive; and rbenv init - fish | source

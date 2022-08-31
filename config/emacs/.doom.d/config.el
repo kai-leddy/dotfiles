@@ -122,7 +122,7 @@
 
 ;; disable LSP formatting for all JS & TS buffers (let prettier do it)
 (setq-hook!
-    '(typescript-mode-hook js2-mode-hook rjsx-mode-hook typescript-tsx-mode-hook)
+    '(typescript-mode-hook js2-mode-hook rjsx-mode-hook typescript-tsx-mode-hook json-mode-hook)
   +format-with-lsp nil)
 
 ;; try to get magit-todos to work with magit-gitflow (UNTESTED)

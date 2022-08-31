@@ -9,6 +9,9 @@
 (package! evil-snipe :disable t)
 ;; (package! evil-easymotion :disable t)
 
+;; Unpin all LSP packages so we run the latest
+(unpin! (:tools lsp))
+
 (package! nvm)
 (package! emojify)
 (package! react-snippets)
@@ -20,7 +23,7 @@
   (:host github
    :repo "shime/emacs-livedown"
    :files ("*.el")))
-
-;;; NOTE: testing out Github Copilot plugin
-(package! copilot
-  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+(package! copilot :recipe
+  (:host github
+   :repo "zerolfx/copilot.el"
+   :files ("*.el" "dist")))
