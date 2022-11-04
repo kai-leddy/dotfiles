@@ -46,6 +46,8 @@
  ;; swap ' and ` to allow using ' to goto exact position
  :n "'" #'evil-goto-mark
  :n "`" #'evil-goto-mark-line
+ ;; use 'SPC r' to rotate values (true/false etc)
+ :n "SPC r" #'rotate-text
  )
 
 ;; Additional leader mappings
