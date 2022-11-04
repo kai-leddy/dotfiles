@@ -40,3 +40,4 @@
 [alias]
 	lg = log --color --graph --pretty=loggraph --abbrev-commit
 	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+	tidy = "!git remote prune origin ; git branch --merged main | grep -v '^[ *]*main$' | xargs git branch -d"
