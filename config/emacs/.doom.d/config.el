@@ -165,6 +165,12 @@
       lsp-java-format-settings-url "file:///Users/kai.leddy/android-formatting.xml"
       lsp-java-format-settings-profile "Android")
 
+;; TODO: since switching to eglot, a lot of the LSP stuff in here is likely irrelevant
+;; Make eglot work with tsx files
+(after! eglot
+  :config
+  (setq eglot-server-programs '((typescript-tsx-mode . ("typescript-language-server" "--stdio")))))
+
 ;;; Setup for Github Copilot
 ;; accept completion from copilot and fallback to company
 (defun my-tab ()
