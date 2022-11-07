@@ -7,12 +7,7 @@
       doom-big-font-increment 2 ; big-font mode doesn't need to be THAT big
       ns-use-thin-smoothing t ; better anti-aliasing on MacOS
       scroll-margin 4
-      company-minimum-prefix-length 1 ; recommended for lsp-mode
-      company-idle-delay 0 ; recommended for lsp-mode
-      lsp-idle-delay 0.1
-      +lsp-company-backends '(:separate company-yasnippet company-capf)
-      gcmh-high-cons-threshold (* 64 1024 1024) ; GC more stuff
-      gcmh-idle-delay 5 ; GC less often
+      company-backends '(:separate company-yasnippet company-capf)
       rustic-lsp-server 'rust-analyzer
       ;; prescient-filter-method '(literal fuzzy regex)
       projectile-track-known-projects-automatically nil
@@ -133,6 +128,7 @@
 ;; enable emojis everywhere :tada:
 (add-hook! 'after-init-hook #'global-emojify-mode)
 
+;; TODO: I might not need this anymore with Eglot
 ;; Disable auto formatting (& LSP) of yaml for helm charts
 (add-hook! 'yaml-mode-hook
   (let ((is-helm-yaml (locate-dominating-file default-directory "Chart.yaml")))
@@ -148,24 +144,6 @@
 ;; fix format-all not respecting the .envrc environment
 (after! format-all (advice-add 'format-all-buffer :around #'envrc-propagate-environment))
 
-;; Setup Clangd as the LSP for C/C++/Obj-C code
-(setq lsp-clients-clangd-args '("-j=3"
-                                "--background-index"
-                                "--clang-tidy"
-                                "--completion-style=detailed"
-                                "--header-insertion=never"
-                                "--header-insertion-decorators=0"))
-(after! lsp-clangd (set-lsp-priority! 'clangd 2))
-
-;; Setup Java LSP for Android development
-(setq lsp-java-save-actions-organize-imports t
-      lsp-java-completion-import-order
-      ["javax" "java" "org" "net" "junit" "gov" "com" "libcore" "dalvik" "com.android" "androidx" "android"
-      "#javax" "#java" "#org" "#net" "#junit" "#gov" "#com" "#libcore" "#dalvik" "#com.android" "#androidx" "#android"]
-      lsp-java-format-settings-url "file:///Users/kai.leddy/android-formatting.xml"
-      lsp-java-format-settings-profile "Android")
-
-;; TODO: since switching to eglot, a lot of the LSP stuff in here is likely irrelevant
 ;; Make eglot work with tsx files
 (after! eglot
   :config
