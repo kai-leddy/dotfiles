@@ -169,7 +169,7 @@
 ;; Make eglot work with tsx files
 (after! eglot
   :config
-  (setq eglot-server-programs '((typescript-tsx-mode . ("typescript-language-server" "--stdio")))))
+  (appendq! eglot-server-programs '((typescript-tsx-mode . ("typescript-language-server" "--stdio")))))
 
 ;;; Setup for Github Copilot
 ;; accept completion from copilot and fallback to company
