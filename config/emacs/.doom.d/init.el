@@ -15,22 +15,20 @@
 ;;      directory (for easy access to its source code).
 
 (doom! :completion
-       (company +childframe)  ; code completion engine
+       (company)  ; code completion engine
        ;; (ivy +icons +prescient +childframe) ; search engine
        (vertico +icons) ; search engine
 
        :ui
        doom                   ; what makes DOOM look the way it does
        doom-dashboard         ; a nifty splash screen for Emacs
-       (emoji +github +unicode) ; enable emojis :smile:
        hl-todo                ; highlight TODO/FIXME/NOTE tags
+       hydra                  ; transient mode keybindings etc
        indent-guides          ; highlighted indent columns
-       ;; ligatures ; felt cute, might delete later
-       minimap ; minimap of the code on the side
        modeline               ; snazzy, Atom-inspired modeline, plus API
        nav-flash              ; blink the current line after jumping
        ophints                ; highlight the region an operation acts on
-       (popup +defaults)            ; some default popup handling stuff
+       (popup +all +defaults)            ; some default popup handling stuff
        treemacs               ; a project drawer, like neotree but cooler
        (vc-gutter +pretty)              ; vcs diff in the fringe
        vi-tilde-fringe        ; fringe tildes to mark beyond EOB

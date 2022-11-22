@@ -7,12 +7,18 @@
       doom-big-font-increment 2 ; big-font mode doesn't need to be THAT big
       ns-use-thin-smoothing t ; better anti-aliasing on MacOS
       scroll-margin 4
+      company-idle-delay 0.01
       company-backends '(:separate company-yasnippet company-capf)
-      rustic-lsp-server 'rust-analyzer
+      rustic-lsp-server 'rust-analyzersetq
+      copilot-node-executable "~/.local/share/nvm/v16.14.0/bin/node"
       ;; prescient-filter-method '(literal fuzzy regex)
       projectile-track-known-projects-automatically nil
       ;; enable gravatars in git commits
       magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
+
+;; Try to improve the garbage collection situation
+(after! gcmh
+  (setq gcmh-high-cons-threshold 67108864)) ; 64mb
 
 ;; custom mode definitions for filenames
 (appendq! auto-mode-alist
@@ -26,40 +32,31 @@
 
 ;; Basic mappings
 (map!
- ;; split lines with K
- :n "K" #'indent-new-comment-line
- ;; swap between latest 2 buffers with backspace
- :n "DEL" #'+kai/toggle-prev-buffer
- ;; move lines up and down with meta+{j,k}
- :n "M-j" #'move-line-down
- :n "M-k" #'move-line-up
- ;; change window with ctrl+{h,j,k,l}
- :n "C-h" #'evil-window-left
- :n "C-j" #'evil-window-down
- :n "C-k" #'evil-window-up
- :n "C-l" #'evil-window-right
- ;; swap ' and ` to allow using ' to goto exact position
- :n "'" #'evil-goto-mark
- :n "`" #'evil-goto-mark-line
- ;; use 'SPC r' to rotate values (true/false etc)
- :n "SPC r" #'rotate-text
- )
+  ;; split lines with K
+  :n "K" #'indent-new-comment-line
+  ;; swap between latest 2 buffers with backspace
+  :n "DEL" #'+kai/toggle-prev-buffer
+  ;; move lines up and down with meta+{j,k}
+  :n "M-j" #'move-line-down
+  :n "M-k" #'move-line-up
+  ;; swap ' and ` to allow using ' to goto exact position
+  :n "'" #'evil-goto-mark
+  :n "`" #'evil-goto-mark-line
+  ;; use 'SPC r' to rotate values (true/false etc)
+  :n "SPC r" #'rotate-text)
 
 ;; Additional leader mappings
 (map! :leader
       :desc "Run shell command" "!" #'projectile-run-shell-command-in-root
       (:prefix "p"
        ;; Save multiple project buffers
-       :desc "Save project files" "s" #'projectile-save-project-buffers
-       )
+       :desc "Save project files" "s" #'projectile-save-project-buffers)
       (:prefix "b"
        ;; save multiple open buffers
-       :desc "Save some buffers" "s" #'save-some-buffers
-       )
+       :desc "Save some buffers" "s" #'save-some-buffers)
       (:prefix "i"
        ;; insert an emoji
-       :desc "Emoji" "e" #'emojify-insert-emoji
-       )
+       :desc "Emoji" "e" #'emojify-insert-emoji)
       (:prefix "o"
        ;; open an Eshell (no fish features, but better integration)
        :desc "Shell (eshell)" "s" #'eshell
@@ -72,6 +69,7 @@
 (use-package! react-snippets :after yasnippet)
 (use-package! jest-snippets :after yasnippet)
 
+;; setup live markdown editing with SPC m l
 (use-package! emacs-livedown
   :commands livedown-preview livedown-kill
   :init
@@ -144,14 +142,14 @@
 ;; fix format-all not respecting the .envrc environment
 (after! format-all (advice-add 'format-all-buffer :around #'envrc-propagate-environment))
 
-;; Make eglot work with tsx files
+;; Make eglot use tsserver for as much as possible
 (after! eglot
   :config
-  (appendq! eglot-server-programs '((typescript-tsx-mode . ("typescript-language-server" "--stdio")))))
+  (prependq! eglot-server-programs '(((typescript-tsx-mode typescript-mode js-mode rjsx-mode) . ("typescript-language-server" "--stdio")))))
 
 ;;; Setup for Github Copilot
 ;; accept completion from copilot and fallback to company
-(defun my-tab ()
+(defun +kai/autocomplete ()
   (interactive)
   (or (copilot-accept-completion)
       (company-indent-or-complete-common nil)))
@@ -161,14 +159,14 @@
   :bind (("C-TAB" . 'copilot-accept-completion-by-word)
          ("C-<tab>" . 'copilot-accept-completion-by-word)
          :map evil-insert-state-map
-         ("<tab>" . 'my-tab)
-         ("TAB" . 'my-tab)
+         ("<tab>" . '+kai/autocomplete)
+         ("TAB" . '+kai/autocomplete)
          :map company-active-map
-         ("<tab>" . 'my-tab)
-         ("TAB" . 'my-tab)
+         ("<tab>" . '+kai/autocomplete)
+         ("TAB" . '+kai/autocomplete)
          :map company-mode-map
-         ("<tab>" . 'my-tab)
-         ("TAB" . 'my-tab)))
+         ("<tab>" . '+kai/autocomplete)
+         ("TAB" . '+kai/autocomplete)))
 
 (provide 'config)
 ;;; config.el ends here
