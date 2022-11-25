@@ -29,7 +29,7 @@
   ;; split lines with K
   :n "K" #'indent-new-comment-line
   ;; swap between latest 2 *project* buffers with backspace
-  :n "DEL" #'projectile-previous-project-buffer
+  :n "DEL" #'projectile-project-buffers-other-buffer
   ;; move lines up and down with meta+{j,k}
   :n "M-j" #'move-line-down
   :n "M-k" #'move-line-up
