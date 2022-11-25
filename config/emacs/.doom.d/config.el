@@ -24,18 +24,12 @@
 (appendq! auto-mode-alist
           '(("Tiltfile" . python-mode)))
 
-;; Random useful functions
-(defun +kai/toggle-prev-buffer ()
-  "Toggle between the current and previous buffer"
-  (interactive)
-  (switch-to-buffer (other-buffer (current-buffer) t)))
-
 ;; Basic mappings
 (map!
   ;; split lines with K
   :n "K" #'indent-new-comment-line
-  ;; swap between latest 2 buffers with backspace
-  :n "DEL" #'+kai/toggle-prev-buffer
+  ;; swap between latest 2 *project* buffers with backspace
+  :n "DEL" #'projectile-previous-project-buffer
   ;; move lines up and down with meta+{j,k}
   :n "M-j" #'move-line-down
   :n "M-k" #'move-line-up
