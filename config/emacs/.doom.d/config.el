@@ -1,4 +1,4 @@
-;;; ~/.doom.d/config.el -*- lexical-binding: t; -*-
+;;; ~/.doom.d/config.el -*- lexical-binding: t; eval: (flycheck-mode -1); -*-
 
 ;; Global variables for configuration
 (setq display-line-numbers-type 'relative ; enable relative line numbers
