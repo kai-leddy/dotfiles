@@ -8,9 +8,12 @@
       ns-use-thin-smoothing t ; better anti-aliasing on MacOS
       scroll-margin 4
       company-idle-delay 0.01
+      flycheck-idle-change-delay 3
+      flycheck-check-syntax-automatically '(save mode-enabled)
       company-backends '(:separate company-yasnippet company-capf)
       rustic-lsp-server 'rust-analyzersetq
       copilot-node-executable "~/.local/share/nvm/v16.14.0/bin/node"
+      eglot-events-buffer-size 0 ; disable eglot events buffer (turn this off to debug language servers)
       ;; prescient-filter-method '(literal fuzzy regex)
       projectile-track-known-projects-automatically nil
       ;; enable gravatars in git commits
@@ -19,6 +22,10 @@
 ;; Try to improve the garbage collection situation
 (after! gcmh
   (setq gcmh-high-cons-threshold 67108864)) ; 64mb
+
+(setq-hook! 'eglot-managed-mode-hook
+      ;; show hovered point docs before function signature docs
+      eldoc-documentation-functions '(eglot-hover-eldoc-function eglot-signature-eldoc-function))
 
 ;; custom mode definitions for filenames
 (appendq! auto-mode-alist
@@ -161,6 +168,18 @@
          :map company-mode-map
          ("<tab>" . '+kai/autocomplete)
          ("TAB" . '+kai/autocomplete)))
+
+;; Temporary hack to stop annoying messages from ts-ls
+;; TODO: remove this after upgrading to Emacs 29
+(advice-add 'json-parse-string :around
+            (lambda (orig string &rest rest)
+              (apply orig (s-replace "\\u0000" "" string)
+                     rest)))
+(advice-add 'json-parse-buffer :around
+              (lambda (orig &rest rest)
+                (while (re-search-forward "\\u0000" nil t)
+                  (replace-match ""))
+                (apply orig rest)))
 
 (provide 'config)
 ;;; config.el ends here
