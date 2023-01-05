@@ -16,6 +16,9 @@
       eglot-events-buffer-size 0 ; disable eglot events buffer (turn this off to debug language servers)
       ;; prescient-filter-method '(literal fuzzy regex)
       projectile-track-known-projects-automatically nil
+      ;; use primary instead of clipboard by default
+      select-enable-clipboard nil
+      select-enable-primary t
       ;; enable gravatars in git commits
       magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
 
