@@ -27,8 +27,8 @@
   (setq gcmh-high-cons-threshold 67108864)) ; 64mb
 
 (setq-hook! 'eglot-managed-mode-hook
-      ;; show hovered point docs before function signature docs
-      eldoc-documentation-functions '(eglot-hover-eldoc-function eglot-signature-eldoc-function))
+  ;; show hovered point docs before function signature docs
+  eldoc-documentation-functions '(eglot-hover-eldoc-function eglot-signature-eldoc-function))
 
 ;; custom mode definitions for filenames
 (appendq! auto-mode-alist
@@ -36,18 +36,18 @@
 
 ;; Basic mappings
 (map!
-  ;; split lines with K
-  :n "K" #'indent-new-comment-line
-  ;; swap between latest 2 *project* buffers with backspace
-  :n "DEL" #'projectile-project-buffers-other-buffer
-  ;; move lines up and down with meta+{j,k}
-  :n "M-j" #'move-line-down
-  :n "M-k" #'move-line-up
-  ;; swap ' and ` to allow using ' to goto exact position
-  :n "'" #'evil-goto-mark
-  :n "`" #'evil-goto-mark-line
-  ;; use 'SPC r' to rotate values (true/false etc)
-  :n "SPC r" #'rotate-text)
+ ;; split lines with K
+ :n "K" #'indent-new-comment-line
+ ;; swap between latest 2 *project* buffers with backspace
+ :n "DEL" #'projectile-project-buffers-other-buffer
+ ;; move lines up and down with meta+{j,k}
+ :n "M-j" #'move-line-down
+ :n "M-k" #'move-line-up
+ ;; swap ' and ` to allow using ' to goto exact position
+ :n "'" #'evil-goto-mark
+ :n "`" #'evil-goto-mark-line
+ ;; use 'SPC r' to rotate values (true/false etc)
+ :n "SPC r" #'rotate-text)
 
 ;; Additional leader mappings
 (map! :leader
@@ -181,10 +181,10 @@
               (apply orig (s-replace "\\u0000" "" string)
                      rest)))
 (advice-add 'json-parse-buffer :around
-              (lambda (orig &rest rest)
-                (while (re-search-forward "\\u0000" nil t)
-                  (replace-match ""))
-                (apply orig rest)))
+            (lambda (orig &rest rest)
+              (while (re-search-forward "\\u0000" nil t)
+                (replace-match ""))
+              (apply orig rest)))
 
 (provide 'config)
 ;;; config.el ends here
