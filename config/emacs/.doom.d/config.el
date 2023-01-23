@@ -156,6 +156,8 @@
 (defun +kai/autocomplete ()
   (interactive)
   (or (copilot-accept-completion)
+      (if (fboundp '+web/indent-or-yas-or-emmet-expand)
+          (+web/indent-or-yas-or-emmet-expand))
       (company-indent-or-complete-common nil)))
 
 (use-package! copilot
