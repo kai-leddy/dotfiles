@@ -43,6 +43,9 @@ alias rndev 'adb shell input keyevent KEYCODE_MENU'
 alias qc 'qmk compile'
 alias qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 
+# Setup git aliases
+alias g lazygit
+
 # Magic to make using `-` on its own work
 abbr -a -- - 'cd -'
 # Git abbreviations
