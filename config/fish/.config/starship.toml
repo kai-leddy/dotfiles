@@ -1,38 +1,54 @@
 # Inserts a blank line between shell prompts
 add_newline = false
-# Use custom format
+
+# Old custom format
+# format = """
+# [█](black)$character$status$cmd_duration[](black)\
+# $jobs\
+# $kubernetes\
+# $aws\
+# $directory\
+# ([](bright-yellow)$git_branch$git_metrics$git_status[](bright-yellow))\
+# $line_break\
+# [█](black)\
+# $nix_shell\
+# $nodejs\
+# $terraform\
+# $rust\
+# $python\
+# $ruby\
+# [](bright-black)[](bright-red)[](bright-green)[](bright-yellow)[](bright-cyan) """
+
+# Custom format for use with warp.dev
 format = """
-[█](black)$character$status$cmd_duration[](black)\
 $jobs\
 $kubernetes\
 $aws\
 $directory\
 ([](bright-yellow)$git_branch$git_metrics$git_status[](bright-yellow))\
-$line_break\
-[█](black)\
 $nix_shell\
 $nodejs\
 $terraform\
 $rust\
 $python\
 $ruby\
-[](bright-black)[](bright-red)[](bright-green)[](bright-yellow)[](bright-cyan) """
+$character$status$cmd_duration"""
 
 [character]
-success_symbol = "[✓](bold green bg:black)"
-error_symbol = "[✗](bold red bg:black)"
-vicmd_symbol = "[](bright-white bg:black)"
-format = "[$symbol ](bg:black)"
+success_symbol = "[✓](bold green)"
+error_symbol = "[✗](bold red)"
+vicmd_symbol = "[](bright-white)"
+format = " $symbol "
 
 [cmd_duration]
 min_time = 0
 format = "([$duration ]($style))"
-style = "bold yellow bg:black"
+style = "bold yellow"
 
 [status]
 disabled = false
 format = "([$status ]($style))"
-style = "bold red bg:black"
+style = "bold red"
 
 [jobs]
 symbol = "省"
@@ -41,9 +57,10 @@ style = "white bg:purple"
 
 [directory]
 truncate_to_repo = true
-truncation_length = 3
-format = "([](bright-black)[  $path]($style)[](bright-black))"
-style = "bright-cyan bg:bright-black"
+truncation_length = 2
+fish_style_pwd_dir_length = 1
+format = "([  $path ]($style))"
+style = "bright-cyan"
 
 [nix_shell]
 disabled = true
@@ -55,7 +72,7 @@ style = "black bg:cyan"
 format = "([](green)[$symbol$version]($style)[](green))"
 version_format = "$raw"
 style = "black bg:green"
-not_capable_style = "red bg:green"
+not_capable_style = "#cc0033 bg:green"
 
 [terraform]
 symbol = "[TF](bold $style)"
