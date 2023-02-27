@@ -68,7 +68,7 @@
 
 (use-package! doom-themes
   :init
-  (setq doom-theme 'doom-molokai))
+  (setq doom-theme 'doom-monokai-spectrum))
 
 (use-package! react-snippets :after yasnippet)
 (use-package! jest-snippets :after yasnippet)
