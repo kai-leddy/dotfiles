@@ -21,17 +21,24 @@ set -x LSP_USE_PLISTS true
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
 
-# Setup nvm
-set -U nvm_default_version v16.14.0
+# Sort out homebrew PATH variables in the right order
+set -gx HOMEBREW_PREFIX /opt/homebrew
+set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
+set -gx HOMEBREW_REPOSITORY /opt/homebrew
+fish_add_path --path /opt/homebrew/bin /opt/homebrew/sbin
 
 # Setup Android development variables
-set -x ANDROID_HOME $HOME/Library/Android/sdk
-set -l android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
+set -gx ANDROID_HOME $HOME/Library/Android/sdk
+set android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
 alias emu '$ANDROID_HOME/emulator/emulator'
 
 # Setup user PATH variables all at once (for performance)
-set -e fish_user_paths
-set -U fish_user_paths $HOME/.emacs.d/bin $HOME/.local/bin $HOME/.linkerd2/bin /opt/homebrew/bin /opt/homebrew/sbin $android_path $HOME/.composer/vendor/bin $HOME/.mint/bin
+set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
+set emacs $HOME/.emacs.d/bin
+set local_bin $HOME/.local/bin
+set composer $HOME/.composer/vendor/bin
+set mint $HOME/.mint/bin
+fish_add_path --unive/rsal $gnu_sed $emacs $android_path $composer $mint $local_bin
 
 # use lsd instead of ls
 alias ls lsd
