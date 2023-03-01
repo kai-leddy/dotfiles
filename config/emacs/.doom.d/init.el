@@ -15,8 +15,9 @@
 ;;      directory (for easy access to its source code).
 
 (doom! :completion
-       (company)  ; code completion engine
+       ;; (company)  ; code completion engine
        ;; (ivy +icons +prescient +childframe) ; search engine
+       (corfu +icons) ; corfu completion engine
        (vertico +icons) ; search engine
 
        :ui

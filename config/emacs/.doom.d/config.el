@@ -7,12 +7,11 @@
       doom-big-font-increment 2 ; big-font mode doesn't need to be THAT big
       ns-use-thin-smoothing t ; better anti-aliasing on MacOS
       scroll-margin 4
-      company-idle-delay 0.01
+      ;company-idle-delay 0.01
       flycheck-idle-change-delay 3
       flycheck-check-syntax-automatically '(save mode-enabled)
-      company-backends '(:separate company-yasnippet company-capf)
+      ;company-backends '(:separate company-yasnippet company-capf)
       rustic-lsp-server 'rust-analyzersetq
-      copilot-node-executable "~/.local/share/nvm/v16.14.0/bin/node"
       eglot-events-buffer-size 0 ; disable eglot events buffer (turn this off to debug language servers)
       ;; prescient-filter-method '(literal fuzzy regex)
       projectile-track-known-projects-automatically nil
@@ -156,9 +155,11 @@
 (defun +kai/autocomplete ()
   (interactive)
   (or (copilot-accept-completion)
+      (corfu-complete)
       (if (fboundp '+web/indent-or-yas-or-emmet-expand)
           (+web/indent-or-yas-or-emmet-expand))
-      (company-indent-or-complete-common nil)))
+      ))
+      ;; (company-indent-or-complete-common nil)))
 
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
@@ -167,10 +168,10 @@
          :map evil-insert-state-map
          ("<tab>" . '+kai/autocomplete)
          ("TAB" . '+kai/autocomplete)
-         :map company-active-map
-         ("<tab>" . '+kai/autocomplete)
-         ("TAB" . '+kai/autocomplete)
-         :map company-mode-map
+         ;; :map company-active-map
+         ;; ("<tab>" . '+kai/autocomplete)
+         ;; ("TAB" . '+kai/autocomplete)
+         :map corfu-map
          ("<tab>" . '+kai/autocomplete)
          ("TAB" . '+kai/autocomplete)))
 
