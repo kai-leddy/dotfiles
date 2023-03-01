@@ -38,7 +38,7 @@ set emacs $HOME/.emacs.d/bin
 set local_bin $HOME/.local/bin
 set composer $HOME/.composer/vendor/bin
 set mint $HOME/.mint/bin
-fish_add_path --unive/rsal $gnu_sed $emacs $android_path $composer $mint $local_bin
+fish_add_path --universal $gnu_sed $emacs $android_path $composer $mint $local_bin
 
 # use lsd instead of ls
 alias ls lsd
