@@ -58,40 +58,44 @@
        (syntax +childframe)                 ; tasing you for every semicolon you forget
 
        :tools
+       ansible
        direnv
        docker
        ;;editorconfig         ; let someone else argue about tabs vs spaces
        (eval +overlay)                   ; run code, run (also, repls)
        ;;gist                 ; interacting with github gists
        lookup                 ; helps you navigate your code and documentation
-       (lsp +eglot +peek)
+       (lsp +eglot)
        magit                  ; a git porcelain for Emacs
        rgb                    ; creating color strings
        terraform            ; infrastructure as code
        tree-sitter            ; better, faster parsing & syntax highlighting
 
        :lang
-       (cc +lsp +tree-sitter)                     ; C/C++/Obj-C madness
+       ;; (cc +lsp +tree-sitter)                     ; C/C++/Obj-C madness
        data                   ; config/data formats
        emacs-lisp             ; drown in parentheses
-       (java +lsp +tree-sitter)    ; the poster child for carpal tunnel syndrome
+       (go +lsp)              ; The hipster dialect
+       ;; (java +lsp +tree-sitter)    ; the poster child for carpal tunnel syndrome
        (javascript +lsp +tree-sitter)             ; all(hope(abandon(ye(who(enter(here))))))
        (json +lsp +tree-sitter)              ; At least it ain't XML
-       (latex +lsp +latexmk)                  ; writing papers in Emacs has never been so fun
+       ;; (latex +lsp +latexmk)                  ; writing papers in Emacs has never been so fun
+       (lua +lsp)             ; One-based indices? one-based indices
        markdown               ; writing docs for people to ignore
        ;;nix                  ; I hereby declare "nix geht mehr!"
        ;;org                   ; organize your plain life in plain text
-       (php +lsp +tree-sitter)                  ; perl's insecure younger brother
+       ;; (php +lsp +tree-sitter)                  ; perl's insecure younger brother
        (python +lsp +tree-sitter)                 ; beautiful is better than ugly
        (ruby +lsp +rbenv +tree-sitter)                 ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
        (rust +lsp)                   ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        (sh +fish)             ; she sells {ba,z,fi}sh shells on the C xor
-       (swift +lsp +tree-sitter)                ; who asked for emoji variables?
+       ;; (swift +lsp +tree-sitter)                ; who asked for emoji variables?
        (web +lsp +tree-sitter)                    ; the tubes
        (yaml +lsp)           ; JSON, but readable
 
        :os
        macos                ; MacOS-specific commands
+       (tty +osc)           ; Make TTY Emacs suck less
 
        :config
        (default +bindings +smartparens))
