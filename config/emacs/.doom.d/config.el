@@ -175,17 +175,5 @@
          ("<tab>" . '+kai/autocomplete)
          ("TAB" . '+kai/autocomplete)))
 
-;; Temporary hack to stop annoying messages from ts-ls
-;; TODO: remove this after upgrading to Emacs 29
-(advice-add 'json-parse-string :around
-            (lambda (orig string &rest rest)
-              (apply orig (s-replace "\\u0000" "" string)
-                     rest)))
-(advice-add 'json-parse-buffer :around
-            (lambda (orig &rest rest)
-              (while (re-search-forward "\\u0000" nil t)
-                (replace-match ""))
-              (apply orig rest)))
-
 (provide 'config)
 ;;; config.el ends here

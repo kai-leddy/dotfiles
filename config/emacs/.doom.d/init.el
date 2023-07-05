@@ -79,7 +79,7 @@
        ;; (java +lsp +tree-sitter)    ; the poster child for carpal tunnel syndrome
        (javascript +lsp +tree-sitter)             ; all(hope(abandon(ye(who(enter(here))))))
        (json +lsp +tree-sitter)              ; At least it ain't XML
-       ;; (latex +lsp +latexmk)                  ; writing papers in Emacs has never been so fun
+       (latex +lsp +latexmk)                  ; writing papers in Emacs has never been so fun
        (lua +lsp)             ; One-based indices? one-based indices
        markdown               ; writing docs for people to ignore
        ;;nix                  ; I hereby declare "nix geht mehr!"
