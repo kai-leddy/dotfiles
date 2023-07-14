@@ -37,9 +37,10 @@ set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
 set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
 set emacs $HOME/.config/emacs/bin
 set local_bin $HOME/.local/bin
+set pip3_bin (python3 -m site --user-base)/bin
 # set composer $HOME/.composer/vendor/bin
 # set mint $HOME/.mint/bin
-fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin
+fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin $pip3_bin
 
 # use lsd instead of ls
 alias ls lsd
@@ -85,14 +86,14 @@ abbr -a -g gf 'git flow'
 # abbr -a -g tu 'tilt up'
 
 # Terraform abbreviations
-abbr -a -g ti 'terraform init'
-abbr -a -g twl 'terraform workspace list'
-abbr -a -g tws 'terraform workspace select'
-abbr -a -g tp 'terraform plan'
-abbr -a -g ta 'terraform apply'
-abbr -a -g td 'terraform destroy'
-abbr -a -g ts 'terraform state'
-abbr -a -g tsl 'terraform state list'
+# abbr -a -g ti 'terraform init'
+# abbr -a -g twl 'terraform workspace list'
+# abbr -a -g tws 'terraform workspace select'
+# abbr -a -g tp 'terraform plan'
+# abbr -a -g ta 'terraform apply'
+# abbr -a -g td 'terraform destroy'
+# abbr -a -g ts 'terraform state'
+# abbr -a -g tsl 'terraform state list'
 
 # Emacsclient abbrev
 abbr -a -g ec 'emacsclient --tty'
@@ -109,4 +110,4 @@ thefuck --alias | source
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
-status --is-interactive; and rbenv init - fish | source
+# status --is-interactive; and rbenv init - fish | source

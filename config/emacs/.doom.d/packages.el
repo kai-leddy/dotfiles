@@ -19,10 +19,6 @@
   (:host github
    :repo "sei40kr/jest-snippets"
    :files ("*.el" "snippets")))
-(package! emacs-livedown :recipe
-  (:host github
-   :repo "shime/emacs-livedown"
-   :files ("*.el")))
 (package! copilot :recipe
   (:host github
    :repo "zerolfx/copilot.el"

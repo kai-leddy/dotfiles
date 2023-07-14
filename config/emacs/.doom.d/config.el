@@ -18,6 +18,8 @@
       ;; use primary instead of clipboard by default
       select-enable-clipboard nil
       select-enable-primary t
+      ;; only live-update markdown previews on save
+      grip-update-after-change nil
       ;; enable gravatars in git commits
       magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
 
@@ -71,14 +73,6 @@
 
 (use-package! react-snippets :after yasnippet)
 (use-package! jest-snippets :after yasnippet)
-
-;; setup live markdown editing with SPC m l
-(use-package! emacs-livedown
-  :commands livedown-preview livedown-kill
-  :init
-  (map! :map markdown-mode-map
-        (:localleader
-         "l" #'livedown-preview)))
 
 ;; Setup org mode stuff
 (after! org
