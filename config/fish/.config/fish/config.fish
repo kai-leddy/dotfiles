@@ -12,8 +12,8 @@ set -x SXHKD_SHELL /bin/sh
 set -x MAKEFLAGS '-j 8'
 
 # Setup env vars for various other stuff
-set -x EDITOR emacsclient --tty
-set -x VISUAL emacsclient --tty
+set -x EDITOR nvim
+set -x VISUAL nvim
 
 # Make emacs LSP faster
 set -x LSP_USE_PLISTS true
