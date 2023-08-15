@@ -22,11 +22,15 @@ return {
       local luasnip = require("luasnip")
       local cmp = require("cmp")
 
+      -- use a keyword_length of 0 so Copilot can show suggestions without any prefix, e.g. newlines
+      opts.completion.keyword_length = 0
+
       -- make sure sources are setup in the right order and with Copilot included
       opts.sources = cmp.config.sources({
-        { name = "copilot" },
-        { name = "nvim_lsp" },
+        { name = "copilot", keyword_length = 0 },
         { name = "luasnip" },
+      }, {
+        { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "path" },
       })

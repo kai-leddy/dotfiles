@@ -22,4 +22,8 @@ vim.keymap.set("n", "<Tab>", "<cmd>wincmd p<cr><esc>", { desc = "Switch to previ
 -- reopen the last Telescope search results with <leader> apostrophe
 vim.keymap.set("n", "<leader>'", "<cmd>Telescope resume<cr><esc>", { desc = "Re-open last search results" })
 
+-- fix issues with quickly pressing esc and then j or k
+vim.keymap.del("i", "<A-j>")
+vim.keymap.del("i", "<A-k>")
+
 -- TODO: add better keybindings for navigating tabs
