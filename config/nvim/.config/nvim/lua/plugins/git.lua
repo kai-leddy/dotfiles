@@ -35,7 +35,60 @@ return {
         map("n", "<leader>gd", gs.diffthis, "Diff This")
         map("n", "<leader>gD", function() gs.diffthis("~") end, "Diff This ~")
         map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>", "GitSigns Select Hunk")
+        -- stylua: ignore end
       end,
+    },
+  },
+  -- setup group prefix description with which-key
+  {
+    "folke/which-key.nvim",
+    opts = {
+      defaults = {
+        ["<leader>fg"] = { name = "+git_branch" },
+      },
+    },
+  },
+  -- use agitator for advanced git functionality, like blame & time machine
+  {
+    "emmanueltouzery/agitator.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    keys = {
+      {
+        "<leader>gB",
+        function()
+          require("agitator").git_blame_toggle({
+            sidebar_width = 40,
+            formatter = function(r)
+              return os.date("%x", r.date.epoch)
+                .. " "
+                .. r.author
+                .. " "
+                .. string.sub(r.sha, 1, 7)
+                .. " => "
+                .. r.summary
+            end,
+          })
+        end,
+        desc = "Blame whole file",
+      },
+      {
+        "<leader>gt",
+        -- stylua: ignore
+        function() require("agitator").git_time_machine() end,
+        desc = "Time machine",
+      },
+      {
+        "<leader>fgf",
+        -- stylua: ignore
+        function() require("agitator").open_file_git_branch() end,
+        desc = "Find file in git branch",
+      },
+      {
+        "<leader>fgg",
+        -- stylua: ignore
+        function() require("agitator").search_git_branch() end,
+        desc = "Grep files in git branch",
+      },
     },
   },
 }
