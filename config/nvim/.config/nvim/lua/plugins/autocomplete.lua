@@ -29,7 +29,6 @@ return {
       opts.sources = cmp.config.sources({
         { name = "copilot", keyword_length = 0 },
         { name = "luasnip" },
-      }, {
         { name = "nvim_lsp" },
         { name = "buffer" },
         { name = "path" },
