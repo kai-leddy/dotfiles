@@ -11,3 +11,4 @@ __pycache__
 # custom stuff
 work.fish
 config/emacs/.doom.d/custom.el
+config/git/.config/lazygit/state.yml

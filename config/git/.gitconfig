@@ -4,7 +4,7 @@
 	email = epickaimail@gmail.com
 	name = Kai Leddy
 [core]
-	editor = emacsclient
+	editor = nvim
 	excludesfile = ~/.gitignore_global
 	pager = delta
 [init]

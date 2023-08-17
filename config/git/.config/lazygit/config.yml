@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://json.schemastore.org/lazygit.json
+
+gui:
+  nerdFontsVersion: "3"
+os:
+  editPreset: "nvim"
+  # editPreset: "nvim-remote" # better for me, but not released yet
+update:
+  method: "background"
+  days: 7
+git:
+  commitPrefixes:
+    frontend:
+      pattern: "^(\\w+?-\\w+?).*"
+      replace: "feat: $1 "
+    nexar-partner-portal:
+      pattern: "^(\\w+?-\\w+?).*"
+      replace: "feat: $1 "
+    octopart-partner:
+      pattern: "^(\\w+?-\\w+?).*"
+      replace: "feat: $1 "
