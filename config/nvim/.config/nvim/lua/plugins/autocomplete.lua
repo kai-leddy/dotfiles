@@ -28,8 +28,8 @@ return {
       -- make sure sources are setup in the right order and with Copilot included
       opts.sources = cmp.config.sources({
         { name = "copilot", keyword_length = 0 },
-        { name = "luasnip" },
         { name = "nvim_lsp" },
+        { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
       })

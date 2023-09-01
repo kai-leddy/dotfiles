@@ -8,14 +8,3 @@ os:
 update:
   method: "background"
   days: 7
-git:
-  commitPrefixes:
-    frontend:
-      pattern: "^(\\w+?-\\w+?).*"
-      replace: "feat: $1 "
-    nexar-partner-portal:
-      pattern: "^(\\w+?-\\w+?).*"
-      replace: "feat: $1 "
-    octopart-partner:
-      pattern: "^(\\w+?-\\w+?).*"
-      replace: "feat: $1 "
