@@ -17,7 +17,7 @@ vim.keymap.set("n", "<leader>wl", "<cmd>wincmd l<cr><esc>", { desc = "Move to wi
 vim.keymap.set("n", "<BS>", "<cmd>buffer #<cr><esc>", { desc = "Switch to previous buffer" })
 
 -- quick switch to "other" window with tab
-vim.keymap.set("n", "<Tab>", "<cmd>wincmd p<cr><esc>", { desc = "Switch to previous window" })
+vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr><esc>", { desc = "Switch to previous window" })
 
 -- reopen the last Telescope search results with <leader> apostrophe
 vim.keymap.set("n", "<leader>'", "<cmd>Telescope resume<cr><esc>", { desc = "Re-open last search results" })
@@ -25,5 +25,3 @@ vim.keymap.set("n", "<leader>'", "<cmd>Telescope resume<cr><esc>", { desc = "Re-
 -- fix issues with quickly pressing esc and then j or k
 vim.keymap.del("i", "<A-j>")
 vim.keymap.del("i", "<A-k>")
-
--- TODO: add better keybindings for navigating tabs
