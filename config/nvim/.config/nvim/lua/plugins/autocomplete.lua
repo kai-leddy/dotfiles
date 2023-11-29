@@ -34,6 +34,16 @@ return {
         { name = "path" },
       })
 
+      opts.sorting = vim.tbl_extend("force", opts.sorting, {
+        priority_weight = 2,
+        -- put the copilot source first
+        comparators = {
+          require("copilot_cmp.comparators").prioritize,
+          require("copilot_cmp.comparators").score,
+          unpack(opts.sorting.comparators or {}), -- the other default comparators
+        },
+      })
+
       opts.mapping = vim.tbl_extend("force", opts.mapping, {
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() then
