@@ -3,37 +3,32 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      {
-        "debugloop/telescope-undo.nvim",
-        config = function()
-          require("telescope").load_extension("undo")
-        end,
-        keys = {
-          {
-            "<leader>bu",
-          -- stylua: ignore
-          function() require("telescope").extensions.undo.undo() end,
-            desc = "Undo tree",
-          },
-        },
-      },
+      "debugloop/telescope-undo.nvim",
     },
-    opts = {
-      extensions = {
-        undo = {
-          mappings = {
-            -- i = {
-            --   -- IMPORTANT: Note that telescope-undo must be available when telescope is configured if
-            --   -- you want to replicate these defaults and use the following actions. This means
-            --   -- installing as a dependency of telescope in it's `requirements` and loading this
-            --   -- extension from there instead of having the separate plugin definition as outlined
-            --   -- above.
-            --   ["<cr>"] = require("telescope-undo.actions").restore,
-            --   ["<C-cr>"] = require("telescope-undo.actions").yank_additions,
-            --   ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
-            -- },
+    config = function()
+      local opts = {
+        extensions = {
+          undo = {
+            mappings = {
+              i = {
+                ["<s-cr>"] = require("telescope-undo.actions").yank_additions,
+                ["<c-cr>"] = require("telescope-undo.actions").yank_deletions,
+                ["<cr>"] = require("telescope-undo.actions").restore,
+              },
+            },
           },
         },
+      }
+
+      require("telescope").setup(opts)
+      require("telescope").load_extension("undo")
+    end,
+    keys = {
+      {
+        "<leader>bu",
+        -- stylua: ignore
+        function() require("telescope").extensions.undo.undo() end,
+        desc = "Undo tree",
       },
     },
   },
