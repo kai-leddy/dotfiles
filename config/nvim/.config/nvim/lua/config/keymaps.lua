@@ -4,6 +4,7 @@
 
 -- keybings I'm used to for saving files and buffers
 vim.keymap.set("n", "<leader>fs", "<cmd>w<cr><esc>", { desc = "Save file" })
+vim.keymap.set("n", "<leader>fd", "<cmd>call delete(expand('%')) | bdelete!<cr><esc>", { desc = "Delete file" })
 vim.keymap.set("n", "<leader>bs", "<cmd>w<cr><esc>", { desc = "Save buffer" })
 vim.keymap.set("n", "<leader>bS", "<cmd>wa<cr><esc>", { desc = "Save all modified buffers" })
 
