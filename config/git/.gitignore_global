@@ -32,3 +32,6 @@ tags
 shell.nix
 .direnv/
 .envrc
+
+# don't commit Gp.Nvim repo-level context for AI commands
+.gp.md
