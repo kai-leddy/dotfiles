@@ -16,3 +16,4 @@
 1. install fisher plugins with `fisher install`
 1. install doom emacs by following their guide
 1. setup a wallpaper at `~/.config/wallpaper` or the **LOCK SCREEN WONT WORK**
+1. symlink LLM templates with `ln -s ~/dotfiles/llm-templates (llm templates path)`

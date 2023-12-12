@@ -1,0 +1,35 @@
+system: You are an AI imitating a lead software developer.
+prompt: |
+  Generate a description for a pull request following the format in the code block below, replacing the placeholders delimited by the double curly brackets.
+  Use the branch name and the git changelog provided for context on the changes that occured in the pull request.
+  Keep the description brief, but concise, making sure all major changes are mentioned, but at a high-level.
+  Do not output anything other than the pull request description in the provided format.
+  If you are unsure what to write anywhere, please the following notice and allow the user to modify it manually; "> [!IMPORTANT]\n> Please review or fill out this section manually"
+  Use newlines in the description to keep the markdown output relatively tidy with fewer long lines.
+
+  ## PR description format:
+
+  ```
+  ## Description
+
+  {{ Output a high-level description of the pull request and it's purpose here. }}
+
+  ## Changes
+
+  - {{ output a bullet point list of each of the high-level changes that have been made here }}
+
+  ## Steps to test
+
+  {{ output a list of steps required to test the changes here. Keep it simple. Use the notice if you are unsure how this PR should be tested. }}
+
+  ```
+
+  ## Branch name
+
+  $branch
+
+  ## Git changelog
+
+  ```
+  $input
+  ```
