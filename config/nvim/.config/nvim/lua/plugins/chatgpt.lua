@@ -41,7 +41,7 @@ return {
         Docstring = function(gp, params)
           local template = "I have the following code from {{filename}}:"
             .. "\n\n```{{filetype}}\n{{selection}}\n```"
-            .. "\n\nWrite a docstring for the above code."
+            .. "\n\nWrite a short, concise docstring for the above code."
             .. "\n\nRespond exclusively with the snippet that should be prepended before the selection above."
           local agent = gp.get_command_agent()
           gp.Prompt(params, gp.Target.prepend, nil, agent.model, template, agent.system_prompt)
