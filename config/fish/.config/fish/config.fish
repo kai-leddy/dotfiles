@@ -23,6 +23,7 @@ set -x LSP_USE_PLISTS true
 
 # get OpenAI API key out of the keychain and set it in the env
 set -x OPENAI_API_KEY (security find-generic-password -w -a $LOGNAME -s neovim-openai-key)
+set -x GH_TOKEN (security find-generic-password -w -a $LOGNAME -s github-cli-key)
 
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
