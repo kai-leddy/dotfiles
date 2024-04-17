@@ -27,6 +27,7 @@ brew "librsvg"
 brew "lsd"
 brew "lsusb"
 #brew "mas"
+brew "neovim"
 brew "neofetch"
 brew "pigz"
 brew "ripgrep"
@@ -39,7 +40,7 @@ brew "tokei"
 brew "vim"
 brew "watchman"
 brew "zoxide"
-brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-elrumo1-icon", "with-native-comp", "with-no-frame-refocus"]
+#brew "d12frosted/emacs-plus/emacs-plus@29", args: ["with-elrumo1-icon", "with-native-comp", "with-no-frame-refocus"]
 brew "qmk/qmk/qmk"
 
 #cask "docker"
