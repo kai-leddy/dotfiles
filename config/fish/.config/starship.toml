@@ -29,6 +29,7 @@ $directory\
 $nix_shell\
 $nodejs\
 $terraform\
+$golang\
 $rust\
 $python\
 $ruby\
@@ -91,6 +92,12 @@ disabled = false
 symbol = ""
 format = '([](bright-red)[$symbol $profile( \[$duration\])]($style)[](bright-red))'
 style = "black bg:bright-red"
+
+[golang]
+symbol = ""
+version_format = "$raw"
+format = "([](cyan)[$symbol $version]($style)[](cyan))"
+style = "black bg:cyan"
 
 [rust]
 version_format = "$raw"

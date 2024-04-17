@@ -39,15 +39,20 @@ fish_add_path --path /opt/homebrew/bin /opt/homebrew/sbin
 # set android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
 # alias emu '$ANDROID_HOME/emulator/emulator'
 
+# Setup Go path variables
+set -x GOPATH $HOME/go
+set -x GOBIN $GOPATH/bin
+
 # Setup user PATH variables all at once (for performance)
 set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
 set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
 set emacs $HOME/.config/emacs/bin
 set local_bin $HOME/.local/bin
 set pip3_bin (python3 -m site --user-base)/bin
+set go_bin $GOBIN
 # set composer $HOME/.composer/vendor/bin
 # set mint $HOME/.mint/bin
-fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin $pip3_bin
+fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin $pip3_bin $go_bin
 
 # use lsd instead of ls
 alias ls lsd
@@ -102,9 +107,6 @@ abbr -a -g gf 'git flow'
 # abbr -a -g ts 'terraform state'
 # abbr -a -g tsl 'terraform state list'
 
-# Emacsclient abbrev
-abbr -a -g ec 'emacsclient --tty'
-
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
 bind p fish_clipboard_paste
@@ -117,4 +119,3 @@ thefuck --alias | source
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
-# status --is-interactive; and rbenv init - fish | source

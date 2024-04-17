@@ -59,7 +59,7 @@ return {
           require("agitator").git_blame_toggle({
             sidebar_width = 40,
             formatter = function(r)
-              return os.date("%x", r.date.epoch)
+              return os.date("%x", os.time(r.date))
                 .. " "
                 .. r.author
                 .. " "
@@ -73,8 +73,11 @@ return {
       },
       {
         "<leader>gt",
-        -- stylua: ignore
-        function() require("agitator").git_time_machine() end,
+        function()
+          require("agitator").git_time_machine({
+            use_current_win = true,
+          })
+        end,
         desc = "Time machine",
       },
       {
