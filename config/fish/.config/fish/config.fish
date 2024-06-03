@@ -79,6 +79,12 @@ abbr -a -g gl 'git lg'
 abbr -a -g gs 'git status'
 abbr -a -g gf 'git flow'
 
+# Docker compose abbreviations
+abbr -a -g dc docker compose
+abbr -a -g dcb 'docker compose build --pull --parallel'
+abbr -a -g dcu 'docker compose up'
+abbr -a -g dcd 'docker compose down'
+
 # Kubernetes abbreviations
 # abbr -a -g k kubectl
 # abbr -a -g kg 'kubectl get'
@@ -119,3 +125,10 @@ thefuck --alias | source
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
+
+# pnpm
+set -gx PNPM_HOME "/Users/kaileddy/Library/pnpm"
+if not string match -q -- $PNPM_HOME $PATH
+  set -gx PATH "$PNPM_HOME" $PATH
+end
+# pnpm end
