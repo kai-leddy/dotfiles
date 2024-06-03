@@ -1,5 +1,8 @@
 -- setup supertab to do completions and snippets (+ copilot)
 return {
+  -- disable auto completing pairs
+  { "echasnovski/mini.pairs", enabled = false },
+
   -- disable the default tab behaviour from LuaSnip
   {
     "L3MON4D3/LuaSnip",
@@ -21,6 +24,9 @@ return {
 
       local luasnip = require("luasnip")
       local cmp = require("cmp")
+
+      -- don't let the gopls language server preselect random stuff in the cmp menu
+      opts.preselect = cmp.PreselectMode.None
 
       -- use a keyword_length of 0 so Copilot can show suggestions without any prefix, e.g. newlines
       opts.completion.keyword_length = 0
