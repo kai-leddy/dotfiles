@@ -6,14 +6,16 @@ return {
       manual_mode = true,
     },
   },
+  -- disabled in favour of harpoon2
+  { "akinsho/bufferline.nvim", enabled = false },
+
   {
-    "akinsho/bufferline.nvim",
-    keys = {
-      { "<leader>1", "<cmd>BufferLineGoToBuffer 1<cr>" },
-      { "<leader>2", "<cmd>BufferLineGoToBuffer 2<cr>" },
-      { "<leader>3", "<cmd>BufferLineGoToBuffer 3<cr>" },
-      { "<leader>4", "<cmd>BufferLineGoToBuffer 4<cr>" },
-      { "<leader>5", "<cmd>BufferLineGoToBuffer 5<cr>" },
+    "ThePrimeagen/harpoon",
+    opts = {
+      settings = {
+        save_on_toggle = true,
+        sync_on_ui_close = true,
+      },
     },
   },
 }
