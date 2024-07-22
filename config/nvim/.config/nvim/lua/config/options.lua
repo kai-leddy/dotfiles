@@ -6,6 +6,3 @@
 vim.opt.wrap = true
 vim.opt.linebreak = true
 vim.opt.breakindent = true
-vim.opt.tabstop = 4 -- why TF was this 8 as default?
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
