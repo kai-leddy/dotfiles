@@ -1,11 +1,16 @@
+-- Modifiers
+local mash = { "cmd", "alt", "ctrl" }
+local shiftMash = { "cmd", "alt", "ctrl", "shift" }
+
 -- Spoons
-hs.loadSpoon("ReloadConfiguration")
-spoon.ReloadConfiguration:start()
+hs.loadSpoon("SpoonInstall")
+spoon.SpoonInstall:andUse("EmmyLua")
+spoon.SpoonInstall:andUse("ReloadConfiguration", { start = true })
+
+-- Local libs
+local toggleVPN = require("vpn")
 
 -- Keybindings
-mash = { "cmd", "alt", "ctrl" }
-shiftMash = { "cmd", "alt", "ctrl", "shift" }
-
 hs.hotkey.bind(mash, "h", function()
 	hs.window.focusedWindow():focusWindowWest(nil, nil, true)
 end)
@@ -36,4 +41,12 @@ end)
 
 hs.hotkey.bind(shiftMash, "l", function()
 	hs.window.focusedWindow():moveOneScreenEast()
+end)
+
+hs.hotkey.bind(mash, "v", function()
+	toggleVPN("Octopart VPN (deprecated)")
+end)
+
+hs.hotkey.bind(shiftMash, "v", function()
+	toggleVPN("Altium VPN")
 end)
