@@ -1,5 +1,5 @@
 # Inserts a blank line between shell prompts
-add_newline = false
+add_newline = true
 
 # Old custom format
 # format = """
@@ -33,7 +33,7 @@ $golang\
 $rust\
 $python\
 $ruby\
-$character$status$cmd_duration"""
+$character$status$cmd_duration\n"""
 
 [character]
 success_symbol = "[✓](bold green)"

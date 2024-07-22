@@ -43,8 +43,8 @@ return {
   {
     "folke/which-key.nvim",
     opts = {
-      defaults = {
-        ["<leader>fg"] = { name = "+git_branch" },
+      spec = {
+        { "<leader>fg", group = "git_branch" },
       },
     },
   },
