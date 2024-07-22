@@ -14,4 +14,16 @@ return {
       sidebars = { "qf", "vista_kind", "terminal", "packer" },
     },
   },
+  -- setup EmmyLua for LSP support in hammerspoon config
+  {
+    "folke/lazydev.nvim",
+    opts = {
+      library = {
+        {
+          path = string.format("%s/.hammerspoon/Spoons/EmmyLua.spoon/annotations", os.getenv("HOME")),
+          words = { "hs.", "spoon." },
+        },
+      },
+    },
+  },
 }

@@ -12,3 +12,4 @@ __pycache__
 work.fish
 config/emacs/.doom.d/custom.el
 config/git/.config/lazygit/state.yml
+config/hammerspoon/.hammerspoon/Spoons
