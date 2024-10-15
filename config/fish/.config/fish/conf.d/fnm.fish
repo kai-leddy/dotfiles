@@ -1,1 +1,1 @@
-fnm env --use-on-cd --corepack-enabled | source
+#fnm env --use-on-cd --shell fish --corepack-enabled | source

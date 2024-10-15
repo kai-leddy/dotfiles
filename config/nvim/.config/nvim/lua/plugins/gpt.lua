@@ -67,6 +67,14 @@ return {
           local agent = gp.get_command_agent()
           gp.Prompt(params, gp.Target.rewrite, agent, template)
         end,
+        Simplify = function(gp, params)
+          local template = "I have the following code from {{filename}}:"
+            .. "\n\n```{{filetype}}\n{{selection}}\n```"
+            .. "\n\nSimplify the code provided while ensuring it's still readable."
+            .. "\n\nRespond exclusively with the snippet that should replace the selection above."
+          local agent = gp.get_command_agent()
+          gp.Prompt(params, gp.Target.rewrite, agent, template)
+        end,
       },
     },
     keys = {
@@ -92,6 +100,7 @@ return {
       { "<leader>aE", "<cmd>%GPTExplain<cr>", mode = { "n" }, desc = "Explain code" },
       { "<leader>ad", "<cmd>%GPTDocstring<cr>", mode = { "n" }, desc = "Generate docstring" },
       { "<leader>af", "<cmd>%GPTFixBugs<cr>", mode = { "n" }, desc = "Fix bugs" },
+      { "<leader>aS", "<cmd>%GPTSimplify<cr>", mode = { "n" }, desc = "Simplify" },
       -- commands for visual mode
       { "<leader>aB", ":<C-u>'<,'>GPTChatNew<cr>", mode = { "v" }, desc = "New chat buffer with context" },
       { "<leader>aC", ":<C-u>'<,'>GPTChatToggle<cr>", mode = { "v" }, desc = "Toggle popup chat with context" },
@@ -103,6 +112,7 @@ return {
       { "<leader>aE", ":<C-u>'<,'>GPTExplain<cr>", mode = { "v" }, desc = "Explain code" },
       { "<leader>ad", ":<C-u>'<,'>GPTDocstring<cr>", mode = { "v" }, desc = "Generate docstring" },
       { "<leader>af", ":<C-u>'<,'>GPTFixBugs<cr>", mode = { "v" }, desc = "Fix bugs" },
+      { "<leader>aS", ":<C-u>'<,'>GPTSimplify<cr>", mode = { "v" }, desc = "Simplify" },
       { "<leader>av", ":<C-u>'<,'>GPTChatPaste<cr>", mode = { "v" }, desc = "Paste into latest chat" },
     },
   },

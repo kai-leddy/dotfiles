@@ -8,9 +8,11 @@ return {
       "antoinemadec/FixCursorHold.nvim",
       "nvim-treesitter/nvim-treesitter",
       "nvim-neotest/neotest-jest",
+      "marilari88/neotest-vitest",
     },
     opts = {
       adapters = {
+        ["neotest-vitest"] = {},
         ["neotest-jest"] = {
           -- jestCommand = "npx jest --watch ", -- disabled as it currently provides no pass/fail feedback
           jest_test_discovery = true,

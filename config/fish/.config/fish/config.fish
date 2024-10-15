@@ -43,6 +43,9 @@ fish_add_path --path /opt/homebrew/bin /opt/homebrew/sbin
 set -x GOPATH $HOME/go
 set -x GOBIN $GOPATH/bin
 
+# Setup docker host with colima for MacOS
+set -gx DOCKER_HOST (docker context inspect colima | jq -r '.[0].Endpoints.docker.Host')
+
 # Setup user PATH variables all at once (for performance)
 set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
 set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
@@ -66,6 +69,13 @@ alias qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 
 # Setup git aliases
 alias g lazygit
+
+# auto brewfile sync
+function newbrew
+    command brew $argv
+    command brew bundle dump -f --file=~/Brewfile
+end
+alias brew="newbrew"
 
 # Magic to make using `-` on its own work
 abbr -a -- - 'cd -'
@@ -104,14 +114,14 @@ abbr -a -g dcd 'docker compose down'
 # abbr -a -g tu 'tilt up'
 
 # Terraform abbreviations
-# abbr -a -g ti 'terraform init'
-# abbr -a -g twl 'terraform workspace list'
-# abbr -a -g tws 'terraform workspace select'
-# abbr -a -g tp 'terraform plan'
-# abbr -a -g ta 'terraform apply'
-# abbr -a -g td 'terraform destroy'
-# abbr -a -g ts 'terraform state'
-# abbr -a -g tsl 'terraform state list'
+abbr -a -g ti 'terraform init'
+abbr -a -g twl 'terraform workspace list'
+abbr -a -g tws 'terraform workspace select'
+abbr -a -g tp 'terraform plan'
+abbr -a -g ta 'terraform apply'
+abbr -a -g td 'terraform destroy'
+abbr -a -g ts 'terraform state'
+abbr -a -g tsl 'terraform state list'
 
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
@@ -121,14 +131,15 @@ bind p fish_clipboard_paste
 complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
 
 # setup various shell extensions
+fnm env --use-on-cd --shell fish --corepack-enabled | source
 thefuck --alias | source
 starship init fish | source
 zoxide init fish | source
 direnv hook fish | source
 
 # pnpm
-set -gx PNPM_HOME "/Users/kaileddy/Library/pnpm"
+set -gx PNPM_HOME /Users/kaileddy/Library/pnpm
 if not string match -q -- $PNPM_HOME $PATH
-  set -gx PATH "$PNPM_HOME" $PATH
+    set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
