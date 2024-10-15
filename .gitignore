@@ -1,15 +1,9 @@
-tmux/.tmux/plugins/*
-!tmux/.tmux/plugins/tpm
-tmux/.tmux/resurrect
-nvim/.config/nvim/plugged/*
-!nvim/.config/nvim/plugged/vim-plug
-nvim/.config/nvim/.netrwhist
 __pycache__
 *.pyc
 *.old
 
 # custom stuff
-work.fish
-config/emacs/.doom.d/custom.el
-config/git/.config/lazygit/state.yml
-config/hammerspoon/.hammerspoon/Spoons
+.doom.d/custom.el
+.config/nvim/.netrwhist
+.config/lazygit/state.yml
+.hammerspoon/Spoons
