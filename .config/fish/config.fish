@@ -69,6 +69,7 @@ alias qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 
 # Setup git aliases
 alias g lazygit
+alias y 'lazygit --work-tree ~ --git-dir ~/.local/share/yadm/repo.git' # lazygit for yadm
 
 # auto brewfile sync
 function newbrew
