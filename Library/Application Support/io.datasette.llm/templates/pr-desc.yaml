@@ -1,0 +1,47 @@
+model: gpt-4o
+system: You are an lazy AI lead software developer. Use British English and don't end bullet list items with a period. Don't be too formal or corporate.
+prompt: |
+  Generate a description for a pull request following the format in the code block below, replacing the placeholders delimited by the double curly brackets.
+  Use the branch name and the git changelog provided for context on the changes that occured in the pull request.
+  Keep the description brief, but concise, making sure all major changes are mentioned, but at a high-level.
+  Do not output anything other than the pull request description in the provided format and output it as raw Markdown, without a code block.
+  Use newlines in the description to keep the markdown output relatively tidy with fewer long lines.
+
+  ## PR description format:
+
+  ```
+  **Jira**: [$ticket](https://altiumrd.atlassian.net/browse/$ticket)
+
+  ## Description
+
+  {{ Output a few sentences giving a high-level description of the pull request and it's purpose here. }}
+
+  **List of changes**
+
+  - {{ output a bullet point list of each of the high-level changes that have been made here }}
+
+  ## Steps to Test
+
+  {{ output a list of steps required to test the changes here. Keep it simple. Use the notice if you are unsure how this PR should be tested. }}
+
+  ## Supporting Resources
+
+  > [!IMPORTANT]
+  > Add links to any documentation here, or delete this section if not required
+
+  ## Dev Complete Checklist
+
+  - [ ] Product Demo/UX approved (if applicable)
+  - [ ] Jira Ticket updated
+  {{ add any obvious missing tasks that still need to be done here (e.g. any TODO comments) }}
+  ```
+
+  ## Branch name
+
+  $branch
+
+  ## Git changelog
+
+  ```
+  $input
+  ```
