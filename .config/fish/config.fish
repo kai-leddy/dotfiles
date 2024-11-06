@@ -144,3 +144,6 @@ if not string match -q -- $PNPM_HOME $PATH
     set -gx PATH "$PNPM_HOME" $PATH
 end
 # pnpm end
+
+# Fix semantic zone interaction with Terminal emulators that support it
+source $XDG_CONFIG_HOME/fish/semantic-zones.fish

@@ -16,6 +16,7 @@ config.freetype_load_target = "Light" -- only light hinting for fonts
 config.use_fancy_tab_bar = true
 -- config.hide_tab_bar_if_only_one_tab = true
 config.window_background_opacity = 0.90
+config.macos_window_background_blur = 8
 config.window_padding = {
 	left = "8pt",
 	right = "8pt",
@@ -39,7 +40,7 @@ config.scrollback_lines = 1000000
 
 -- key mappings
 config.keys = {
-	{ key = "c", mods = "SHIFT|CMD", action = wezterm.action.QuickSelect },
+	{ key = "c", mods = "SHIFT|CTRL", action = wezterm.action.QuickSelect },
 	{
 		key = "o",
 		mods = "CTRL",
@@ -54,6 +55,16 @@ config.keys = {
 				wezterm.open_with(url)
 			end),
 		}),
+	},
+	{
+		key = "c",
+		mods = "SHIFT|CMD",
+		action = wezterm.action_callback(function(window, pane)
+			local ozones = pane:get_semantic_zones("Output")
+			local txt = pane:get_text_from_semantic_zone(ozones[#ozones])
+			wezterm.log_info("Copying: " .. txt)
+			window:copy_to_clipboard(txt)
+		end),
 	},
 }
 
