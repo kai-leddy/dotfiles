@@ -35,3 +35,6 @@ shell.nix
 
 # don't commit Gp.Nvim repo-level context for AI commands
 .gp.md
+
+# don't commit aider logs and config
+.aider*

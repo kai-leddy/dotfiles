@@ -1,0 +1,8 @@
+dark-mode: true
+code-theme: monokai
+attribute-author: false
+attribute-committer: false
+
+architect: true
+
+check-update: true
