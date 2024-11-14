@@ -143,9 +143,13 @@ ctrl-alt-cmd-shift-l = 'move right'
 ctrl-alt-cmd-minus = 'resize smart -50'
 ctrl-alt-cmd-equal = 'resize smart +50'
 
+# Monitor related commands
 ctrl-alt-cmd-q = "focus-monitor 1"
 ctrl-alt-cmd-w = "focus-monitor 2"
 ctrl-alt-cmd-e = "focus-monitor 3"
+ctrl-alt-cmd-shift-q = "move-node-to-monitor --focus-follows-window 1"
+ctrl-alt-cmd-shift-w = "move-node-to-monitor --focus-follows-window 2"
+ctrl-alt-cmd-shift-e = "move-node-to-monitor --focus-follows-window 3"
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 ctrl-alt-cmd-1 = 'summon-workspace 1'
