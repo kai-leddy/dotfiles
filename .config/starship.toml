@@ -1,6 +1,8 @@
 # Inserts a blank line between shell prompts
 add_newline = true
 
+command_timeout = 1000 # 1 second for command timeout
+
 # Old custom format
 # format = """
 # [█](black)$character$status$cmd_duration[](black)\
@@ -131,3 +133,4 @@ deleted_style = "red bg:bright-yellow"
 deleted = "x"
 format = "([ $all_status$ahead_behind ]($style))"
 style = "bold red bg:bright-yellow"
+ignore_submodules = true
