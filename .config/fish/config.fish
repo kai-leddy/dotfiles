@@ -131,8 +131,15 @@ bind p fish_clipboard_paste
 # Enable AWS CLI autocompletion: github.com/aws/aws-cli/issues/1079
 complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
 
+# Setup mise-en-place for managing programming language versions & tools
+set -gx MISE_NODE_COREPACK true
+if status is-interactive
+    mise activate fish | source
+else
+    mise activate fish --shims | source
+end
+
 # setup various shell extensions
-fnm env --use-on-cd --shell fish --corepack-enabled | source
 thefuck --alias | source
 starship init fish | source
 zoxide init fish | source

@@ -38,3 +38,6 @@ shell.nix
 
 # don't commit aider logs and config
 .aider*
+
+# don't commit mise-en-place configs
+mise.toml
