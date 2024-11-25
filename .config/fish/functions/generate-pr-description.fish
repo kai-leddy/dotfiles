@@ -15,6 +15,7 @@ function generate-pr-description --argument base_branch
             echo "The changelog is large ($changelog_tokens tokens). Are you sure you want to continue? (y/n)"
             set answer (read)
             if test $answer = y
+                # NOTE: I have to use the "mini" models for large changelogs, as my API key is limited to 30k tokens per minute 
                 echo $changelog | llm -t pr-desc -p ticket $ticket -p branch $branch
             else
                 echo "Aborting."
