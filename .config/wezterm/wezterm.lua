@@ -1,6 +1,7 @@
 local wezterm = require("wezterm")
 local utils = require("utils")
 
+local act = wezterm.action
 local config = wezterm.config_builder()
 
 local font_size = 14.0
@@ -40,11 +41,11 @@ config.scrollback_lines = 1000000
 
 -- key mappings
 config.keys = {
-	{ key = "c", mods = "SHIFT|CTRL", action = wezterm.action.QuickSelect },
+	{ key = "c", mods = "SHIFT|CTRL", action = act.QuickSelect },
 	{
 		key = "o",
 		mods = "CTRL",
-		action = wezterm.action.QuickSelectArgs({
+		action = act.QuickSelectArgs({
 			label = "Open URL",
 			patterns = {
 				"https?://\\S+",
@@ -66,12 +67,28 @@ config.keys = {
 			window:copy_to_clipboard(txt)
 		end),
 	},
+
+	-- add keybdingins for managing splits (use shift to create splits)
+	{ key = "h", mods = "CMD", action = act.ActivatePaneDirection("Left") },
+	{ key = "j", mods = "CMD", action = act.ActivatePaneDirection("Down") },
+	{ key = "k", mods = "CMD", action = act.ActivatePaneDirection("Up") },
+	{ key = "l", mods = "CMD", action = act.ActivatePaneDirection("Right") },
+	{ key = "H", mods = "CMD|SHIFT", action = act.SplitPane({ direction = "Left" }) },
+	{ key = "J", mods = "CMD|SHIFT", action = act.SplitPane({ direction = "Down" }) },
+	{ key = "K", mods = "CMD|SHIFT", action = act.SplitPane({ direction = "Up" }) },
+	{ key = "L", mods = "CMD|SHIFT", action = act.SplitPane({ direction = "Right" }) },
+	-- close current pane with CMD+w rather than the whole tab
+	{
+		key = "w",
+		mods = "CMD",
+		action = act.CloseCurrentPane({ confirm = true }),
+	},
 }
 
 config.key_tables = {
 	-- these will make switching between search and copy easier for me
 	search_mode = utils.extend_key_table("search_mode", {
-		{ key = "Escape", mods = "NONE", action = wezterm.action.CopyMode("Close") },
+		{ key = "Escape", mods = "NONE", action = act.CopyMode("Close") },
 		-- Go back to copy mode when pressing enter, so that we can use unmodified keys like "n"
 		-- to navigate search results without conflicting with typing into the search area.
 		{ key = "Enter", mods = "NONE", action = "ActivateCopyMode" },
@@ -79,10 +96,10 @@ config.key_tables = {
 	-- these make the copy experience a little more vim-like for me
 	copy_mode = utils.extend_key_table("copy_mode", {
 		-- Enter search mode to edit the pattern.
-		{ key = "/", mods = "NONE", action = wezterm.action.Search("CurrentSelectionOrEmptyString") },
+		{ key = "/", mods = "NONE", action = act.Search("CurrentSelectionOrEmptyString") },
 		-- navigate any search mode results
-		{ key = "n", mods = "NONE", action = wezterm.action.CopyMode("PriorMatch") },
-		{ key = "N", mods = "SHIFT", action = wezterm.action.CopyMode("NextMatch") },
+		{ key = "n", mods = "NONE", action = act.CopyMode("PriorMatch") },
+		{ key = "N", mods = "SHIFT", action = act.CopyMode("NextMatch") },
 	}),
 }
 
