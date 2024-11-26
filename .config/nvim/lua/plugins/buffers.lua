@@ -38,17 +38,20 @@ return {
           end
 
           local cleaned_count = 0
-          for _, n in ipairs(vim.api.nvim_list_bufs()) do
-            local is_current = n == cur
-            local is_modifiable = vim.api.nvim_get_option_value("modifiable", { buf = n })
-            local is_harpooned = get_is_harpooned(n)
+          local function can_be_deleted(bufnum)
+            local is_current = bufnum == cur
+            local is_modifiable = vim.api.nvim_get_option_value("modifiable", { buf = bufnum })
+            local is_harpooned = get_is_harpooned(bufnum)
 
-            -- If the iter buffer is not the current buffer, not readonly and not in the harpoon list, delete it
             if not is_current and is_modifiable and not is_harpooned then
-              vim.api.nvim_buf_delete(n, {})
               cleaned_count = cleaned_count + 1
+              return true
+            else
+              return false
             end
           end
+
+          Snacks.bufdelete.delete({ filter = can_be_deleted })
 
           -- show notification that buffers have been cleaned
           vim.notify("Cleaned " .. cleaned_count .. " buffers", vim.log.levels.INFO)

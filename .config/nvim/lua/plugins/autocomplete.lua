@@ -26,6 +26,7 @@ return {
       opts.sources = cmp.config.sources({
         { name = "copilot", keyword_length = 0 },
         { name = "nvim_lsp" },
+        { name = "lazydev" },
         { name = "snippets" },
         { name = "path" },
         { name = "buffer" },
