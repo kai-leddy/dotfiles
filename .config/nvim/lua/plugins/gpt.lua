@@ -9,7 +9,8 @@ return {
     },
   },
   {
-    "robitx/gp.nvim",
+    "kai-leddy/gp.nvim",
+    branch = "o1-streaming",
     opts = {
       cmd_prefix = "GPT",
       -- chat buffer specific keybinds
@@ -21,11 +22,20 @@ return {
       },
       -- custom agents setup
       agents = {
-        -- disabling the old dMefault agents
+        -- disabling the old default agents
         { name = "ChatGPT3-5", disable = true },
         { name = "ChatGPT4", disable = true },
         { name = "CodeGPT3-5", disable = true },
         { name = "CodeGPT4", disable = true },
+        -- add an agent for using o1-mini
+        {
+          name = "Code-o1-mini",
+          provider = "openai",
+          chat = false,
+          command = true,
+          model = { model = "o1-mini", temperature = 0.8, top_p = 1 },
+          system_prompt = "", -- o1-mini doesn't support system prompts
+        },
       },
       -- custom chat commands
       hooks = {
