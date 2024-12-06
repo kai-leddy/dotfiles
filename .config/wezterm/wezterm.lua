@@ -4,7 +4,7 @@ local utils = require("utils")
 local act = wezterm.action
 local config = wezterm.config_builder()
 
-local font_size = 14.0
+local font_size = 15
 
 -- TODO: how can I get intellisense for Wezterm API?
 
