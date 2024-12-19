@@ -20,8 +20,8 @@ vim.keymap.set("n", "<BS>", "<cmd>buffer #<cr><esc>", { desc = "Switch to previo
 -- quick switch to "other" window with tab
 vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr><esc>", { desc = "Switch to previous window" })
 
--- reopen the last Telescope search results with <leader> apostrophe
-vim.keymap.set("n", "<leader>'", "<cmd>Telescope resume<cr><esc>", { desc = "Re-open last search results" })
+-- reopen the last FzfLua search results with <leader> apostrophe
+vim.keymap.set("n", "<leader>'", "<cmd>FzfLua resume<cr>", { desc = "Re-open last search results" })
 
 -- fix issues with quickly pressing esc and then j or k
 vim.keymap.del("i", "<A-j>")

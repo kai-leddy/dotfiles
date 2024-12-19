@@ -1,5 +1,6 @@
 -- TODO: this needs fixing - it currently just breaks lazyvim's telescope setup
 return {
+  -- TODO: try to setup undo tree functionality again now that LazyVim uses FzfLua
   -- setup undo tree functionality with telescope
   --   {
   --     "nvim-telescope/telescope.nvim",
