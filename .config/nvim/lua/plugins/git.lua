@@ -1,5 +1,6 @@
 return {
   -- TODO: check whether I need this or if it can be replaced with snacks.nvim now
+  -- TODO: tidy up this entire file, it's a bit of a mess
   {
     "nvim-treesitter/nvim-treesitter",
     opts = function(_, opts)
