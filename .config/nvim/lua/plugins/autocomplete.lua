@@ -17,7 +17,10 @@ return {
         ["<S-Tab>"] = { "select_prev", "snippet_backward", "fallback" },
         ["<C-u>"] = { "scroll_documentation_up", "fallback" },
         ["<C-d>"] = { "scroll_documentation_down", "fallback" },
-        ["<esc>"] = { "cancel", "fallback" },
+        -- TODO: make esc cancel and close cmp if not currently completing a snippet
+        -- otherwise, just cancel the cmp, but continue with the snippet
+        -- ["<esc>"] = { "cancel", "fallback" },
+        -- ["<esc>"] = { "fallback" },
       },
     },
   },
