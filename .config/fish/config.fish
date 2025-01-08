@@ -152,14 +152,10 @@ if not string match -q -- $PNPM_HOME $PATH
 end
 # pnpm end
 
-# Fix semantic zone interaction with Terminal emulators that support it
-source $XDG_CONFIG_HOME/fish/semantic-zones.fish
-
-
 # BEGIN opam configuration
 # This is useful if you're using opam as it adds:
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-test -r '/Users/kaileddy/.opam/opam-init/init.fish' && source '/Users/kaileddy/.opam/opam-init/init.fish' > /dev/null 2> /dev/null; or true
+test -r '/Users/kaileddy/.opam/opam-init/init.fish' && source '/Users/kaileddy/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
 # END opam configuration

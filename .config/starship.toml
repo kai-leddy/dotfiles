@@ -45,7 +45,7 @@ format = " $symbol "
 
 [cmd_duration]
 min_time = 0
-format = "([$duration ]($style))"
+format = "([$duration]($style))"
 style = "bold yellow"
 
 [status]
