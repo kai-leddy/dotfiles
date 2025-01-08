@@ -1,8 +1,9 @@
 # Setup FZF to use FD (like ripgrep but for files/folders)
-set -x FZF_DEFAULT_OPTS --ansi
 set -x FZF_DEFAULT_COMMAND 'fd --type file --color=always --follow --hidden --exclude .git . $dir'
 set -x FZF_ALT_C_COMMAND 'fd --type directory --color=always --follow --hidden --exclude .git . $dir'
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+# Use ctrl+t for fzf directory search and ctrl+alt+v for fzf variable search
+fzf_configure_bindings --directory=\ct --variables=\e\cv
 
 # Compatibility with XDG tools for config home
 set -x XDG_CONFIG_HOME $HOME/.config
