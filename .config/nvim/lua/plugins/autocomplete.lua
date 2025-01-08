@@ -8,7 +8,12 @@ return {
     "saghen/blink.cmp",
     opts = {
       completion = {
-        list = { selection = "auto_insert" },
+        list = {
+          selection = {
+            preselect = true,
+            auto_insert = true,
+          },
+        },
       },
       keymap = {
         preset = "enter",
