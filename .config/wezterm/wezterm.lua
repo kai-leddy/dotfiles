@@ -9,9 +9,9 @@ local font_size = 15
 -- TODO: how can I get intellisense for Wezterm API?
 
 -- required to stop weird stuff happening with font rendering
--- config.front_end = "WebGpu"
--- config.freetype_load_flags = "FORCE_AUTOHINT" -- use freetype auto-hinter as the Fantasque one is a bit broken
--- config.freetype_load_target = "Light" -- only light hinting for fonts
+config.front_end = "WebGpu"
+config.freetype_load_flags = "FORCE_AUTOHINT" -- use freetype auto-hinter as the Fantasque one is a bit broken
+config.freetype_load_target = "Light" -- only light hinting for fonts
 
 -- window appearance
 config.use_fancy_tab_bar = true
