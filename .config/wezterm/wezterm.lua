@@ -10,8 +10,8 @@ local font_size = 15
 
 -- required to stop weird stuff happening with font rendering
 config.front_end = "WebGpu"
-config.freetype_load_flags = "FORCE_AUTOHINT" -- use freetype auto-hinter as the Fantasque one is a bit broken
-config.freetype_load_target = "Light" -- only light hinting for fonts
+config.freetype_load_flags = "NO_HINTING" -- disable hinting, as it just causes more artefacts than it solves
+config.freetype_load_target = "Light" -- use light rendering and hinting (although hinting is currently disabled)
 
 -- window appearance
 config.use_fancy_tab_bar = true
@@ -34,7 +34,7 @@ config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 config.color_scheme = "Molokai"
 config.font = wezterm.font("Fantasque Sans Mono")
 config.font_size = font_size
-config.line_height = 1.05
+config.line_height = 1.0
 
 -- functionality changes
 config.scrollback_lines = 1000000
