@@ -5,14 +5,13 @@ command_timeout = 1000 # 1 second for command timeout
 
 # Old custom format
 format = """
-[█](black)$character$status$cmd_duration[](black)\
+$character$status$cmd_duration\
 $jobs\
 $kubernetes\
 $aws\
 $directory\
 ([](bright-yellow)$git_branch$git_metrics$git_status[](bright-yellow))\
 $line_break\
-[█](black)\
 $nix_shell\
 $nodejs\
 $terraform\
