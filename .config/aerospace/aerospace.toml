@@ -62,7 +62,7 @@ inner.horizontal = 20
 inner.vertical = 20
 outer.left = 16
 outer.bottom = 16
-outer.top = 16
+outer.top = [{ monitor.main = 24 }, 56]
 outer.right = 16
 
 
