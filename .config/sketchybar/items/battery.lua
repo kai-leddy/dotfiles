@@ -1,3 +1,4 @@
+local colors = require("colors")
 local icons = require("icons")
 local settings = require("settings")
 
@@ -10,13 +11,15 @@ local battery = sbar.add("item", {
 		},
 		padding_right = settings.padding.big,
 	},
-	label = { drawing = false },
+	label = { drawing = false, font = { size = 14 } },
 	update_freq = 120,
 })
 
 local function battery_update()
 	sbar.exec("pmset -g batt", function(batt_info)
 		local icon = "!"
+		local color = colors.white
+		local label = ""
 
 		if string.find(batt_info, "AC Power") then
 			icon = icons.battery.charging
@@ -34,12 +37,19 @@ local function battery_update()
 				icon = icons.battery._50
 			elseif found and charge > 20 then
 				icon = icons.battery._25
+				color = colors.orange
 			else
 				icon = icons.battery._0
+				color = colors.red
+			end
+
+			local found2, _, remaining = batt_info:find(" (%d+:%d+) remaining")
+			if found2 then
+				label = remaining:gsub(":", "h") .. "m"
 			end
 		end
 
-		battery:set({ icon = icon })
+		battery:set({ icon = { string = icon, color = color }, label = { string = label, drawing = label ~= "" } })
 	end)
 end
 
