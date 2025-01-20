@@ -18,7 +18,7 @@ $terraform\
 $rust\
 $python\
 $ruby\
-[](bright-black)[](bright-red)[](bright-green)[](bright-yellow)[](bright-cyan) """
+[](bright-black)[](bright-red)[](bright-green)[](bright-yellow)[](bright-cyan) """
 
 [character]
 success_symbol = "[✓](bold green)"

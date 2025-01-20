@@ -25,14 +25,14 @@ config.window_padding = {
 	bottom = "8pt",
 }
 config.window_frame = {
-	font = wezterm.font("Fantasque Sans Mono"),
+	font = wezterm.font("FantasqueSansM Nerd Font"),
 	font_size = font_size,
 }
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 -- console appearance
 config.color_scheme = "Molokai"
-config.font = wezterm.font("Fantasque Sans Mono")
+config.font = wezterm.font("FantasqueSansM Nerd Font")
 config.font_size = font_size
 config.line_height = 1.0
 
