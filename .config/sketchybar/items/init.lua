@@ -3,11 +3,9 @@ require("items.calendar")
 require("items.volume")
 require("items.battery")
 
--- TODO:
--- # sketchybar --add alias Tunnelblick q \
--- #            --set Tunnelblick label.drawing=off icon.drawing=off \
--- #            --add alias AeroSpace e \
--- #            --set AeroSpace label.drawing=off icon.drawing=off
+-- TODO: Replace this vomit with actual bar items that look nice
+sbar.add("alias", "Tunnelblick", { label = { drawing = false }, icon = { drawing = false }, position = "q" })
+sbar.add("alias", "AeroSpace", { label = { drawing = false }, icon = { drawing = false }, position = "e" })
 
 -- TODO: add an item for AeroSpace workspaces
 -- # # TODO: add some CPU, mem, etc monitors, perhaps with a graph over time
