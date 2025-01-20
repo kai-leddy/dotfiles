@@ -10,8 +10,6 @@ require("bar")
 require("default")
 require("items")
 
--- TODO: add an item for AeroSpace workspaces
-
 sbar.hotload(true)
 sbar.end_config()
 

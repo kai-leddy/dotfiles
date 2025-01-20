@@ -10,12 +10,12 @@ sbar.default({
 		font = settings.font,
 		color = colors.white,
 		padding_left = settings.padding.big,
-		padding_right = settings.padding.small,
+		padding_right = settings.padding.big,
 	},
 	label = {
 		font = settings.font,
 		color = colors.white,
-		padding_left = settings.padding.small,
+		padding_left = 0,
 		padding_right = settings.padding.big,
 	},
 	background = {
