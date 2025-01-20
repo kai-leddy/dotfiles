@@ -1,108 +1,57 @@
-# This is a demo config to showcase some of the most important commands.
-# It is meant to be changed and configured, as it is intentionally kept sparse.
-# For a (much) more advanced configuration example see my dotfiles:
-# https://github.com/FelixKratz/dotfiles
+#!/usr/bin/env lua
 
-PLUGIN_DIR="$CONFIG_DIR/plugins"
+-- This is only needed once to install the sketchybar module
+-- (or for an update of the module)
+-- os.execute(
+-- 	"[ ! -d $HOME/.local/share/sketchybar_lua/ ] && (git clone https://github.com/FelixKratz/SbarLua.git /tmp/SbarLua && cd /tmp/SbarLua/ && make install && rm -rf /tmp/SbarLua/)"
+-- )
 
-##### Bar Appearance #####
-# Configuring the general appearance of the bar.
-# These are only some of the options available. For all options see:
-# https://felixkratz.github.io/SketchyBar/config/bar
-# If you are looking for other colors, see the color picker:
-# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+-- Add the sketchybar module to the package cpath (the module could be
+-- installed into the default search path then this would not be needed)
+package.cpath = package.cpath .. ";/Users/" .. os.getenv("USER") .. "/.local/share/sketchybar_lua/?.so"
 
-sketchybar --hotload true --bar position=top height=40 blur_radius=8 color=0x40000000
+require("init")
 
-##### Changing Defaults #####
-# We now change some default values, which are applied to all further items.
-# For a full list of all available item properties see:
-# https://felixkratz.github.io/SketchyBar/config/items
-
-# TODO: actually make all this stuff look nicer and add some colour
-# TODO: consider replacing this whole config with SbarLua
-default=(
-  padding_left=4
-  padding_right=4
-  icon.font="FantasqueSansM Nerd Font Mono:Bold:20.0"
-  label.font="FantasqueSansM Nerd Font Mono:Bold:16.0"
-  background.color=0x40ffffff
-  background.corner_radius=8
-  background.height=25
-  icon.color=0xffffffff
-  label.color=0xffffffff
-  icon.padding_left=8
-  icon.padding_right=4
-  label.padding_left=4
-  label.padding_right=8
-)
-sketchybar --default "${default[@]}"
-
-##### Adding Mission Control Space Indicators #####
-# Let's add some mission control spaces:
-# https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
-# to indicate active and available mission control spaces.
-
-# TODO: replace with with some kind of decent AeroSpace integration for each monitor
-SPACE_ICONS=("1" "2" "3" "4" "5" "6" "7" "8" "9" "10")
-for i in "${!SPACE_ICONS[@]}"
-do
-  sid="$(($i+1))"
-  space=(
-    space="$sid"
-    icon="${SPACE_ICONS[i]}"
-    icon.padding_left=7
-    icon.padding_right=7
-    background.color=0x40ffffff
-    background.corner_radius=5
-    background.height=25
-    label.drawing=off
-    script="$PLUGIN_DIR/space.sh"
-    click_script="yabai -m space --focus $sid"
-  )
-  sketchybar --add space space."$sid" left --set space."$sid" "${space[@]}"
-done
-
-##### Adding Left Items #####
-# We add some regular items to the left side of the bar, where
-# only the properties deviating from the current defaults need to be set
-
-sketchybar --add item chevron left \
-           --set chevron icon= label.drawing=off \
-           --add item front_app left \
-           --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
-           --subscribe front_app front_app_switched
-
-##### Adding Items next to the notch #####
-# This is mostly going to be aliases to the native MacOS menu bar items
-
-sketchybar --add alias Tunnelblick q \
-           --set Tunnelblick label.drawing=off icon.drawing=off \
-           --add alias AeroSpace e \
-           --set AeroSpace label.drawing=off icon.drawing=off 
-
-##### Adding Right Items #####
-# In the same way as the left items we can add items to the right side.
-# Additional position (e.g. center) are available, see:
-# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
-
-# Some items refresh on a fixed cycle, e.g. the clock runs its script once
-# every 10s. Other items respond to events they subscribe to, e.g. the
-# volume.sh script is only executed once an actual change in system audio
-# volume is registered. More info about the event system can be found here:
-# https://felixkratz.github.io/SketchyBar/config/events
-
-# TODO: add some CPU, mem, etc monitors, perhaps with a graph over time
-# TODO: add some more icons for status of Bluetooth, VPN, WiFi, etc
-# TODO: add some indicators for number of Slack messages, emails, PRs to review, etc
-sketchybar --add item clock right \
-           --set clock update_freq=10 icon=  script="$PLUGIN_DIR/clock.sh" \
-           --add item volume right \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
-           --subscribe volume volume_change \
-           --add item battery right \
-           --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
-           --subscribe battery system_woke power_source_change
-
-##### Force all scripts to run the first time (never do this in a script) #####
-sketchybar --update
+-- # ##### Adding Left Items #####
+-- # # We add some regular items to the left side of the bar, where
+-- # # only the properties deviating from the current defaults need to be set
+-- #
+-- # sketchybar --add item chevron left \
+-- #            --set chevron icon= label.drawing=off \
+-- #            --add item front_app left \
+-- #            --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
+-- #            --subscribe front_app front_app_switched
+-- #
+-- # ##### Adding Items next to the notch #####
+-- # # This is mostly going to be aliases to the native MacOS menu bar items
+-- #
+-- # sketchybar --add alias Tunnelblick q \
+-- #            --set Tunnelblick label.drawing=off icon.drawing=off \
+-- #            --add alias AeroSpace e \
+-- #            --set AeroSpace label.drawing=off icon.drawing=off
+-- #
+-- # ##### Adding Right Items #####
+-- # # In the same way as the left items we can add items to the right side.
+-- # # Additional position (e.g. center) are available, see:
+-- # # https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
+-- #
+-- # # Some items refresh on a fixed cycle, e.g. the clock runs its script once
+-- # # every 10s. Other items respond to events they subscribe to, e.g. the
+-- # # volume.sh script is only executed once an actual change in system audio
+-- # # volume is registered. More info about the event system can be found here:
+-- # # https://felixkratz.github.io/SketchyBar/config/events
+-- #
+-- # # TODO: add some CPU, mem, etc monitors, perhaps with a graph over time
+-- # # TODO: add some more icons for status of Bluetooth, VPN, WiFi, etc
+-- # # TODO: add some indicators for number of Slack messages, emails, PRs to review, etc
+-- # sketchybar --add item clock right \
+-- #            --set clock update_freq=10 icon=  script="$PLUGIN_DIR/clock.sh" \
+-- #            --add item volume right \
+-- #            --set volume script="$PLUGIN_DIR/volume.sh" \
+-- #            --subscribe volume volume_change \
+-- #            --add item battery right \
+-- #            --set battery update_freq=120 script="$PLUGIN_DIR/battery.sh" \
+-- #            --subscribe battery system_woke power_source_change
+-- #
+-- # ##### Force all scripts to run the first time (never do this in a script) #####
+-- # sketchybar --update
