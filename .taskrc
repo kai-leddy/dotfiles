@@ -29,3 +29,5 @@ uda.ref.type=string
 uda.ref.label=Ref
 urgency.uda.ref.coefficient=1.2
 urgency.user.tag.tools.coefficient=-1
+color.tag.tools=rgb431
+color.tag.work=rgb245
