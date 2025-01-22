@@ -9,7 +9,7 @@ local battery = sbar.add("item", {
 			style = "Regular",
 			size = 19.0,
 		},
-		padding_right = settings.padding.big,
+		padding_right = settings.padding.small,
 	},
 	label = { drawing = false, font = { size = 14 } },
 	update_freq = 120,
@@ -20,33 +20,28 @@ local function battery_update()
 		local icon = "!"
 		local color = colors.white
 		local label = ""
+		local is_charging = string.find(batt_info, "AC Power")
+		local found_charge, _, charge = batt_info:find("(%d+)%%")
+		if found_charge then
+			-- handle looking up icon based on battery percent
+			charge = tonumber(charge)
+			local iconset = is_charging and icons.battery_ac or icons.battery
+			local inverse_remainder = 10 - charge % 10
+			local charge_rounded_up = charge + inverse_remainder
+			icon = iconset["_" .. charge_rounded_up]
 
-		if string.find(batt_info, "AC Power") then
-			icon = icons.battery.charging
-		else
-			local found, _, charge = batt_info:find("(%d+)%%")
-			if found then
-				charge = tonumber(charge)
-			end
-
-			if found and charge > 80 then
-				icon = icons.battery._100
-			elseif found and charge > 60 then
-				icon = icons.battery._75
-			elseif found and charge > 40 then
-				icon = icons.battery._50
-			elseif found and charge > 20 then
-				icon = icons.battery._25
+			-- handle highlighting low battery levels
+			if (not is_charging) and charge < 40 then
 				color = colors.orange
-			else
-				icon = icons.battery._0
+			elseif (not is_charging) and charge < 20 then
 				color = colors.red
 			end
+		end
 
-			local found2, _, remaining = batt_info:find(" (%d+:%d+) remaining")
-			if found2 then
-				label = remaining:gsub(":", "h") .. "m"
-			end
+		-- show remaining battery time if available
+		local found_rem, _, remaining = batt_info:find(" (%d+:%d+) remaining")
+		if found_rem then
+			label = remaining:gsub(":", "h") .. "m"
 		end
 
 		battery:set({ icon = { string = icon, color = color }, label = { string = label, drawing = label ~= "" } })
