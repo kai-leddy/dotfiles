@@ -2,6 +2,8 @@ return {
 	chevron_left = "",
 	chevron_right = "",
 
+	vpn = "",
+
 	volume = {
 		high = "",
 		low = "",

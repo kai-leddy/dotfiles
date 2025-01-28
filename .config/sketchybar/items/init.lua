@@ -2,9 +2,9 @@ require("items.front_app")
 require("items.calendar")
 require("items.volume")
 require("items.battery")
+require("items.vpn")
 
 -- TODO: Replace this vomit with actual bar items that look nice
-sbar.add("alias", "Tunnelblick", { label = { drawing = false }, icon = { drawing = false }, position = "q" })
 sbar.add("alias", "AeroSpace", { label = { drawing = false }, icon = { drawing = false }, position = "e" })
 
 -- TODO: add an item for AeroSpace workspaces
