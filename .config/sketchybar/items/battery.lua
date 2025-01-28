@@ -28,6 +28,7 @@ local function battery_update()
 			local iconset = is_charging and icons.battery_ac or icons.battery
 			local inverse_remainder = 10 - charge % 10
 			local charge_rounded_up = charge + inverse_remainder
+			charge_rounded_up = charge_rounded_up > 100 and 100 or charge_rounded_up
 			icon = iconset["_" .. charge_rounded_up]
 
 			-- handle highlighting low battery levels
@@ -40,7 +41,7 @@ local function battery_update()
 
 		-- show remaining battery time if available
 		local found_rem, _, remaining = batt_info:find(" (%d+:%d+) remaining")
-		if found_rem then
+		if found_rem and not is_charging then
 			label = remaining:gsub(":", "h") .. "m"
 		end
 

@@ -41,5 +41,4 @@ local function update()
 	clock:set({ label = time })
 end
 
-clock:subscribe("routine", update)
-clock:subscribe("forced", update)
+clock:subscribe({ "routine", "forced" }, update)
