@@ -17,24 +17,93 @@ return {
       chat_shortcut_respond = { modes = { "n", "v", "x" }, shortcut = "<cr>" },
       -- setup the providers
       providers = {
-        openai = { disabled = false },
+        openai = { disabled = true },
         copilot = { disabled = false },
+        openrouter = {
+          endpoint = "https://openrouter.ai/api/v1/chat/completions",
+          secret = os.getenv("OPENROUTER_API_KEY"),
+        },
       },
       -- custom agents setup
       agents = {
         -- disabling the old default agents
         { name = "ChatGPT3-5", disable = true },
         { name = "ChatGPT4", disable = true },
+        { name = "ChatGPT4o", disable = true },
+        { name = "ChatGPT4o-mini", disable = true },
         { name = "CodeGPT3-5", disable = true },
         { name = "CodeGPT4", disable = true },
-        -- add an agent for using o1-mini
+        { name = "CodeGPT4o", disable = true },
+        { name = "CodeGPT4o-mini", disable = true },
+        -- add agents for the models I often use
+        -- TODO: abstract all this duplication into just a list of model names
         {
-          name = "Code-o1-mini",
-          provider = "openai",
+          name = "4o-mini",
+          provider = "openrouter",
+          chat = true,
+          command = true,
+          model = { model = "openai/gpt-4o-mini", temperature = 0.7, top_p = 1 },
+          system_prompt = "You are an AI working as a code editor.\n\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
+        },
+        {
+          name = "o1-mini",
+          provider = "openrouter",
           chat = false,
           command = true,
-          model = { model = "o1-mini", temperature = 0.8, top_p = 1 },
+          model = { model = "openai/gpt-o1-mini", temperature = 0.8, top_p = 1 },
           system_prompt = "", -- o1-mini doesn't support system prompts
+        },
+        {
+          name = "claude-3.5-sonnet",
+          provider = "openrouter",
+          chat = true,
+          command = true,
+          model = { model = "anthropic/claude-3.5-sonnet", temperature = 0.8, top_p = 1 },
+          system_prompt = "You are an AI working as a code editor.\n\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
+        },
+        {
+          name = "deepseek-v3",
+          provider = "openrouter",
+          chat = true,
+          command = true,
+          model = { model = "deepseek/deepseek-chat", temperature = 0.8, top_p = 1 },
+          system_prompt = "You are an AI working as a code editor.\n\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
+        },
+        {
+          name = "deepseek-R1",
+          provider = "openrouter",
+          chat = true,
+          command = true,
+          model = { model = "deepseek/deepseek-r1", temperature = 0.8, top_p = 1 },
+          system_prompt = "You are an AI working as a code editor.\n\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
+        },
+        {
+          name = "gemini-flash",
+          provider = "openrouter",
+          chat = true,
+          command = true,
+          model = { model = "google/gemini-flash-1.5", temperature = 0.8, top_p = 1 },
+          system_prompt = "You are an AI working as a code editor.\n\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
+        },
+        {
+          name = "qwen-coder",
+          provider = "openrouter",
+          chat = true,
+          command = true,
+          model = { model = "qwen/qwen-2.5-coder-32b-instruct", temperature = 0.8, top_p = 1 },
+          system_prompt = "You are an AI working as a code editor.\n\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
         },
       },
       -- custom chat commands

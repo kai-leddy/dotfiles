@@ -22,8 +22,9 @@ set -x VISUAL nvim
 # Make emacs LSP faster
 set -x LSP_USE_PLISTS true
 
-# get OpenAI API key out of the keychain and set it in the env
+# get API keys out of the keychain and set them in the env
 set -x OPENAI_API_KEY (security find-generic-password -w -a $LOGNAME -s neovim-openai-key)
+set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
 set -x GH_TOKEN (security find-generic-password -w -a $LOGNAME -s github-cli-key)
 
 # Setup QMK global CLI tool
