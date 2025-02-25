@@ -19,12 +19,16 @@ exec-on-workspace-change = [
   '-c',
   'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE',
 ]
+# Notify Sketchybar about focus change
+on-focus-changed = [
+  "exec-and-forget sketchybar --trigger aerospace_focus_change",
+]
 
 # Start AeroSpace at login
 start-at-login = true
 
-# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-flatten-containers = true
+# Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
 enable-normalization-opposite-orientation-for-nested-containers = true
 
 # See: https://nikitabobko.github.io/AeroSpace/guide#layouts
@@ -78,6 +82,22 @@ outer.right = 16
 C = ['DELL P2723D (1)', 'BenQ GW2760']
 B = ['DELL P2723D (2)', 'BenQ GL2760']
 S = 'built-in'
+
+# Force terminal windows to the code workspace
+[[on-window-detected]]
+if.app-name-regex-substring = 'WezTerm|iTerm2|Terminal|Ghostty|Warp'
+run = ['move-node-to-workspace C']
+
+# Force social windows to the social workspace
+[[on-window-detected]]
+if.app-name-regex-substring = 'Slack|Mail|zoom'
+run = ['move-node-to-workspace S']
+
+# Force browser windows to the browser workspace (but only on first startup)
+[[on-window-detected]]
+if.app-name-regex-substring = 'Arc|Chrome|Safari|Firefox'
+if.during-aerospace-startup = true
+run = ['move-node-to-workspace B']
 
 
 # All possible keys:
