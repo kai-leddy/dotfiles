@@ -1,0 +1,14 @@
+
+-- local function update()
+-- 	sbar.exec(
+-- 		[[
+--     osascript -e 'tell application "Mail" to count of (messages of inbox whose read status is false)'
+--   ]],
+-- 		function(count)
+-- 			local day = os.date("%A")
+-- 			local date = os.date("%d/%m")
+-- 			local time = os.date("%H:%M")
+-- 			vpn:set({ label = time })
+-- 		end
+-- 	)
+-- end
