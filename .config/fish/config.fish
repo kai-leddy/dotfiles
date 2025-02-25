@@ -45,19 +45,15 @@ fish_add_path --path /opt/homebrew/bin /opt/homebrew/sbin
 set -x GOPATH $HOME/go
 set -x GOBIN $GOPATH/bin
 
-# Setup docker host with colima for MacOS
-set -gx DOCKER_HOST (docker context inspect colima | jq -r '.[0].Endpoints.docker.Host')
-
 # Setup user PATH variables all at once (for performance)
 set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
 set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
 set emacs $HOME/.config/emacs/bin
 set local_bin $HOME/.local/bin
-set pip3_bin (python3 -m site --user-base)/bin
 set go_bin $GOBIN
 # set composer $HOME/.composer/vendor/bin
 # set mint $HOME/.mint/bin
-fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin $pip3_bin $go_bin
+fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin $go_bin
 
 # use lsd instead of ls
 alias ls lsd
@@ -70,6 +66,7 @@ alias qc 'qmk compile'
 alias qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 
 # Setup git aliases
+alias v nvim
 alias g lazygit
 alias y 'lazygit --work-tree ~ --git-dir ~/.local/share/yadm/repo.git' # lazygit for yadm
 
@@ -99,22 +96,22 @@ abbr -a -g dcu 'docker compose up'
 abbr -a -g dcd 'docker compose down'
 
 # Kubernetes abbreviations
-# abbr -a -g k kubectl
-# abbr -a -g kg 'kubectl get'
-# abbr -a -g kga 'kubectl get --all-namespaces'
-# abbr -a -g kgp 'kubectl get pods'
-# abbr -a -g kgl 'kubectl get pods --show-labels'
-# abbr -a -g kd 'kubectl describe'
-# abbr -a -g kdp 'kubectl describe pods'
-# abbr -a -g ke 'kubectl exec -it'
-# abbr -a -g kl 'kubectl logs'
-# abbr -a -g kp 'kubectl port-forward'
-# abbr -a -g kr 'kubectl rollout restart'
-# abbr -a -g kt 'kubectl top pods'
-# abbr -a -g ktn 'kubectl top nodes'
-# abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
-# abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
-# abbr -a -g tu 'tilt up'
+abbr -a -g k kubectl
+abbr -a -g kg 'kubectl get'
+abbr -a -g kga 'kubectl get --all-namespaces'
+abbr -a -g kgp 'kubectl get pods'
+abbr -a -g kgl 'kubectl get pods --show-labels'
+abbr -a -g kd 'kubectl describe'
+abbr -a -g kdp 'kubectl describe pods'
+abbr -a -g ke 'kubectl exec -it'
+abbr -a -g kl 'kubectl logs'
+abbr -a -g kp 'kubectl port-forward'
+abbr -a -g kr 'kubectl rollout restart'
+abbr -a -g kt 'kubectl top pods'
+abbr -a -g ktn 'kubectl top nodes'
+abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
+abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
+abbr -a -g tu 'tilt up'
 
 # Terraform abbreviations
 abbr -a -g ti 'terraform init'

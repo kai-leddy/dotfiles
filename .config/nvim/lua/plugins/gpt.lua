@@ -52,7 +52,7 @@ return {
           provider = "openrouter",
           chat = false,
           command = true,
-          model = { model = "openai/gpt-o1-mini", temperature = 0.8, top_p = 1 },
+          model = { model = "openai/o1-mini", temperature = 0.8, top_p = 1 },
           system_prompt = "", -- o1-mini doesn't support system prompts
         },
         {

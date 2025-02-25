@@ -40,4 +40,4 @@ shell.nix
 .aider*
 
 # don't commit mise-en-place configs
-mise.toml
+mise.local.toml
