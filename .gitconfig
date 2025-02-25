@@ -17,14 +17,18 @@
 [fetch]
 	prune = true
 	pruneTags = true
+	all = true
 [diff]
 	algorithm = histogram
 	indentHeuristic = true
 	colorMoved = default
+	mnemonicPrefix = true
+	renames = true
 [delta]
 	syntax-theme = Monokai Extended
 	line-numbers = true
 	navigate = true
+  hyperlinks = true
 	side-by-side = false
 	pager = less -RS
 	# styling
@@ -34,7 +38,7 @@
 [interactive]
 	diffFilter = delta --color-only
 [merge]
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 [pretty]
 	loggraph = "format:'%Cred%h%Creset -%C(yellow)%d%Creset %<(50,trunc)%s %Cgreen(%cr)%C(bold blue)<%an>%Creset'"
 [alias]
@@ -46,3 +50,20 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[column]
+	ui = auto
+[branch]
+	sort = -committerdate
+[tag]
+	sort = version:refname
+[help]
+	autocorrect = prompt
+[commit]
+	verbose = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
