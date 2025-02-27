@@ -18,7 +18,8 @@ vim.keymap.set("n", "<leader>wl", "<cmd>wincmd l<cr><esc>", { desc = "Move to wi
 vim.keymap.set("n", "<BS>", "<cmd>buffer #<cr><esc>", { desc = "Switch to previous buffer" })
 
 -- quick switch to "other" window with tab
-vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr><esc>", { desc = "Switch to previous window" })
+vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr><esc>", { desc = "Switch to next focusable window" })
+vim.keymap.set("n", "<S-Tab>", "<cmd>wincmd W<cr><esc>", { desc = "Switch to previous focusable window" })
 
 -- reopen the last FzfLua search results with <leader> apostrophe
 vim.keymap.set("n", "<leader>'", "<cmd>FzfLua resume<cr>", { desc = "Re-open last search results" })

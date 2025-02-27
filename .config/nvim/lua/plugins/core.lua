@@ -26,4 +26,16 @@ return {
       },
     },
   },
+  -- stop notifications from being focussed by accident (I don't want to focus them ever)
+  {
+    "folke/snacks.nvim",
+    opts = {
+      styles = {
+        notification = {
+          focusable = false,
+          enter = false,
+        },
+      },
+    },
+  },
 }
