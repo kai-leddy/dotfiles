@@ -56,11 +56,11 @@ return {
           system_prompt = "", -- o1-mini doesn't support system prompts
         },
         {
-          name = "claude-3.5-sonnet",
+          name = "claude-3.7-sonnet",
           provider = "openrouter",
           chat = true,
           command = true,
-          model = { model = "anthropic/claude-3.5-sonnet", temperature = 0.8, top_p = 1 },
+          model = { model = "anthropic/claude-3.7-sonnet", temperature = 0.8, top_p = 1 },
           system_prompt = "You are an AI working as a code editor.\n\n"
             .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
             .. "START AND END YOUR ANSWER WITH:\n\n```",
@@ -91,6 +91,26 @@ return {
           chat = true,
           command = true,
           model = { model = "google/gemini-flash-1.5", temperature = 0.8, top_p = 1 },
+          system_prompt = "You are an AI working as a code editor.\n\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
+        },
+        {
+          name = "gemini-flash-2",
+          provider = "openrouter",
+          chat = true,
+          command = true,
+          model = { model = "google/gemini-2.0-flash-001", temperature = 0.8, top_p = 1 },
+          system_prompt = "You are an AI working as a code editor.\n\n"
+            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+            .. "START AND END YOUR ANSWER WITH:\n\n```",
+        },
+        {
+          name = "gemini-flash-lite",
+          provider = "openrouter",
+          chat = true,
+          command = true,
+          model = { model = "google/gemini-2.0-flash-lite-001", temperature = 0.8, top_p = 1 },
           system_prompt = "You are an AI working as a code editor.\n\n"
             .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
             .. "START AND END YOUR ANSWER WITH:\n\n```",
