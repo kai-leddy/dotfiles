@@ -43,4 +43,5 @@ return {
 	["WhatsApp"] = "",
 	["Xcode"] = "",
 	["zoom.us"] = "",
+	["Redis Insight"] = "",
 }
