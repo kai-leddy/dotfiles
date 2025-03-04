@@ -63,7 +63,7 @@ local function updateWindow(workspace_index, args)
 		local app = open_window
 		local lookup = app_icons[app]
 		local icon = ((lookup == nil) and app_icons["Default"] or lookup)
-		icon_line = icon_line .. " " .. icon
+		icon_line = icon_line .. icon .. " "
 	end
 
 	sbar.animate("tanh", 10, function()
@@ -146,14 +146,11 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 				highlight_color = colors.white,
 				drawing = false,
 				string = workspace_index,
-				padding_right = 0,
 				font = {
 					size = settings.font.size * 1.5,
 				},
 			},
 			label = {
-				padding_left = 0,
-				padding_right = settings.padding.biggest,
 				color = colors.with_alpha(colors.white, 0.5),
 				highlight_color = colors.white,
 			},
