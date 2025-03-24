@@ -4,6 +4,7 @@ return {
 
 	vpn = "",
 	mail = "",
+	github = "",
 
 	volume = {
 		high = "",
