@@ -13,27 +13,39 @@ local vpn = sbar.add("item", {
 		padding_right = settings.padding.small,
 	},
 	label = { color = colors.blue },
-	updates = true, -- always poll for updates, even when not drawing
-	update_freq = 10, -- TODO:setup event from Hammerspoon script instead of polling
+	updates = true, -- always check for updates, even when not drawing
 })
 
 local function update()
+	-- start by setting the pending state
+	vpn:set({
+		drawing = true,
+		label = "...",
+	})
 	-- get status of each config, using config name to mean connected and "..." to mean connecting
-	-- NOTE: we have to keep doing `configuration idx` with Tunnelblick, as the named key form of lookup is broken, so we can only looj up by index
+	-- NOTE: we have to keep doing `configuration idx` with Tunnelblick, as the named key form of lookup is broken, so we can only look up by index
 	sbar.exec(
 		[[
-			osascript -e 'tell application "Tunnelblick"
-				repeat with idx from 1 to (count (configurations as list))
-					if state of configuration idx is "CONNECTED" then
-						return name of configuration idx
-					else if state of configuration idx is not "EXITING" then
-						return "..."
-					end if
-				end repeat
-			end tell'
+			osascript -e '
+      set status to "..."
+      tell application "Tunnelblick"
+        repeat until (status is not "...")
+          delay 1
+          set status to ""
+          repeat with idx from 1 to (count (configurations as list))
+            if state of configuration idx is "CONNECTED" then
+              set status to name of configuration idx
+            else if state of configuration idx is not "EXITING" then
+              set status to "..."
+            end if
+          end repeat
+        end repeat
+      end tell
+      return status
+			'
 		]],
 		function(status)
-			if status == "" then
+			if status:match("^%s*$") then
 				vpn:set({
 					drawing = false,
 					label = "...",
@@ -49,4 +61,4 @@ local function update()
 	)
 end
 
-vpn:subscribe({ "routine", "forced" }, update)
+vpn:subscribe({ "forced", "vpn_change" }, update)
