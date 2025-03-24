@@ -3,6 +3,7 @@ return {
 	chevron_right = "",
 
 	vpn = "",
+	mail = "",
 
 	volume = {
 		high = "",
