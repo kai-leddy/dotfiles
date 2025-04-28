@@ -14,7 +14,7 @@ local github = sbar.add("item", {
 	},
 	drawing = false,
 	updates = true, -- update even if currently not drawing
-	update_freq = 300, -- update every
+	update_freq = 300, -- update every 5 mins
 })
 
 local function update(callback)

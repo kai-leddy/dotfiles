@@ -14,12 +14,13 @@ local vpn = sbar.add("item", {
 	},
 	label = { color = colors.blue },
 	updates = true, -- always check for updates, even when not drawing
+	update_freq = 300, -- update every 5 minutes
 })
 
-local function update()
+local function update(trigger)
 	-- start by setting the pending state
 	vpn:set({
-		drawing = true,
+		drawing = trigger == "vpn_change",
 		label = "...",
 	})
 	-- get status of each config, using config name to mean connected and "..." to mean connecting
@@ -61,4 +62,7 @@ local function update()
 	)
 end
 
-vpn:subscribe({ "forced", "vpn_change" }, update)
+vpn:subscribe({ "forced", "routine" }, update)
+vpn:subscribe({ "vpn_change" }, function()
+	update("vpn_change")
+end)

@@ -1,5 +1,5 @@
-local colors = require("colors")
 local settings = require("settings")
+local colors = require("colors")
 local app_icons = require("app_icons")
 
 local query_workspaces =
