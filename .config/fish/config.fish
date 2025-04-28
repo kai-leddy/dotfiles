@@ -45,6 +45,9 @@ fish_add_path --path /opt/homebrew/bin /opt/homebrew/sbin
 set -x GOPATH $HOME/go
 set -x GOBIN $GOPATH/bin
 
+# Don't know how or why - but this magically makes docker-compose build faster
+set -x COMPOSE_BAKE true
+
 # Setup user PATH variables all at once (for performance)
 set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
 set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
