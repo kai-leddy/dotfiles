@@ -38,16 +38,6 @@ return {
         -- add agents for the models I often use
         -- TODO: abstract all this duplication into just a list of model names
         {
-          name = "4o-mini",
-          provider = "openrouter",
-          chat = true,
-          command = true,
-          model = { model = "openai/gpt-4o-mini", temperature = 0.7, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-        {
           name = "o1-mini",
           provider = "openrouter",
           chat = false,
@@ -90,37 +80,17 @@ return {
           provider = "openrouter",
           chat = true,
           command = true,
-          model = { model = "google/gemini-flash-1.5", temperature = 0.8, top_p = 1 },
+          model = { model = "google/gemini-2.5-flash-preview", temperature = 0.8, top_p = 1 },
           system_prompt = "You are an AI working as a code editor.\n\n"
             .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
             .. "START AND END YOUR ANSWER WITH:\n\n```",
         },
         {
-          name = "gemini-flash-2",
+          name = "gemini-pro",
           provider = "openrouter",
           chat = true,
           command = true,
-          model = { model = "google/gemini-2.0-flash-001", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-        {
-          name = "gemini-flash-lite",
-          provider = "openrouter",
-          chat = true,
-          command = true,
-          model = { model = "google/gemini-2.0-flash-lite-001", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-        {
-          name = "qwen-coder",
-          provider = "openrouter",
-          chat = true,
-          command = true,
-          model = { model = "qwen/qwen-2.5-coder-32b-instruct", temperature = 0.8, top_p = 1 },
+          model = { model = "google/gemini-2.5-pro-preview-03-25", temperature = 0.8, top_p = 1 },
           system_prompt = "You are an AI working as a code editor.\n\n"
             .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
             .. "START AND END YOUR ANSWER WITH:\n\n```",
