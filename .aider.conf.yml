@@ -12,7 +12,7 @@ check-update: true
 
 alias:
   - "fast:openrouter/google/gemini-2.5-flash-preview"
-  - "smart:openrouter/google/gemini-2.5-pro-preview-03-25"
+  - "smart:openrouter/google/gemini-2.5-pro-preview"
 
 # default models if not chosen via CLI
 model: smart

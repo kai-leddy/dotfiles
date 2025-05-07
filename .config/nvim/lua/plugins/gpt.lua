@@ -90,7 +90,7 @@ return {
           provider = "openrouter",
           chat = true,
           command = true,
-          model = { model = "google/gemini-2.5-pro-preview-03-25", temperature = 0.8, top_p = 1 },
+          model = { model = "google/gemini-2.5-pro-preview", temperature = 0.8, top_p = 1 },
           system_prompt = "You are an AI working as a code editor.\n\n"
             .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
             .. "START AND END YOUR ANSWER WITH:\n\n```",

@@ -1,12 +1,12 @@
-model: openrouter/google/gemini-2.5-pro-preview-03-25
+model: openrouter/google/gemini-2.5-pro-preview
 # model: openrouter/google/gemini-2.5-flash-preview
-# system: You are an lazy AI lead software developer. Use British English and don't end bullet list items with a period. Don't be too formal or corporate.
 prompt: |
-  You are an lazy AI lead software developer. Use British English and don't end bullet list items with a period. Don't be too formal or corporate.
+  You are an lazy AI lead software developer. Use British English and don't end bullet list items with a period. 
   Generate a description for a pull request following the format in the code block below, replacing the placeholders delimited by the double curly brackets.
   Use the branch name and the git changelog provided for context on the changes that occured in the pull request.
   Do not output anything other than the pull request description in the provided format and output it as raw Markdown, without a code block.
   Use newlines in the description to keep the markdown output relatively tidy with fewer long lines.
+  Please do not start the description with "Right then". You're british, but not cockney.
 
   ## PR description format:
 
