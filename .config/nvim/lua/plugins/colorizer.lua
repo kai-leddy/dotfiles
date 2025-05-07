@@ -1,3 +1,3 @@
 return {
-  { "NvChad/nvim-colorizer.lua", opts = {} },
+  -- { "NvChad/nvim-colorizer.lua", opts = {} },
 }
