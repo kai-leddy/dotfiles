@@ -1,3 +1,44 @@
+-- definition of LLMs that I currently make use of
+local llms = {
+  -- disabling the old default agents
+  { name = "ChatGPT3-5", disable = true },
+  { name = "ChatGPT4", disable = true },
+  { name = "ChatGPT4o", disable = true },
+  { name = "ChatGPT4o-mini", disable = true },
+  { name = "CodeGPT3-5", disable = true },
+  { name = "CodeGPT4", disable = true },
+  { name = "CodeGPT4o", disable = true },
+  { name = "CodeGPT4o-mini", disable = true },
+  { name = "o1-mini", openrouter_model = "openai/o1-mini", no_sys_prompt = true },
+  { name = "claude-3.7-sonnet", openrouter_model = "anthropic/claude-3.7-sonnet" },
+  { name = "deepseek-v3", openrouter_model = "deepseek/deepseek-chat" },
+  { name = "deepseek-R1", openrouter_model = "deepseek/deepseek-r1" },
+  { name = "gemini-flash", openrouter_model = "google/gemini-2.5-flash-preview" },
+  { name = "gemini-pro", openrouter_model = "google/gemini-2.5-pro-preview" },
+}
+
+local generated_agents = {}
+local default_system_prompt = "You are an AI working as a code editor.\n\n"
+  .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+  .. "START AND END YOUR ANSWER WITH:\n\n```"
+
+for _, llm in ipairs(llms) do
+  if llm.disable then
+    table.insert(generated_agents, { name = llm.name, disable = true })
+  end
+  if llm.openrouter_model then
+    local agent = {
+      name = llm.name,
+      provider = "openrouter",
+      chat = true,
+      command = true,
+      model = { model = llm.openrouter_model, temperature = 0.8, top_p = 1 },
+      system_prompt = llm.no_sys_prompt and "" or default_system_prompt,
+    }
+    table.insert(generated_agents, agent)
+  end
+end
+
 return {
   -- setup group prefix description with which-key
   {
@@ -25,77 +66,7 @@ return {
         },
       },
       -- custom agents setup
-      agents = {
-        -- disabling the old default agents
-        { name = "ChatGPT3-5", disable = true },
-        { name = "ChatGPT4", disable = true },
-        { name = "ChatGPT4o", disable = true },
-        { name = "ChatGPT4o-mini", disable = true },
-        { name = "CodeGPT3-5", disable = true },
-        { name = "CodeGPT4", disable = true },
-        { name = "CodeGPT4o", disable = true },
-        { name = "CodeGPT4o-mini", disable = true },
-        -- add agents for the models I often use
-        -- TODO: abstract all this duplication into just a list of model names
-        {
-          name = "o1-mini",
-          provider = "openrouter",
-          chat = false,
-          command = true,
-          model = { model = "openai/o1-mini", temperature = 0.8, top_p = 1 },
-          system_prompt = "", -- o1-mini doesn't support system prompts
-        },
-        {
-          name = "claude-3.7-sonnet",
-          provider = "openrouter",
-          chat = true,
-          command = true,
-          model = { model = "anthropic/claude-3.7-sonnet", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-        {
-          name = "deepseek-v3",
-          provider = "openrouter",
-          chat = true,
-          command = true,
-          model = { model = "deepseek/deepseek-chat", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-        {
-          name = "deepseek-R1",
-          provider = "openrouter",
-          chat = true,
-          command = true,
-          model = { model = "deepseek/deepseek-r1", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-        {
-          name = "gemini-flash",
-          provider = "openrouter",
-          chat = true,
-          command = true,
-          model = { model = "google/gemini-2.5-flash-preview", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-        {
-          name = "gemini-pro",
-          provider = "openrouter",
-          chat = true,
-          command = true,
-          model = { model = "google/gemini-2.5-pro-preview", temperature = 0.8, top_p = 1 },
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-      },
+      agents = generated_agents,
       -- custom chat commands
       hooks = {
         Complete = function(gp, params)
