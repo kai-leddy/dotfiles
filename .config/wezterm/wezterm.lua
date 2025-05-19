@@ -6,8 +6,6 @@ local config = wezterm.config_builder()
 
 local font_size = 15
 
--- TODO: how can I get intellisense for Wezterm API?
-
 -- required to stop weird stuff happening with font rendering
 config.front_end = "WebGpu"
 config.freetype_load_flags = "NO_HINTING" -- disable hinting, as it just causes more artefacts than it solves
