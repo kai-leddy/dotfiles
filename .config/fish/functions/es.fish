@@ -1,3 +1,3 @@
 function es
-    $EDITOR ~/.config/starship.toml $argv
+    $EDITOR ~/.config/sketchybar/items/init.lua $argv
 end
