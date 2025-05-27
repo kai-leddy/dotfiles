@@ -67,15 +67,15 @@ format = "([](blue)[$symbol $workspace]($style)[](blue))"
 style = "white bg:blue"
 
 [kubernetes]
-disabled = true
-symbol = "ﴱ"
+disabled = false
+symbol = ""
 format = '([](bright-red)[$symbol $context( \[$namespace\])]($style)[](bright-red))'
 style = "black bg:bright-red"
 context_aliases = { kind-kind = "kind" }
 
 [aws]
-disabled = false
-symbol = ""
+disabled = true
+symbol = ""
 format = '([](bright-red)[$symbol $profile( \[$duration\])]($style)[](bright-red))'
 style = "black bg:bright-red"
 
