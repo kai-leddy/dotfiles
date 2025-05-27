@@ -22,7 +22,9 @@ vim.keymap.set("n", "<Tab>", "<cmd>wincmd w<cr><esc>", { desc = "Switch to next 
 vim.keymap.set("n", "<S-Tab>", "<cmd>wincmd W<cr><esc>", { desc = "Switch to previous focusable window" })
 
 -- reopen the last FzfLua search results with <leader> apostrophe
-vim.keymap.set("n", "<leader>'", "<cmd>FzfLua resume<cr>", { desc = "Re-open last search results" })
+vim.keymap.set("n", "<leader>'", function()
+  Snacks.picker.resume()
+end, { desc = "Re-open last search results" })
 
 -- fix issues with quickly pressing esc and then j or k
 vim.keymap.del("i", "<A-j>")
