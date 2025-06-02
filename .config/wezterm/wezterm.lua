@@ -14,7 +14,7 @@ config.freetype_load_target = "Light" -- use light rendering and hinting (althou
 -- window appearance
 config.use_fancy_tab_bar = true
 -- config.hide_tab_bar_if_only_one_tab = true
-config.window_background_opacity = 0.90
+config.window_background_opacity = 0.85
 config.macos_window_background_blur = 8
 config.window_padding = {
 	left = "8pt",
