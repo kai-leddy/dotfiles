@@ -1,17 +1,44 @@
 return {
   { "folke/lazy.nvim", version = false },
-  { "LazyVim/LazyVim", version = false, opts = { colorscheme = "tokyonight" } },
+  { "LazyVim/LazyVim", version = false, opts = { colorscheme = "catppuccin-mocha" } },
   {
-    "folke/tokyonight.nvim",
-    -- lazy = true,
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
     opts = {
-      style = "moon",
-      transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
+      flavour = "mocha",
+      transparent_background = true,
+      integrations = {
+        blink_cmp = true,
+        flash = true,
+        grug_far = true,
+        harpoon = true,
+        mason = true,
+        mini = { enabled = true, indentscope_color = "flamingo" },
+        neotest = true,
+        noice = true,
+        copilot_vim = true,
+        snacks = { enabled = true, indentscope_color = "flamingo" },
+        lsp_trouble = true,
+        which_key = true,
       },
-      sidebars = { "qf", "vista_kind", "terminal", "packer" },
+      custom_highlights = function(colors)
+        return {
+          -- make the window separator clearer
+          WinSeparator = { fg = colors.flamingo },
+        }
+      end,
+    },
+  },
+  -- make sure lualine uses the catppuccin theme
+  {
+    "nvim-lualine/lualine.nvim",
+    opts = {
+      options = {
+        theme = "catppuccin",
+        component_separators = { left = "│", right = "│" },
+        section_separators = { left = "", right = "" },
+      },
     },
   },
   -- setup EmmyLua for LSP support in hammerspoon config
