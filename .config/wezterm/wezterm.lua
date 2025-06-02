@@ -39,6 +39,12 @@ config.scrollback_lines = 1000000
 
 -- key mappings
 config.keys = {
+	-- disable the default keybindings for alt+enter, so that we can use it in CLI apps
+	{
+		key = "Enter",
+		mods = "ALT",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
 	{ key = "c", mods = "SHIFT|CTRL", action = act.QuickSelect },
 	{
 		key = "o",
