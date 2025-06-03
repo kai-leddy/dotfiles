@@ -11,7 +11,10 @@ local mail = sbar.add("item", {
 			size = 18.0,
 		},
 		padding_right = settings.padding.small,
+		color = colors.base,
 	},
+	label = { color = colors.base },
+	background = { color = colors.lavender },
 	drawing = false,
 	updates = true, -- update even if currently not drawing
 	update_freq = 300, -- update every 5 minutes

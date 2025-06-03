@@ -9,10 +9,11 @@ local vpn = sbar.add("item", {
 		font = {
 			size = 19,
 		},
-		color = colors.blue,
+		color = colors.base,
 		padding_right = settings.padding.small,
 	},
-	label = { color = colors.blue },
+	label = { color = colors.base },
+	background = { color = colors.blue },
 	updates = true, -- always check for updates, even when not drawing
 	update_freq = 300, -- update every 5 minutes
 })

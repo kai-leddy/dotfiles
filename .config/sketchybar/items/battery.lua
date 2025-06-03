@@ -11,6 +11,7 @@ local battery = sbar.add("item", {
 		},
 		padding_right = settings.padding.small,
 	},
+	background = { color = colors.surface1 },
 	label = { drawing = false, font = { size = 14 } },
 	update_freq = 120,
 })
@@ -18,7 +19,7 @@ local battery = sbar.add("item", {
 local function battery_update()
 	sbar.exec("pmset -g batt", function(batt_info)
 		local icon = "!"
-		local color = colors.white
+		local color = colors.text
 		local label = ""
 		local is_charging = string.find(batt_info, "AC Power")
 		local found_charge, _, charge = batt_info:find("(%d+)%%")
@@ -33,7 +34,7 @@ local function battery_update()
 
 			-- handle highlighting low battery levels
 			if (not is_charging) and charge < 40 then
-				color = colors.orange
+				color = colors.peach
 			elseif (not is_charging) and charge < 20 then
 				color = colors.red
 			end

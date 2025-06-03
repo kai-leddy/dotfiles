@@ -1,5 +1,7 @@
 {
     "diagnostics.globals": [
-        "sbar"
-    ]
+        "sbar",
+        "tonumber"
+    ],
+    "runtime.version": "Lua 5.4"
 }

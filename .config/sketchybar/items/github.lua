@@ -11,7 +11,10 @@ local github = sbar.add("item", {
 			size = 22.0,
 		},
 		padding_right = settings.padding.small,
+		color = colors.base,
 	},
+	label = { color = colors.base },
+	background = { color = colors.mauve },
 	drawing = false,
 	updates = true, -- update even if currently not drawing
 	update_freq = 300, -- update every 5 mins
@@ -30,7 +33,7 @@ local function update(callback)
 			else
 				github:set({ drawing = true, label = { string = c } })
 			end
-			if callback then
+			if type(callback) == "function" then
 				callback(c)
 			end
 		end

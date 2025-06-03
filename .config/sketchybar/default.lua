@@ -8,19 +8,19 @@ sbar.default({
 	padding_right = 4,
 	icon = {
 		font = settings.font,
-		color = colors.white,
+		color = colors.text,
 		padding_left = settings.padding.big,
 		padding_right = settings.padding.big,
 	},
 	label = {
 		font = settings.font,
-		color = colors.white,
+		color = colors.text,
 		padding_left = 0,
 		padding_right = settings.padding.big,
 	},
 	background = {
-		color = colors.bg1,
-		height = 25,
+		color = colors.surface0,
+		height = 32,
 		corner_radius = 8,
 	},
 })

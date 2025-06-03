@@ -6,6 +6,7 @@ local volume_icon = sbar.add("item", {
 	icon = {
 		string = icons.volume.high,
 	},
+	background = { color = colors.surface1 },
 })
 
 volume_icon:subscribe("volume_change", function(env)
@@ -23,7 +24,7 @@ volume_icon:subscribe("volume_change", function(env)
 	local is_off = volume == 0
 
 	volume_icon:set({
-		icon = { string = icon or "", color = is_off and colors.red or colors.white },
+		icon = { string = icon or "", color = is_off and colors.red or colors.text },
 		label = { string = volume .. "%", drawing = not is_off },
 	})
 end)

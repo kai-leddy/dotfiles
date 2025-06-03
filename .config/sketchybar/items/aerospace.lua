@@ -142,8 +142,8 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 		local workspace = sbar.add("item", {
 			position = "e",
 			icon = {
-				color = colors.with_alpha(colors.white, 0.5),
-				highlight_color = colors.white,
+				color = colors.with_alpha(colors.base, 0.5),
+				highlight_color = colors.base,
 				drawing = false,
 				string = workspace_index,
 				font = {
@@ -151,12 +151,11 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 				},
 			},
 			label = {
-				color = colors.with_alpha(colors.white, 0.5),
-				highlight_color = colors.white,
+				color = colors.with_alpha(colors.base, 0.5),
+				highlight_color = colors.base,
 			},
 			background = {
-				border_color = colors.with_alpha(colors.white, 0),
-				border_width = 1,
+				color = colors.with_alpha(colors.sapphire, 0.5),
 			},
 			padding_left = 0,
 			padding_right = 0,
@@ -173,7 +172,7 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 					icon = { highlight = is_focused },
 					label = { highlight = is_focused },
 					background = {
-						border_color = is_focused and colors.white or colors.with_alpha(colors.white, 0),
+						color = is_focused and colors.sapphire or colors.with_alpha(colors.sapphire, 0.5),
 					},
 				})
 			end)
@@ -198,7 +197,7 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 		workspaces[focused]:set({
 			icon = { highlight = true },
 			label = { highlight = true },
-			background = { border_color = colors.white },
+			background = { color = colors.sapphire },
 		})
 	end)
 end)
