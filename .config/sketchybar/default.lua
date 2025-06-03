@@ -21,6 +21,6 @@ sbar.default({
 	background = {
 		color = colors.surface0,
 		height = 32,
-		corner_radius = 8,
+		corner_radius = 12,
 	},
 })
