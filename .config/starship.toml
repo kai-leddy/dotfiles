@@ -23,6 +23,7 @@ $nix_shell\
 $nodejs\
 $terraform\
 $rust\
+$golang\
 $python\
 $ruby\
 [](rosewater) """
@@ -87,7 +88,7 @@ format = '([](maroon)[$symbol $profile( \[$duration\])]($style)[](maroon))
 style = "crust bg:maroon"
 
 [golang]
-symbol = ""
+symbol = "󰟓"
 version_format = "$raw"
 format = "([](sapphire)[$symbol $version]($style)[](sapphire)) "
 style = "crust bg:sapphire"

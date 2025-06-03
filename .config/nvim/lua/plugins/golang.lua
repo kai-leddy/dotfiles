@@ -9,4 +9,10 @@ return {
       go = { "golangcilint" },
     },
   } },
+  -- change formatter to gofmt as thats what our projects use currently
+  { "stevearc/conform.nvim", opts = {
+    formatters_by_ft = {
+      go = { "gofmt" },
+    },
+  } },
 }
