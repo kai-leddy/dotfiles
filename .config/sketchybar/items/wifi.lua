@@ -36,32 +36,29 @@ local function update_wifi_status()
 		local power_status = power_status_output:match("^%s*(.-)%s*$") -- Trim whitespace
 
 		if power_status:match("On$") then -- Matches "Wi-Fi Power: On"
-			-- Wi-Fi is On, now check for connection details using airport utility
-			sbar.exec(
-				"/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I",
-				function(airport_output)
-					local ssid = airport_output:match("SSID: (.-)\n")
-					if ssid then
-						ssid = ssid:match("^%s*(.-)%s*$") -- Trim whitespace
-					end
+			-- Wi-Fi is On, now check for connection details using wdutil
+			sbar.exec("ipconfig getsummary " .. current_wifi_device, function(ipconfig_output)
+				local ssid_match = ipconfig_output:match("[^B]SSID : ([^\n]+)")
+				local ssid = ssid_match and ssid_match:match("^%s*(.-)%s*$") -- Trim whitespace
+				local first_word = ssid and ssid:match("^[%a%d]+") or ""
+				ssid = first_word
 
-					if ssid and ssid ~= "" then
-						-- Connected to a network
-						wifi:set({
-							icon = { string = icons.wifi_on, color = colors.green },
-							label = { string = ssid, color = colors.text },
-							drawing = true,
-						})
-					else
-						-- Wi-Fi is On but not connected (or SSID not found in airport output)
-						wifi:set({
-							icon = { string = icons.wifi_on, color = colors.yellow }, -- Yellow to show it's on but not connected
-							label = { string = "Disconnected", color = colors.subtext0 },
-							drawing = true,
-						})
-					end
+				if ssid and ssid ~= "" and ssid ~= "<unknown>" then
+					-- Connected to a network
+					wifi:set({
+						icon = { string = icons.wifi_on, color = colors.green },
+						label = { string = ssid, color = colors.text },
+						drawing = true,
+					})
+				else
+					-- Wi-Fi is On but not connected (or SSID not found in wdutil output or is <unknown>)
+					wifi:set({
+						icon = { string = icons.wifi_on, color = colors.yellow }, -- Yellow to show it's on but not connected
+						label = { string = "Disconnected", color = colors.subtext0 },
+						drawing = true,
+					})
 				end
-			)
+			end)
 		elseif power_status:match("Off$") then -- Matches "Wi-Fi Power: Off"
 			-- Wi-Fi is Off
 			wifi:set({
