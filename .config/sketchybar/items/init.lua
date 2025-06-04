@@ -6,7 +6,12 @@ require("items.vpn")
 require("items.mail")
 require("items.github")
 
--- TODO: add some CPU, mem, etc monitors, perhaps with a graph over time
--- TODO: add some more icons for status of Bluetooth, WiFi, etc
--- TODO: add some indicators for number of Slack messages, etc
--- TODO: add an item showing how long until my next meeting and the title
+-- System Monitors
+require("items.cpu")
+require("items.mem")
+require("items.wifi")
+require("items.bluetooth")
+
+-- TODO: implement items for number of Slack messages and time to next meeting
+-- TODO: change colors of the new items; wifi, mem, cpu, bluetooth
+-- TODO: change mem and cpu to show some graphs

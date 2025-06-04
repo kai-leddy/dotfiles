@@ -6,6 +6,15 @@ return {
 	mail = "",
 	github = "",
 
+	cpu = "", -- Microchip icon for CPU
+	mem = "", -- Memory chip icon for RAM
+	wifi_on = "󰖩", -- WiFi symbol
+	wifi_off = "󰖪", -- WiFi off symbol
+	bluetooth_on = "", -- Bluetooth symbol
+	bluetooth_off = "󰂲", -- Bluetooth off symbol
+	calendar = "", -- Calendar icon (nf-fa-calendar)
+	slack = "󰒱", -- Slack icon (for placeholder)
+
 	volume = {
 		high = "",
 		low = "",
