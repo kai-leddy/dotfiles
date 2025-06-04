@@ -79,6 +79,8 @@ local function updateWindow(workspace_index, args)
 					},
 					background = { drawing = true },
 					display = monitor_id,
+					padding_left = settings.padding.small,
+					padding_right = settings.padding.small,
 				})
 				return
 			end
@@ -88,6 +90,8 @@ local function updateWindow(workspace_index, args)
 				icon = { drawing = false },
 				label = { drawing = false },
 				background = { drawing = false },
+				padding_left = 0,
+				padding_right = 0,
 			})
 			return
 		end
@@ -100,6 +104,8 @@ local function updateWindow(workspace_index, args)
 					drawing = true,
 				},
 				background = { drawing = true },
+				padding_left = settings.padding.small,
+				padding_right = settings.padding.small,
 			})
 		end
 
@@ -107,6 +113,8 @@ local function updateWindow(workspace_index, args)
 			icon = { drawing = true },
 			label = { drawing = true, string = icon_line },
 			background = { drawing = true },
+			padding_left = settings.padding.small,
+			padding_right = settings.padding.small,
 		})
 	end)
 end
@@ -157,8 +165,8 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 			background = {
 				color = colors.with_alpha(colors.sapphire, 0.5),
 			},
-			padding_left = 0,
-			padding_right = 0,
+			padding_left = settings.padding.small,
+			padding_right = settings.padding.small,
 		})
 
 		workspaces[workspace_index] = workspace

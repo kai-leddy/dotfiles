@@ -31,7 +31,7 @@ local cal = sbar.add("item", {
 	background = { drawing = false },
 })
 
-local bracket = sbar.add("bracket", { clock.name, cal.name }, { background = {} })
+sbar.add("bracket", { clock.name, cal.name }, { background = {} })
 
 local function update()
 	local day = os.date("%A")
