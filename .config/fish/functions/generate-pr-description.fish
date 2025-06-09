@@ -5,7 +5,7 @@ function generate-pr-description --argument base_branch
 
     set branch (git branch --show-current)
     set merge_base (git merge-base $base_branch $branch)
-    set changelog "$(git diff --unified=0 --abbrev=1 --no-prefix $merge_base..HEAD ':(exclude)**yarn.lock' ':(exclude)**pnpm-lock.yaml' ':(exclude)**package-lock.json' ':(exclude)**gql/graphql.ts')"
+    set changelog "$(git diff --unified=0 --abbrev=1 --no-prefix $merge_base..HEAD ':(exclude)**yarn.lock' ':(exclude)**pnpm-lock.yaml' ':(exclude)**package-lock.json' ':(exclude)**generated/**')"
     set ticket (string match -r '([A-Z]+-\d+)' $branch)[1]
     set changelog_tokens (echo $changelog | ttok)
 
