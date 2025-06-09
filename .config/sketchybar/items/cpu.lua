@@ -2,6 +2,14 @@ local colors = require("colors")
 local icons = require("icons")
 local settings = require("settings")
 
+local threads = 0
+sbar.exec("nproc --all", function(output)
+	local num = tonumber(output:match("(%d+)"))
+	if num then
+		threads = math.floor(num)
+	end
+end)
+
 local cpu = sbar.add("item", {
 	position = "left",
 	icon = {
@@ -18,15 +26,17 @@ local cpu = sbar.add("item", {
 })
 
 local function update_cpu()
-	sbar.exec("top -l 1 | grep -E '^CPU usage:'", function(output)
-		local user, sys, idle = output:match("CPU usage: (%d+%.?%d*)%% user, (%d+%.?%d*)%% sys, (%d+%.?%d*)%% idle")
-		if idle then
-			local usage = 100 - tonumber(idle)
-			cpu:set({ label = string.format("%.1f%%", usage) })
-		else
-			cpu:set({ label = "N/A" })
+	sbar.exec(
+		"ps -eo pcpu | awk -v core_count=" .. threads .. " '{sum+=$1} END {printf sum/core_count}'",
+		function(output)
+			local num = tonumber(output)
+			if num then
+				cpu:set({ label = string.format("%.1f%%", num) })
+			else
+				cpu:set({ label = "N/A" })
+			end
 		end
-	end)
+	)
 end
 
 cpu:subscribe({ "routine", "forced" }, update_cpu)
