@@ -49,6 +49,9 @@ config.keys = {
 		action = wezterm.action.DisableDefaultAssignment,
 	},
 	{ key = "c", mods = "SHIFT|CTRL", action = act.QuickSelect },
+	-- mappings for scrolling up/down commands at a time
+	{ key = "UpArrow", mods = "CMD", action = act.ScrollToPrompt(-1) },
+	{ key = "DownArrow", mods = "CMD", action = act.ScrollToPrompt(1) },
 	{
 		key = "o",
 		mods = "CTRL",
@@ -70,6 +73,9 @@ config.keys = {
 		action = wezterm.action_callback(function(window, pane)
 			local ozones = pane:get_semantic_zones("Output")
 			local txt = pane:get_text_from_semantic_zone(ozones[#ozones])
+			if not txt or txt == "" then
+				txt = pane:get_text_from_semantic_zone(ozones[#ozones - 1])
+			end
 			wezterm.log_info("Copying: " .. txt)
 			window:copy_to_clipboard(txt)
 		end),
