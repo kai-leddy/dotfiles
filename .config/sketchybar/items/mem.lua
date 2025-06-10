@@ -13,44 +13,57 @@ local mem = sbar.add("item", {
 		color = colors.text,
 		font = { size = 14 },
 	},
-	background = { color = colors.surface1 },
+	background = { color = colors.surface0 },
 	update_freq = 10,
 })
 
-local function format_mem_value(mem_str)
-	if not mem_str then
-		return 0
-	end
-	local num = tonumber(mem_str:match("^(%d+)"))
-	local unit = mem_str:match("%d+(%a)")
-	if not num then
-		return 0
+local function format_mem_value(mem_num, precision)
+	if not mem_num then
+		return "N/A"
 	end
 
-	if unit == "G" then
-		return num
-	elseif unit == "M" then
-		return num / 1024
-	elseif unit == "K" then
-		return num / (1024 * 1024)
+	if mem_num >= 1024 * 1024 * 1024 then
+		return string.format("%." .. precision .. "fG", mem_num / (1024 * 1024 * 1024))
+	elseif mem_num >= 1024 * 1024 then
+		return string.format("%." .. precision .. "fM", mem_num / (1024 * 1024))
+	elseif mem_num >= 1024 then
+		return string.format("%." .. precision .. "fK", mem_num / 1024)
 	end
-	return 0 -- Should not happen if regex matches
+
+	return mem_num .. "B"
 end
 
 local function update_mem()
-	sbar.exec("top -l 1 | grep PhysMem", function(output)
-		-- Example: PhysMem: 12345M used (1234M wired, 123M compressor), 1234M unused.
-		local used_mem_str = output:match("PhysMem: (%d+[GMK]) used")
-		local unused_mem_str = output:match(", (%d+[GMK]) unused")
+	sbar.exec("sysctl vm.page_pageable_internal_count vm.page_purgeable_count vm.pagesize vm.pages", function(output)
+		local pageable_internal_count_str = output:match("vm.page_pageable_internal_count: (%d+)")
+		local purgeable_count_str = output:match("vm.page_purgeable_count: (%d+)")
+		local page_size_str = output:match("vm.pagesize: (%d+)")
+		local pages_str = output:match("vm.pages: (%d+)")
 
-		if used_mem_str and unused_mem_str then
-			local used_gb = format_mem_value(used_mem_str)
-			local unused_gb = format_mem_value(unused_mem_str)
-			local total_gb = used_gb + unused_gb
-			if total_gb > 0 then
-				mem:set({ label = string.format("%.1f/%.1fG", used_gb, total_gb) })
-			else
-				mem:set({ label = "N/A" })
+		if pageable_internal_count_str and purgeable_count_str and page_size_str and pages_str then
+			local pageable_count = tonumber(pageable_internal_count_str)
+			local purgeable_count = tonumber(purgeable_count_str)
+			local page_size = tonumber(page_size_str)
+			local total_pages = tonumber(pages_str)
+			local used = (pageable_count - purgeable_count) * page_size
+			local total = total_pages * page_size
+
+			local used_gb = format_mem_value(used, 1)
+			mem:set({
+				label = { string = used_gb, color = colors.text },
+				icon = { color = colors.blue },
+				background = { color = colors.surface0 },
+			})
+
+			local percentage_used = (used / total) * 100
+			if percentage_used > 90 then
+				mem:set({
+					label = { color = colors.crust },
+					icon = { color = colors.crust },
+					background = { color = colors.red },
+				})
+			elseif percentage_used > 75 then
+				mem:set({ label = { color = colors.peach }, background = { color = colors.surface0 } })
 			end
 		else
 			mem:set({ label = "N/A" })

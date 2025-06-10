@@ -6,7 +6,7 @@ local volume_icon = sbar.add("item", {
 	icon = {
 		string = icons.volume.high,
 	},
-	background = { color = colors.surface1 },
+	background = { color = colors.surface0 },
 })
 
 volume_icon:subscribe("volume_change", function(env)

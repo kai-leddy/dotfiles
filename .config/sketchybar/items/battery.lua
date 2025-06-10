@@ -11,7 +11,7 @@ local battery = sbar.add("item", {
 		},
 		padding_right = settings.padding.small,
 	},
-	background = { color = colors.surface1 },
+	background = { color = colors.surface0 },
 	label = { drawing = false, font = { size = 14 } },
 	update_freq = 120,
 })

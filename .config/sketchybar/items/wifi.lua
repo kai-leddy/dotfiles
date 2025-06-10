@@ -17,7 +17,7 @@ local wifi = sbar.add("item", wifi_item_name, {
 		padding_right = settings.padding.big, -- Add padding if it's on the far right
 	},
 	background = {
-		color = colors.surface1, -- Consistent with other items
+		color = colors.surface0, -- Consistent with other items
 	},
 	update_freq = 15, -- How often to check for WiFi status
 })

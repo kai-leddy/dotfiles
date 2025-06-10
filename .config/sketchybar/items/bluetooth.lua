@@ -6,10 +6,9 @@ local bluetooth = sbar.add("item", {
 	position = "right",
 	icon = {
 		string = icons.bluetooth_on or "",
-		padding_right = settings.padding.small,
 	},
 	label = { drawing = false },
-	background = { color = colors.surface1 },
+	background = { color = colors.surface0 },
 	update_freq = 30,
 	drawing = false, -- Start hidden, show if blueutil works and BT is on
 })

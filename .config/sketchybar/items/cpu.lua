@@ -21,7 +21,7 @@ local cpu = sbar.add("item", {
 		color = colors.text,
 		font = { size = 14 },
 	},
-	background = { color = colors.surface1 },
+	background = { color = colors.surface0 },
 	update_freq = 5, -- Update every 5 seconds
 })
 
@@ -30,10 +30,21 @@ local function update_cpu()
 		"ps -eo pcpu | awk -v core_count=" .. threads .. " '{sum+=$1} END {printf sum/core_count}'",
 		function(output)
 			local num = tonumber(output)
-			if num then
-				cpu:set({ label = string.format("%.1f%%", num) })
-			else
-				cpu:set({ label = "N/A" })
+			local num_str = num ~= nil and string.format("%.1f%%", num) or "N/A"
+			cpu:set({
+				label = { string = num_str, color = colors.text },
+				icon = { color = colors.green },
+				background = { color = colors.surface0 },
+			})
+
+			if num > 75 then
+				cpu:set({
+					label = { color = colors.crust },
+					icon = { color = colors.crust },
+					background = { color = colors.red },
+				})
+			elseif num > 50 then
+				cpu:set({ label = { color = colors.peach }, background = { color = colors.surface0 } })
 			end
 		end
 	)
