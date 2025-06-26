@@ -12,5 +12,6 @@ require("items.mem")
 require("items.wifi")
 require("items.bluetooth")
 
--- TODO: implement items for number of Slack messages and time to next meeting
+-- TODO: implement items for number of Slack messages and details of next meeting
 -- TODO: change mem and cpu to show some graphs
+-- TODO: implement an item for Taskwarrior to show either the in-progress tasks or the next task
