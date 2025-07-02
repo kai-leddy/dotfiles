@@ -1,7 +1,7 @@
 -- setup supertab to do completions and snippets (+ copilot)
 return {
   -- disable auto completing pairs
-  -- { "echasnovski/mini.pairs", enabled = false },
+  { "echasnovski/mini.pairs", enabled = false },
 
   -- setup my prefered tab behaviour with blink.cmp
   {
