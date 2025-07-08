@@ -93,10 +93,9 @@ run = ['move-node-to-workspace C']
 if.app-name-regex-substring = 'Slack|Mail|zoom'
 run = ['move-node-to-workspace S']
 
-# Force browser windows to the browser workspace (but only on first startup)
+# Force browser windows to the browser workspace 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Arc|Chrome|Safari|Firefox'
-if.during-aerospace-startup = true
 run = ['move-node-to-workspace B']
 
 

@@ -3,85 +3,85 @@
   "display": {
     "separator": ">  ",
     "color": {
-      "separator": "red"
+      "separator": "red",
     },
     "constants": [
       "───────────────────────────────────────────────────────────────────────────",
-      "│\u001b[75C│\u001b[75D"
-    ]
+      "│\u001b[75C│\u001b[75D",
+    ],
   },
   "modules": [
     {
-      "format": "{#1}{#keys}╭{$1}╮\u001b[76D {user-name-colored}{at-symbol-colored}{host-name-colored} 🖥  {date-time-colored}",
-      "type": "title"
+      "format": "{#1}{#keys}╭{$1}╮\u001b[76D {user-name-colored}{at-symbol-colored}{host-name-colored} 🖥  ",
+      "type": "title",
     },
     {
       "key": "{$2}{#33}{icon} distro   ",
-      "type": "os"
+      "type": "os",
     },
     {
       "key": "{$2}{#31} kernel   ",
-      "type": "kernel"
+      "type": "kernel",
     },
     {
       "key": "{$2}{#32}󰅐 uptime   ",
-      "type": "uptime"
+      "type": "uptime",
     },
     {
       "key": "{$2}{#36} packages ",
-      "type": "packages"
+      "type": "packages",
     },
     {
       "key": "{$2}{#34}󰇄 desktop  ",
-      "type": "de"
+      "type": "de",
     },
     {
       "key": "{$2}{#32} window   ",
       "type": "wm",
-      "detectPlugin": true
+      "detectPlugin": true,
     },
     {
       "key": "{$2}{#35} term     ",
-      "type": "terminal"
+      "type": "terminal",
     },
     {
       "key": "{$2}{#36} shell    ",
-      "type": "shell"
+      "type": "shell",
     },
     {
       "key": "{$2}{#33} editor   ",
-      "type": "editor"
+      "type": "editor",
     },
     {
       "key": "{$2}{#32}󰹑 displays ",
       "type": "display",
-      "compactType": "original-with-refresh-rate"
+      "compactType": "original-with-refresh-rate",
     },
     {
       "key": "{$2}{#35}󰍛 cpu      ",
-      "type": "cpu"
+      "type": "cpu",
     },
     {
       "key": "{$2}{#34}󰍛 gpu      ",
-      "type": "gpu"
+      "type": "gpu",
     },
     {
       "key": "{$2}{#31}󰩟 network  ",
       "type": "localip",
-      "format": "{ipv4} ({ifname})"
+      "format": "{ipv4} ({ifname})",
     },
     {
       "format": "{#1}{#keys}├{$1}┤",
-      "type": "custom"
+      "type": "custom",
     },
     {
       "key": "{$2}{#39} colors   ",
       "type": "colors",
-      "symbol": "circle"
+      "symbol": "circle",
     },
     {
       "format": "{#1}{#keys}╰{$1}╯",
-      "type": "custom"
-    }
-  ]
+      "type": "custom",
+    },
+  ],
 }
