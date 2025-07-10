@@ -4,9 +4,19 @@
 
 -- keybings I'm used to for saving files and buffers
 vim.keymap.set("n", "<leader>fs", "<cmd>w<cr><esc>", { desc = "Save file" })
-vim.keymap.set("n", "<leader>fd", "<cmd>call delete(expand('%')) | bdelete!<cr><esc>", { desc = "Delete file" })
 vim.keymap.set("n", "<leader>bs", "<cmd>w<cr><esc>", { desc = "Save buffer" })
 vim.keymap.set("n", "<leader>bS", "<cmd>wa<cr><esc>", { desc = "Save all modified buffers" })
+vim.keymap.set("n", "<leader>fd", function()
+  vim.ui.input({ prompt = "Delete file (y/n): " }, function(input)
+    if input and input == "y" then
+      -- delete the file
+      local file = vim.fn.expand("%")
+      vim.fn.delete(file, "rf")
+      -- close the buffer
+      vim.cmd("bdelete!")
+    end
+  end)
+end, { desc = "Delete file" })
 
 -- move to window using the <leader>w prefix and hjkl
 vim.keymap.set("n", "<leader>wh", "<cmd>wincmd h<cr><esc>", { desc = "Move to window left" })
