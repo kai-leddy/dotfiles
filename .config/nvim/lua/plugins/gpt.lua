@@ -13,8 +13,8 @@ local llms = {
   { name = "claude-3.7-sonnet", openrouter_model = "anthropic/claude-3.7-sonnet" },
   { name = "deepseek-v3", openrouter_model = "deepseek/deepseek-chat" },
   { name = "deepseek-R1", openrouter_model = "deepseek/deepseek-r1" },
-  { name = "gemini-flash", openrouter_model = "google/gemini-2.5-flash-preview" },
-  { name = "gemini-pro", openrouter_model = "google/gemini-2.5-pro-preview" },
+  { name = "gemini-flash", openrouter_model = "google/gemini-2.5-flash" },
+  { name = "gemini-pro", openrouter_model = "google/gemini-2.5-pro" },
 }
 
 local generated_agents = {}

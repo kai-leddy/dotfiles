@@ -8,6 +8,10 @@ return {
     opts = {
       flavour = "mocha",
       transparent_background = true,
+      float = {
+        transparent = true,
+      },
+      auto_integrations = true, -- let catppuccin auto-detect plugins via lazy.nvim
       integrations = {
         blink_cmp = true,
         flash = true,

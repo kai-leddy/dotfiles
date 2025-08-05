@@ -1,5 +1,5 @@
 {
-  "openrouter/google/gemini-2.5-flash-preview": {
+  "openrouter/google/gemini-2.5-flash": {
     "max_tokens": 8192,
     "max_input_tokens": 1048576,
     "max_output_tokens": 8192,

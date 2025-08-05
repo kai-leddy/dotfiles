@@ -11,8 +11,8 @@ architect: true
 check-update: true
 
 alias:
-  - "fast:openrouter/google/gemini-2.5-flash-preview"
-  - "smart:openrouter/google/gemini-2.5-pro-preview"
+  - "fast:openrouter/google/gemini-2.5-flash"
+  - "smart:openrouter/google/gemini-2.5-pro"
 
 # default models if not chosen via CLI
 model: smart
