@@ -40,7 +40,7 @@ local function update_wifi_status()
 			sbar.exec("ipconfig getsummary " .. current_wifi_device, function(ipconfig_output)
 				local ssid_match = ipconfig_output:match("[^B]SSID : ([^\n]+)")
 				local ssid = ssid_match and ssid_match:match("^%s*(.-)%s*$") -- Trim whitespace
-				local first_word = ssid and ssid:match("^[%a%d]+") or ""
+				local first_word = ssid and ssid:match("^[%a%d<>]+") or ""
 				ssid = first_word
 
 				if ssid and ssid ~= "" and ssid ~= "<unknown>" then
