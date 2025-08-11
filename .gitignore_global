@@ -41,3 +41,7 @@ shell.nix
 
 # don't commit mise-en-place configs
 mise.local.toml
+
+# don't commit any crush AI configs
+.crush
+CRUSH.md
