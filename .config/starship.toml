@@ -79,7 +79,6 @@ disabled = false
 symbol = ""
 format = '([](maroon)[$symbol $context( \[$namespace\])]($style)[](maroon)) '
 style = "crust bg:maroon"
-context_aliases = { kind-kind = "kind" }
 
 [aws]
 disabled = true
