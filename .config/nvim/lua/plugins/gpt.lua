@@ -15,6 +15,7 @@ local llms = {
   { name = "deepseek-R1", openrouter_model = "deepseek/deepseek-r1" },
   { name = "gemini-flash", openrouter_model = "google/gemini-2.5-flash" },
   { name = "gemini-pro", openrouter_model = "google/gemini-2.5-pro" },
+  { name = "codestral", openrouter_model = "mistralai/codestral-2508" },
 }
 
 local generated_agents = {}
