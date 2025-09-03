@@ -22,7 +22,8 @@ local slack = sbar.add("item", {
 
 local function update(callback)
 	sbar.exec([[ lsappinfo info Slack -all | rg '"StatusLabel"=\{ "label"="(.*)" \}' -o -r '$1' ]], function(count)
-		local c = tonumber(count)
+		local trimmed = count:match("^%s*(.-)%s*$") -- Trim whitespace
+		local c = (trimmed ~= "") and tonumber(trimmed) or 0
 		if c == 0 then
 			slack:set({ drawing = false })
 		else
