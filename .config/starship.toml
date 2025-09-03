@@ -8,7 +8,7 @@ palette = "catppuccin_mocha"
 # Inserts a blank line between shell prompts
 add_newline = true
 
-command_timeout = 1000 # 1 second for command timeout
+command_timeout = 2000 # 1 second for command timeout
 
 # Old custom format
 format = """
