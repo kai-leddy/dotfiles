@@ -5,6 +5,7 @@ require("items.battery")
 require("items.vpn")
 require("items.mail")
 require("items.github")
+require("items.slack")
 
 -- System Monitors
 require("items.cpu")
