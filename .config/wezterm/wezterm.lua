@@ -72,11 +72,17 @@ config.keys = {
 		key = "c",
 		mods = "SHIFT|CMD",
 		action = wezterm.action_callback(function(window, pane)
+			-- get semantic output zones
 			local ozones = pane:get_semantic_zones("Output")
+			-- get either the latest or the one before (I had a bug with empty zones being output)
 			local txt = pane:get_text_from_semantic_zone(ozones[#ozones])
 			if not txt or txt == "" then
 				txt = pane:get_text_from_semantic_zone(ozones[#ozones - 1])
 			end
+			if txt:match("^%s*```[^\n]*\n(.*)\n```%s*$") then
+				txt = txt:match("^%s*```[^\n]*\n(.*)\n```%s*$")
+			end
+			-- copy to clipboard
 			wezterm.log_info("Copying: " .. txt)
 			window:copy_to_clipboard(txt)
 		end),
