@@ -21,7 +21,7 @@ return {
         mini = { enabled = true, indentscope_color = "flamingo" },
         neotest = true,
         noice = true,
-        -- copilot_vim = true,
+        copilot_vim = true,
         snacks = { enabled = true, indentscope_color = "flamingo" },
         lsp_trouble = true,
         which_key = true,
