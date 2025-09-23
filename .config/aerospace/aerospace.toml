@@ -95,8 +95,13 @@ run = ['move-node-to-workspace S']
 
 # Force browser windows to the browser workspace 
 [[on-window-detected]]
-if.app-name-regex-substring = 'Arc|Chrome|Safari|Firefox'
+if.app-name-regex-substring = 'Zen|Chrome|Safari|Firefox'
 run = ['move-node-to-workspace B']
+
+# Make Zen Browser Picture-in-Picture windows floating
+[[on-window-detected]]
+if.window-title-regex-substring = 'Picture-in-Picture'
+run = ['layout floating']
 
 
 # All possible keys:

@@ -1,6 +1,7 @@
 return {
 	["App Store"] = "",
 	["Arc"] = "",
+	["Zen"] = "",
 	["Calculator"] = "",
 	["Calendar"] = "",
 	["Code"] = "󰨞",
