@@ -1,7 +1,7 @@
 -- enables GraphQL LSP and Treesitter support
 return {
   {
-    "williamboman/mason.nvim",
+    "mason-org/mason.nvim",
     opts = {
       ensure_installed = {
         "graphql-language-service-cli", -- required for graphql-lsp
