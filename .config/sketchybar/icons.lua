@@ -15,6 +15,8 @@ return {
 	calendar = "", -- Calendar icon (nf-fa-calendar)
 	slack = "󰒱", -- Slack icon (for placeholder)
 
+	task_todo = "", -- Clipboard icon for tasks (nf-mdi-clipboard-text-outline)
+
 	volume = {
 		high = "",
 		low = "",
