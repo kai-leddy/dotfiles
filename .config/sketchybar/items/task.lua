@@ -9,12 +9,7 @@ local task_next_command = "task +work limit:1 next"
 
 local task_widget = sbar.add("item", {
 	position = "right",
-	icon = {
-		string = icons.task_todo,
-		color = colors.mauve,
-	},
 	label = {
-		string = "Loading...",
 		color = colors.text,
 	},
 	update_freq = 15,
@@ -58,8 +53,41 @@ local function update_task_widget()
 				task_widget:set({ label = { string = description } })
 			end
 		end)
+		sbar.exec("task _get " .. task_id .. ".start", function(start_output)
+			local started = start_output:match("(%S+)")
+			if started then
+				task_widget:set({
+					icon = { string = icons.task_active, color = colors.green },
+					label = { color = colors.text },
+				})
+			else
+				task_widget:set({
+					icon = { string = icons.task_next, color = colors.yellow },
+					label = { color = colors.subtext0 },
+				})
+			end
+		end)
+	end)
+end
+
+local function click()
+	if not task_id then
+		return
+	end
+	sbar.exec("task _get " .. task_id .. ".start", function(start_output)
+		local started = start_output:match("(%S+)")
+		if started then
+			sbar.exec("task " .. task_id .. " done", function()
+				update_task_widget()
+			end)
+		else
+			sbar.exec("task " .. task_id .. " start", function()
+				update_task_widget()
+			end)
+		end
 	end)
 end
 
 task_widget:subscribe({ "routine", "forced" }, update_task_widget)
+task_widget:subscribe({ "mouse.clicked" }, click)
 
