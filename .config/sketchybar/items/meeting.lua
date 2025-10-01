@@ -116,8 +116,14 @@ end
 
 local function click()
 	if next_event and next_event.notes and next_event.notes ~= "" then
-		-- parse URL from notes and open it
-		local url = string.match(next_event.notes, "https?://[%w%d%./%-~_?#=]+")
+		-- parse meeting join URL from notes and open it
+		local url
+		for found_url in string.gmatch(next_event.notes, "https?://[%w%d%./%-~_?#=]+") do
+			if string.find(found_url, "zoom") or string.find(found_url, "meet") then
+				url = found_url
+				break
+			end
+		end
 		if url then
 			os.execute("open '" .. url .. "'")
 		end
