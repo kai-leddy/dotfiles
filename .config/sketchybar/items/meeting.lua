@@ -57,7 +57,6 @@ local function update()
 			end
 			local title, time_str, notes = lines[1]:match("^(.+)###(.+)###(.+)$")
 			while not done do
-				::process::
 				if time_str and title then
 					next_event = { title = title, time = time_str, notes = notes }
 					local time_diff = ""
@@ -82,34 +81,34 @@ local function update()
 					if diff_minutes < -10 then
 						-- Event is in the past, try again with the next one
 						title, time_str, notes = lines[2]:match("^(.+)###(.+)###(.+)$")
-						goto process
-					end
+					else
+						if diff_hours > 0 then
+							time_diff = diff_hours .. "h"
+						end
+						time_diff = time_diff .. remaining_minutes .. "m"
+						if diff_hours == 0 and remaining_minutes <= 10 then
+							color = colors.yellow
+						end
 
-					if diff_hours > 0 then
-						time_diff = diff_hours .. "h"
-					end
-					time_diff = time_diff .. remaining_minutes .. "m"
-					if diff_hours == 0 and remaining_minutes <= 10 then
-						color = colors.yellow
-					end
+						-- Truncate title if too long
+						local display_title = next_event.title
+						if #display_title > 25 then
+							display_title = display_title:sub(1, 22) .. "..."
+						end
 
-					-- Truncate title if too long
-					local display_title = next_event.title
-					if #display_title > 25 then
-						display_title = display_title:sub(1, 22) .. "..."
+						cal:set({
+							drawing = true,
+							label = { string = display_title .. " in " .. time_diff },
+							background = { color = color },
+						})
+						cal_short:set({ drawing = true, label = { string = time_diff }, background = { color = color } })
+						done = true
 					end
-
-					cal:set({
-						drawing = true,
-						label = { string = display_title .. " in " .. time_diff },
-						background = { color = color },
-					})
-					cal_short:set({ drawing = true, label = { string = time_diff }, background = { color = color } })
 				else
 					cal:set({ drawing = false })
 					cal_short:set({ drawing = false })
+					done = true
 				end
-				done = true
 			end
 		end
 	)

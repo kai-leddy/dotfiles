@@ -12,6 +12,9 @@ local task_widget = sbar.add("item", {
 	label = {
 		color = colors.text,
 	},
+	background = {
+		color = colors.base,
+	},
 	update_freq = 15,
 })
 
@@ -90,4 +93,3 @@ end
 
 task_widget:subscribe({ "routine", "forced" }, update_task_widget)
 task_widget:subscribe({ "mouse.clicked" }, click)
-
