@@ -73,13 +73,6 @@ alias v nvim
 alias g lazygit
 alias y 'lazygit --work-tree ~ --git-dir ~/.local/share/yadm/repo.git' # lazygit for yadm
 
-# auto brewfile sync
-function newbrew
-    command brew $argv
-    command brew bundle dump -f --file=~/Brewfile
-end
-alias brew="newbrew"
-
 # Magic to make using `-` on its own work
 abbr -a -- - 'cd -'
 # Git abbreviations
