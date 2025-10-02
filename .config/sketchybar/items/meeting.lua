@@ -81,6 +81,12 @@ local function update()
 					if diff_minutes < -10 then
 						-- Event is in the past, try again with the next one
 						title, time_str, notes = lines[2]:match("^(.+)###(.+)###(.+)$")
+						if not title or not time_str then
+							next_event = nil
+							cal:set({ drawing = false })
+							cal_short:set({ drawing = false })
+							done = true
+						end
 					else
 						if diff_hours > 0 then
 							time_diff = diff_hours .. "h"
@@ -105,6 +111,7 @@ local function update()
 						done = true
 					end
 				else
+					next_event = nil
 					cal:set({ drawing = false })
 					cal_short:set({ drawing = false })
 					done = true

@@ -15,6 +15,7 @@ local task_widget = sbar.add("item", {
 	background = {
 		color = colors.base,
 	},
+	display = "2,3,4,5", -- all displays except the small built-in laptop screen
 	update_freq = 15,
 })
 
