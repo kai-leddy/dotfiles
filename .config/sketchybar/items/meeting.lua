@@ -55,6 +55,12 @@ local function update()
 			for line in output:gmatch("([^\n]+)") do
 				table.insert(lines, line)
 			end
+			if #lines == 0 then
+				next_event = nil
+				cal:set({ drawing = false })
+				cal_short:set({ drawing = false })
+				return
+			end
 			local title, time_str, notes = lines[1]:match("^(.+)###(.+)###(.+)$")
 			while not done do
 				if time_str and title then
@@ -80,8 +86,17 @@ local function update()
 
 					if diff_minutes < -10 then
 						-- Event is in the past, try again with the next one
-						title, time_str, notes = lines[2]:match("^(.+)###(.+)###(.+)$")
-						if not title or not time_str then
+						if #lines >= 2 then
+							title, time_str, notes = lines[2]:match("^(.+)###(.+)###(.+)$")
+							next_event = { title = title, time = time_str, notes = notes }
+							if not title or not time_str then
+								next_event = nil
+								cal:set({ drawing = false })
+								cal_short:set({ drawing = false })
+								done = true
+							end
+						else
+							-- No next event if lines[2] doesn't exist
 							next_event = nil
 							cal:set({ drawing = false })
 							cal_short:set({ drawing = false })
