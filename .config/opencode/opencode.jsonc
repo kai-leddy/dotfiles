@@ -2,6 +2,6 @@
   "$schema": "https://opencode.ai/config.json",
   // Theme configuration
   "theme": "catppuccin",
-  "model": "anthropic/claude-sonnet-4-20250514",
+  "model": "openrouter/anthropic/claude-haiku-4.5",
   "autoupdate": true,
 }
