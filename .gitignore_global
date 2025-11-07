@@ -40,4 +40,4 @@ shell.nix
 mise.local.toml
 
 # don't commit any OpenCode configs
-
+AGENTS.md
