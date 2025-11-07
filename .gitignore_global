@@ -36,12 +36,8 @@ shell.nix
 # don't commit Gp.Nvim repo-level context for AI commands
 .gp.md
 
-# don't commit aider logs and config
-.aider*
-
 # don't commit mise-en-place configs
 mise.local.toml
 
-# don't commit any crush AI configs
-.crush
-CRUSH.md
+# don't commit any OpenCode configs
+
