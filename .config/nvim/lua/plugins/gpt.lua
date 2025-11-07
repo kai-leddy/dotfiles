@@ -11,8 +11,6 @@ local llms = {
   { name = "CodeGPT4o-mini", disable = true },
   { name = "o1-mini", openrouter_model = "openai/o1-mini", no_sys_prompt = true },
   { name = "claude-3.7-sonnet", openrouter_model = "anthropic/claude-3.7-sonnet" },
-  { name = "deepseek-v3", openrouter_model = "deepseek/deepseek-chat" },
-  { name = "deepseek-R1", openrouter_model = "deepseek/deepseek-r1" },
   { name = "gemini-flash", openrouter_model = "google/gemini-2.5-flash" },
   { name = "gemini-pro", openrouter_model = "google/gemini-2.5-pro" },
   { name = "codestral", openrouter_model = "mistralai/codestral-2508" },
@@ -116,6 +114,15 @@ return {
           local agent = gp.get_command_agent()
           gp.Prompt(params, gp.Target.rewrite, agent, template)
         end,
+        AskQuestion = function(gp, params)
+          local template = "I have the following code from {{filename}}:"
+            .. "\n\n```{{filetype}}\n{{selection}}\n```"
+            .. "\n\nPlease answer the following question about the code above - respond exclusively with the answer:"
+            .. "\n\n{{command}}"
+          local agent = gp.get_chat_agent()
+          local prompt = "🤖 " .. agent.name .. " ~"
+          gp.Prompt(params, gp.Target.popup, agent, template, prompt)
+        end,
       },
     },
     keys = {
@@ -142,6 +149,7 @@ return {
       { "<leader>ad", "<cmd>%GPTDocstring<cr>", mode = { "n" }, desc = "Generate docstring" },
       { "<leader>af", "<cmd>%GPTFixBugs<cr>", mode = { "n" }, desc = "Fix bugs" },
       { "<leader>aS", "<cmd>%GPTSimplify<cr>", mode = { "n" }, desc = "Simplify" },
+      { "<leader>aq", "<cmd>%GPTAskQuestion<cr>", mode = { "n" }, desc = "Ask Question" },
       -- commands for visual mode
       { "<leader>aB", ":<C-u>'<,'>GPTChatNew<cr>", mode = { "v" }, desc = "New chat buffer with context" },
       { "<leader>aC", ":<C-u>'<,'>GPTChatToggle<cr>", mode = { "v" }, desc = "Toggle popup chat with context" },
@@ -154,6 +162,7 @@ return {
       { "<leader>ad", ":<C-u>'<,'>GPTDocstring<cr>", mode = { "v" }, desc = "Generate docstring" },
       { "<leader>af", ":<C-u>'<,'>GPTFixBugs<cr>", mode = { "v" }, desc = "Fix bugs" },
       { "<leader>aS", ":<C-u>'<,'>GPTSimplify<cr>", mode = { "v" }, desc = "Simplify" },
+      { "<leader>aq", ":<C-u>'<,'>GPTAskQuestion<cr>", mode = { "v" }, desc = "Ask Question" },
       { "<leader>av", ":<C-u>'<,'>GPTChatPaste<cr>", mode = { "v" }, desc = "Paste into latest chat" },
     },
   },
