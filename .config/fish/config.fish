@@ -34,7 +34,6 @@ set -x QMK_HOME $HOME/repos/qmk_firmware
 set -gx HOMEBREW_PREFIX /opt/homebrew
 set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
 set -gx HOMEBREW_REPOSITORY /opt/homebrew
-fish_add_path --path /opt/homebrew/bin /opt/homebrew/sbin
 
 # Setup Android development variables
 # set -gx ANDROID_HOME $HOME/Library/Android/sdk
@@ -56,7 +55,8 @@ set local_bin $HOME/.local/bin
 set go_bin $GOBIN
 # set composer $HOME/.composer/vendor/bin
 # set mint $HOME/.mint/bin
-fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin $go_bin
+# NOTE: make sure homebrew is last
+fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin $go_bin /opt/homebrew/bin /opt/homebrew/sbin
 
 # use lsd instead of ls
 alias ls lsd
