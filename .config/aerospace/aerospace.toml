@@ -83,25 +83,26 @@ C = ['DELL P2723D (1)', 'BenQ GW2760']
 B = ['DELL P2723D (2)', 'BenQ GL2760']
 S = 'built-in'
 
+# Make Picture-in-Picture windows floating
+[[on-window-detected]]
+if.window-title-regex-substring = 'Picture-in-Picture'
+run = 'layout floating'
+check-further-callbacks = true
+
 # Force terminal windows to the code workspace
 [[on-window-detected]]
 if.app-name-regex-substring = 'WezTerm|iTerm2|Terminal|Ghostty|Warp'
-run = ['move-node-to-workspace C']
+run = 'move-node-to-workspace C'
 
 # Force social windows to the social workspace
 [[on-window-detected]]
 if.app-name-regex-substring = 'Slack|Mail|zoom'
-run = ['move-node-to-workspace S']
+run = 'move-node-to-workspace S'
 
 # Force browser windows to the browser workspace 
 [[on-window-detected]]
 if.app-name-regex-substring = 'Zen|Chrome|Safari|Firefox'
-run = ['move-node-to-workspace B']
-
-# Make Zen Browser Picture-in-Picture windows floating
-[[on-window-detected]]
-if.window-title-regex-substring = 'Picture-in-Picture'
-run = ['layout floating']
+run = 'move-node-to-workspace B'
 
 
 # All possible keys:
