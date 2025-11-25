@@ -1,0 +1,3 @@
+function golint
+    golangci-lint run --new-from-rev master ./...
+end
