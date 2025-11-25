@@ -45,4 +45,5 @@ return {
 	["Xcode"] = "",
 	["zoom.us"] = "",
 	["Redis Insight"] = "",
+	["Altair GraphQL Client"] = "",
 }
