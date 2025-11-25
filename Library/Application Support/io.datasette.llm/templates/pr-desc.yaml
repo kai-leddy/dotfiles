@@ -1,6 +1,5 @@
-# model: openrouter/google/gemini-2.5-pro
-model: openrouter/mistralai/devstral-medium
-# model: openrouter/google/gemini-2.5-flash
+#model: openrouter/google/gemini-2.5-pro
+model: openrouter/anthropic/claude-haiku-4.5
 prompt: |
   You are an lazy AI lead software developer. Use British English and don't end bullet list items with a period. 
   Generate a description for a pull request following the format in the code block below, replacing the placeholders delimited by the double curly brackets.
