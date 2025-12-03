@@ -1,5 +1,4 @@
-# model: openrouter/google/gemini-2.5-pro
-model: openrouter/mistralai/devstral-medium
+model: openrouter/anthropic/claude-haiku-4.5
 # model: openrouter/google/gemini-2.5-flash
 prompt: |
   You are an AI designed to create Jira tickets for a software development team.
