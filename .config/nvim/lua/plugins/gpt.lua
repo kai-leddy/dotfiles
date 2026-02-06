@@ -9,11 +9,8 @@ local llms = {
   { name = "CodeGPT4", disable = true },
   { name = "CodeGPT4o", disable = true },
   { name = "CodeGPT4o-mini", disable = true },
-  { name = "o1-mini", openrouter_model = "openai/o1-mini", no_sys_prompt = true },
-  { name = "claude-3.7-sonnet", openrouter_model = "anthropic/claude-3.7-sonnet" },
-  { name = "gemini-flash", openrouter_model = "google/gemini-2.5-flash" },
-  { name = "gemini-pro", openrouter_model = "google/gemini-2.5-pro" },
-  { name = "codestral", openrouter_model = "mistralai/codestral-2508" },
+  { name = "gemini-flash", openrouter_model = "google/gemini-3-flash-preview" },
+  { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
 }
 
 local generated_agents = {}
