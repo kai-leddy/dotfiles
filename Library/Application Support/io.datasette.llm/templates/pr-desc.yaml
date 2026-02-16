@@ -1,5 +1,5 @@
-model: openrouter/google/gemini-3-flash-preview
-# model: openrouter/anthropic/claude-haiku-4.5
+# model: openrouter/google/gemini-3-flash-preview
+model: openrouter/anthropic/claude-sonnet-4.5
 prompt: |
   You are an lazy AI lead software developer. Use British English and don't end bullet list items with a period. 
   Generate a description for a pull request following the format in the code block below, replacing the placeholders delimited by the double curly brackets.
