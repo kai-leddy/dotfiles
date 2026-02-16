@@ -11,6 +11,9 @@ local llms = {
   { name = "CodeGPT4o-mini", disable = true },
   { name = "gemini-flash", openrouter_model = "google/gemini-3-flash-preview" },
   { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
+  { name = "copilot-gemini-flash", copilot_model = "gemini-3-flash-preview" },
+  { name = "copilot-haiku", copilot_model = "claude-haiku-4.5" },
+  { name = "copilot-sonnet", copilot_model = "claude-sonnet-4.5" },
 }
 
 local generated_agents = {}
@@ -33,6 +36,17 @@ for _, llm in ipairs(llms) do
     }
     table.insert(generated_agents, agent)
   end
+  if llm.copilot_model then
+    local agent = {
+      name = llm.name,
+      provider = "copilot",
+      chat = true,
+      command = true,
+      model = { model = llm.copilot_model, temperature = 0.8, top_p = 1 },
+      system_prompt = llm.no_sys_prompt and "" or default_system_prompt,
+    }
+    table.insert(generated_agents, agent)
+  end
 end
 
 return {
@@ -46,8 +60,7 @@ return {
     },
   },
   {
-    "kai-leddy/gp.nvim",
-    branch = "o1-streaming",
+    "robitx/gp.nvim",
     opts = {
       cmd_prefix = "GPT",
       -- chat buffer specific keybinds
