@@ -79,8 +79,8 @@ outer.right = 16
 
 # Assignments of workspaces to monitors.
 [workspace-to-monitor-force-assignment]
-C = ['DELL P2723D (1)', 'BenQ GW2760']
-B = ['DELL P2723D (2)', 'BenQ GL2760']
+C = ['DELL P2723D (2)', 'BenQ GW2760']
+B = ['DELL P2723D (1)', 'BenQ GL2760']
 S = 'built-in'
 
 # Make Picture-in-Picture windows floating

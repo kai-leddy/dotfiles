@@ -5,6 +5,10 @@ local app_icons = require("app_icons")
 local query_workspaces =
 	"aerospace list-workspaces --all --format '%{workspace}%{monitor-appkit-nsscreen-screens-id}' --json"
 
+-- CONFIGURATION: Set to true if your external monitors appear reversed in Sketchybar
+-- (i.e., workspace indicators show on the wrong external monitor)
+local SWAP_EXTERNAL_MONITORS = true
+
 local root = sbar.add("item", {
 	icon = {
 		drawing = false,
@@ -63,13 +67,21 @@ local function updateWindow(workspace_index, args)
 		local app = open_window
 		local lookup = app_icons[app]
 		local icon = ((lookup == nil) and app_icons["Default"] or lookup)
-		icon_line = icon_line .. icon .. " "
+		icon_line = icon_line .. icon .. " "
 	end
 
 	sbar.animate("tanh", 10, function()
 		for i, visible_workspace in ipairs(visible_workspaces) do
 			if no_app and workspace_index == visible_workspace["workspace"] then
 				local monitor_id = visible_workspace["monitor-appkit-nsscreen-screens-id"]
+				-- Apply monitor swap if configured (fixes reversed external monitors)
+				if SWAP_EXTERNAL_MONITORS then
+					if monitor_id == 2 then
+						monitor_id = 3
+					elseif monitor_id == 3 then
+						monitor_id = 2
+					end
+				end
 				icon_line = " —"
 				workspaces[workspace_index]:set({
 					icon = { drawing = true },
@@ -133,6 +145,14 @@ local function updateWorkspaceMonitor()
 		for _, entry in ipairs(workspaces_and_monitors) do
 			local space_index = entry.workspace
 			local monitor_id = math.floor(entry["monitor-appkit-nsscreen-screens-id"])
+			-- Apply monitor swap if configured (fixes reversed external monitors)
+			if SWAP_EXTERNAL_MONITORS then
+				if monitor_id == 2 then
+					monitor_id = 3
+				elseif monitor_id == 3 then
+					monitor_id = 2
+				end
+			end
 			workspace_monitor[space_index] = monitor_id
 		end
 		for workspace_index, _ in pairs(workspaces) do
