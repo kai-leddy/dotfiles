@@ -36,13 +36,16 @@ set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
 set -gx HOMEBREW_REPOSITORY /opt/homebrew
 
 # Setup Android development variables
-# set -gx ANDROID_HOME $HOME/Library/Android/sdk
-# set android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
-# alias emu '$ANDROID_HOME/emulator/emulator'
+set -gx ANDROID_HOME $HOME/Library/Android/sdk
+set android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
+alias emu '$ANDROID_HOME/emulator/emulator'
 
 # Setup Go path variables
 set -x GOPATH $HOME/go
 set -x GOBIN $GOPATH/bin
+
+# Setup Java Zulu for reasons...
+set -x JAVA_HOME /Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
 
 # Don't know how or why - but this magically makes docker-compose build faster
 set -x COMPOSE_BAKE true
