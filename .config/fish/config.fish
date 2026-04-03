@@ -21,15 +21,13 @@ set -x VISUAL nvim
 
 # get API keys out of the keychain and set them in the env
 if test (uname) = Darwin
-    set -x OPENAI_API_KEY (security find-generic-password -w -a $LOGNAME -s neovim-openai-key)
     set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
-    set -x GH_TOKEN (security find-generic-password -w -a $LOGNAME -s github-cli-key)
+    set -x OPENROUTER_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
 else
     # For Linux, use pass or other credential manager as fallback
     if command -v pass &>/dev/null
-        set -x OPENAI_API_KEY (pass show neovim-openai-key)
         set -x OPENROUTER_API_KEY (pass show openrouter-api-key)
-        set -x GH_TOKEN (pass show github-cli-key)
+        set -x OPENROUTER_KEY (pass show openrouter-api-key)
     end
 end
 
