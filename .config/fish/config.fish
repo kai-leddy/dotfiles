@@ -133,16 +133,15 @@ complete --command aws --no-files --arguments '(begin; set --local --export COMP
 # Setup mise-en-place for managing programming language versions & tools
 set -gx MISE_NODE_COREPACK true
 if status is-interactive
-    mise activate fish | source
+    mise activate fish | source; or echo "Failed to activate mise interactive"
 else
-    mise activate fish --shims | source
+    mise activate fish --shims | source; or echo "Failed to activate mise shims"
 end
 
 # setup various shell extensions
-thefuck --alias | source
-starship init fish | source
-zoxide init fish | source
-direnv hook fish | source
+starship init fish | source; or echo "Failed to initialize starship"
+zoxide init fish | source; or echo "Failed to initialize zoxide"
+direnv hook fish | source; or echo "Failed to initialize direnv"
 
 # pnpm
 set -gx PNPM_HOME /Users/kaileddy/Library/pnpm
