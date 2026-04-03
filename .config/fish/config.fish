@@ -19,47 +19,70 @@ set -x MAKEFLAGS '-j 8'
 set -x EDITOR nvim
 set -x VISUAL nvim
 
-# Make emacs LSP faster
-set -x LSP_USE_PLISTS true
-
 # get API keys out of the keychain and set them in the env
-set -x OPENAI_API_KEY (security find-generic-password -w -a $LOGNAME -s neovim-openai-key)
-set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
-set -x GH_TOKEN (security find-generic-password -w -a $LOGNAME -s github-cli-key)
+if test (uname) = Darwin
+    set -x OPENAI_API_KEY (security find-generic-password -w -a $LOGNAME -s neovim-openai-key)
+    set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
+    set -x GH_TOKEN (security find-generic-password -w -a $LOGNAME -s github-cli-key)
+else
+    # For Linux, use pass or other credential manager as fallback
+    if command -v pass &>/dev/null
+        set -x OPENAI_API_KEY (pass show neovim-openai-key)
+        set -x OPENROUTER_API_KEY (pass show openrouter-api-key)
+        set -x GH_TOKEN (pass show github-cli-key)
+    end
+end
 
 # Setup QMK global CLI tool
 set -x QMK_HOME $HOME/repos/qmk_firmware
 
-# Sort out homebrew PATH variables in the right order
-set -gx HOMEBREW_PREFIX /opt/homebrew
-set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
-set -gx HOMEBREW_REPOSITORY /opt/homebrew
-
-# Setup Android development variables
-set -gx ANDROID_HOME $HOME/Library/Android/sdk
-set android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
-alias emu '$ANDROID_HOME/emulator/emulator'
+# Don't know how or why - but this magically makes docker-compose build faster
+set -x COMPOSE_BAKE true
 
 # Setup Go path variables
 set -x GOPATH $HOME/go
 set -x GOBIN $GOPATH/bin
 
-# Setup Java Zulu for reasons...
-set -x JAVA_HOME /Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+if test (uname) = Darwin
+    # Sort out homebrew PATH variables in the right order
+    set -gx HOMEBREW_PREFIX /opt/homebrew
+    set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
+    set -gx HOMEBREW_REPOSITORY /opt/homebrew
 
-# Don't know how or why - but this magically makes docker-compose build faster
-set -x COMPOSE_BAKE true
+    # Setup Android development variables
+    set -gx ANDROID_HOME $HOME/Library/Android/sdk
+    set android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
+    alias emu '$ANDROID_HOME/emulator/emulator'
 
-# Setup user PATH variables all at once (for performance)
-set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
-set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
-set emacs $HOME/.config/emacs/bin
-set local_bin $HOME/.local/bin
-set go_bin $GOBIN
-# set composer $HOME/.composer/vendor/bin
-# set mint $HOME/.mint/bin
-# NOTE: make sure homebrew is last
-fish_add_path --universal $gnu_sed $gnu_grep $emacs $android_path $composer $mint $local_bin $go_bin /opt/homebrew/bin /opt/homebrew/sbin
+    # Setup Java Zulu for reasons...
+    set -x JAVA_HOME /Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+
+    # Setup user PATH variables all at once (for performance)
+    set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
+    set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
+    set local_bin $HOME/.local/bin
+    set go_bin $GOBIN
+    # NOTE: make sure homebrew is last
+    fish_add_path --universal $gnu_sed $gnu_grep $android_path $composer $mint $local_bin $go_bin /opt/homebrew/bin /opt/homebrew/sbin
+
+    # pnpm
+    set -gx PNPM_HOME /Users/kaileddy/Library/pnpm
+    if not string match -q -- $PNPM_HOME $PATH
+        set -gx PATH "$PNPM_HOME" $PATH
+    end
+    # pnpm end
+else
+    # Linux setup
+    set local_bin $HOME/.local/bin
+    set go_bin $GOBIN
+    fish_add_path --universal $local_bin $go_bin
+
+    # pnpm for Linux
+    set -gx PNPM_HOME $HOME/.local/share/pnpm
+    if not string match -q -- $PNPM_HOME $PATH
+        set -gx PATH "$PNPM_HOME" $PATH
+    end
+end
 
 # use lsd instead of ls
 alias ls lsd
@@ -142,10 +165,3 @@ end
 starship init fish | source; or echo "Failed to initialize starship"
 zoxide init fish | source; or echo "Failed to initialize zoxide"
 direnv hook fish | source; or echo "Failed to initialize direnv"
-
-# pnpm
-set -gx PNPM_HOME /Users/kaileddy/Library/pnpm
-if not string match -q -- $PNPM_HOME $PATH
-    set -gx PATH "$PNPM_HOME" $PATH
-end
-# pnpm end
