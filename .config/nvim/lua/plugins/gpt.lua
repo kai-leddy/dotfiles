@@ -1,6 +1,8 @@
 -- definition of LLMs that I currently make use of
 local llms = {
   -- disabling the old default agents
+  { name = "CodeCopilot", disable = true },
+  { name = "ChatCopilot", disable = true },
   { name = "ChatGPT3-5", disable = true },
   { name = "ChatGPT4", disable = true },
   { name = "ChatGPT4o", disable = true },
@@ -9,9 +11,10 @@ local llms = {
   { name = "CodeGPT4", disable = true },
   { name = "CodeGPT4o", disable = true },
   { name = "CodeGPT4o-mini", disable = true },
+  { name = "CodeGPT-o3-mini", disable = true },
   { name = "gemini-flash", openrouter_model = "google/gemini-3-flash-preview" },
-  { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
-  { name = "copilot-gemini-flash", copilot_model = "gemini-3-flash-preview" },
+  -- { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
+  -- { name = "copilot-gemini-flash", copilot_model = "gemini-3-flash-preview" },
   { name = "copilot-haiku", copilot_model = "claude-haiku-4.5" },
   { name = "copilot-sonnet", copilot_model = "claude-sonnet-4.5" },
 }
