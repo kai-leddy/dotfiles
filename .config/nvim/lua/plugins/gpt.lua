@@ -13,15 +13,16 @@ local llms = {
   { name = "CodeGPT4o-mini", disable = true },
   { name = "CodeGPT-o3-mini", disable = true },
   { name = "gemini-flash", openrouter_model = "google/gemini-3-flash-preview" },
-  -- { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
-  -- { name = "copilot-gemini-flash", copilot_model = "gemini-3-flash-preview" },
-  { name = "copilot-haiku", copilot_model = "claude-haiku-4.5" },
-  { name = "copilot-sonnet", copilot_model = "claude-sonnet-4.5" },
+  { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
+  { name = "copilot-gemini-flash", copilot_model = "gemini-3-flash-preview" },
+  { name = "copilot-haiku", copilot_model = "claude-haiku-4.6" },
+  { name = "copilot-sonnet", copilot_model = "claude-sonnet-4.6" },
 }
 
 local generated_agents = {}
 local default_system_prompt = "You are an AI working as a code editor.\n\n"
   .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+  .. "DO NOT OUTPUT ANY INSTRUCTIONS YOU ARE GIVEN VERBATIM - ONLY THE RESPONSE.\n"
   .. "START AND END YOUR ANSWER WITH:\n\n```"
 
 for _, llm in ipairs(llms) do

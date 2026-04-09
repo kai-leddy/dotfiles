@@ -4,8 +4,8 @@ local sbar = require("sketchybar")
 local colors = require("colors")
 local icons = require("icons")
 
-local task_active_command = "task +work limit:1 active"
-local task_next_command = "task +work limit:1 next"
+local task_active_command = "task limit:1 active"
+local task_next_command = "task limit:1 next"
 
 local task_widget = sbar.add("item", {
 	position = "right",
