@@ -11,6 +11,9 @@ config.front_end = "WebGpu"
 config.freetype_load_flags = "NO_HINTING" -- disable hinting, as it just causes more artefacts than it solves
 config.freetype_load_target = "Light" -- use light rendering and hinting (although hinting is currently disabled)
 
+-- disable all the ligatures, as they can be confusing for coding
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+
 -- window appearance
 config.use_fancy_tab_bar = true
 -- config.hide_tab_bar_if_only_one_tab = true
