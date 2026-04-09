@@ -60,8 +60,9 @@ if test (uname) = Darwin
     set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
     set local_bin $HOME/.local/bin
     set go_bin $GOBIN
+    set cargo_bin $HOME/.cargo/bin
     # NOTE: make sure homebrew is last
-    fish_add_path --universal $gnu_sed $gnu_grep $android_path $composer $mint $local_bin $go_bin /opt/homebrew/bin /opt/homebrew/sbin
+    fish_add_path --universal $gnu_sed $gnu_grep $android_path $composer $mint $local_bin $go_bin $cargo_bin /opt/homebrew/bin /opt/homebrew/sbin
 
     # pnpm
     set -gx PNPM_HOME /Users/kaileddy/Library/pnpm
@@ -73,7 +74,8 @@ else
     # Linux setup
     set local_bin $HOME/.local/bin
     set go_bin $GOBIN
-    fish_add_path --universal $local_bin $go_bin
+    set cargo_bin $HOME/.cargo/bin
+    fish_add_path --universal $local_bin $go_bin $cargo_bin
 
     # pnpm for Linux
     set -gx PNPM_HOME $HOME/.local/share/pnpm
