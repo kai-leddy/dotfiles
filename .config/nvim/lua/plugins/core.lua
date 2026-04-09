@@ -13,7 +13,9 @@ return {
       },
       auto_integrations = true, -- let catppuccin auto-detect plugins via lazy.nvim
       integrations = {
-        blink_cmp = true,
+        blink_cmp = {
+          style = "bordered",
+        },
         flash = true,
         grug_far = true,
         harpoon = true,
@@ -25,6 +27,9 @@ return {
         snacks = { enabled = true, indentscope_color = "flamingo" },
         lsp_trouble = true,
         which_key = true,
+        lualine = true,
+        dap = true,
+        dap_ui = true,
       },
       custom_highlights = function(colors)
         return {
@@ -39,7 +44,7 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = {
       options = {
-        theme = "catppuccin",
+        theme = "catppuccin-nvim",
         component_separators = { left = "│", right = "│" },
         section_separators = { left = "", right = "" },
       },
