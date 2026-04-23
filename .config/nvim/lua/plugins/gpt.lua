@@ -15,8 +15,9 @@ local llms = {
   { name = "gemini-flash", openrouter_model = "google/gemini-3-flash-preview" },
   { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
   { name = "copilot-gemini-flash", copilot_model = "gemini-3-flash-preview" },
-  { name = "copilot-haiku", copilot_model = "claude-haiku-4.6" },
+  { name = "copilot-haiku", copilot_model = "claude-haiku-4.5" },
   { name = "copilot-sonnet", copilot_model = "claude-sonnet-4.6" },
+  { name = "copilot-opus", copilot_model = "claude-opus-4.6" },
 }
 
 local generated_agents = {}
