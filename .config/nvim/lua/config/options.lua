@@ -9,3 +9,7 @@ vim.opt.breakindent = true
 
 -- Prepend mise shims to PATH
 vim.env.PATH = vim.env.HOME .. "/.local/share/mise/shims:" .. vim.env.PATH
+
+-- testing out `tsgo` lsp server for TypeScript
+---@type "vtsls" | "tsgo"
+vim.g.lazyvim_ts_lsp = "tsgo" -- currently the default
