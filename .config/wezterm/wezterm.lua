@@ -4,7 +4,12 @@ local utils = require("utils")
 local act = wezterm.action
 local config = wezterm.config_builder()
 
-local font_size = 15
+local font_size
+if utils.getOSName() == "Darwin" then
+	font_size = 15
+else
+	font_size = 12
+end
 
 -- required to stop weird stuff happening with font rendering
 config.front_end = "WebGpu"

@@ -21,4 +21,24 @@ function M.extend_key_table(table_name, keys)
 	return tbl
 end
 
+--- Detects the operating system name.
+--- Returns the OS name from jit.os if available, otherwise executes 'uname -o',
+--- or defaults to "Windows" if neither method succeeds.
+--- @return string The operating system name
+function M.getOSName()
+	local osname
+	-- ask LuaJIT first
+	if jit then
+		return jit.os
+	end
+
+	-- Unix, Linux variants
+	local fh, err = assert(io.popen("uname -o 2>/dev/null", "r"))
+	if fh then
+		osname = fh:read()
+	end
+
+	return osname or "Windows"
+end
+
 return M
