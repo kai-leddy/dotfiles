@@ -44,7 +44,6 @@ return {
     "nvim-lualine/lualine.nvim",
     opts = {
       options = {
-        theme = "catppuccin-nvim",
         component_separators = { left = "│", right = "│" },
         section_separators = { left = "", right = "" },
       },
