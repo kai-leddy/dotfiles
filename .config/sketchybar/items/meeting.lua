@@ -15,7 +15,7 @@ local cal_short = sbar.add("item", {
 	},
 	label = { color = colors.base },
 	background = { color = colors.flamingo },
-	display = 1, -- only the small built-in laptop screen
+	display = 1, -- updated dynamically: internal + vertical monitors
 	drawing = false,
 	updates = true,
 	update_freq = 60,
@@ -34,13 +34,38 @@ local cal = sbar.add("item", {
 	},
 	label = { color = colors.base },
 	background = { color = colors.flamingo },
-	display = "2,3,4,5", -- all displays except the small built-in laptop screen
+	display = "2,3,4,5", -- updated dynamically: horizontal external monitors only
 	drawing = false,
 	updates = true,
 	update_freq = 60,
 })
 
 local next_event = nil
+
+local function update_display_assignments()
+	sbar.exec(
+		'system_profiler SPDisplaysDataType | grep Resolution | awk \'{i++; w=$2; h=$4; print i, (h+0>w+0) ? "v" : "h"}\'',
+		function(output)
+			local short_displays = { "1" } -- always include internal laptop display
+			local long_displays = {}
+			for line in output:gmatch("([^\n]+)") do
+				local num, orientation = line:match("^(%d+) ([vh])$")
+				if num and orientation then
+					local n = tonumber(num)
+					if n ~= 1 then
+						if orientation == "h" then
+							table.insert(short_displays, num)
+						else
+							table.insert(long_displays, num)
+						end
+					end
+				end
+			end
+			cal_short:set({ display = table.concat(short_displays, ",") })
+			cal:set({ display = #long_displays > 0 and table.concat(long_displays, ",") or "99" })
+		end
+	)
+end
 
 local function update()
 	local start_time = os.date("%H:%M", os.time() - 600)
@@ -152,7 +177,11 @@ local function click()
 	end
 end
 
+update_display_assignments()
+
 cal:subscribe({ "routine", "forced" }, update)
 cal_short:subscribe({ "routine", "forced" }, update)
 cal:subscribe({ "mouse.clicked" }, click)
 cal_short:subscribe({ "mouse.clicked" }, click)
+cal:subscribe({ "display_change" }, update_display_assignments)
+cal_short:subscribe({ "display_change" }, update_display_assignments)
