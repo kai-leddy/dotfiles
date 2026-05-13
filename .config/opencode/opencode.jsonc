@@ -8,6 +8,11 @@
       "enabled": false,
       "type": "local",
       "command": ["bunx", "-y", "next-devtools-mcp@latest"]
+    },
+      "figma": {
+      "enabled": false,
+      "type": "remote",
+      "url": "https://mcp.figma.com/mcp"
     }
   }
 }
