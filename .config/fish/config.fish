@@ -97,6 +97,7 @@ alias qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 # Setup git aliases
 alias v nvim
 alias g lazygit
+alias d lazydocker
 alias y 'lazygit --work-tree ~ --git-dir ~/.local/share/yadm/repo.git' # lazygit for yadm
 
 # Magic to make using `-` on its own work
