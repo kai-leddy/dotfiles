@@ -166,3 +166,8 @@ end
 starship init fish | source; or echo "Failed to initialize starship"
 zoxide init fish | source; or echo "Failed to initialize zoxide"
 direnv hook fish | source; or echo "Failed to initialize direnv"
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/kaileddy/.cache/lm-studio/bin
+# End of LM Studio CLI section
+
