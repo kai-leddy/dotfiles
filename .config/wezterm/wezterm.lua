@@ -22,7 +22,7 @@ config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 -- window appearance
 config.use_fancy_tab_bar = true
 -- config.hide_tab_bar_if_only_one_tab = true
-config.window_background_opacity = 0.8
+config.window_background_opacity = 0.7
 -- config.window_background_opacity = 1
 config.macos_window_background_blur = 8
 config.window_padding = {
@@ -61,6 +61,7 @@ config.keys = {
 	-- mappings for scrolling up/down commands at a time
 	{ key = "UpArrow", mods = "CMD", action = act.ScrollToPrompt(-1) },
 	{ key = "DownArrow", mods = "CMD", action = act.ScrollToPrompt(1) },
+	-- quick select and open a URL in the browser (CMD+o)
 	{
 		key = "o",
 		mods = "CTRL",
@@ -76,6 +77,7 @@ config.keys = {
 			end),
 		}),
 	},
+	-- quickly copy the latest command's output into the clipboard (CMD+SHIFT+c)
 	{
 		key = "c",
 		mods = "SHIFT|CMD",
@@ -93,6 +95,24 @@ config.keys = {
 			-- copy to clipboard
 			wezterm.log_info("Copying: " .. txt)
 			window:copy_to_clipboard(txt)
+		end),
+	},
+	-- rename the current tab (CMD+SHIFT+r)
+	{
+		key = "r",
+		mods = "SHIFT|CMD",
+		action = wezterm.action_callback(function(window, pane)
+			window:perform_action(
+				act.PromptInputLine({
+					description = "Rename tab",
+					action = wezterm.action_callback(function(w, _, line)
+						if line and line ~= "" then
+							w:active_tab():set_title(line)
+						end
+					end),
+				}),
+				pane
+			)
 		end),
 	},
 
