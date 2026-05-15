@@ -64,6 +64,8 @@ return {
         { path = "wezterm-types", mods = { "wezterm" } },
         -- Only load the lazyvim library when the `LazyVim` global is found
         { path = "LazyVim", words = { "LazyVim" } },
+        -- type annotations for snacks.nvim
+        { path = "snacks.nvim", words = { "Snacks" } },
       },
     },
   },
