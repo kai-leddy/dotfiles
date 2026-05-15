@@ -54,7 +54,7 @@ local function update()
 	local start_time = os.date("%H:%M", os.time() - 600)
 	local current_time = os.date("%H:%M")
 	sbar.exec(
-		'icalBuddy -nc -nrd -npn -n -ea -eed -b "" -ps "|###|" -li 2 -iep title,datetime,notes -po title,datetime,notes -df "" -tf "%H:%M" eventsFrom:"'
+		'icalBuddy -nc -nrd -npn -n -ea -eed -b "" -nnr "<br>" -ps "|###|" -li 2 -iep title,datetime,notes -po title,datetime,notes -df "" -tf "%H:%M" eventsFrom:"'
 			.. start_time
 			.. '" to:"23:59"',
 		function(output)
