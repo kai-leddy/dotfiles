@@ -27,7 +27,9 @@ local cpu = sbar.add("item", {
 
 local function update_cpu()
 	sbar.exec(
-		"ps -eo pcpu | awk -v core_count=" .. threads .. " '{sum+=$1} END {printf sum/core_count}'",
+		"ps -eo pcpu | awk -v core_count="
+			.. threads
+			.. " 'BEGIN{if(core_count==0)core_count=1} {sum+=$1} END {printf sum/core_count}'",
 		function(output)
 			local num = tonumber(output)
 			local num_str = num ~= nil and string.format("%.1f%%", num) or "N/A"
@@ -36,6 +38,10 @@ local function update_cpu()
 				icon = { color = colors.green },
 				background = { color = colors.surface0 },
 			})
+
+			if num == nil then
+				return
+			end
 
 			if num > 75 then
 				cpu:set({
