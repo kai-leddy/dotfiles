@@ -1,6 +1,7 @@
 local colors = require("colors")
 local icons = require("icons")
 local settings = require("settings")
+local utils = require("utils")
 
 local cal_short = sbar.add("item", {
 	position = "q",
@@ -43,28 +44,10 @@ local cal = sbar.add("item", {
 local next_event = nil
 
 local function update_display_assignments()
-	sbar.exec(
-		'system_profiler SPDisplaysDataType | grep Resolution | awk \'{i++; w=$2; h=$4; print i, (h+0>w+0) ? "v" : "h"}\'',
-		function(output)
-			local short_displays = { "1" } -- always include internal laptop display
-			local long_displays = {}
-			for line in output:gmatch("([^\n]+)") do
-				local num, orientation = line:match("^(%d+) ([vh])$")
-				if num and orientation then
-					local n = tonumber(num)
-					if n ~= 1 then
-						if orientation == "h" then
-							table.insert(short_displays, num)
-						else
-							table.insert(long_displays, num)
-						end
-					end
-				end
-			end
-			cal_short:set({ display = table.concat(short_displays, ",") })
-			cal:set({ display = #long_displays > 0 and table.concat(long_displays, ",") or "99" })
-		end
-	)
+	utils.get_display_lengths(function(displays)
+		cal_short:set({ display = table.concat(displays.short, ",") })
+		cal:set({ display = #displays.long > 0 and table.concat(displays.long, ",") or "99" })
+	end)
 end
 
 local function update()
