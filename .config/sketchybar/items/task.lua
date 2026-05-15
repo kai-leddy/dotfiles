@@ -3,11 +3,12 @@
 local sbar = require("sketchybar")
 local colors = require("colors")
 local icons = require("icons")
+local utils = require("utils")
 
 local task_active_command = "task limit:1 active"
 local task_next_command = "task limit:1 next"
 
-local task_widget = sbar.add("item", {
+local task = sbar.add("item", {
 	position = "right",
 	label = {
 		color = colors.text,
@@ -16,6 +17,19 @@ local task_widget = sbar.add("item", {
 		color = colors.base,
 	},
 	update_freq = 15,
+	display = 1, -- updated dynamically: internal + vertical monitors
+})
+
+local task_short = sbar.add("item", {
+	position = "right",
+	label = {
+		color = colors.text,
+	},
+	background = {
+		color = colors.base,
+	},
+	update_freq = 15,
+	display = "2,3,4,5", -- updated dynamically: horizontal external monitors only
 })
 
 local task_id = nil
@@ -43,27 +57,38 @@ end
 local function update_task_widget()
 	get_task(function()
 		if not task_id then
-			task_widget:set({ drawing = false })
+			task:set({ drawing = false })
+			task_short:set({ drawing = false })
 			return
 		end
 		sbar.exec("task _get " .. task_id .. ".description", function(desc_output)
 			local description = desc_output:match("(.+)")
 			if description then
-				if #description > 30 then
-					description = description:sub(1, 27) .. "..."
+				local desc_short = description:sub(1, 12) .. "..."
+				if #description > 64 then
+					description = description:sub(1, 64) .. "..."
 				end
-				task_widget:set({ label = { string = description } })
+				task:set({ label = { string = description } })
+				task_short:set({ label = { string = desc_short } })
 			end
 		end)
 		sbar.exec("task _get " .. task_id .. ".start", function(start_output)
 			local started = start_output:match("(%S+)")
 			if started then
-				task_widget:set({
+				task:set({
+					icon = { string = icons.task_active, color = colors.green },
+					label = { color = colors.text },
+				})
+				task_short:set({
 					icon = { string = icons.task_active, color = colors.green },
 					label = { color = colors.text },
 				})
 			else
-				task_widget:set({
+				task:set({
+					icon = { string = icons.task_next, color = colors.yellow },
+					label = { color = colors.subtext0 },
+				})
+				task_short:set({
 					icon = { string = icons.task_next, color = colors.yellow },
 					label = { color = colors.subtext0 },
 				})
@@ -90,5 +115,16 @@ local function click()
 	end)
 end
 
-task_widget:subscribe({ "routine", "forced" }, update_task_widget)
-task_widget:subscribe({ "mouse.clicked" }, click)
+local function update_display_assignments()
+	utils.get_display_lengths(function(displays)
+		task_short:set({ display = table.concat(displays.short, ",") })
+		task:set({ display = #displays.long > 0 and table.concat(displays.long, ",") or "99" })
+	end)
+end
+
+update_display_assignments()
+
+task:subscribe({ "routine", "forced" }, update_task_widget)
+task:subscribe({ "mouse.clicked" }, click)
+task:subscribe({ "display_change" }, update_display_assignments)
+task:subscribe({ "display_change" }, update_display_assignments)
