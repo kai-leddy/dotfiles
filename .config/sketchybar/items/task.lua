@@ -15,14 +15,12 @@ local task_widget = sbar.add("item", {
 	background = {
 		color = colors.base,
 	},
-	display = "2,3,4,5", -- all displays except the small built-in laptop screen
 	update_freq = 15,
 })
 
 local task_id = nil
 
 local function get_task(callback)
-	local state = nil
 	sbar.exec(task_active_command, function(output)
 		local id = output:match("(%d+)")
 		if id then
