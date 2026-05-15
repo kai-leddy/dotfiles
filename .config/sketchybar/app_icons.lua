@@ -1,5 +1,7 @@
 return {
+	["Unknown"] = "",
 	["App Store"] = "",
+	["Beekeeper Studio"] = "",
 	["Arc"] = "",
 	["Zen"] = "",
 	["Calculator"] = "",

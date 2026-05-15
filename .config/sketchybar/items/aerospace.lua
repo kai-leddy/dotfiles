@@ -66,7 +66,8 @@ local function updateWindow(workspace_index, args)
 		no_app = false
 		local app = open_window
 		local lookup = app_icons[app]
-		local icon = ((lookup == nil) and app_icons["Default"] or lookup)
+		-- local icon = ((lookup == nil) and app_icons["Default"] or lookup)
+		local icon = lookup or app_icons["Unknown"]
 		icon_line = icon_line .. icon .. " "
 	end
 
