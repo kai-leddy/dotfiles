@@ -125,6 +125,8 @@ end
 update_display_assignments()
 
 task:subscribe({ "routine", "forced" }, update_task_widget)
+task_short:subscribe({ "routine", "forced" }, update_task_widget)
 task:subscribe({ "mouse.clicked" }, click)
+task_short:subscribe({ "mouse.clicked" }, click)
 task:subscribe({ "display_change" }, update_display_assignments)
-task:subscribe({ "display_change" }, update_display_assignments)
+task_short:subscribe({ "display_change" }, update_display_assignments)
