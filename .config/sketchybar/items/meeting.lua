@@ -70,6 +70,10 @@ local function update()
 				return
 			end
 			local title, time_str, notes = lines[1]:match("^(.+)###(.+)###(.+)$")
+			-- handle meetings that don't have notes
+			if not title then
+				title, time_str = lines[1]:match("^(.+)###(.+)$")
+			end
 			while not done do
 				if time_str and title then
 					next_event = { title = title, time = time_str, notes = notes }
