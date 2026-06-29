@@ -45,7 +45,7 @@ return {
 	["WezTerm"] = "",
 	["WhatsApp"] = "",
 	["Xcode"] = "",
-	["zoom.us"] = "",
+	["Zoom"] = "",
 	["Redis Insight"] = "",
 	["Altair GraphQL Client"] = "",
 }
