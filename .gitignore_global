@@ -41,3 +41,5 @@ mise.local.toml
 
 # don't commit any OpenCode configs
 AGENTS.md
+
+**/.claude/settings.local.json
