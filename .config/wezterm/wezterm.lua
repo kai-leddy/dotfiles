@@ -58,6 +58,7 @@ config.keys = {
 		action = wezterm.action.DisableDefaultAssignment,
 	},
 	{ key = "c", mods = "SHIFT|CTRL", action = act.QuickSelect },
+	{ key = "Space", mods = "SHIFT|CTRL", action = act.QuickSelect },
 	-- mappings for scrolling up/down commands at a time
 	{ key = "UpArrow", mods = "CMD", action = act.ScrollToPrompt(-1) },
 	{ key = "DownArrow", mods = "CMD", action = act.ScrollToPrompt(1) },
