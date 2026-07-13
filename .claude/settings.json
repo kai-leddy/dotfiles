@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pbcopy)",
+      "Bash(pbpaste)",
+      "WebFetch(domain:as.atlassian.com)"
+    ]
+  },
+  "model": "sonnet",
+  "sandbox": {
+    "network": {
+      "allowMachLookup": [
+        "com.apple.pasteboard.*"
+      ]
+    },
+    "filesystem": {
+      "allowRead": [
+        "~/.config/gh"
+      ],
+      "allowWrite": [ ]
+    },
+    "excludedCommands": [
+      "pnpm run *"
+    ]
+  },
+  "effortLevel": "high",
+  "theme": "auto",
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true
+  }
+}
