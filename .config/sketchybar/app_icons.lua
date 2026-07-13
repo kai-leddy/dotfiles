@@ -48,4 +48,5 @@ return {
 	["Zoom"] = "",
 	["Redis Insight"] = "",
 	["Altair GraphQL Client"] = "",
+	["Google Chrome for Testing"] = "", -- Playwright UI
 }
