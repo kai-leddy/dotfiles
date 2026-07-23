@@ -1,12 +1,17 @@
 {
   "permissions": {
     "allow": [
+      "Bash(cat)",
       "Bash(pbcopy)",
       "Bash(pbpaste)",
       "WebFetch(domain:as.atlassian.com)"
     ]
   },
   "model": "sonnet",
+  "enabledPlugins": {
+    "typescript-lsp@claude-plugins-official": true,
+    "gopls-lsp@claude-plugins-official": true
+  },
   "sandbox": {
     "network": {
       "allowMachLookup": [
@@ -14,18 +19,15 @@
       ]
     },
     "filesystem": {
+      "allowWrite": [],
       "allowRead": [
         "~/.config/gh"
-      ],
-      "allowWrite": [ ]
+      ]
     },
     "excludedCommands": [
       "pnpm run *"
     ]
   },
   "effortLevel": "high",
-  "theme": "auto",
-  "enabledPlugins": {
-    "typescript-lsp@claude-plugins-official": true
-  }
+  "theme": "auto"
 }
