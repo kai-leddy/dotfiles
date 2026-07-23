@@ -26,7 +26,7 @@ function M.get_display_lengths(callback)
 			local num, orientation = line:match("^(%d+) ([vh])$")
 			if num and orientation then
 				if tonumber(num) ~= 1 then
-					if orientation == "h" then
+					if orientation == "v" then
 						table.insert(short_displays, num)
 					else
 						table.insert(long_displays, num)
