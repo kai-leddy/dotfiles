@@ -48,6 +48,9 @@ config.line_height = 1.0
 
 -- functionality changes
 config.scrollback_lines = 1000000
+-- enable the kitty protocols for improved support and perf in some apps
+config.enable_kitty_keyboard = true
+config.enable_kitty_graphics = true
 
 -- key mappings
 config.keys = {
