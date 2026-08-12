@@ -7,7 +7,6 @@
       "WebFetch(domain:as.atlassian.com)"
     ]
   },
-  "model": "sonnet",
   "enabledPlugins": {
     "typescript-lsp@claude-plugins-official": true,
     "gopls-lsp@claude-plugins-official": true
@@ -28,6 +27,7 @@
       "pnpm run *"
     ]
   },
+  "syntaxHighlightingDisabled": false,
   "effortLevel": "high",
   "theme": "auto"
 }
