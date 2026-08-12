@@ -1,0 +1,28 @@
+{
+  "lastChangelogVersion": "0.84.1",
+  "theme": "dark",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "gpt-5.6-terra",
+  "enabledModels": [
+    "anthropic/claude-sonnet-5",
+    "anthropic/claude-haiku-4-5",
+    "anthropic/claude-opus-5",
+    "github-copilot/gemini-3.6-flash",
+    "github-copilot/gemini-3.1-pro-preview",
+    "github-copilot/gpt-5.6-terra",
+    "github-copilot/gpt-5.6-sol",
+    "github-copilot/gpt-5.6-luna"
+  ],
+  "defaultThinkingLevel": "medium",
+  "doubleEscapeAction": "tree",
+  "packages": [
+    "npm:pi-web-access",
+    "npm:pi-open-tui",
+    "npm:@juicesharp/rpiv-ask-user-question",
+    "npm:pi-lens",
+    "npm:pi-subagents",
+    "npm:@dietrichgebert/ponytail",
+    "npm:@juicesharp/rpiv-todo",
+    "npm:pi-usage-bar-focus"
+  ]
+}

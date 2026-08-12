@@ -7,3 +7,11 @@ __pycache__
 .config/nvim/.netrwhist
 .config/lazygit/state.yml
 .hammerspoon/Spoons
+
+# Pi agent state, credentials, and installed package data. Track only the
+# portable configuration files explicitly unignored below.
+.pi/agent/*
+!.pi/agent/AGENTS.md
+!.pi/agent/settings.json
+!.pi/agent/open-tui.json
+!.pi/agent/zentui.json
