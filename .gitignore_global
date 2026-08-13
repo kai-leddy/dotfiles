@@ -39,7 +39,7 @@ shell.nix
 # don't commit mise-en-place configs
 mise.local.toml
 
-# don't commit any OpenCode configs
+# don't commit any AI Agent configs
 AGENTS.md
-
+.pi/
 **/.claude/settings.local.json
