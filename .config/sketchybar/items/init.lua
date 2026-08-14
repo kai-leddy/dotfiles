@@ -12,6 +12,7 @@ require("items.meeting")
 require("items.cpu")
 require("items.mem")
 require("items.wifi")
+require("items.colima")
 require("items.bluetooth")
 require("items.task")
 

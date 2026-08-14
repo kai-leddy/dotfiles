@@ -5,6 +5,7 @@ return {
 	vpn = "",
 	mail = "",
 	github = "",
+	docker = "",
 
 	cpu = "", -- Microchip icon for CPU
 	mem = "", -- Memory chip icon for RAM
