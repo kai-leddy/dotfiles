@@ -36,22 +36,26 @@ local function update_wifi_status()
 		local power_status = power_status_output:match("^%s*(.-)%s*$") -- Trim whitespace
 
 		if power_status:match("On$") then -- Matches "Wi-Fi Power: On"
-			-- Wi-Fi is On, now check for connection details using wdutil
-			sbar.exec("ipconfig getsummary " .. current_wifi_device, function(ipconfig_output)
-				local ssid_match = ipconfig_output:match("[^B]SSID : ([^\n]+)")
-				local ssid = ssid_match and ssid_match:match("^%s*(.-)%s*$") -- Trim whitespace
-				local first_word = ssid and ssid:match("^[%a%d<>]+") or ""
-				ssid = first_word
+			-- macwifi-cli uses CoreWLAN through a signed helper, avoiding macOS SSID redaction.
+			local query = "ssid=$(macwifi-cli info --json 2>/dev/null | jq -r '.ssid // empty'); "
+				.. "if [ -n \"$ssid\" ]; then printf 'ssid:%s' \"$ssid\"; "
+				.. "elif ipconfig getsummary "
+				.. current_wifi_device
+				.. " 2>/dev/null | grep -q '^[[:space:]]*SSID :'; then "
+				.. "printf connected; else printf disconnected; fi"
+			sbar.exec(query, function(network_output)
+				local ssid = network_output:match("^ssid:(.*)$")
+				local connected = ssid ~= nil or network_output:match("^connected")
 
-				if ssid and ssid ~= "" and ssid ~= "<unknown>" then
+				if connected then
 					-- Connected to a network
 					wifi:set({
 						icon = { string = icons.wifi_on, color = colors.green },
-						label = { string = ssid, color = colors.text },
+						label = { string = (ssid or "Connected"), color = colors.text },
 						drawing = true,
 					})
 				else
-					-- Wi-Fi is On but not connected (or SSID not found in wdutil output or is <unknown>)
+					-- Wi-Fi is On but not connected (or no SSID was returned)
 					wifi:set({
 						icon = { string = icons.wifi_on, color = colors.yellow }, -- Yellow to show it's on but not connected
 						label = { string = "Disconnected", color = colors.subtext0 },
