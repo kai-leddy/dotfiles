@@ -16,7 +16,7 @@
   "defaultThinkingLevel": "medium",
   "doubleEscapeAction": "tree",
   "packages": [
-    "npm:pi-web-access",
+    "npm:@neuralmux/omp-firecrawl",
     "npm:pi-open-tui",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-lens",
