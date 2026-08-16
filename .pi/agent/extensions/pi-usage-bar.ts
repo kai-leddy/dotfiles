@@ -32,7 +32,14 @@ function providerOf(model: unknown): string {
 }
 
 async function openRouterGauge(): Promise<Gauge | undefined> {
-	const key = process.env.OPENROUTER_API_KEY;
+	// First try Pi's auth store (from /login openrouter), then env var fallback.
+	let key: string | undefined;
+	try {
+		const auth = JSON.parse(readFileSync(AUTH_FILE, "utf8")) as Record<string, Record<string, unknown>>;
+		const entry = auth["openrouter"];
+		key = (entry?.key ?? entry?.access ?? entry?.apiKey) as string | undefined;
+	} catch { /* auth.json missing — try env var */ }
+	if (!key) key = process.env.OPENROUTER_API_KEY;
 	if (!key) return undefined;
 	try {
 		const response = await fetch("https://openrouter.ai/api/v1/auth/key", {
