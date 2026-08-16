@@ -2,11 +2,12 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import { truncateToWidth } from "@earendil-works/pi-tui";
 
 type Gauge = { label: string; used: number; limit: number; updatedAt: number };
 const REFRESH_MS = 120_000;
 const CACHE_FILE = join(homedir(), ".cache", "pi-usage-bar.json");
+const AUTH_FILE = join(homedir(), ".pi", "agent", "auth.json");
 const gauges = new Map<string, Gauge>();
 
 function loadCache() {
@@ -25,12 +26,6 @@ function saveCache() {
 	} catch { /* Cache is best effort. */ }
 }
 
-function envGauge(prefix: string, label: string): Gauge | undefined {
-	const used = Number(process.env[`${prefix}_USED`]);
-	const limit = Number(process.env[`${prefix}_LIMIT`]);
-	return Number.isFinite(used) && Number.isFinite(limit) && limit > 0 ? { label, used: Math.max(0, used), limit, updatedAt: Date.now() } : undefined;
-}
-
 function providerOf(model: unknown): string {
 	const value = model as { provider?: unknown; id?: unknown } | undefined;
 	return String(value?.provider ?? value?.id ?? "").toLowerCase();
@@ -41,7 +36,7 @@ async function openRouterGauge(): Promise<Gauge | undefined> {
 	if (!key) return undefined;
 	try {
 		const response = await fetch("https://openrouter.ai/api/v1/auth/key", {
-			headers: { Authorization: `Bearer ${key}` },
+			headers: { Authorization: "Bearer " + key },
 			signal: AbortSignal.timeout(8_000),
 		});
 		if (!response.ok) return undefined;
@@ -52,6 +47,57 @@ async function openRouterGauge(): Promise<Gauge | undefined> {
 	} catch { return undefined; }
 }
 
+async function copilotGauge(): Promise<Gauge | undefined> {
+	try {
+		const auth = JSON.parse(readFileSync(AUTH_FILE, "utf8")) as Record<string, Record<string, unknown>>;
+		const token = (auth["github-copilot"]?.refresh ?? auth["github-copilot"]?.access) as string | undefined;
+		if (!token) return undefined;
+		const response = await fetch("https://api.github.com/copilot_internal/user", {
+			headers: { authorization: "Bearer " + token, "user-agent": "pi-usage-bar" },
+			signal: AbortSignal.timeout(8_000),
+		});
+		if (!response.ok) return undefined;
+		const body = await response.json() as { quota_snapshots?: { premium_interactions?: { percent_remaining?: number; unlimited?: boolean } } };
+		const quota = body?.quota_snapshots?.premium_interactions;
+		if (!quota || quota.unlimited || typeof quota.percent_remaining !== "number") return undefined;
+		return { label: "Copilot", used: 100 - quota.percent_remaining, limit: 100, updatedAt: Date.now() };
+	} catch { return undefined; }
+}
+
+async function anthropicGauge(): Promise<Gauge | undefined> {
+	// Claude Code's /usage command uses this OAuth-only internal endpoint.  The
+	// public organizations/usage endpoint is billing/API-key usage, not Pro/Max
+	// plan quota, and does not return the shape needed by this gauge.
+	try {
+		const auth = JSON.parse(readFileSync(AUTH_FILE, "utf8")) as Record<string, Record<string, unknown>>;
+		const token = auth["anthropic"]?.access as string | undefined;
+		if (!token) return undefined;
+
+		const response = await fetch("https://api.anthropic.com/api/oauth/usage", {
+			headers: {
+				authorization: "Bearer " + token,
+				"anthropic-beta": "oauth-2025-04-20",
+				"anthropic-dangerous-direct-browser-access": "true",
+				"user-agent": "claude-code/1.0.0",
+			},
+			signal: AbortSignal.timeout(8_000),
+		});
+		if (!response.ok) return undefined;
+
+		// The endpoint returns windows such as five_hour and seven_day, each with
+		// utilization as a percentage (and resets_at). Pick the most-used window.
+		const body = await response.json() as Record<string, unknown>;
+		const windows = Object.values(body).filter((value): value is { utilization?: unknown } =>
+			typeof value === "object" && value !== null && "utilization" in value,
+		);
+		const utilization = windows
+			.map((window) => typeof window.utilization === "number" ? window.utilization : undefined)
+			.filter((value): value is number => value !== undefined && Number.isFinite(value));
+		const used = utilization.length ? Math.max(...utilization) : undefined;
+		return used === undefined ? undefined : { label: "Claude", used, limit: 100, updatedAt: Date.now() };
+	} catch { return undefined; }
+}
+
 async function refresh(model: unknown) {
 	const provider = providerOf(model);
 	try {
@@ -59,10 +105,10 @@ async function refresh(model: unknown) {
 			const gauge = await openRouterGauge();
 			if (gauge) gauges.set("openrouter", gauge);
 		} else if (provider.includes("copilot") || provider.includes("github")) {
-			const gauge = envGauge("GITHUB_COPILOT_QUOTA", "Copilot");
+			const gauge = await copilotGauge();
 			if (gauge) gauges.set("copilot", gauge);
 		} else if (provider.includes("anthropic") || provider.includes("claude")) {
-			const gauge = envGauge("ANTHROPIC_QUOTA", "Claude");
+			const gauge = await anthropicGauge();
 			if (gauge) gauges.set("anthropic", gauge);
 		}
 		saveCache();
@@ -92,18 +138,14 @@ export default function (pi: ExtensionAPI) {
 			update();
 			timer = setInterval(update, REFRESH_MS);
 			return {
-				dispose() {
-				disposed = true;
-				if (timer) clearInterval(timer);
-			},
+				dispose() { disposed = true; if (timer) clearInterval(timer); },
 				invalidate() {},
 				render(width: number): string[] {
 					const provider = providerOf(ctx.model);
 					const key = provider.includes("openrouter") ? "openrouter" : provider.includes("copilot") || provider.includes("github") ? "copilot" : provider.includes("anthropic") || provider.includes("claude") ? "anthropic" : "";
 					const gauge = key ? gauges.get(key) : undefined;
 					if (!gauge) return [""];
-					const content = renderGauge(gauge, theme);
-					return [truncateToWidth("  " + content, Math.max(1, width))];
+					return [truncateToWidth("  " + renderGauge(gauge, theme), Math.max(1, width))];
 				},
 			};
 		});
