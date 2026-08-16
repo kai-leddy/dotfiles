@@ -23,8 +23,6 @@
     "npm:@gotgenes/pi-subagents",
     "npm:@dietrichgebert/ponytail",
     "npm:@99percentpeople/pi-todo",
-    "npm:pi-usage-bar-focus",
-    "npm:@heyhuynhgiabuu/pi-pretty",
-    "npm:@heyhuynhgiabuu/pi-diff"
+    "npm:pi-usage-bar-focus"
   ]
 }

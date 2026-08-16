@@ -15,3 +15,5 @@ __pycache__
 !.pi/agent/settings.json
 !.pi/agent/open-tui.json
 !.pi/agent/zentui.json
+!.pi/agent/extensions/
+!.pi/agent/extensions/*.ts
