@@ -1,7 +1,10 @@
 import { spawn } from "node:child_process";
 import { existsSync } from "node:fs";
-import { basename } from "node:path";
+import { homedir } from "node:os";
+import { basename, join } from "node:path";
+import { pathToFileURL } from "node:url";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import type { SubagentsService } from "@gotgenes/pi-subagents";
 import { Text } from "@earendil-works/pi-tui";
 
 const MAX_OUTPUT_BYTES = 50 * 1024;
@@ -74,8 +77,10 @@ function eventText(value: unknown): string | undefined {
 
 export default function (pi: ExtensionAPI) {
   let running = 0;
-  let subagentsReady = false;
   const activeRpcQuests = new Map<string, ActiveRpcQuest>();
+  const subagentsServiceUrl = pathToFileURL(
+    join(homedir(), ".pi", "agent", "npm", "node_modules", "@gotgenes", "pi-subagents", "src", "service", "service.ts"),
+  ).href;
 
   const completeQuest = (
     quest: ActiveRpcQuest,
@@ -92,13 +97,6 @@ export default function (pi: ExtensionAPI) {
       output: truncateOutput(output || (failed ? "(subagent failed)" : "(no output)")),
     } satisfies SideQuestEntry);
   };
-
-  // The ready event is the capability probe. The RPC was intentionally kept
-  // event-based so this extension remains optional and does not require the
-  // subagents package as a hard import-time dependency.
-  pi.events.on("subagents:ready", () => {
-    subagentsReady = true;
-  });
 
   pi.events.on("subagents:created", (raw: unknown) => {
     const event = (raw ?? {}) as SubagentEvent;
@@ -158,30 +156,29 @@ export default function (pi: ExtensionAPI) {
 
       const sideQuestId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
-      if (subagentsReady) {
-        const quest: ActiveRpcQuest = {
-          task,
-          sideQuestId,
-          updateStatus: (count) =>
-            ctx.ui.setStatus("side-quest", count ? `Side quest running (${count})` : undefined),
+      try {
+        const { getSubagentsService } = (await import(subagentsServiceUrl)) as {
+          getSubagentsService: () => SubagentsService | undefined;
         };
-        activeRpcQuests.set(sideQuestId, quest);
-
-        try {
-          pi.events.emit("subagents:rpc:spawn", {
-            prompt: task,
+        const service = getSubagentsService();
+        if (service) {
+          const quest: ActiveRpcQuest = {
+            task,
+            sideQuestId,
+            updateStatus: (count) =>
+              ctx.ui.setStatus("side-quest", count ? `Side quest running (${count})` : undefined),
+          };
+          activeRpcQuests.set(sideQuestId, quest);
+          quest.agentId = service.spawn("general-purpose", task, {
             description: `Side quest (${sideQuestId})`,
-            subagent_type: "general-purpose",
-            run_in_background: true,
+            inheritContext: true,
+            bypassQueue: false,
           });
           return;
-        } catch (error) {
-          activeRpcQuests.delete(sideQuestId);
-          running--;
-          ctx.ui.notify(`Subagents RPC unavailable; using standalone Pi process (${String(error)})`, "warning");
         }
-      } else {
-        ctx.ui.notify("Subagents system not loaded; using standalone Pi process", "warning");
+        ctx.ui.notify("Subagents service unavailable; using standalone Pi process", "warning");
+      } catch (error) {
+        ctx.ui.notify(`Subagents service unavailable; using standalone Pi process (${String(error)})`, "warning");
       }
 
       // Compatibility fallback for sessions where pi-subagents is not loaded.
