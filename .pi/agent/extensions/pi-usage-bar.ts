@@ -1,10 +1,9 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { truncateToWidth } from "@earendil-works/pi-tui";
+import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 
-type Gauge = { label: string; used: number; limit: number; updatedAt: number };
+type Gauge = { label: string; used: number; limit: number; remaining?: number; updatedAt: number };
 const REFRESH_MS = 120_000;
 const CACHE_FILE = join(homedir(), ".cache", "pi-usage-bar.json");
 const AUTH_FILE = join(homedir(), ".pi", "agent", "auth.json");
@@ -14,7 +13,7 @@ function loadCache() {
 	try {
 		const saved = JSON.parse(readFileSync(CACHE_FILE, "utf8")) as Record<string, Gauge>;
 		for (const [key, value] of Object.entries(saved)) {
-			if (value && Number.isFinite(value.used) && Number.isFinite(value.limit) && value.limit > 0) gauges.set(key, value);
+			if (value && Number.isFinite(value.used) && Number.isFinite(value.limit) && value.limit > 0 && (value.remaining === undefined || Number.isFinite(value.remaining))) gauges.set(key, value);
 		}
 	} catch { /* A missing or corrupt cache is harmless. */ }
 }
@@ -42,15 +41,15 @@ async function openRouterGauge(): Promise<Gauge | undefined> {
 	if (!key) key = process.env.OPENROUTER_API_KEY;
 	if (!key) return undefined;
 	try {
-		const response = await fetch("https://openrouter.ai/api/v1/auth/key", {
+		const response = await fetch("https://openrouter.ai/api/v1/credits", {
 			headers: { Authorization: "Bearer " + key },
 			signal: AbortSignal.timeout(8_000),
 		});
 		if (!response.ok) return undefined;
-		const body = await response.json() as { data?: { limit?: number | null; limit_remaining?: number | null } };
-		const data = body.data;
-		if (!data || typeof data.limit !== "number" || data.limit <= 0 || typeof data.limit_remaining !== "number") return undefined;
-		return { label: "OpenRouter", used: Math.max(0, data.limit - data.limit_remaining), limit: data.limit, updatedAt: Date.now() };
+		const data = (await response.json() as { data?: { total_credits?: unknown; total_usage?: unknown } }).data;
+		if (!data || typeof data.total_credits !== "number" || typeof data.total_usage !== "number") return undefined;
+		const remaining = Math.max(0, data.total_credits - data.total_usage);
+		return { label: "OpenRouter", used: Math.max(0, data.total_credits - remaining), limit: Math.max(1, data.total_credits), remaining, updatedAt: Date.now() };
 	} catch { return undefined; }
 }
 
@@ -127,32 +126,49 @@ function renderGauge(gauge: Gauge, theme: any): string {
 	const color = percent > 85 ? "error" : percent >= 50 ? "warning" : "success";
 	const filled = Math.round(percent / 10);
 	const bar = "▓".repeat(filled) + "░".repeat(10 - filled);
-	return `${theme.fg(color, bar)} ${gauge.label} ${percent.toFixed(0)}%`;
+	const remaining = gauge.remaining === undefined ? "" : ` $${gauge.remaining.toFixed(2)}`;
+	if (gauge.label === "OpenRouter") return `\x1b[1mOpenRouter\x1b[22m${remaining}`;
+	return `${theme.fg(color, bar)} \x1b[1m${gauge.label === "Copilot" ? "󰊤 Copilot" : gauge.label}\x1b[22m${remaining} \x1b[3m${percent.toFixed(0)}%\x1b[23m`
 }
 
 export default function (pi: ExtensionAPI) {
 	loadCache();
 	let timer: ReturnType<typeof setInterval> | undefined;
+	let modelContext: ExtensionContext | undefined;
+	let updateWidget: (() => void) | undefined;
+
+	pi.on("model_select", (_event, nextCtx) => {
+		modelContext = nextCtx;
+		updateWidget?.();
+	});
 
 	pi.on("session_start", (_event, ctx) => {
-		ctx.ui.setFooter((tui, theme) => {
+		modelContext = ctx;
+		ctx.ui.setWidget("pi-usage-bar", (tui, theme) => {
 			let disposed = false;
 			const update = () => {
 				if (!disposed) {
-					void refresh(ctx.model).then(() => tui.requestRender()).catch(() => undefined);
+					void refresh(modelContext?.model ?? ctx.model).then(() => {
+						const provider = providerOf(modelContext?.model ?? ctx.model);
+						const key = provider.includes("openrouter") ? "openrouter" : provider.includes("copilot") || provider.includes("github") ? "copilot" : provider.includes("anthropic") || provider.includes("claude") ? "anthropic" : "";
+						const gauge = key ? gauges.get(key) : undefined;
+						(modelContext?.ui ?? ctx.ui).setStatus("󰍛", gauge ? renderGauge(gauge, theme) : undefined);
+						tui.requestRender();
+					}).catch(() => undefined);
 				}
 			};
+			updateWidget = update;
 			update();
 			timer = setInterval(update, REFRESH_MS);
 			return {
 				dispose() { disposed = true; if (timer) clearInterval(timer); },
 				invalidate() {},
 				render(width: number): string[] {
-					const provider = providerOf(ctx.model);
+					const provider = providerOf(modelContext?.model ?? ctx.model);
 					const key = provider.includes("openrouter") ? "openrouter" : provider.includes("copilot") || provider.includes("github") ? "copilot" : provider.includes("anthropic") || provider.includes("claude") ? "anthropic" : "";
 					const gauge = key ? gauges.get(key) : undefined;
 					if (!gauge) return [""];
-					return [truncateToWidth("  " + renderGauge(gauge, theme), Math.max(1, width))];
+					return []
 				},
 			};
 		});
