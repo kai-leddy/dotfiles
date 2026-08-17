@@ -21,7 +21,7 @@ const palette = {
   sky: "#89dceb", yellow: "#f9e2af", green: "#a6e3a1", text: "#cdd6f4",
   dim: "#6c7086", surface0: "#313244", surface1: "#45475a", crust: "#11111b",
 };
-const logoColors = ["blue", "mauve", "teal", "pink"] as const;
+const logoColors = ["accent", "success", "warning", "error"] as const;
 const defaults: Required<Config> = {
   enabled: true,
   footerSegments: { cwd: true, gitBranch: true, gitStatus: true, runtime: true, context: true, tokens: true, cost: true, extensionStatuses: true },
@@ -38,11 +38,13 @@ function readConfig(): Required<Config> {
     };
   } catch { return defaults; }
 }
-function hex(value: string, text: string, background = false): string {
+function hex(value: string, text: string, background = false, foreground?: string): string {
   const match = value.match(/^#(..)(..)(..)$/);
+  const foregroundMatch = foreground?.match(/^#(..)(..)(..)$/);
   if (!match) return text;
   const rgb = match.map((v, i) => i ? Number.parseInt(v, 16) : 0).slice(1).join(";");
-  return `\x1b[${background ? 48 : 38};2;${rgb}m${text}\x1b[0m`;
+  const fg = foregroundMatch?.map((v, i) => i ? Number.parseInt(v, 16) : 0).slice(1).join(";");
+  return `\x1b[${fg ? `38;2;${fg};` : ""}${background ? 48 : 38};2;${rgb}m${text}\x1b[0m`;
 }
 function fmt(n: number): string {
   if (!Number.isFinite(n)) return "—";
@@ -80,25 +82,33 @@ function usageFrom(value: any): { input: number; output: number; cost: number } 
   const u = value?.usage ?? value?.message?.usage ?? {};
   return { input: Number(u.input ?? u.inputTokens ?? 0), output: Number(u.output ?? u.outputTokens ?? 0), cost: Number(u.cost ?? 0) };
 }
-function segment(icon: string, content: string, color: string, background = palette.surface0): string {
-  return `${hex(color, ``)}${hex(background, ` ${icon} ${content} `, true)}${hex(background, "")}`;
+function segment(icon: string, content: string, color: string): string {
+  return `${hex(color, "")}${hex(color, ` ${icon} ${content} `, true, palette.crust)}${hex(color, "")}`;
+}
+
+function wrapSegments(parts: string[], width: number): string[] {
+  const lines = [""];
+  for (const part of parts) {
+    const line = lines.at(-1)!;
+    const separator = line ? "  " : "";
+    if (line && visibleWidth(line) + visibleWidth(separator) + visibleWidth(part) > width) lines.push(part);
+    else lines[lines.length - 1] = line + separator + part;
+  }
+  return lines;
 }
 
 class RoundedEditor extends CustomEditor {
   override render(width: number): string[] {
-    const lines = super.render(width);
-    if (!lines.length) return lines;
-    const round = (line: string, left: string, right: string) => {
-      if (visibleWidth(line) < 2) return line;
-      return left + line.slice(1, -1) + right;
-    };
-    lines[0] = round(lines[0]!, "╭", "╮");
-    let bottom = -1;
-    for (let index = lines.length - 1; index >= 0; index--) {
-      if (lines[index]!.includes("─")) { bottom = index; break; }
-    }
-    if (bottom >= 0) lines[bottom] = round(lines[bottom]!, "╰", "╯");
-    return lines;
+    const innerWidth = Math.max(1, width - 2);
+    const lines = super.render(innerWidth);
+    const bottom = lines.findLastIndex((line) => line.includes("─"));
+    return lines.map((line, index) => {
+      const inner = truncateToWidth(line, innerWidth, "");
+      const padded = inner + " ".repeat(Math.max(0, innerWidth - visibleWidth(inner)));
+      if (index === 0) return `╭${"─".repeat(innerWidth)}╮`;
+      if (index === bottom) return `╰${"─".repeat(innerWidth)}╯`;
+      return `│${padded}│`;
+    });
   }
 }
 
@@ -121,7 +131,7 @@ export default function (pi: ExtensionAPI) {
     if (!config.footerSegments.extensionStatuses) return "";
     const statuses = footerData.getExtensionStatuses?.() as ReadonlyMap<string, string> | undefined;
     if (!statuses?.size) return "";
-    return [...statuses].map(([key, value]) => segment(key, value, palette.teal)).join(" ");
+    return [...statuses].map(([key, value]) => `${key} ${value}`).join(" ");
   };
 
   pi.on("session_start", (_event, nextCtx) => {
@@ -136,12 +146,12 @@ export default function (pi: ExtensionAPI) {
       renderTui = tui;
       const render = (width: number): string[] => {
         const parts: string[] = [];
-        const add = (key: string, value: string, color: string, icon: string, bg?: string) => {
-          if (config.footerSegments[key] !== false) parts.push(segment(icon, value, color, bg));
-        };
-        if (config.footerSegments.cwd !== false) add("cwd", shortCwd(ctx.cwd), palette.sky, "");
+        const add = (key: string, value: string, color: string, icon: string) => {
+                  if (config.footerSegments[key] !== false) parts.push(segment(icon, value, color));
+                };
+        if (config.footerSegments.cwd !== false) parts.push(hex(palette.sky, `  ${shortCwd(ctx.cwd)}`))
         const git = gitInfo(ctx.cwd);
-        if (config.footerSegments.gitBranch !== false && git.branch) add("gitBranch", `${git.branch}${config.footerSegments.gitStatus !== false ? ` ${git.status ?? ""}` : ""}`, palette.yellow, "", palette.crust);
+        if (config.footerSegments.gitBranch !== false && git.branch) add("gitBranch", `${git.branch}${config.footerSegments.gitStatus !== false ? ` ${git.status ?? ""}` : ""}`, palette.yellow, "");
         if (config.footerSegments.runtime !== false) add("runtime", runtime(ctx.cwd), palette.green, "󰘧");
         const cu = ctx.getContextUsage?.();
         if (config.footerSegments.context !== false) {
@@ -151,17 +161,17 @@ export default function (pi: ExtensionAPI) {
         }
         if (config.footerSegments.model !== false) add("model", modelName(ctx.model), palette.mauve, "󰚩");
         if (config.footerSegments.tokens !== false) add("tokens", `↑${fmt(stats.input)} ↓${fmt(stats.output)}`, palette.text, "󰆡");
-        if (config.footerSegments.cost !== false) add("cost", `$${stats.cost.toFixed(2)}`, palette.pink, "$ ");
-        if (config.footerSegments.timer !== false) add("timer", started ? (ctx.isIdle?.() ? seconds((lastUpdate || Date.now() - started) / 1000) : seconds((Date.now() - started) / 1000)) : "idle", palette.sky, "◷");
+        if (config.footerSegments.cost !== false) add("cost", `$${stats.cost.toFixed(2)}`, palette.pink, "󰎟");
+        if (config.footerSegments.timer !== false) add("timer", started ? (ctx.isIdle?.() ? seconds((lastUpdate || Date.now() - started) / 1000) : seconds((Date.now() - started) / 1000)) : "idle", palette.sky, "󰔛");
         const statuses = statusSegments(footerData, theme);
         if (statuses) parts.push(statuses);
-        return [truncateToWidth(parts.join(" "), Math.max(1, width), "…")];
+        return wrapSegments(parts, Math.max(1, width))
       };
       return { render, invalidate: refresh, dispose() {} } as any;
     });
     ctx.ui.setEditorComponent((tui: any, theme: any, keybindings: any) => {
       renderTui = tui;
-      const editor = new RoundedEditor(tui, { ...theme, borderColor: (s: string) => hex(palette.surface1, s) }, keybindings, { paddingX: 1 });
+      const editor = new RoundedEditor(tui, { ...theme, borderColor: (s: string) => hex(palette.surface1, s) }, keybindings, { paddingX: 4 });
       return editor;
     });
     if (!animation) animation = setInterval(() => { frame++; refresh(); }, 900);
