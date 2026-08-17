@@ -23,11 +23,13 @@ set -x VISUAL nvim
 if test (uname) = Darwin
     set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
     set -x OPENROUTER_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
+    set -x FIRECRAWL_API_KEY (security find-generic-password -w -a $LOGNAME -s firecrawl-api-key)
 else
     # For Linux, use pass or other credential manager as fallback
     if command -v pass &>/dev/null
         set -x OPENROUTER_API_KEY (pass show openrouter-api-key)
         set -x OPENROUTER_KEY (pass show openrouter-api-key)
+        set -x FIRECRAWL_API_KEY (pass show firecrawl-api-key)
     end
 end
 
