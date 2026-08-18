@@ -21,17 +21,17 @@ set -x VISUAL nvim
 
 # get API keys out of the keychain and set them in the env
 if test (uname) = Darwin
-    set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
-    set -x OPENROUTER_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key)
-    set -x FIRECRAWL_API_KEY (security find-generic-password -w -a $LOGNAME -s firecrawl-api-key)
-    set -x CONTEXT7_API_KEY (security find-generic-password -w -a $LOGNAME -s context7-api-key)
+    set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key 2>/dev/null)
+    set -x OPENROUTER_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key 2>/dev/null)
+    set -x FIRECRAWL_API_KEY (security find-generic-password -w -a $LOGNAME -s firecrawl-api-key 2>/dev/null)
+    set -x CONTEXT7_API_KEY (security find-generic-password -w -a $LOGNAME -s context7-api-key 2>/dev/null)
 else
     # For Linux, use pass or other credential manager as fallback
     if command -v pass &>/dev/null
-        set -x OPENROUTER_API_KEY (pass show openrouter-api-key)
-        set -x OPENROUTER_KEY (pass show openrouter-api-key)
-        set -x FIRECRAWL_API_KEY (pass show firecrawl-api-key)
-        set -x CONTEXT7_API_KEY (pass show context7-api-key)
+        set -x OPENROUTER_API_KEY (pass show openrouter-api-key 2>/dev/null)
+        set -x OPENROUTER_KEY (pass show openrouter-api-key 2>/dev/null)
+        set -x FIRECRAWL_API_KEY (pass show firecrawl-api-key 2>/dev/null)
+        set -x CONTEXT7_API_KEY (pass show context7-api-key 2>/dev/null)
     end
 end
 
