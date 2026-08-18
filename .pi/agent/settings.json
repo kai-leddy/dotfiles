@@ -20,6 +20,7 @@
     "npm:@watercol/pi-lens-simple",
     "npm:@gotgenes/pi-subagents",
     "npm:@dietrichgebert/ponytail",
-    "npm:@99percentpeople/pi-todo"
+    "npm:@99percentpeople/pi-todo",
+    "npm:pi-skill-acli"
   ]
 }
