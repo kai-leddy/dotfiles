@@ -17,6 +17,7 @@
   "doubleEscapeAction": "tree",
   "packages": [
     "npm:@neuralmux/omp-firecrawl",
+    "npm:pi-open-tui",
     "npm:@watercol/pi-lens-simple",
     "npm:@gotgenes/pi-subagents",
     "npm:@dietrichgebert/ponytail",
