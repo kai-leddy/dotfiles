@@ -47,6 +47,25 @@ export default function (pi: ExtensionAPI) {
 		description: "Ask the user for information instead of guessing. Supports mixed multiple-choice and free-form questions.",
 		parameters: Parameters,
 		executionMode: "sequential",
+		renderCall(args, theme) {
+			const questions = ((args as { questions?: Question[] }).questions ?? []) as Question[];
+			const lines = questions
+				.filter((question): question is Question => Boolean(question?.question))
+				.map((question) => theme.fg("accent", `? ${question.question}`));
+			return new Text([theme.fg("dim", "asking the user a question"), ...lines].join("\n"), 0, 0);
+		},
+		renderResult(result, _options, theme, context) {
+			const details = result.details as { answers?: Answer[]; cancelled?: boolean } | undefined;
+			const answers = details?.answers ?? [];
+			if (!answers.length) {
+				const text = result.content.find((item) => item.type === "text")?.text ?? "No answer";
+				return new Text(theme.fg(context.isError ? "error" : "warning", text), 0, 0);
+			}
+
+			const lines = answers.map((answer) => theme.fg("success", `→ ${answer.answer || "—"}`));
+			if (details?.cancelled) lines.push(theme.fg("warning", "Cancelled"));
+			return new Text(lines.join("\n"), 0, 0);
+		},
 		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
 			const questions = (params as { questions?: Question[] }).questions ?? [];
 			if (ctx.mode !== "tui") {
@@ -61,18 +80,6 @@ export default function (pi: ExtensionAPI) {
 				for (let index = 0; index < questions.length; index++) {
 					const q = questions[index];
 					if (!q || typeof q.question !== "string") continue;
-					const heading = `ASK USER  ${index + 1}/${questions.length}`;
-					const widgetKey = "ask-user-question";
-					ctx.ui.setWidget(widgetKey, (tui, theme) => {
-						const lines = [
-							theme.fg("accent", `╭─ ${heading} ${"─".repeat(Math.max(0, 44 - heading.length))}╮`),
-							theme.fg("text", `│ ${q.question}`),
-							theme.fg("dim", `│ ${q.type === "choice" ? "↑/↓ select · Enter confirm" : "Type your answer · Enter confirm"}`),
-							theme.fg("dim", "│ Esc cancels the questionnaire"),
-							theme.fg("accent", "╰" + "─".repeat(50) + "╯"),
-						];
-						return new Text(lines.join("\n"), 0, 0);
-					});
 
 					let answer: string | undefined;
 					if (q.type === "choice") {
@@ -83,15 +90,12 @@ export default function (pi: ExtensionAPI) {
 						answer = await ctx.ui.input(q.question, q.placeholder ?? q.default, { signal: _signal });
 					}
 					if (answer === undefined) {
-						ctx.ui.setWidget(widgetKey, undefined);
 						return { content: [{ type: "text", text: resultText(answers, true) }], details: { answers, cancelled: true } };
 					}
 					answers.push({ question: q.question, type: q.type, answer: answer || q.default || "" });
 				}
-				ctx.ui.setWidget("ask-user-question", undefined);
 				return { content: [{ type: "text", text: resultText(answers) }], details: { answers, cancelled: false } };
 			} catch (error) {
-				ctx.ui.setWidget("ask-user-question", undefined);
 				return { content: [{ type: "text", text: resultText(answers, true) }], details: { answers, cancelled: true, error: String(error) } };
 			}
 		},

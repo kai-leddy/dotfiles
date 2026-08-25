@@ -11,7 +11,7 @@ const MAX_OUTPUT_BYTES = 50 * 1024;
 
 type SideQuestEntry = {
   task: string;
-  status: "running" | "completed" | "failed";
+  status: "pending" | "running" | "completed" | "failed";
   output?: string;
 };
 
@@ -78,6 +78,15 @@ function eventText(value: unknown): string | undefined {
 export default function (pi: ExtensionAPI) {
   let running = 0;
   const activeRpcQuests = new Map<string, ActiveRpcQuest>();
+  const sideQuestWidgetEntries = new Map<string, SideQuestEntry>();
+  let sideQuestWidgetTui: { requestRender(): void } | undefined;
+  let sideQuestWidgetRegistered = false;
+
+  const updateSideQuestWidget = (id: string, entry: SideQuestEntry) => {
+    sideQuestWidgetEntries.set(id, entry);
+    sideQuestWidgetTui?.requestRender();
+  };
+
   const subagentsServiceUrl = pathToFileURL(
     join(homedir(), ".pi", "agent", "npm", "node_modules", "@gotgenes", "pi-subagents", "src", "service", "service.ts"),
   ).href;
@@ -91,6 +100,11 @@ export default function (pi: ExtensionAPI) {
     activeRpcQuests.delete(quest.sideQuestId);
     running--;
     quest.updateStatus(running);
+    updateSideQuestWidget(quest.sideQuestId, {
+      task: quest.task,
+      status: failed ? "failed" : "completed",
+      output: truncateOutput(output || (failed ? "(subagent failed)" : "(no output)")),
+    });
     pi.appendEntry("side-quest", {
       task: quest.task,
       status: failed ? "failed" : "completed",
@@ -133,7 +147,7 @@ export default function (pi: ExtensionAPI) {
 
   pi.registerEntryRenderer("side-quest", (entry, _options, theme) => {
     const data = entry.data as SideQuestEntry;
-    const icon = data.status === "running" ? "…" : data.status === "completed" ? "✓" : "✗";
+    const icon = data.status === "pending" || data.status === "running" ? "…" : data.status === "completed" ? "✓" : "✗";
     const color = data.status === "failed" ? "error" : data.status === "completed" ? "success" : "warning";
     let text = theme.fg(color, `${icon} Side quest: ${data.status}`);
     text += `\n${theme.fg("dim", data.task)}`;
@@ -156,6 +170,30 @@ export default function (pi: ExtensionAPI) {
 
       const sideQuestId = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
 
+      if (!sideQuestWidgetRegistered) {
+        ctx.ui.setWidget("side-quest", (tui, theme) => {
+          sideQuestWidgetTui = tui;
+          return {
+            render: () => {
+              const lines = [theme.fg("accent", "SIDE QUESTS")];
+              for (const entry of sideQuestWidgetEntries.values()) {
+                const state = entry.status === "pending" ? "pending" : entry.status === "running" ? "started" : "done";
+                const color = entry.status === "failed" ? "error" : entry.status === "completed" ? "success" : "warning";
+                lines.push(theme.fg(color, `${state}: ${entry.task}`));
+                if (entry.output) lines.push(theme.fg("dim", `  ${entry.output}`));
+              }
+              return lines;
+            },
+            invalidate: () => {},
+            dispose: () => {
+              sideQuestWidgetTui = undefined;
+            },
+          };
+        }, { placement: "aboveEditor" });
+        sideQuestWidgetRegistered = true;
+      }
+      updateSideQuestWidget(sideQuestId, { task, status: "pending" });
+
       try {
         const { getSubagentsService } = (await import(subagentsServiceUrl)) as {
           getSubagentsService: () => SubagentsService | undefined;
@@ -169,6 +207,7 @@ export default function (pi: ExtensionAPI) {
               ctx.ui.setStatus("side-quest", count ? `Side quest running (${count})` : undefined),
           };
           activeRpcQuests.set(sideQuestId, quest);
+          updateSideQuestWidget(sideQuestId, { task, status: "running" });
           quest.agentId = service.spawn("general-purpose", task, {
             description: `Side quest (${sideQuestId})`,
             inheritContext: true,
@@ -182,6 +221,7 @@ export default function (pi: ExtensionAPI) {
       }
 
       // Compatibility fallback for sessions where pi-subagents is not loaded.
+      updateSideQuestWidget(sideQuestId, { task, status: "running" });
       const invocation = getPiInvocation(["--mode", "json", "-p", "--no-session", task]);
       const child = spawn(invocation.command, invocation.args, {
         cwd: ctx.cwd,
@@ -198,6 +238,11 @@ export default function (pi: ExtensionAPI) {
         running--;
         ctx.ui.setStatus("side-quest", running ? `Side quest running (${running})` : undefined);
         const failed = error || code !== 0;
+        updateSideQuestWidget(sideQuestId, {
+          task,
+          status: failed ? "failed" : "completed",
+          output: truncateOutput(output || error || stderr || "(no output)"),
+        });
         pi.appendEntry("side-quest", {
           task,
           status: failed ? "failed" : "completed",
