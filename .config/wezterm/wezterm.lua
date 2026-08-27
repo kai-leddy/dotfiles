@@ -158,6 +158,8 @@ config.keys = {
 	{ key = "X", mods = "CMD|SHIFT", action = herdr_key("x", 10) },
 	{ key = "P", mods = "CMD|SHIFT", action = herdr_key("p", 10) },
 	{ key = "Q", mods = "CMD|SHIFT", action = herdr_key("q", 10) },
+	{ key = "O", mods = "CMD|SHIFT", action = herdr_key("o", 10) },
+	{ key = "U", mods = "CMD|SHIFT", action = herdr_key("u", 10) },
 	{ key = "H", mods = "CMD|SHIFT", action = herdr_key("h", 10) },
 	{ key = "J", mods = "CMD|SHIFT", action = herdr_key("j", 10) },
 	{ key = "K", mods = "CMD|SHIFT", action = herdr_key("k", 10) },
