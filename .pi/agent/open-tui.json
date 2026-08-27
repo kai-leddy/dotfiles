@@ -1,11 +1,16 @@
 {
   "enabled": true,
   "settingsLanguage": "en",
+  "cursorStyle": "block",
+  "fullscreen": {
+    "wheelScrollLines": 4
+  },
   "icons": {
     "mode": "auto"
   },
   "footerSegments": {
     "cwd": true,
+    "sessionName": false,
     "gitBranch": true,
     "gitStatus": true,
     "gitCommit": false,
