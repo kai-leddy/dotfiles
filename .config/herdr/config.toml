@@ -106,8 +106,8 @@ toggle_sidebar = "cmd+b"
 
 # Navigate-mode movement. These local shortcuts win while navigate mode is open.
 # They are independent from focus_pane_*. Use Ctrl+j/k for workspace movement and h/j/k/l for panes.
-navigate_workspace_up = "k"
-navigate_workspace_down = "j"
+navigate_workspace_up = "ctrl+k"
+navigate_workspace_down = "ctrl+j"
 navigate_pane_left = "h"
 navigate_pane_down = "j"
 navigate_pane_up = "k"
