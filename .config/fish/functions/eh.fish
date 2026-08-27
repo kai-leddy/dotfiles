@@ -1,3 +1,3 @@
 function eh
-    $EDITOR ~/.hammerspoon/init.lua $argv
+    $EDITOR ~/.config/herdr/config.toml $argv
 end
