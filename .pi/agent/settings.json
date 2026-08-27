@@ -13,7 +13,7 @@
     "github-copilot/gpt-5.6-sol",
     "github-copilot/gpt-5.6-luna"
   ],
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "medium",
   "doubleEscapeAction": "tree",
   "packages": [
     "npm:@neuralmux/omp-firecrawl",
@@ -23,7 +23,8 @@
     "npm:@dietrichgebert/ponytail",
     "npm:@99percentpeople/pi-todo",
     "npm:pi-skill-acli",
-    "npm:pi-observational-memory"
+    "npm:pi-observational-memory",
+    "npm:@heyhuynhgiabuu/pi-pretty"
   ],
   "observational-memory": {
     "compactAfterTokensMode": "ratio",
