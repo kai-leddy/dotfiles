@@ -9,7 +9,10 @@ __pycache__
 .hammerspoon/Spoons
 
 # Pi agent state, credentials, and installed package data. Track only the
-# portable configuration files explicitly unignored below.
+# portable configuration files explicitly unignored below. (.pi/ itself is
+# ignored globally for other repos; unignore the folder here for $HOME only.)
+!.pi/
+!.pi/agent/
 .pi/agent/*
 !.pi/agent/AGENTS.md
 !.pi/agent/settings.json
