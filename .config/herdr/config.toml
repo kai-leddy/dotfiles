@@ -1,3 +1,4 @@
+onboarding = false
 # herdr configuration
 # Place this file at ~/.config/herdr/config.toml
 
@@ -243,6 +244,8 @@ navigate_pane_right = "l"
 # accent = "cyan"
 
 # Background notification popup delivery
+show_agent_labels_on_pane_borders = true
+status_indicators = "symbols"
 [ui.toast]
 # off = disable pop-up notifications
 # herdr = show in-app toasts
@@ -251,6 +254,7 @@ navigate_pane_right = "l"
 # delivery = "off"
 # delay_seconds = 1
 
+delivery = "herdr"
 [ui.toast.herdr]
 # position = "bottom-right"
 
