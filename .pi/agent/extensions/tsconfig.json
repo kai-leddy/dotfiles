@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "target": "ES2024",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2024"],
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "typeRoots": [
+      "/opt/homebrew/Cellar/pi-coding-agent/0.84.2/libexec/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@types"
+    ],
+    "paths": {
+      "@earendil-works/pi-coding-agent": [
+        "/opt/homebrew/Cellar/pi-coding-agent/0.84.2/libexec/lib/node_modules/@earendil-works/pi-coding-agent/dist/index.d.ts"
+      ],
+      "@earendil-works/pi-tui": [
+        "/Users/kaileddy/.pi/agent/npm/node_modules/@earendil-works/pi-tui/dist/index.d.ts"
+      ],
+      "@gotgenes/pi-subagents": [
+        "/Users/kaileddy/.pi/agent/npm/node_modules/@gotgenes/pi-subagents/dist/public.d.ts"
+      ]
+    }
+  },
+  "include": ["*.ts"]
+}
