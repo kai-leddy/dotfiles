@@ -21,7 +21,7 @@ config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 -- window appearance
 config.use_fancy_tab_bar = true
--- config.hide_tab_bar_if_only_one_tab = true
+config.hide_tab_bar_if_only_one_tab = true
 config.window_background_opacity = 0.7
 -- config.window_background_opacity = 1
 config.macos_window_background_blur = 8
@@ -35,7 +35,8 @@ config.window_frame = {
 	font = wezterm.font("FantasqueSansM Nerd Font"),
 	font_size = font_size,
 }
-config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+config.window_decorations = "NONE"
+-- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 -- console appearance
 config.color_scheme = "catppuccin-mocha"
@@ -118,7 +119,7 @@ config.keys = {
 -- Send explicit terminal key sequences: xterm's modifier encoding has no SUPER bit,
 -- so SendKey would drop Cmd before Herdr can match it as SUPER.
 local function herdr_key(key, modifiers)
-    return act.SendString(string.format("\x1b[%d;%du", string.byte(key), modifiers))
+	return act.SendString(string.format("\x1b[%d;%du", string.byte(key), modifiers))
 end
 
 config.keys = {
