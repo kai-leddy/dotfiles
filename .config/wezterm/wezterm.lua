@@ -182,11 +182,11 @@ config.keys = {
 	-- Utility shortcuts retained from the previous WezTerm workflow.
 	{ key = "c", mods = "SHIFT|CTRL", action = act.QuickSelect },
 	{ key = "Space", mods = "SHIFT|CTRL", action = act.QuickSelect },
-	{ key = "UpArrow", mods = "CMD", action = act.ScrollToPrompt(-1) },
-	{ key = "DownArrow", mods = "CMD", action = act.ScrollToPrompt(1) },
+	--{ key = "UpArrow", mods = "CMD", action = act.ScrollToPrompt(-1) },
+	--{ key = "DownArrow", mods = "CMD", action = act.ScrollToPrompt(1) },
 	{
 		key = "o",
-		mods = "CTRL",
+		mods = "SHIFT|CTRL",
 		action = act.QuickSelectArgs({
 			label = "Open URL",
 			patterns = { "https?://\\S+" },
