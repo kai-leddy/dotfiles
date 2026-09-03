@@ -3,7 +3,7 @@ return {
 	chevron_right = "",
 
 	vpn = "",
-	tailscale = "󱗼",
+	tailscale = "", -- fa-network_wired: bold/blocky, distinct from the vpn shield icon
 	mail = "",
 	github = "",
 	docker = "",

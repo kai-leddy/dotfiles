@@ -1,6 +1,5 @@
 local colors = require("colors")
 local icons = require("icons")
-local settings = require("settings")
 
 local wifi_item_name = "wifi_status_indicator" -- Unique name for the item
 
@@ -9,13 +8,11 @@ local wifi = sbar.add("item", wifi_item_name, {
 	icon = {
 		string = icons.wifi_off,
 		color = colors.red,
-		padding_right = settings.padding.small,
+		-- icon-only widget now (no label) so use the default icon padding on
+		-- both sides, matching colima/bluetooth, instead of the tighter
+		-- padding_right that used to lead into the SSID label.
 	},
-	label = {
-		string = "Loading...", -- Initial state
-		color = colors.subtext0,
-		padding_right = settings.padding.big, -- Add padding if it's on the far right
-	},
+	label = { drawing = false },
 	background = {
 		color = colors.surface0, -- Consistent with other items
 	},
@@ -51,14 +48,12 @@ local function update_wifi_status()
 					-- Connected to a network
 					wifi:set({
 						icon = { string = icons.wifi_on, color = colors.green },
-						label = { string = (ssid or "Connected"), color = colors.text },
 						drawing = true,
 					})
 				else
 					-- Wi-Fi is On but not connected (or no SSID was returned)
 					wifi:set({
 						icon = { string = icons.wifi_on, color = colors.yellow }, -- Yellow to show it's on but not connected
-						label = { string = "Disconnected", color = colors.subtext0 },
 						drawing = true,
 					})
 				end
@@ -67,14 +62,12 @@ local function update_wifi_status()
 			-- Wi-Fi is Off
 			wifi:set({
 				icon = { string = icons.wifi_off, color = colors.red },
-				label = { string = "Off", color = colors.subtext0 },
 				drawing = true,
 			})
 		else
 			-- Unknown state or error reading power status (e.g., device name incorrect, permissions)
 			wifi:set({
 				icon = { string = icons.wifi_off, color = colors.overlay0 },
-				label = { string = "N/C", color = colors.subtext0 }, -- Not Clear / No Connection
 				drawing = true,
 			})
 			-- sbar.debug("Unknown Wi-Fi power status for " .. current_wifi_device .. ": " .. power_status)
@@ -96,7 +89,6 @@ local function initialize_wifi_monitor()
 				current_wifi_device = "en0" -- Fallback to en0 if dynamic detection fails
 				-- sbar.debug("Failed to find Wi-Fi device dynamically. Falling back to default: " .. current_wifi_device)
 			end
-			wifi:set({ label = "..." }) -- Clear "Loading..." or "No WiFi Iface"
 			update_wifi_status() -- Perform initial update now that we have the device
 		end
 	)
