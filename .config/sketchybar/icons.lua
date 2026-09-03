@@ -3,6 +3,7 @@ return {
 	chevron_right = "",
 
 	vpn = "",
+	tailscale = "󱗼",
 	mail = "",
 	github = "",
 	docker = "",
