@@ -4,7 +4,7 @@ local icons = require("icons")
 local wifi_item_name = "wifi_status_indicator" -- Unique name for the item
 
 local wifi = sbar.add("item", wifi_item_name, {
-	position = "left", -- Adjust as per your layout preference
+	position = "right", -- grouped with battery/bluetooth as host machine/OS status
 	icon = {
 		string = icons.wifi_off,
 		color = colors.red,
