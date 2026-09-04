@@ -35,7 +35,7 @@ config.window_frame = {
 	font = wezterm.font("FantasqueSansM Nerd Font"),
 	font_size = font_size,
 }
-config.window_decorations = "NONE"
+config.window_decorations = "RESIZE"
 -- config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 -- console appearance
