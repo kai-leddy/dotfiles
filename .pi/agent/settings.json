@@ -26,6 +26,7 @@
   ],
   "observational-memory": {
     "compactAfterTokensMode": "ratio",
+    "compactAfterTokensRatio": 0.4,
     "model": {
       "provider": "openrouter",
       "id": "openai/gpt-oss-20b",
