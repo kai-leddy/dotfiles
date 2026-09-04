@@ -1,3 +1,3 @@
 function eg
-    $EDITOR ~/.gitconfig $argv
+    $EDITOR ~/.config/ghostty/config $argv
 end

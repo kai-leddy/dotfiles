@@ -1,0 +1,134 @@
+# ---------------------------------------------------------------------------
+# Ghostty config, ported from ~/.config/wezterm/wezterm.lua for comparison
+# testing. See notes at the bottom for things that don't map 1:1.
+# ---------------------------------------------------------------------------
+
+# --- Font -------------------------------------------------------------------
+font-family = FantasqueSansM Nerd Font Mono
+font-size = 16
+# wezterm: config.line_height = 1.0 (default is already 1.0 in Ghostty)
+
+# Disable programming ligatures (calt/clig/liga), same intent as
+# harfbuzz_features = { "calt=0", "clig=0", "liga=0" } in wezterm.
+font-feature = -calt
+font-feature = -clig
+font-feature = -liga
+
+# --- Theme / colours ---------------------------------------------------------
+theme = Catppuccin Mocha
+# override just the background, like wezterm's config.colors.background,
+# since the blue-tinged catppuccin bg doesn't look great with transparency
+background = #111111
+
+# --- Window appearance --------------------------------------------------------
+background-opacity = 0.7
+background-blur = 8
+
+window-padding-x = 8
+window-padding-y = 8
+# balance padding across splits like wezterm's uniform padding does
+window-padding-balance = true
+
+# wezterm: config.window_decorations = "RESIZE" (no titlebar, but resizable,
+# native frame/shadow/corners kept). Closest Ghostty equivalent on macOS:
+macos-titlebar-style = hidden
+
+# --- Functionality -------------------------------------------------------------
+# wezterm: config.scrollback_lines = 1000000 (lines). Ghostty's limit is in
+# bytes, not lines - 100MB is a roughly comparable "very large" scrollback.
+scrollback-limit = 100000000
+
+# Kitty keyboard + kitty graphics protocols are always on in Ghostty, no
+# config flags needed (wezterm needed enable_kitty_keyboard/enable_kitty_graphics).
+
+mouse-hide-while-typing = true
+
+# --- Keybinds ------------------------------------------------------------------
+# Herdr manages its own shortcuts directly (it doesn't need the CSI-u
+# modifier-passthrough workaround wezterm required - Ghostty passes Cmd/Ctrl
+# combos through to Herdr fine on its own). All Ghostty needs to do is get
+# out of the way: unbind any Ghostty default that would otherwise consume a
+# combo Herdr wants to own, before Herdr ever sees it.
+
+# Ghostty's screen/selection-dump-to-tempfile defaults - unbind so they can
+# never leak tmp file paths into the terminal.
+keybind = super+ctrl+shift+j=unbind
+keybind = super+shift+j=unbind
+keybind = super+alt+shift+j=unbind
+
+# Tab management (Herdr owns tabs/workspaces via cmd+1-9).
+keybind = super+1=unbind
+keybind = super+2=unbind
+keybind = super+3=unbind
+keybind = super+4=unbind
+keybind = super+5=unbind
+keybind = super+6=unbind
+keybind = super+7=unbind
+keybind = super+8=unbind
+keybind = super+9=unbind
+keybind = super+digit_1=unbind
+keybind = super+digit_2=unbind
+keybind = super+digit_3=unbind
+keybind = super+digit_4=unbind
+keybind = super+digit_5=unbind
+keybind = super+digit_6=unbind
+keybind = super+digit_7=unbind
+keybind = super+digit_8=unbind
+
+# Plain cmd+letter combos Herdr owns that collide with a Ghostty default.
+keybind = super+t=unbind
+keybind = super+q=unbind
+keybind = super+j=unbind
+keybind = super+k=unbind
+keybind = super+z=unbind
+keybind = super+e=unbind
+keybind = super+g=unbind
+
+# cmd+shift+letter combos Herdr owns that collide with a Ghostty default.
+keybind = super+shift+t=unbind
+keybind = super+shift+g=unbind
+keybind = super+shift+w=unbind
+keybind = super+shift+d=unbind
+keybind = super+shift+p=unbind
+keybind = super+shift+left=unbind
+keybind = super+shift+right=unbind
+
+# cmd+alt / cmd+ctrl combos Herdr owns that collide with a Ghostty default.
+keybind = super+alt+w=unbind
+keybind = super+ctrl+w=unbind
+keybind = super+ctrl+d=unbind
+
+# --- Utility shortcuts retained from wezterm workflow --------------------------
+# wezterm's QuickSelect (regex-based "jump to a URL/word and copy it" overlay,
+# ctrl+shift+c / ctrl+shift+space) has no direct Ghostty equivalent - Ghostty
+# has no Lua-style scripting or a QuickSelect-style picker. Closest built-ins:
+#   - URLs are auto-detected and openable with a mouse click (link-url, on by
+#     default); no keybind needed to "find and open a URL".
+#   - search_selection/start_search give you incremental buffer search instead
+#     of a fuzzy jump-to-match overlay.
+keybind = ctrl+shift+f=start_search
+keybind = ctrl+shift+g=navigate_search:next
+
+# wezterm's "copy last shell command's output" (ctrl+shift+c, via
+# get_semantic_zones) needs shell integration + no direct action in Ghostty.
+# jump_to_prompt is the closest built-in (needs shell-integration enabled,
+# which is on by default via `shell-integration = detect`):
+keybind = super+shift+up=jump_to_prompt:-1
+keybind = super+shift+down=jump_to_prompt:1
+
+# ---------------------------------------------------------------------------
+# NOT ported (no Ghostty equivalent / not applicable):
+#   - front_end = "WebGpu", freetype_load_flags/target: Ghostty uses CoreText
+#     on macOS; these FreeType tuning knobs don't apply.
+#   - use_fancy_tab_bar / hide_tab_bar_if_only_one_tab: Ghostty's tab bar is
+#     managed by the native macOS tab UI, not separately themeable, and it
+#     already only shows once you have >1 tab.
+#   - window_frame font/font_size (titlebar font): not configurable on macOS.
+#   - copy_mode / search_mode key tables with vim-like n/N navigation and a
+#     "/" search-from-selection binding: Ghostty's search UI is simpler
+#     (start_search / navigate_search:next|previous) and has no modal
+#     copy-mode key table to layer these onto.
+#   - Custom Lua action callbacks (QuickSelect URL opener, clipboard output
+#     scraping via semantic zones): Ghostty config is static key=value, no
+#     scripting, so callback-based actions can't be reproduced.
+# ---------------------------------------------------------------------------

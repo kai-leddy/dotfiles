@@ -32,5 +32,6 @@
       "id": "openai/gpt-oss-20b",
       "thinking": "low"
     }
-  }
+  },
+  "hideThinkingBlock": false
 }
