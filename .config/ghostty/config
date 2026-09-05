@@ -4,7 +4,10 @@
 # ---------------------------------------------------------------------------
 
 # --- Font -------------------------------------------------------------------
-font-family = FantasqueSansM Nerd Font Mono
+# Use the non-"Mono" Nerd Font variant, matching wezterm.font("FantasqueSansM
+# Nerd Font") - the "Mono" patch deliberately shrinks icon glyphs to fit a
+# single cell, which is why most (non-Powerline) Nerd Font icons looked tiny.
+font-family = FantasqueSansM Nerd Font
 font-size = 16
 # wezterm: config.line_height = 1.0 (default is already 1.0 in Ghostty)
 
@@ -13,6 +16,22 @@ font-size = 16
 font-feature = -calt
 font-feature = -clig
 font-feature = -liga
+
+# WezTerm forced FreeType rendering (freetype_load_flags/load_target) even on
+# macOS, which renders comparatively soft/heavy strokes. Ghostty uses CoreText
+# natively here, which draws thinner, crisper glyphs by default. These two
+# knobs soften it back up without switching rendering engines:
+font-thicken = true
+font-thicken-strength = 175
+# native (default) alpha-blending makes light text on a dark bg look thinner;
+# linear-corrected keeps the weight of linear blending without its
+# red/green edge-darkening artifacts.
+alpha-blending = linear-corrected
+
+# If icons still look small after the font-family change above, uncomment to
+# bump icon glyph height further (Powerline/box-drawing glyphs are unaffected
+# by this setting either way):
+# adjust-icon-height = 20%
 
 # --- Theme / colours ---------------------------------------------------------
 theme = Catppuccin Mocha
