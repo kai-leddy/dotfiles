@@ -1,3 +1,3 @@
 function pr-desc
-    opencode run /pr-description
+    pi -p /pr-description
 end
