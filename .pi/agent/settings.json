@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.84.4",
+  "lastChangelogVersion": "0.85.1",
   "theme": "catppuccin-mocha",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-sonnet-5",
@@ -7,8 +7,8 @@
     "anthropic/claude-sonnet-5",
     "anthropic/claude-haiku-4-5",
     "anthropic/claude-opus-5",
-    "github-copilot/gemini-3.6-flash",
-    "github-copilot/gemini-3.1-pro-preview",
+    "github-copilot/gemini-3.8-flash",
+    "github-copilot/gpt-6-astra",
     "github-copilot/gpt-5.6-terra",
     "github-copilot/gpt-5.6-sol",
     "github-copilot/gpt-5.6-luna"
