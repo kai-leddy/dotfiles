@@ -17,6 +17,7 @@ return {
 	["System Preferences"] = "",
 	["System Settings"] = "",
 	["Chromium"] = "",
+	["Ghostty"] = "",
 	["Google Chrome"] = "",
 	["iTerm2"] = "",
 	["LM Studio"] = "󰚩",
