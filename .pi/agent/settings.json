@@ -5,7 +5,7 @@
   "defaultModel": "claude-sonnet-5",
   "enabledModels": [
     "anthropic/claude-sonnet-5",
-    "anthropic/claude-haiku-4-5",
+    "anthropic/claude-haiku-4-6",
     "anthropic/claude-opus-5",
     "github-copilot/gemini-3.8-flash",
     "github-copilot/gpt-6-astra",
