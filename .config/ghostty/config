@@ -56,7 +56,7 @@ macos-titlebar-style = hidden
 # Start Herdr as the terminal process instead of opening a shell first. When
 # Herdr exits, the surface closes; with quit-after-last-window-closed enabled
 # below, Ghostty exits too.
-command = /opt/homebrew/bin/herdr
+command = herdr
 quit-after-last-window-closed = true
 
 # wezterm: config.scrollback_lines = 1000000 (lines). Ghostty's limit is in
