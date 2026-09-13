@@ -1,0 +1,37 @@
+{
+  "lastChangelogVersion": "0.85.1",
+  "theme": "catppuccin-mocha",
+  "defaultProvider": "github-copilot",
+  "defaultModel": "gpt-5.6-luna",
+  "enabledModels": [
+    "anthropic/claude-sonnet-5",
+    "anthropic/claude-haiku-4.5",
+    "anthropic/claude-opus-5",
+    "github-copilot/gemini-3.8-flash",
+    "github-copilot/gpt-6-astra",
+    "github-copilot/gpt-5.6-terra",
+    "github-copilot/gpt-5.6-sol",
+    "github-copilot/gpt-5.6-luna"
+  ],
+  "defaultThinkingLevel": "medium",
+  "doubleEscapeAction": "tree",
+  "packages": [
+    "npm:pi-open-tui",
+    "npm:@watercol/pi-lens-simple",
+    "npm:@gotgenes/pi-subagents",
+    "npm:@99percentpeople/pi-todo",
+    "npm:pi-skill-acli",
+    "npm:pi-observational-memory",
+    "npm:@heyhuynhgiabuu/pi-pretty"
+  ],
+  "observational-memory": {
+    "compactAfterTokensMode": "ratio",
+    "compactAfterTokensRatio": 0.4,
+    "model": {
+      "provider": "openrouter",
+      "id": "openai/gpt-oss-20b",
+      "thinking": "low"
+    }
+  },
+  "hideThinkingBlock": false
+}
