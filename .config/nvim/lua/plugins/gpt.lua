@@ -15,9 +15,10 @@ local llms = {
   { name = "gemini-flash", openrouter_model = "google/gemini-3-flash-preview" },
   { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
   { name = "copilot-gemini-flash-3.5", copilot_model = "gemini-3.5-flash" },
-  { name = "copilot-haiku", copilot_model = "claude-haiku-4.5" },
   { name = "copilot-sonnet", copilot_model = "claude-sonnet-5" },
-  { name = "copilot-opus", copilot_model = "claude-opus-4.8" },
+  { name = "copilot-luna", copilot_model = "gpt-5.6-luna" },
+  { name = "copilot-terra", copilot_model = "gpt-5.6-terra" },
+  { name = "copilot-sol", copilot_model = "gpt-5.6-sol" },
 }
 
 local generated_agents = {}
@@ -73,7 +74,14 @@ return {
       -- setup the providers
       providers = {
         openai = { disabled = true },
-        copilot = { disabled = false },
+        copilot = {
+          disabled = false,
+          secret = {
+            "sqlite3",
+            os.getenv("HOME") .. "/.config/github-copilot/auth.db",
+            "SELECT token_ciphertext FROM oauth_tokens ORDER BY updated_at DESC LIMIT 1",
+          },
+        },
         openrouter = {
           endpoint = "https://openrouter.ai/api/v1/chat/completions",
           secret = os.getenv("OPENROUTER_API_KEY"),
