@@ -64,7 +64,10 @@ local function update_task_widget()
 		sbar.exec("task _get " .. task_id .. ".description", function(desc_output)
 			local description = desc_output:match("(.+)")
 			if description then
-				local desc_short = description:sub(1, 12) .. "..."
+				local desc_short = description
+				if #desc_short > 12 then
+					desc_short = desc_short:sub(1, 12) .. "..."
+				end
 				if #description > 64 then
 					description = description:sub(1, 64) .. "..."
 				end
