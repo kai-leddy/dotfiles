@@ -33,5 +33,8 @@
       "thinking": "low"
     }
   },
-  "hideThinkingBlock": false
+  "hideThinkingBlock": false,
+  "warnings": {
+    "anthropicExtraUsage": false
+  }
 }
