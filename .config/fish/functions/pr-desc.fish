@@ -1,3 +1,3 @@
 function pr-desc
-    pi -p /skill:pr-description --provider anthropic --model claude-sonnet-5
+    pi --provider anthropic --model claude-sonnet-5 -p /skill:pr-description
 end
