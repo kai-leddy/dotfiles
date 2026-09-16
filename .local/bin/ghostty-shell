@@ -1,0 +1,28 @@
+#!/bin/sh
+# Ghostty's `command` entry point. The Quick Terminal (Quake-style dropdown,
+# toggle_quick_terminal) sets GHOSTTY_QUICK_TERMINAL=1 in the child env - use
+# a plain fish shell there instead of Herdr, since the quick terminal is
+# meant to be a quick scratch shell, not a full Herdr session. Regular
+# Ghostty windows keep launching Herdr as before.
+#
+# Ghostty spawns this without a login-shell PATH, so `command -v` is tried
+# first and known Homebrew locations are the fallback (matches the
+# per-machine absolute paths already used in the ghostty config).
+
+resolve() {
+    if command -v "$1" >/dev/null 2>&1; then
+        command -v "$1"
+    elif [ -x "/opt/homebrew/bin/$1" ]; then
+        echo "/opt/homebrew/bin/$1"
+    elif [ -x "/usr/local/bin/$1" ]; then
+        echo "/usr/local/bin/$1"
+    else
+        echo "$1"
+    fi
+}
+
+if [ -n "$GHOSTTY_QUICK_TERMINAL" ]; then
+    exec "$(resolve fish)"
+else
+    exec "$(resolve herdr)"
+fi
