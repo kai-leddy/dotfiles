@@ -104,6 +104,10 @@ run = 'move-node-to-workspace S'
 if.app-name-regex-substring = 'Zen|Chrome|Safari|Firefox'
 run = 'move-node-to-workspace B'
 
+# Hide the FUCKING Microsoft AutoUpdate piece of shit window
+[[on-window-detected]]
+if.app-name-regex-substring = 'Microsoft AutoUpdate'
+run = 'close'
 
 # All possible keys:
 # - Letters.        a, b, c, ..., z
