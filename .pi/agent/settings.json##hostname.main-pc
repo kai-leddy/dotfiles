@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.85.1",
   "theme": "catppuccin-mocha",
-  "defaultProvider": "github-copilot",
-  "defaultModel": "gpt-5.6-luna",
+  "defaultProvider": "deepinfra",
+  "defaultModel": "deepseek-ai/DeepSeek-V4-Flash",
   "enabledModels": [
     "anthropic/claude-sonnet-5",
     "anthropic/claude-haiku-4.5",
@@ -28,8 +28,8 @@
     "compactAfterTokensMode": "ratio",
     "compactAfterTokensRatio": 0.4,
     "model": {
-      "provider": "openrouter",
-      "id": "openai/gpt-oss-20b",
+      "provider": "deepinfra",
+      "id": "deepseek-ai/DeepSeek-V4-Flash",
       "thinking": "low"
     }
   },
