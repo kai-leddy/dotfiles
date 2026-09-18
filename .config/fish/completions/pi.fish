@@ -35,7 +35,7 @@ complete -c pi -n __fish_pi_needs_subcommand -f -a auth -d 'Print configured cre
 complete -c pi -s p -l print -d 'Print response and exit'
 complete -c pi -s c -l continue -d 'Continue the most recent session'
 complete -c pi -s r -l resume -d 'Select a session to resume'
-complete -c pi -l provider -x -a 'anthropic openai azure-openai google vertex deepseek nvidia groq cerebras xai deepinfra bedrock mistral fireworks together baseten kimi minimax moonshot opencode cloudflare vercel zai github-copilot' -d 'Model provider'
+complete -c pi -l provider -x -a 'anthropic openai azure-openai google vertex deepseek nvidia groq cerebras xai bedrock mistral fireworks together baseten kimi minimax moonshot opencode cloudflare vercel zai github-copilot' -d 'Model provider'
 complete -c pi -l model -x -d 'Model pattern or ID'
 complete -c pi -l api-key -x -d 'API key'
 complete -c pi -l system-prompt -x -d 'Replace the system prompt'

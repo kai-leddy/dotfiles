@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.85.1",
   "theme": "catppuccin-mocha",
   "defaultProvider": "deepinfra",
-  "defaultModel": "deepseek-ai/DeepSeek-V4-Flash",
+  "defaultModel": "mistralai/Mistral-Nemo-Instruct-2407",
   "enabledModels": [
     "anthropic/claude-sonnet-5",
     "anthropic/claude-haiku-4.5",
@@ -29,7 +29,7 @@
     "compactAfterTokensRatio": 0.4,
     "model": {
       "provider": "deepinfra",
-      "id": "deepseek-ai/DeepSeek-V4-Flash",
+      "id": "mistralai/Mistral-Nemo-Instruct-2407",
       "thinking": "low"
     }
   },
