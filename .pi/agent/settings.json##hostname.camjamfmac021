@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.85.1",
   "theme": "catppuccin-mocha",
-  "defaultProvider": "github-copilot",
-  "defaultModel": "gpt-5.6-luna",
+  "defaultProvider": "anthropic",
+  "defaultModel": "claude-sonnet-5",
   "enabledModels": [
     "anthropic/claude-sonnet-5",
     "anthropic/claude-haiku-4.5",
@@ -39,5 +39,8 @@
       "thinking": "low"
     }
   },
-  "hideThinkingBlock": false
+  "hideThinkingBlock": false,
+  "warnings": {
+    "anthropicExtraUsage": false
+  }
 }

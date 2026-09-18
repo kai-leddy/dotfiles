@@ -12,8 +12,11 @@ local llms = {
   { name = "CodeGPT4o", disable = true },
   { name = "CodeGPT4o-mini", disable = true },
   { name = "CodeGPT-o3-mini", disable = true },
-  { name = "gemini-flash", openrouter_model = "google/gemini-3-flash-preview" },
-  { name = "gemini-pro", openrouter_model = "google/gemini-3-pro-preview" },
+  { name = "glm-5.3-flash", deepinfra_model = "zai-org/GLM-5.3-Flash" },
+  { name = "deepseek-v4-flash", deepinfra_model = "deepseek-ai/DeepSeek-V4-Flash-0731" },
+  { name = "nemotron-3-super", deepinfra_model = "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B" },
+  { name = "gemma-4-31B", deepinfra_model = "google/gemma-4-31B-it" },
+  { name = "qwen3-235B-A22B", deepinfra_model = "Qwen/Qwen3-235B-A22B-Instruct-2507" },
   { name = "copilot-gemini-flash-3.5", copilot_model = "gemini-3.5-flash" },
   { name = "copilot-sonnet", copilot_model = "claude-sonnet-5" },
   { name = "copilot-luna", copilot_model = "gpt-5.6-luna" },
@@ -31,13 +34,13 @@ for _, llm in ipairs(llms) do
   if llm.disable then
     table.insert(generated_agents, { name = llm.name, disable = true })
   end
-  if llm.openrouter_model then
+  if llm.deepinfra_model then
     local agent = {
       name = llm.name,
-      provider = "openrouter",
+      provider = "deepinfra",
       chat = true,
       command = true,
-      model = { model = llm.openrouter_model, temperature = 0.8, top_p = 1 },
+      model = { model = llm.deepinfra_model, temperature = 0.8, top_p = 1 },
       system_prompt = llm.no_sys_prompt and "" or default_system_prompt,
     }
     table.insert(generated_agents, agent)
@@ -82,9 +85,9 @@ return {
             "SELECT token_ciphertext FROM oauth_tokens ORDER BY updated_at DESC LIMIT 1",
           },
         },
-        openrouter = {
-          endpoint = "https://openrouter.ai/api/v1/chat/completions",
-          secret = os.getenv("OPENROUTER_API_KEY"),
+        deepinfra = {
+          endpoint = "https://api.deepinfra.com/v1/openai/chat/completions",
+          secret = os.getenv("DEEPINFRA_TOKEN"),
         },
       },
       -- custom agents setup
