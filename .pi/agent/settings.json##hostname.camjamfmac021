@@ -27,7 +27,7 @@
     "npm:@gotgenes/pi-subagents",
     "npm:@99percentpeople/pi-todo",
     "npm:pi-skill-acli",
-    "npm:pi-observational-memory",
+    "npm:pi-blackhole",
     "npm:@heyhuynhgiabuu/pi-pretty"
   ],
   "observational-memory": {
