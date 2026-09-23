@@ -1,20 +1,19 @@
 {
-  "lastChangelogVersion": "0.85.1",
+  "lastChangelogVersion": "0.86.1",
   "theme": "catppuccin-mocha",
   "defaultProvider": "github-copilot",
-  "defaultModel": "gpt-5.6-luna",
+  "defaultModel": "gpt-6-luna",
   "enabledModels": [
     "github-copilot/gemini-3.8-flash",
     "github-copilot/gpt-6-astra",
-    "github-copilot/gpt-5.6-terra",
-    "github-copilot/gpt-5.6-sol",
-    "github-copilot/gpt-5.6-luna",
+    "github-copilot/gpt-6-sol",
+    "github-copilot/gpt-6-luna",
     "deepinfra/zai-org/GLM-5.3-Flash",
-    "deepinfra/deepseek-ai/DeepSeek-V4-Flash-0731",
+    "deepinfra/deepseek-ai/DeepSeek-V4.1-Flash",
     "deepinfra/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B",
     "deepinfra/google/gemma-4-31B-it",
     "deepinfra/Qwen/Qwen3-235B-A22B-Instruct-2507",
-    "deepinfra/mistralai/Mistral-Nemo-Instruct-2407"
+    "deepinfra/XiaomiMiMo/MiMo-V2.6-Flash"
   ],
   "defaultThinkingLevel": "medium",
   "doubleEscapeAction": "tree",

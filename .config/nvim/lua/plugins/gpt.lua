@@ -13,15 +13,15 @@ local llms = {
   { name = "CodeGPT4o-mini", disable = true },
   { name = "CodeGPT-o3-mini", disable = true },
   { name = "glm-5.3-flash", deepinfra_model = "zai-org/GLM-5.3-Flash" },
-  { name = "deepseek-v4-flash", deepinfra_model = "deepseek-ai/DeepSeek-V4-Flash-0731" },
+  { name = "deepseek-v4.1-flash", deepinfra_model = "deepseek-ai/DeepSeek-V4.1-Flash" },
   { name = "nemotron-3-super", deepinfra_model = "nvidia/NVIDIA-Nemotron-3-Super-120B-A12B" },
   { name = "gemma-4-31B", deepinfra_model = "google/gemma-4-31B-it" },
   { name = "qwen3-235B-A22B", deepinfra_model = "Qwen/Qwen3-235B-A22B-Instruct-2507" },
-  { name = "copilot-gemini-flash-3.5", copilot_model = "gemini-3.5-flash" },
-  { name = "copilot-sonnet", copilot_model = "claude-sonnet-5" },
-  { name = "copilot-luna", copilot_model = "gpt-5.6-luna" },
-  { name = "copilot-terra", copilot_model = "gpt-5.6-terra" },
-  { name = "copilot-sol", copilot_model = "gpt-5.6-sol" },
+  { name = "mimo-2.6-flash", deepinfra_model = "XiaomiMiMo/MiMo-V2.6-Flash" },
+  { name = "copilot-gemini-flash-3.8", copilot_model = "gemini-3.8-flash" },
+  { name = "copilot-luna", copilot_model = "gpt-6-luna" },
+  { name = "copilot-sol", copilot_model = "gpt-6-sol" },
+  { name = "copilot-astra", copilot_model = "gpt-6-astra" },
 }
 
 local generated_agents = {}
