@@ -5,7 +5,7 @@
   "defaultModel": "claude-sonnet-5",
   "enabledModels": [
     "anthropic/claude-sonnet-5",
-    "anthropic/claude-opus-5.5",
+    "anthropic/claude-opus-5-5",
     "github-copilot/gemini-3.8-flash",
     "github-copilot/gpt-6-astra",
     "github-copilot/gpt-6-sol",
@@ -26,7 +26,8 @@
     "npm:@99percentpeople/pi-todo",
     "npm:pi-skill-acli",
     "npm:pi-blackhole",
-    "npm:@heyhuynhgiabuu/pi-pretty"
+    "npm:@heyhuynhgiabuu/pi-pretty",
+    "npm:@mnemosyne-oss/pi-mnemosyne"
   ],
   "observational-memory": {
     "compactAfterTokensMode": "ratio",

@@ -24,7 +24,8 @@
     "npm:@99percentpeople/pi-todo",
     "npm:pi-skill-acli",
     "npm:pi-blackhole",
-    "npm:@heyhuynhgiabuu/pi-pretty"
+    "npm:@heyhuynhgiabuu/pi-pretty",
+    "npm:@mnemosyne-oss/pi-mnemosyne"
   ],
   "observational-memory": {
     "compactAfterTokensMode": "ratio",
