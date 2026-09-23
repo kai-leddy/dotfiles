@@ -22,6 +22,7 @@ set -x VISUAL nvim
 # get API keys out of the keychain and set them in the env
 if test (uname) = Darwin
     set -x DEEPINFRA_TOKEN (security find-generic-password -w -a $LOGNAME -s deepinfra-token 2>/dev/null)
+    set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key 2>/dev/null)
     set -x FIRECRAWL_API_KEY (security find-generic-password -w -a $LOGNAME -s firecrawl-api-key 2>/dev/null)
     set -x CONTEXT7_API_KEY (security find-generic-password -w -a $LOGNAME -s context7-api-key 2>/dev/null)
     set -x ATLASSIAN_API_KEY (security find-generic-password -w -a $LOGNAME -s atlassian-api-key 2>/dev/null)
@@ -29,6 +30,7 @@ else
     # For Linux, use pass or other credential manager as fallback
     if command -v pass &>/dev/null
         set -x DEEPINFRA_TOKEN (pass show deepinfra-token 2>/dev/null)
+        set -x OPENROUTER_API_KEY (pass show openrouter-api-key 2>/dev/null)
         set -x FIRECRAWL_API_KEY (pass show firecrawl-api-key 2>/dev/null)
         set -x CONTEXT7_API_KEY (pass show context7-api-key 2>/dev/null)
         set -x ATLASSIAN_API_KEY (pass show atlassian-api-key 2>/dev/null)
