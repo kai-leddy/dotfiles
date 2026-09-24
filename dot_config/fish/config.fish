@@ -1,0 +1,176 @@
+# Setup FZF to use FD (like ripgrep but for files/folders)
+set -x FZF_DEFAULT_COMMAND 'fd --type file --color=always --follow --hidden --exclude .git . $dir'
+set -x FZF_ALT_C_COMMAND 'fd --type directory --color=always --follow --hidden --exclude .git . $dir'
+set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+# Use ctrl+t for fzf directory search and ctrl+alt+v for fzf variable search
+fzf_configure_bindings --directory=\ct --variables=\e\cv
+
+# Compatibility with XDG tools for config home
+set -x XDG_CONFIG_HOME $HOME/.config
+
+# Fucking Java GUI applications...
+set -x _JAVA_AWT_WM_NONREPARENTING 1
+# Fucking slow make builds
+set -x MAKEFLAGS '-j 8'
+
+# Setup env vars for various other stuff
+set -x EDITOR nvim
+set -x VISUAL nvim
+
+# get API keys out of the keychain and set them in the env
+if test (uname) = Darwin
+    set -x DEEPINFRA_TOKEN (security find-generic-password -w -a $LOGNAME -s deepinfra-token 2>/dev/null)
+    set -x OPENROUTER_API_KEY (security find-generic-password -w -a $LOGNAME -s openrouter-api-key 2>/dev/null)
+    set -x FIRECRAWL_API_KEY (security find-generic-password -w -a $LOGNAME -s firecrawl-api-key 2>/dev/null)
+    set -x CONTEXT7_API_KEY (security find-generic-password -w -a $LOGNAME -s context7-api-key 2>/dev/null)
+    set -x ATLASSIAN_API_KEY (security find-generic-password -w -a $LOGNAME -s atlassian-api-key 2>/dev/null)
+else
+    # For Linux, use pass or other credential manager as fallback
+    if command -v pass &>/dev/null
+        set -x DEEPINFRA_TOKEN (pass show deepinfra-token 2>/dev/null)
+        set -x OPENROUTER_API_KEY (pass show openrouter-api-key 2>/dev/null)
+        set -x FIRECRAWL_API_KEY (pass show firecrawl-api-key 2>/dev/null)
+        set -x CONTEXT7_API_KEY (pass show context7-api-key 2>/dev/null)
+        set -x ATLASSIAN_API_KEY (pass show atlassian-api-key 2>/dev/null)
+    end
+end
+
+# Setup QMK global CLI tool
+set -x QMK_HOME $HOME/repos/qmk_firmware
+
+# Don't know how or why - but this magically makes docker-compose build faster
+set -x COMPOSE_BAKE true
+
+# Setup Go path variables
+set -x GOPATH $HOME/go
+set -x GOBIN $GOPATH/bin
+
+if test (uname) = Darwin
+    # Sort out homebrew PATH variables in the right order
+    set -gx HOMEBREW_PREFIX /opt/homebrew
+    set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
+    set -gx HOMEBREW_REPOSITORY /opt/homebrew
+
+    # Setup Android development variables
+    set -gx ANDROID_HOME $HOME/Library/Android/sdk
+    set android_path $ANDROID_HOME/emulator $ANDROID_HOME/tools $ANDROID_HOME/tools/bin $ANDROID_HOME/platform-tools
+    alias emu '$ANDROID_HOME/emulator/emulator'
+
+    # Setup Java Zulu for reasons...
+    set -x JAVA_HOME /Library/Java/JavaVirtualMachines/zulu-17.jdk/Contents/Home
+
+    # Setup user PATH variables all at once (for performance)
+    set gnu_sed /opt/homebrew/opt/gnu-sed/libexec/gnubin
+    set gnu_grep /opt/homebrew/opt/grep/libexec/gnubin
+    set local_bin $HOME/.local/bin
+    set go_bin $GOBIN
+    set cargo_bin $HOME/.cargo/bin
+    # NOTE: make sure homebrew is last
+    fish_add_path --universal $gnu_sed $gnu_grep $android_path $composer $mint $local_bin $go_bin $cargo_bin /opt/homebrew/bin /opt/homebrew/sbin
+
+    # pnpm
+    set -gx PNPM_HOME /Users/kaileddy/Library/pnpm
+    if not string match -q -- $PNPM_HOME $PATH
+        set -gx PATH "$PNPM_HOME" $PATH
+    end
+    # pnpm end
+else
+    # Linux setup
+    set local_bin $HOME/.local/bin
+    set go_bin $GOBIN
+    set cargo_bin $HOME/.cargo/bin
+    fish_add_path --universal $local_bin $go_bin $cargo_bin
+
+    # pnpm for Linux
+    set -gx PNPM_HOME $HOME/.local/share/pnpm
+    if not string match -q -- $PNPM_HOME $PATH
+        set -gx PATH "$PNPM_HOME" $PATH
+    end
+end
+
+# use lsd instead of ls
+alias ls lsd
+
+# React Native dev aliases
+alias rndev 'adb shell input keyevent KEYCODE_MENU'
+
+# QMK aliases
+alias qc 'qmk compile'
+alias qf 'qmk flash -kb redox/rev1 -km FrogInABox'
+
+# Setup git aliases
+alias v nvim
+alias g lazygit
+alias d lazydocker
+alias y 'lazygit -p $(chezmoi source-path)' # lazygit for chezmoi
+
+# Magic to make using `-` on its own work
+abbr -a -- - 'cd -'
+# Git abbreviations
+abbr -a -g ga 'git add'
+abbr -a -g gb 'git branch'
+abbr -a -g gc 'git commit'
+abbr -a -g gco 'git checkout'
+abbr -a -g gd 'git diff'
+abbr -a -g gl 'git lg'
+abbr -a -g gs 'git status'
+abbr -a -g gf 'git flow'
+
+# Docker compose abbreviations
+abbr -a -g dc docker compose
+abbr -a -g dcb 'docker compose build --pull --parallel'
+abbr -a -g dcu 'docker compose up'
+abbr -a -g dcd 'docker compose down'
+
+# Kubernetes abbreviations
+abbr -a -g k kubectl
+abbr -a -g kg 'kubectl get'
+abbr -a -g kga 'kubectl get --all-namespaces'
+abbr -a -g kgp 'kubectl get pods'
+abbr -a -g kgl 'kubectl get pods --show-labels'
+abbr -a -g kd 'kubectl describe'
+abbr -a -g kdp 'kubectl describe pods'
+abbr -a -g ke 'kubectl exec -it'
+abbr -a -g kl 'kubectl logs'
+abbr -a -g kp 'kubectl port-forward'
+abbr -a -g kr 'kubectl rollout restart'
+abbr -a -g kt 'kubectl top pods'
+abbr -a -g ktn 'kubectl top nodes'
+abbr -a -g kx kubectx
+abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
+abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
+abbr -a -g tu 'tilt up'
+
+# Terraform abbreviations
+abbr -a -g ti 'terraform init'
+abbr -a -g twl 'terraform workspace list'
+abbr -a -g tws 'terraform workspace select'
+abbr -a -g tp 'terraform plan'
+abbr -a -g ta 'terraform apply'
+abbr -a -g td 'terraform destroy'
+abbr -a -g ts 'terraform state'
+abbr -a -g tsl 'terraform state list'
+
+# Bindings for copying and pasting to clipboard in normal mode
+bind yy fish_clipboard_copy
+bind p fish_clipboard_paste
+
+# Enable AWS CLI autocompletion: github.com/aws/aws-cli/issues/1079
+complete --command aws --no-files --arguments '(begin; set --local --export COMP_SHELL fish; set --local --export COMP_LINE (commandline); aws_completer | sed \'s/ $//\'; end)'
+
+# Setup mise-en-place for managing programming language versions & tools
+set -gx MISE_NODE_COREPACK true
+if status is-interactive
+    mise activate fish | source; or echo "Failed to activate mise interactive"
+else
+    mise activate fish --shims | source; or echo "Failed to activate mise shims"
+end
+
+# setup various shell extensions
+starship init fish | source; or echo "Failed to initialize starship"
+zoxide init fish | source; or echo "Failed to initialize zoxide"
+direnv hook fish | source; or echo "Failed to initialize direnv"
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/kaileddy/.cache/lm-studio/bin
+# End of LM Studio CLI section
