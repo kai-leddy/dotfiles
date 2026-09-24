@@ -1,0 +1,11 @@
+# Enable chezmoi-native age encryption for encrypted_ source files.
+# Keep this recipient set in sync with the homelab repository's .sops.yaml.
+encryption = "age"
+[age]
+    identity = "~/.config/sops/age/keys.txt"
+    recipients = [
+        "age1uewd243a75zteja4kmqg84awa2wx7jhplp8ne5d3rwc6q2dza5zqufmk7f",
+        "age1d4jajjsrxvewaxclzxdfdwup2f85gm5zzuu0sk9k7lfd3ljp4qqslpg5k6",
+        "age1fr8fx36p28u2r9f4w6a5qs7crqrlds5ew27wk0c4r7c4mqudtp9qcsmt76",
+        "age1zavkd9unqp487kjy36xfrme5g4t0rlnan5kv4z598j4xay0x7cfqy63amp",
+    ]
