@@ -91,7 +91,7 @@ check-further-callbacks = true
 
 # Force terminal windows to the code workspace
 [[on-window-detected]]
-if.app-name-regex-substring = 'iTerm2|Terminal|Ghostty|Warp'
+if.app-name-regex-substring = 'iTerm2|Terminal|Ghostty'
 run = 'move-node-to-workspace C'
 
 # Force social windows to the social workspace

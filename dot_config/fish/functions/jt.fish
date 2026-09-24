@@ -1,4 +1,3 @@
-function jt --wraps='llm -t jira-ticket ' --description 'alias jt llm -t jira-ticket '
-  llm -t jira-ticket  $argv
-        
+function jt --description 'draft a Jira ticket description with pi'
+    pi --provider anthropic --model claude-sonnet-5 -p "/jira-ticket $argv"
 end

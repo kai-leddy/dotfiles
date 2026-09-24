@@ -7,7 +7,7 @@ return {
 	mail = "",
 	github = "",
 	docker = "",
-	coffee = "", -- fa-coffee: used for the caffeine (keep-awake) toggle
+	coffee = "", -- fa-coffee: used for the caffeinate (keep-awake) toggle
 
 	cpu = "", -- Microchip icon for CPU
 	mem = "", -- Memory chip icon for RAM

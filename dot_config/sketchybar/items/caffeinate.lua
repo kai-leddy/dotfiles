@@ -8,7 +8,7 @@ local icons = require("icons")
 -- the other icon-only tool/status widgets. Click to toggle on/off.
 
 local pending = false
-local caffeine = sbar.add("item", {
+local caffeinate = sbar.add("item", {
 	position = "left",
 	icon = {
 		string = icons.coffee,
@@ -19,36 +19,36 @@ local caffeine = sbar.add("item", {
 	update_freq = 30,
 })
 
-local function update_caffeine()
+local function update_caffeinate()
 	if pending then
 		return
 	end
 
 	sbar.exec("pgrep -f 'caffeinate -isd' >/dev/null 2>&1 && printf running || printf stopped", function(status)
 		local running = status:match("running") ~= nil
-		caffeine:set({
+		caffeinate:set({
 			icon = { color = running and colors.peach or colors.overlay0 },
 		})
 	end)
 end
 
-local function toggle_caffeine()
+local function toggle_caffeinate()
 	if pending then
 		return
 	end
 
 	pending = true
-	caffeine:set({ icon = { color = colors.yellow } })
+	caffeinate:set({ icon = { color = colors.yellow } })
 	sbar.exec(
 		"if pgrep -f 'caffeinate -isd' >/dev/null 2>&1; then pkill -f 'caffeinate -isd'; else nohup caffeinate -isd >/dev/null 2>&1 & fi",
 		function()
 			pending = false
-			update_caffeine()
+			update_caffeinate()
 		end
 	)
 end
 
-caffeine:subscribe({ "routine", "forced" }, update_caffeine)
-caffeine:subscribe("mouse.clicked", toggle_caffeine)
+caffeinate:subscribe({ "routine", "forced" }, update_caffeinate)
+caffeinate:subscribe("mouse.clicked", toggle_caffeinate)
 
-return caffeine
+return caffeinate
