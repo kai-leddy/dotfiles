@@ -1,3 +1,3 @@
 function eb
-    $EDITOR ~/.config/sketchybar/sketchybarrc $argv
+    chezmoi edit --apply ~/.config/sketchybar/sketchybarrc
 end

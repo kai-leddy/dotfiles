@@ -1,3 +1,3 @@
 function ea
-$EDITOR ~/.config/aerospace/aerospace.toml $argv
+    chezmoi edit --apply ~/.config/aerospace/aerospace.toml
 end

@@ -1,3 +1,3 @@
 function ep
-    $EDITOR ~/.pi/agent/settings.json $argv
+    chezmoi edit --apply ~/.pi/agent/settings.json
 end

@@ -1,3 +1,3 @@
 function es
-    $EDITOR ~/.config/sketchybar/items/init.lua $argv
+    chezmoi edit --apply ~/.config/sketchybar/items/init.lua
 end

@@ -1,3 +1,3 @@
 function eh
-    $EDITOR ~/.config/herdr/config.toml $argv
+    chezmoi edit --apply ~/.config/herdr/config.toml
 end

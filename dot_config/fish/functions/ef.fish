@@ -1,3 +1,3 @@
 function ef
-    $EDITOR ~/.config/fish/config.fish $argv
+    chezmoi edit --apply ~/.config/fish/config.fish
 end

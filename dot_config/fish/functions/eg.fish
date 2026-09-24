@@ -1,3 +1,3 @@
 function eg
-    $EDITOR ~/.config/ghostty/config $argv
+    chezmoi edit --apply ~/.config/ghostty/config
 end
