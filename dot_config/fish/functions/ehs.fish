@@ -1,3 +1,3 @@
 function ehs
-    $EDITOR ~/.hammerspoon/init.lua $argv
+    chezmoi edit --apply ~/.hammerspoon/init.lua
 end

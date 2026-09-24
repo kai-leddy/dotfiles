@@ -1,3 +1,3 @@
 function ess
-    $EDITOR ~/.config/starship.toml $argv
+    chezmoi edit --apply ~/.config/starship.toml
 end
