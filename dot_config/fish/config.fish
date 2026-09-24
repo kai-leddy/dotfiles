@@ -10,8 +10,6 @@ set -x XDG_CONFIG_HOME $HOME/.config
 
 # Fucking Java GUI applications...
 set -x _JAVA_AWT_WM_NONREPARENTING 1
-# Fucking SXHKD
-set -x SXHKD_SHELL /bin/sh
 # Fucking slow make builds
 set -x MAKEFLAGS '-j 8'
 

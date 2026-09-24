@@ -43,7 +43,6 @@ return {
 	["VimR"] = "",
 	["VLC"] = "󰕼",
 	["Warp"] = "",
-	["WezTerm"] = "",
 	["WhatsApp"] = "",
 	["Xcode"] = "",
 	["Zoom"] = "",
