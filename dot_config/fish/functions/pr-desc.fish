@@ -1,3 +1,3 @@
-function pr-desc
-    pi --provider anthropic --model claude-sonnet-5 -p /skill:pr-description
+function pr-desc --description 'draft a PR description with pi (Jira context + diff + repo template)'
+    pi --provider anthropic --model claude-sonnet-5 --tools read,bash -p "/pr-description $argv"
 end
