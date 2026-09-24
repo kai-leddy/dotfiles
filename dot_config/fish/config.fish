@@ -102,7 +102,7 @@ alias qf 'qmk flash -kb redox/rev1 -km FrogInABox'
 alias v nvim
 alias g lazygit
 alias d lazydocker
-alias y 'lazygit --work-tree ~ --git-dir ~/.local/share/yadm/repo.git' # lazygit for yadm
+alias y 'lazygit -p $(chezmoi source-path)' # lazygit for chezmoi
 
 # Magic to make using `-` on its own work
 abbr -a -- - 'cd -'
