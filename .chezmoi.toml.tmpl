@@ -1,0 +1,7 @@
+{{- $ageRecipient := promptStringOnce . "ageRecipient" "Age public recipient" -}}
+
+# Enable chezmoi-native age encryption for encrypted_ source files.
+encryption = "age"
+[age]
+    identity = "~/.config/chezmoi/age.txt"
+    recipient = {{ $ageRecipient | quote }}
