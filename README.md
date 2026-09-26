@@ -6,7 +6,7 @@ usage instructions.
 ## Setup on a new machine
 
 ```sh
-chezmoi init --apply kai-leddy
+chezmoi init --ssh --apply kai-leddy
 ```
 
 Host-specific files (currently the Ghostty config and the pi agent settings) are chezmoi
