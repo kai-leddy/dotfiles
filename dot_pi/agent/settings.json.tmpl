@@ -6,7 +6,7 @@
 */ -}}
 {{- $isCamjam := eq .chezmoi.hostname "camjamfmac021" -}}
 {
-  "lastChangelogVersion": "0.86.1",
+  "lastChangelogVersion": "0.87.1",
   "theme": "catppuccin-mocha",
   "defaultProvider": {{ ternary "\"anthropic\"" "\"github-copilot\"" $isCamjam }},
   "defaultModel": {{ ternary "\"claude-sonnet-5\"" "\"gpt-6-luna\"" $isCamjam }},
