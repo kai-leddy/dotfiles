@@ -1,16 +1,16 @@
 {{- /*
   This file is host-specific. It used to be yadm's `##default` /
   `##hostname.<name>` alt-file mechanism; now it templates just the
-  differences between the camjamfmac021 (work laptop) config and the
+  differences between the work-laptop config and the
   main-pc config, which is the default/base.
 */ -}}
-{{- $isCamjam := eq .chezmoi.hostname "camjamfmac021" -}}
+{{- $isWorkLaptop := eq .machine "work-laptop" -}}
 {
   "lastChangelogVersion": "0.87.1",
   "theme": "catppuccin-mocha",
-  "defaultProvider": {{ ternary "\"anthropic\"" "\"github-copilot\"" $isCamjam }},
-  "defaultModel": {{ ternary "\"claude-sonnet-5\"" "\"gpt-6-luna\"" $isCamjam }},
-  "enabledModels": [{{ if $isCamjam }}
+  "defaultProvider": {{ ternary "\"anthropic\"" "\"github-copilot\"" $isWorkLaptop }},
+  "defaultModel": {{ ternary "\"claude-sonnet-5\"" "\"gpt-6-luna\"" $isWorkLaptop }},
+  "enabledModels": [{{ if $isWorkLaptop }}
     "anthropic/claude-sonnet-5",
     "anthropic/claude-opus-5-5",{{ end }}
     "github-copilot/gemini-3.8-flash",
@@ -36,7 +36,7 @@
     "npm:@heyhuynhgiabuu/pi-pretty",
     "npm:@mnemosyne-oss/pi-mnemosyne"
   ],
-  "hideThinkingBlock": false{{ if $isCamjam }},
+  "hideThinkingBlock": false{{ if $isWorkLaptop }},
   "warnings": {
     "anthropicExtraUsage": false
   }{{ end }}

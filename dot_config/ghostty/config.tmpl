@@ -1,4 +1,4 @@
-{{- $isCamjam := eq .chezmoi.hostname "camjamfmac021" -}}
+{{- $isWorkLaptop := eq .machine "work-laptop" -}}
 # ---------------------------------------------------------------------------
 # Ghostty config, ported from ~/.config/wezterm/wezterm.lua for comparison
 # testing. See notes at the bottom for things that don't map 1:1.
@@ -9,7 +9,7 @@
 # Nerd Font") - the "Mono" patch deliberately shrinks icon glyphs to fit a
 # single cell, which is why most (non-Powerline) Nerd Font icons looked tiny.
 font-family = FantasqueSansM Nerd Font
-font-size = {{ ternary "15" "12" $isCamjam }}
+font-size = {{ ternary "15" "12" $isWorkLaptop }}
 # wezterm: config.line_height = 1.0 (default is already 1.0 in Ghostty)
 
 # Disable programming ligatures (calt/clig/liga), same intent as
@@ -57,7 +57,7 @@ macos-titlebar-style = hidden
 # Start Herdr as the terminal process instead of opening a shell first. When
 # Herdr exits, the surface closes; with quit-after-last-window-closed enabled
 # below, Ghostty exits too.
-command = {{ ternary "/Users/kaileddy/.local/bin/ghostty-shell" "herdr" $isCamjam }}
+command = {{ ternary "/Users/kaileddy/.local/bin/ghostty-shell" "herdr" $isWorkLaptop }}
 quit-after-last-window-closed = true
 
 # wezterm: config.scrollback_lines = 1000000 (lines). Ghostty's limit is in
@@ -142,7 +142,7 @@ keybind = ctrl+shift+g=navigate_search:next
 keybind = super+shift+up=jump_to_prompt:-1
 keybind = super+shift+down=jump_to_prompt:1
 
-{{ if $isCamjam -}}
+{{ if $isWorkLaptop -}}
 # Quick Terminal: system-wide dropdown terminal, toggled from any app.
 # `global:` makes it fire outside Ghostty too - on macOS this needs
 # Accessibility/Input Monitoring permission granted to Ghostty in
