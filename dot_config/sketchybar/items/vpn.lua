@@ -1,17 +1,26 @@
 local icons = require("icons")
 local colors = require("colors")
 
+-- Altium's VPN is FortiClient, which registers itself as a macOS Network
+-- Extension VPN service, so its state comes from `scutil --nc status`.
+-- FortiClient renames the service depending on state ("FortiClient VPN Tunnel"
+-- when disconnected, "VPN" when connected), so find it by bundle id.
+local forticlient_status = [[
+	id=$(/usr/sbin/scutil --nc list | /usr/bin/awk '/com.fortinet.forticlient.macos.vpn/ {print $3; exit}')
+	[ -n "$id" ] && /usr/sbin/scutil --nc status "$id" 2>/dev/null | head -1
+]]
+
 -- Tunnelblick-managed configs get shortened to a 3-letter code in the label
 -- instead of showing the full configuration name.
 local short_names = {
 	["Octopart VPN (deprecated)"] = "OCT",
-	["Altium VPN"] = "ALT",
 }
 
 -- Styled to match items/colima.lua / items/tailscale.lua (icon-only group,
 -- surface0 background, no border), grouped with the other icon-only
 -- tool/status widgets (wifi, tailscale, colima, bluetooth). Keeps its label
--- (unlike the others) to show which Tunnelblick config is connected.
+-- (unlike the others) to show which VPN is connected (ALT = FortiClient, or
+-- a Tunnelblick config's short name).
 local vpn = sbar.add("item", {
 	position = "left",
 	icon = {
@@ -24,7 +33,7 @@ local vpn = sbar.add("item", {
 	update_freq = 300, -- update every 5 minutes
 })
 
-local function update(trigger)
+local function update_tunnelblick()
 	-- start by setting the pending state
 	vpn:set({
 		icon = { color = colors.yellow },
@@ -35,6 +44,9 @@ local function update(trigger)
 	sbar.exec(
 		[[
 			osascript -e '
+      set status to ""
+      -- do not launch Tunnelblick just to ask it about its state
+      if application "Tunnelblick" is not running then return status
       set status to "..."
       tell application "Tunnelblick"
         repeat until (status is not "...")
@@ -70,7 +82,25 @@ local function update(trigger)
 	)
 end
 
+local function update()
+	sbar.exec(forticlient_status, function(status)
+		status = tostring(status):match("^%s*(.-)%s*$")
+		if status == "Connected" then
+			vpn:set({
+				icon = { color = colors.blue },
+				label = { drawing = true, string = "ALT" },
+			})
+		elseif status == "Connecting" or status == "Reasserting" or status == "Disconnecting" then
+			vpn:set({
+				icon = { color = colors.yellow },
+				label = { drawing = true, string = "..." },
+			})
+		else
+			-- FortiClient is down, so fall back to checking Tunnelblick
+			update_tunnelblick()
+		end
+	end)
+end
+
 vpn:subscribe({ "forced", "routine" }, update)
-vpn:subscribe({ "vpn_change" }, function()
-	update("vpn_change")
-end)
+vpn:subscribe({ "vpn_change" }, update)
