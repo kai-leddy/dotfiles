@@ -122,34 +122,44 @@ abbr -a -g dcb 'docker compose build --pull --parallel'
 abbr -a -g dcu 'docker compose up'
 abbr -a -g dcd 'docker compose down'
 
+# Chezmoi abbreviations
+abbr -a cm chezmoi
+abbr -a cma chezmoi apply
+abbr -a cmd chezmoi diff
+abbr -a cme chezmoi edit
+abbr -a cms chezmoi status
+abbr -a cmu chezmoi update
+abbr -a cmcd chezmoi cd
+abbr -a cmadd chezmoi add
+
 # Kubernetes abbreviations
-abbr -a -g k kubectl
-abbr -a -g kg 'kubectl get'
-abbr -a -g kga 'kubectl get --all-namespaces'
-abbr -a -g kgp 'kubectl get pods'
-abbr -a -g kgl 'kubectl get pods --show-labels'
-abbr -a -g kd 'kubectl describe'
-abbr -a -g kdp 'kubectl describe pods'
-abbr -a -g ke 'kubectl exec -it'
-abbr -a -g kl 'kubectl logs'
-abbr -a -g kp 'kubectl port-forward'
-abbr -a -g kr 'kubectl rollout restart'
-abbr -a -g kt 'kubectl top pods'
-abbr -a -g ktn 'kubectl top nodes'
-abbr -a -g kx kubectx
-abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
-abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
-abbr -a -g tu 'tilt up'
+# abbr -a -g k kubectl
+# abbr -a -g kg 'kubectl get'
+# abbr -a -g kga 'kubectl get --all-namespaces'
+# abbr -a -g kgp 'kubectl get pods'
+# abbr -a -g kgl 'kubectl get pods --show-labels'
+# abbr -a -g kd 'kubectl describe'
+# abbr -a -g kdp 'kubectl describe pods'
+# abbr -a -g ke 'kubectl exec -it'
+# abbr -a -g kl 'kubectl logs'
+# abbr -a -g kp 'kubectl port-forward'
+# abbr -a -g kr 'kubectl rollout restart'
+# abbr -a -g kt 'kubectl top pods'
+# abbr -a -g ktn 'kubectl top nodes'
+# abbr -a -g kx kubectx
+# abbr -a -g ca 'ctlptl apply -f ctlptl-cluster.yaml'
+# abbr -a -g cx 'ctlptl delete -f ctlptl-cluster.yaml'
+# abbr -a -g tu 'tilt up'
 
 # Terraform abbreviations
-abbr -a -g ti 'terraform init'
-abbr -a -g twl 'terraform workspace list'
-abbr -a -g tws 'terraform workspace select'
-abbr -a -g tp 'terraform plan'
-abbr -a -g ta 'terraform apply'
-abbr -a -g td 'terraform destroy'
-abbr -a -g ts 'terraform state'
-abbr -a -g tsl 'terraform state list'
+# abbr -a -g ti 'terraform init'
+# abbr -a -g twl 'terraform workspace list'
+# abbr -a -g tws 'terraform workspace select'
+# abbr -a -g tp 'terraform plan'
+# abbr -a -g ta 'terraform apply'
+# abbr -a -g td 'terraform destroy'
+# abbr -a -g ts 'terraform state'
+# abbr -a -g tsl 'terraform state list'
 
 # Bindings for copying and pasting to clipboard in normal mode
 bind yy fish_clipboard_copy
