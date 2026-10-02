@@ -11,7 +11,7 @@
   "defaultProvider": {{ ternary "\"anthropic\"" "\"github-copilot\"" $isWorkLaptop }},
   "defaultModel": {{ ternary "\"claude-sonnet-5-5\"" "\"gpt-6-luna\"" $isWorkLaptop }},
   "enabledModels": [{{ if $isWorkLaptop }}
-    "anthropic/claude-sonnet-5",
+    "anthropic/claude-sonnet-5-5",
     "anthropic/claude-opus-5-5",{{ end }}
     "github-copilot/gemini-3.8-flash",
     "github-copilot/gpt-6-astra",
