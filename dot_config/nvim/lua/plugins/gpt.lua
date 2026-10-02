@@ -19,9 +19,9 @@ local llms = {
   { name = "qwen3-235B-A22B", deepinfra_model = "Qwen/Qwen3-235B-A22B-Instruct-2507" },
   { name = "mimo-2.6-flash", deepinfra_model = "XiaomiMiMo/MiMo-V2.6-Flash" },
   { name = "copilot-gemini-flash-3.8", copilot_model = "gemini-3.8-flash" },
-  { name = "copilot-luna", copilot_model = "gpt-6-luna" },
-  { name = "copilot-sol", copilot_model = "gpt-6-sol" },
-  { name = "copilot-astra", copilot_model = "gpt-6-astra" },
+  { name = "copilot-luna", copilot_model = "gpt-6-luna", reasoning_effort = "low" },
+  { name = "copilot-sol", copilot_model = "gpt-6-sol", reasoning_effort = "high" },
+  { name = "copilot-astra", copilot_model = "gpt-6-astra", reasoning_effort = "high" },
 }
 
 local generated_agents = {}
@@ -40,7 +40,12 @@ for _, llm in ipairs(llms) do
       provider = "deepinfra",
       chat = true,
       command = true,
-      model = { model = llm.deepinfra_model, temperature = 0.8, top_p = 1 },
+      model = {
+        model = llm.deepinfra_model,
+        temperature = 0.8,
+        top_p = 1,
+        reasoning_effort = llm.reasoning_effort or "medium",
+      },
       system_prompt = llm.no_sys_prompt and "" or default_system_prompt,
     }
     table.insert(generated_agents, agent)
@@ -51,7 +56,12 @@ for _, llm in ipairs(llms) do
       provider = "copilot",
       chat = true,
       command = true,
-      model = { model = llm.copilot_model, temperature = 0.8, top_p = 1 },
+      model = {
+        model = llm.copilot_model,
+        temperature = 0.8,
+        top_p = 1,
+        reasoning_effort = llm.reasoning_effort or "medium",
+      },
       system_prompt = llm.no_sys_prompt and "" or default_system_prompt,
     }
     table.insert(generated_agents, agent)
@@ -69,7 +79,8 @@ return {
     },
   },
   {
-    "robitx/gp.nvim",
+    "kai-leddy/gp.nvim",
+    branch = "feat/copilot-responses-api",
     opts = {
       cmd_prefix = "GPT",
       -- chat buffer specific keybinds
