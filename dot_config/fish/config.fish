@@ -124,6 +124,7 @@ abbr -a -g dcd 'docker compose down'
 
 # Chezmoi abbreviations
 abbr -a cm chezmoi
+abbr -a cmr chezmoi re-add
 abbr -a cma chezmoi apply
 abbr -a cmd chezmoi diff
 abbr -a cme chezmoi edit
