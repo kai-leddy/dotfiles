@@ -6,8 +6,9 @@
 */ -}}
 {{- $isWorkLaptop := eq .machine "work-laptop" -}}
 {
-  "lastChangelogVersion": "0.87.1",
+  "lastChangelogVersion": "1.0.0",
   "theme": "catppuccin-mocha",
+  "defaultTools": ["+codemode"],
   "defaultProvider": {{ ternary "\"anthropic\"" "\"github-copilot\"" $isWorkLaptop }},
   "defaultModel": {{ ternary "\"claude-sonnet-5-5\"" "\"gpt-6-luna\"" $isWorkLaptop }},
   "enabledModels": [{{ if $isWorkLaptop }}
