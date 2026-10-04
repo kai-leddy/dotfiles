@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "firecrawl": {
+      "url": "https://mcp.firecrawl.dev/v2/mcp",
+      "headers": {
+        "Authorization": "Bearer ${FIRECRAWL_API_KEY}"
+      },
+      "exposure": "codemode",
+      "description": "Firecrawl web search and scraping; discover tools through codemode only when web research is needed."
+    }
+  }
+}
