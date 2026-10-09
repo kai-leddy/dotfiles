@@ -53,7 +53,7 @@ name = "catppuccin"
 # manifest_check = true
 
 [keys]
-# F12 is retained only as an unused fallback prefix; normal controls are direct.
+# F12 remains the prefix for prefix-only actions; most controls are direct.
 # Direct bindings use explicit syntax such as "cmd+h" or "cmd+alt+j".
 # Accepted key syntax: plain keys, ctrl/shift/alt/cmd/super modifiers, and special keys like enter/tab/esc/left/right/up/down.
 # Named punctuation such as minus, comma, ampersand, plus, and backtick is also accepted.
@@ -62,10 +62,11 @@ name = "catppuccin"
 prefix = "f12"
 
 # Direct actions
-help = "cmd+f1"
+help = ["cmd+f1", "prefix+?"]
 settings = "cmd+s"
 detach = "cmd+q"
-reload_config = "cmd+f5"
+# Cmd+F5 is reserved for VoiceOver on macOS.
+reload_config = ["ctrl+alt+r", "prefix+shift+r"]
 # Herdr has no direct equivalent for WezTerm's Cmd+O URL picker.
 goto = "cmd+g"
 new_workspace = "cmd+shift+n"

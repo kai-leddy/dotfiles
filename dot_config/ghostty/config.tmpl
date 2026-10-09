@@ -70,11 +70,8 @@ scrollback-limit = 100000000
 mouse-hide-while-typing = true
 
 # --- Keybinds ------------------------------------------------------------------
-# Herdr manages its own shortcuts directly (it doesn't need the CSI-u
-# modifier-passthrough workaround wezterm required - Ghostty passes Cmd/Ctrl
-# combos through to Herdr fine on its own). All Ghostty needs to do is get
-# out of the way: unbind any Ghostty default that would otherwise consume a
-# combo Herdr wants to own, before Herdr ever sees it.
+# Herdr handles the shortcut actions. Ghostty passes Cmd/Ctrl keys through
+# using the same unbind pattern for Cmd+Shift+J and Cmd+Shift+L.
 
 # Ghostty's screen/selection-dump-to-tempfile defaults - unbind so they can
 # never leak tmp file paths into the terminal.
@@ -110,7 +107,8 @@ keybind = super+z=unbind
 keybind = super+e=unbind
 keybind = super+g=unbind
 
-# cmd+shift+letter combos Herdr owns that collide with a Ghostty default.
+# cmd+shift+letter combos Herdr owns. Unbind Ghostty shortcuts so they reach Herdr.
+keybind = super+shift+l=unbind
 keybind = super+shift+t=unbind
 keybind = super+shift+g=unbind
 keybind = super+shift+w=unbind
