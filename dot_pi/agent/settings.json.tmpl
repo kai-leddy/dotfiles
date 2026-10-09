@@ -39,8 +39,12 @@
     "npm:@heyhuynhgiabuu/pi-pretty",
     "npm:@mnemosyne-oss/pi-mnemosyne"
   ],
-  "hideThinkingBlock": false{{ if $isWorkLaptop }},
+  "hideThinkingBlock": true{{ if $isWorkLaptop }},
   "warnings": {
     "anthropicExtraUsage": false
-  }{{ end }}
+  }{{ end }},
+  "terminal": {
+    "imageWidthCells": 120
+  },
+  "shellPath": "{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/fish{{ else }}/usr/bin/fish{{ end }}"
 }
