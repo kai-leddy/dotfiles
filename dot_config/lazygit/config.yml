@@ -6,7 +6,6 @@ os:
 update:
   method: "background"
   days: 7
-
 gui:
   nerdFontsVersion: "3"
   # Use the mocha catppuccin theme
@@ -30,6 +29,5 @@ gui:
       - "#cdd6f4"
     searchingActiveBorderColor:
       - "#f9e2af"
-
-  authorColors:
-    "*": "#b4befe"
+    authorColors:
+      "*": "#b4befe"
