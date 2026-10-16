@@ -1,12 +1,12 @@
 {
   "mcpServers": {
-    "firecrawl": {
-      "url": "https://mcp.firecrawl.dev/v2/mcp",
+    "exa": {
+      "url": "https://mcp.exa.ai/mcp?tools=web_search_exa,web_fetch_exa,web_search_advanced_exa",
       "headers": {
-        "Authorization": "Bearer ${FIRECRAWL_API_KEY}"
+        "x-api-key": "${EXA_API_KEY}"
       },
       "exposure": "codemode",
-      "description": "Firecrawl web search and scraping; discover tools through codemode only when web research is needed."
+      "description": "Exa web search and page fetching; discover tools through codemode only when web research is needed."
     }
   }
 }
