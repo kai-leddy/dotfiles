@@ -18,6 +18,14 @@ return {
 	calendar = "", -- Calendar icon (nf-fa-calendar)
 	slack = "󰒱", -- Slack icon (for placeholder)
 
+	-- AI quota pill (items/ai.lua)
+	ai = {
+		claude = "\u{F06C4}", -- nf-md-asterisk, closest to the Claude starburst
+		copilot = "\u{F4B8}", -- nf-oct-copilot
+		openrouter = "\u{F09BB}", -- nf-md-arrow_decision (routing)
+		deepinfra = "\u{F048B}", -- nf-md-server
+	},
+
 	task_next = "󱔢", -- icon for next task
 	task_active = "󰦖", -- icon for active task
 

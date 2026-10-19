@@ -33,7 +33,7 @@ function M.spacer(position)
 	})
 end
 
-local function add_separator(position)
+function M.separator(position)
 	return sbar.add("item", {
 		position = position,
 		padding_left = 0,
@@ -59,6 +59,18 @@ function M.bracket(members)
 	})
 end
 
+-- Strips an item's own pill so it can sit inside a bracket.
+function M.member(item)
+	item:set({
+		padding_left = 0,
+		padding_right = 0,
+		icon = { padding_left = inner_padding, padding_right = inner_padding },
+		label = { padding_right = inner_padding },
+		background = { color = colors.transparent },
+	})
+	return item
+end
+
 function M.merge(position, modules)
 	local order = {}
 	for i, module in ipairs(modules) do
@@ -69,17 +81,9 @@ function M.merge(position, modules)
 	local members = {}
 	for i, module in ipairs(order) do
 		if i > 1 then
-			table.insert(members, add_separator(position).name)
+			table.insert(members, M.separator(position).name)
 		end
-		local item = require(module)
-		item:set({
-			padding_left = 0,
-			padding_right = 0,
-			icon = { padding_left = inner_padding, padding_right = inner_padding },
-			label = { padding_right = inner_padding },
-			background = { color = colors.transparent },
-		})
-		table.insert(members, item.name)
+		table.insert(members, M.member(require(module)).name)
 	end
 	M.spacer(position)
 

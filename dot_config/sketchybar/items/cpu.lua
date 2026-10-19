@@ -35,7 +35,7 @@ local function update_cpu()
 			.. " 'BEGIN{if(core_count==0)core_count=1} {sum+=$1} END {printf sum/core_count}'",
 		function(output)
 			local num = tonumber(output)
-			local num_str = num ~= nil and string.format("%.1f%%", num) or "N/A"
+			local num_str = num ~= nil and string.format("%d%%", math.floor(num + 0.5)) or "N/A"
 			cpu:set({
 				label = { string = num_str, color = colors.text },
 				icon = { color = colors.green },

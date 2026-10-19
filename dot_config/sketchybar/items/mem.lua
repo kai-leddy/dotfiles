@@ -51,7 +51,7 @@ local function update_mem()
 			local used = (pageable_count - purgeable_count) * page_size
 			local total = total_pages * page_size
 
-			local used_gb = format_mem_value(used, 1)
+			local used_gb = format_mem_value(used, 0)
 			mem:set({
 				label = { string = used_gb, color = colors.text },
 				icon = { color = colors.blue },
