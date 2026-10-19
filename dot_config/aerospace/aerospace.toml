@@ -69,12 +69,26 @@ preset = 'qwerty'
 #                 Monitor pattern is the same as for 'workspace-to-monitor-force-assignment'.
 #                 See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
 [gaps]
-inner.horizontal = 20
-inner.vertical = 20
-outer.left = 16
-outer.bottom = 16
-outer.top = [{ monitor.main = 24 }, 56]
-outer.right = 16
+# Everything is spaced to match the sketchybar gap (`gap` in
+# ~/.config/sketchybar/settings.lua, currently 8). JankyBorders draws its
+# border 3pt outside each window frame, so frames sit 3pt further in to keep
+# the visible gap at 8: outer gaps are 8 + 3, gaps between windows 8 + 3 + 3.
+inner.horizontal = 14
+inner.vertical = 14
+outer.left = 11
+outer.bottom = 11
+outer.right = 11
+# outer.top is measured from below the macOS menu bar area, which is 32 on the
+# built-in (notch) display and nothing on the externals. The sketchybar bar is
+# 26 + 2 * 8 = 42 tall, with the pill ending 8 above its bottom edge.
+# Keep one line active, matching `layout` in settings.lua.
+#
+# layout = "single": visible window edge at 42, frame at 45.
+#   built-in 45 - 32 = 13, externals 45, main (only if an external is ever main,
+#   with a ~24 menu bar) 45 - 24 = 21
+outer.top = [{ monitor."built-in" = 13 }, { monitor.main = 21 }, 45]
+# layout = "dual": the stats row adds 26 + 8 = 34 on the built-in.
+# outer.top = [{ monitor."built-in" = 47 }, { monitor.main = 21 }, 45]
 
 
 # Assignments of workspaces to monitors.

@@ -104,3 +104,5 @@ end
 
 vpn:subscribe({ "forced", "routine" }, update)
 vpn:subscribe({ "vpn_change" }, update)
+
+return vpn

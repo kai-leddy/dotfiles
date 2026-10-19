@@ -51,3 +51,5 @@ local function battery_update()
 end
 
 battery:subscribe({ "routine", "power_source_change", "system_woke" }, battery_update)
+
+return battery

@@ -1,3 +1,12 @@
+local pill_group = require("pill_group")
+
+-- Two items sharing one pill: the clock on the right, and the day stacked over
+-- the date on its left. Like the merged pills, the bracket background covers
+-- the members' outer padding, so the outer edges have no padding and spacers
+-- supply the gap outside the pill.
+
+pill_group.spacer("right")
+
 local clock = sbar.add("item", {
 	icon = { drawing = false },
 	position = "right",
@@ -10,7 +19,7 @@ local clock = sbar.add("item", {
 local cal = sbar.add("item", {
 	icon = {
 		font = {
-			size = 12.0,
+			size = 11.0,
 		},
 		align = "right",
 		y_offset = 5,
@@ -18,7 +27,7 @@ local cal = sbar.add("item", {
 	},
 	label = {
 		font = {
-			size = 12.0,
+			size = 11.0,
 		},
 		align = "right",
 		width = 0,
@@ -31,7 +40,8 @@ local cal = sbar.add("item", {
 	background = { drawing = false },
 })
 
-sbar.add("bracket", { clock.name, cal.name }, { background = {} })
+pill_group.spacer("right")
+pill_group.bracket({ clock.name, cal.name })
 
 local function update()
 	local day = os.date("%A")

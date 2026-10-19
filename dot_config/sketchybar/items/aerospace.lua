@@ -9,7 +9,11 @@ local query_workspaces =
 -- (i.e., workspace indicators show on the wrong external monitor)
 local SWAP_EXTERNAL_MONITORS = true
 
+-- Invisible item that only receives aerospace events. Zero padding so it
+-- doesn't push the first left-hand pill 8px away from the screen edge.
 local root = sbar.add("item", {
+	padding_left = 0,
+	padding_right = 0,
 	icon = {
 		drawing = false,
 	},
@@ -92,8 +96,8 @@ local function updateWindow(workspace_index, args)
 					},
 					background = { drawing = true },
 					display = monitor_id,
-					padding_left = settings.padding.small,
-					padding_right = settings.padding.small,
+					padding_left = settings.bar.item_padding,
+					padding_right = settings.bar.item_padding,
 				})
 				return
 			end
@@ -117,8 +121,8 @@ local function updateWindow(workspace_index, args)
 					drawing = true,
 				},
 				background = { drawing = true },
-				padding_left = settings.padding.small,
-				padding_right = settings.padding.small,
+				padding_left = settings.bar.item_padding,
+				padding_right = settings.bar.item_padding,
 			})
 		end
 
@@ -126,8 +130,8 @@ local function updateWindow(workspace_index, args)
 			icon = { drawing = true },
 			label = { drawing = true, string = icon_line },
 			background = { drawing = true },
-			padding_left = settings.padding.small,
-			padding_right = settings.padding.small,
+			padding_left = settings.bar.item_padding,
+			padding_right = settings.bar.item_padding,
 		})
 	end)
 end
@@ -176,7 +180,7 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 				drawing = false,
 				string = workspace_index,
 				font = {
-					size = settings.font.size * 1.5,
+					size = 18.0,
 				},
 			},
 			label = {
@@ -186,8 +190,8 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 			background = {
 				color = colors.with_alpha(colors.sapphire, 0.5),
 			},
-			padding_left = settings.padding.small,
-			padding_right = settings.padding.small,
+			padding_left = settings.bar.item_padding,
+			padding_right = settings.bar.item_padding,
 		})
 
 		workspaces[workspace_index] = workspace

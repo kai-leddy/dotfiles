@@ -37,3 +37,5 @@ local function update_bluetooth()
 end
 
 bluetooth:subscribe({ "routine", "forced" }, update_bluetooth)
+
+return bluetooth

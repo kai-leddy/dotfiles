@@ -4,8 +4,8 @@ local colors = require("colors")
 -- Equivalent to the --default domain
 sbar.default({
 	updates = "when_shown",
-	padding_left = 4,
-	padding_right = 4,
+	padding_left = settings.bar.item_padding,
+	padding_right = settings.bar.item_padding,
 	icon = {
 		font = settings.font,
 		color = colors.text,
@@ -13,14 +13,18 @@ sbar.default({
 		padding_right = settings.padding.big,
 	},
 	label = {
-		font = settings.font,
+		font = {
+			family = settings.font.family,
+			style = settings.font.style,
+			size = 14.0,
+		},
 		color = colors.text,
 		padding_left = 0,
 		padding_right = settings.padding.big,
 	},
 	background = {
 		color = colors.surface0,
-		height = 32,
-		corner_radius = 12,
+		height = settings.bar.item_height,
+		corner_radius = 10,
 	},
 })

@@ -51,3 +51,5 @@ tailscale:subscribe({ "forced", "routine" }, update)
 tailscale:subscribe({ "tailscale_change" }, function()
 	update()
 end)
+
+return tailscale

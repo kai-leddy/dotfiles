@@ -2,6 +2,9 @@ local colors = require("colors")
 local icons = require("icons")
 local settings = require("settings")
 
+-- Background is transparent because this item sits inside a merged pill
+-- (pill_group.lua). Only the high-usage alert gives it a (red) background.
+
 local mem = sbar.add("item", {
 	position = "left",
 	icon = {
@@ -13,7 +16,7 @@ local mem = sbar.add("item", {
 		color = colors.text,
 		font = { size = 14 },
 	},
-	background = { color = colors.surface0 },
+	background = { color = colors.transparent },
 	update_freq = 10,
 })
 
@@ -52,7 +55,7 @@ local function update_mem()
 			mem:set({
 				label = { string = used_gb, color = colors.text },
 				icon = { color = colors.blue },
-				background = { color = colors.surface0 },
+				background = { color = colors.transparent },
 			})
 
 			local percentage_used = (used / total) * 100
@@ -63,7 +66,7 @@ local function update_mem()
 					background = { color = colors.red },
 				})
 			elseif percentage_used > 75 then
-				mem:set({ label = { color = colors.peach }, background = { color = colors.surface0 } })
+				mem:set({ label = { color = colors.peach }, background = { color = colors.transparent } })
 			end
 		else
 			mem:set({ label = "N/A" })
@@ -72,3 +75,5 @@ local function update_mem()
 end
 
 mem:subscribe({ "routine", "forced" }, update_mem)
+
+return mem

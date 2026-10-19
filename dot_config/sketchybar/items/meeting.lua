@@ -9,7 +9,7 @@ local cal_short = sbar.add("item", {
 		string = icons.calendar,
 		font = {
 			style = "Regular",
-			size = 22.0,
+			size = 18.0,
 		},
 		padding_right = settings.padding.small,
 		color = colors.base,
@@ -28,7 +28,7 @@ local cal = sbar.add("item", {
 		string = icons.calendar,
 		font = {
 			style = "Regular",
-			size = 22.0,
+			size = 18.0,
 		},
 		padding_right = settings.padding.small,
 		color = colors.base,

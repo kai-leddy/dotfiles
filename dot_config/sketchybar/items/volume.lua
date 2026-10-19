@@ -28,3 +28,5 @@ volume_icon:subscribe("volume_change", function(env)
 		label = { string = volume .. "%", drawing = not is_off },
 	})
 end)
+
+return volume_icon

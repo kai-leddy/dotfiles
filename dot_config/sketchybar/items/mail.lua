@@ -8,7 +8,7 @@ local mail = sbar.add("item", {
 		string = icons.mail,
 		font = {
 			style = "Regular",
-			size = 18.0,
+			size = 16.0,
 		},
 		padding_right = settings.padding.small,
 		color = colors.base,
