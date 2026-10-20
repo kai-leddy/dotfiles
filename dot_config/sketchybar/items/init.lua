@@ -19,7 +19,5 @@ require("items.meeting")
 
 -- Left, from the screen edge inwards
 pill_group.merge("left", groups.system)
-pill_group.merge("left", groups.toggles)
 require("items.ai")
-
--- TODO: change mem and cpu to show some graphs
+pill_group.merge("left", groups.toggles)

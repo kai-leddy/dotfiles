@@ -1,9 +1,13 @@
 -- One merged pill with the remaining quota of each AI provider:
 --   Claude and Copilot as % left (helpers/ai_quota.sh can also report
 --   OpenRouter and DeepInfra $ credit; add them to `providers` to show them).
+-- The number turns yellow at 50% left or less and red under 15% (for credit,
+-- under $5 and under $1).
+--
 -- Data comes from helpers/ai_quota.sh (same sources as the pi usage bar).
 -- Providers it doesn't return (no credentials) are hidden. Values it could
--- only take from pi's cache are dimmed. Click the pill to refresh.
+-- only get second-hand (this session's last good reading, or failing that
+-- pi's cache) are dimmed. Click the pill to refresh.
 
 local colors = require("colors")
 local icons = require("icons")
@@ -25,8 +29,6 @@ for _, provider in ipairs(providers) do
 end
 local command = script .. " " .. table.concat(keys, " ")
 
--- Label colour by how much is left (matches the pi usage bar: red under 15%,
--- yellow at 50% or less; for credit, red under $1, yellow under $5).
 local function level_color(quota)
 	local left = quota.remaining
 	if quota.kind == "usd" then
@@ -89,6 +91,13 @@ local function update()
 				provider.separator:set({ drawing = shown and any })
 			end
 			if shown then
+				-- pi's cache can be days old (any pi session rewrites it from
+				-- memory), so prefer this session's last good reading.
+				if quota.stale and provider.last then
+					quota.remaining = provider.last
+				elseif not quota.stale then
+					provider.last = quota.remaining
+				end
 				provider.item:set({
 					drawing = true,
 					icon = { color = quota.stale and colors.overlay0 or provider.color },

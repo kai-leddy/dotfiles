@@ -18,6 +18,7 @@ local M = {}
 
 -- Space either side of each icon/label inside a merged pill.
 local inner_padding = 6
+M.inner_padding = inner_padding
 
 -- A bracket's background covers its members' outer padding, so members get
 -- no outer padding and these empty items supply the gap outside the pill
@@ -51,6 +52,8 @@ end
 
 function M.bracket(members)
 	return sbar.add("bracket", members, {
+		-- Brackets otherwise take their first member's y_offset.
+		y_offset = 0,
 		background = {
 			color = colors.surface0,
 			height = settings.bar.item_height,
@@ -83,7 +86,16 @@ function M.merge(position, modules)
 		if i > 1 then
 			table.insert(members, M.separator(position).name)
 		end
-		table.insert(members, M.member(require(module)).name)
+		local item = require(module)
+		if item.is_stat then
+			-- graph.lua stat: style the icon; the graph item is already set up.
+			M.member(item.icon)
+			for _, part in ipairs(item.items) do
+				table.insert(members, part.name)
+			end
+		else
+			table.insert(members, M.member(item).name)
+		end
 	end
 	M.spacer(position)
 

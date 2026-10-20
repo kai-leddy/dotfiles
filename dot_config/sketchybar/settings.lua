@@ -22,5 +22,9 @@ return {
 		-- pills end up `gap` apart. The bar adds the other half at the screen
 		-- edges.
 		item_padding = gap / 2,
+		-- Line graphs inside the pills (graph.lua): plot width in points, and
+		-- the height of the track behind it (0% at its bottom, 100% at its top).
+		graph_width = 30,
+		graph_height = 14,
 	},
 }

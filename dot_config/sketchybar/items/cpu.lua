@@ -1,9 +1,12 @@
 local colors = require("colors")
 local icons = require("icons")
 local settings = require("settings")
+local graph = require("graph")
 
--- Background is transparent because this item sits inside a merged pill
--- (pill_group.lua). Only the high-usage alert gives it a (red) background.
+-- CPU load as a small line graph (0-100%, oldest on the left, newest on the
+-- right). One point per update, so with update_freq = 5 the graph shows
+-- roughly the last graph_width * 5 seconds.
+-- The line and icon go peach above 50% and red above 75%.
 
 local threads = 0
 sbar.exec("nproc --all", function(output)
@@ -13,20 +16,16 @@ sbar.exec("nproc --all", function(output)
 	end
 end)
 
-local cpu = sbar.add("item", {
-	position = "left",
-	icon = {
-		string = icons.cpu or "CPU:",
-		padding_right = settings.padding.small,
-		color = colors.green,
-	},
-	label = {
-		color = colors.text,
-		font = { size = 14 },
-	},
-	background = { color = colors.transparent },
-	update_freq = 5, -- Update every 5 seconds
+local cpu = graph.add("cpu", {
+	icon = icons.cpu or "CPU:",
+	color = colors.green,
+	update_freq = 5,
 })
+local history = graph.rolling(cpu.graph, settings.bar.graph_width)
+
+local function level_color(percent)
+	return percent > 75 and colors.red or percent > 50 and colors.peach or colors.green
+end
 
 local function update_cpu()
 	sbar.exec(
@@ -35,30 +34,16 @@ local function update_cpu()
 			.. " 'BEGIN{if(core_count==0)core_count=1} {sum+=$1} END {printf sum/core_count}'",
 		function(output)
 			local num = tonumber(output)
-			local num_str = num ~= nil and string.format("%d%%", math.floor(num + 0.5)) or "N/A"
-			cpu:set({
-				label = { string = num_str, color = colors.text },
-				icon = { color = colors.green },
-				background = { color = colors.transparent },
-			})
-
 			if num == nil then
 				return
 			end
-
-			if num > 75 then
-				cpu:set({
-					label = { color = colors.crust },
-					icon = { color = colors.crust },
-					background = { color = colors.red },
-				})
-			elseif num > 50 then
-				cpu:set({ label = { color = colors.peach }, background = { color = colors.transparent } })
-			end
+			local color = level_color(num)
+			history.add(num / 100)
+			cpu:set({ color = color })
 		end
 	)
 end
 
-cpu:subscribe({ "routine", "forced" }, update_cpu)
+cpu.graph:subscribe({ "routine", "forced" }, update_cpu)
 
 return cpu
