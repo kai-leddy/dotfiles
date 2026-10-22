@@ -53,7 +53,7 @@ local poll = sbar.add("item", "ai.poll", {
 	position = "left",
 	drawing = false,
 	updates = true,
-	update_freq = 300,
+	update_freq = 3600, -- hourly; click the pill to refresh sooner
 })
 
 local spacers = { pill_group.spacer("left") }
