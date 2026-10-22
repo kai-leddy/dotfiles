@@ -14,7 +14,14 @@ type Gauge = {
   detail?: string;
   updatedAt: number;
 };
-const REFRESH_MS = 120_000;
+// Quotas are fetched on events (session start/resume, end of an agent run,
+// model change, terminal focus in/out), not on a timer. Anthropic's usage
+// endpoint rate-limits hard, so a provider is fetched at most once per gap.
+// Readings other pi sessions saved to the cache count towards the gap.
+const MIN_FETCH_GAP_MS = 60_000;
+// Terminal focus reports (DEC mode 1004). Pi's fullscreen TUI turns these on.
+const FOCUS_IN = "\x1b[I";
+const FOCUS_OUT = "\x1b[O";
 const CACHE_FILE = join(homedir(), ".cache", "pi-usage-bar.json");
 const AUTH_FILE = join(homedir(), ".pi", "agent", "auth.json");
 const gauges = new Map<string, Gauge>();
@@ -235,23 +242,42 @@ async function anthropicGauge(): Promise<Gauge | undefined> {
   }
 }
 
+const fetchers: Record<string, () => Promise<Gauge | undefined>> = {
+  deepinfra: deepInfraGauge,
+  copilot: copilotGauge,
+  anthropic: anthropicGauge,
+};
+const lastAttempt = new Map<string, number>();
+const inFlight = new Map<string, Promise<void>>();
+
 async function refresh(model: unknown) {
-  const provider = providerOf(model);
-  try {
-    if (provider.includes("deepinfra")) {
-      const gauge = await deepInfraGauge();
-      if (gauge) gauges.set("deepinfra", gauge);
-    } else if (provider.includes("copilot") || provider.includes("github")) {
-      const gauge = await copilotGauge();
-      if (gauge) gauges.set("copilot", gauge);
-    } else if (provider.includes("anthropic") || provider.includes("claude")) {
-      const gauge = await anthropicGauge();
-      if (gauge) gauges.set("anthropic", gauge);
+  const key = gaugeKey(providerOf(model));
+  const fetcher = key ? fetchers[key] : undefined;
+  if (!fetcher) return;
+  const running = inFlight.get(key);
+  if (running) return running;
+  // Pick up readings other pi sessions have saved since.
+  loadCache();
+  const now = Date.now();
+  const latest = Math.max(
+    gauges.get(key)?.updatedAt ?? 0,
+    lastAttempt.get(key) ?? 0,
+  );
+  if (now - latest < MIN_FETCH_GAP_MS) return;
+  lastAttempt.set(key, now);
+  const run = (async () => {
+    try {
+      const gauge = await fetcher();
+      if (gauge) {
+        gauges.set(key, gauge);
+        saveCache();
+      }
+    } catch {
+      /* Never let a quota provider affect the agent. */
     }
-    saveCache();
-  } catch {
-    /* Never let a quota provider affect the agent. */
-  }
+  })().finally(() => inFlight.delete(key));
+  inFlight.set(key, run);
+  return run;
 }
 
 function renderGauge(gauge: Gauge, theme: any): string {
@@ -277,43 +303,69 @@ function gaugeKey(provider: string): string {
 
 export default function (pi: ExtensionAPI) {
   loadCache();
-  let timer: ReturnType<typeof setInterval> | undefined;
   let modelContext: ExtensionContext | undefined;
   let updateWidget: (() => void) | undefined;
+  let stopFocusWatch: (() => void) | undefined;
 
   pi.on("model_select", (_event, nextCtx) => {
     modelContext = nextCtx;
     updateWidget?.();
   });
 
+  // Final end of a run: pi won't continue automatically after this.
+  pi.on("agent_settled", (_event, nextCtx) => {
+    modelContext = nextCtx;
+    updateWidget?.();
+  });
+
+  pi.on("session_shutdown", () => {
+    stopFocusWatch?.();
+    stopFocusWatch = undefined;
+  });
+
+  // Fires for startup, resume, new, fork and reload.
   pi.on("session_start", (_event, ctx) => {
     modelContext = ctx;
+    // Pi's fullscreen TUI consumes focus reports before extension input
+    // listeners see them, so watch stdin directly. This only reads; pi still
+    // gets every byte. In regular mode the terminal sends no focus reports.
+    if (ctx.mode === "tui" && !stopFocusWatch) {
+      const onData = (chunk: Buffer | string) => {
+        const text =
+          typeof chunk === "string" ? chunk : chunk.toString("latin1");
+        if (text.includes(FOCUS_IN) || text.includes(FOCUS_OUT))
+          updateWidget?.();
+      };
+      process.stdin.on("data", onData);
+      stopFocusWatch = () => process.stdin.off("data", onData);
+    }
     ctx.ui.setWidget("pi-usage-bar", (tui, theme) => {
       let disposed = false;
+      const render = () => {
+        const key = gaugeKey(providerOf(modelContext?.model ?? ctx.model));
+        const gauge = key ? gauges.get(key) : undefined;
+        (modelContext?.ui ?? ctx.ui).setStatus(
+          "󰍛",
+          gauge ? renderGauge(gauge, theme) : undefined,
+        );
+        tui.requestRender();
+      };
       const update = () => {
-        if (!disposed) {
-          void refresh(modelContext?.model ?? ctx.model)
-            .then(() => {
-              const key = gaugeKey(
-                providerOf(modelContext?.model ?? ctx.model),
-              );
-              const gauge = key ? gauges.get(key) : undefined;
-              (modelContext?.ui ?? ctx.ui).setStatus(
-                "󰍛",
-                gauge ? renderGauge(gauge, theme) : undefined,
-              );
-              tui.requestRender();
-            })
-            .catch(() => undefined);
-        }
+        if (disposed) return;
+        // Show the cached reading straight away, then the fresh one.
+        render();
+        void refresh(modelContext?.model ?? ctx.model)
+          .then(() => {
+            if (!disposed) render();
+          })
+          .catch(() => undefined);
       };
       updateWidget = update;
       update();
-      timer = setInterval(update, REFRESH_MS);
       return {
         dispose() {
           disposed = true;
-          if (timer) clearInterval(timer);
+          if (updateWidget === update) updateWidget = undefined;
         },
         invalidate() {},
         render(_width: number): string[] {
