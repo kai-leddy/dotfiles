@@ -73,11 +73,13 @@ preset = 'qwerty'
 # ~/.config/sketchybar/settings.lua, currently 8). JankyBorders draws its
 # border 3pt outside each window frame, so frames sit 3pt further in to keep
 # the visible gap at 8: outer gaps are 8 + 3, gaps between windows 8 + 3 + 3.
+# Left and right also add sketchybar's `edge_inset` (14, which keeps the macOS
+# privacy dot off the clock) so windows line up with the pills: 8 + 3 + 14.
 inner.horizontal = 14
 inner.vertical = 14
-outer.left = 11
+outer.left = 25
 outer.bottom = 11
-outer.right = 11
+outer.right = 25
 # outer.top is measured from below the macOS menu bar area, which is 32 on the
 # built-in (notch) display and nothing on the externals. The sketchybar bar is
 # 26 + 2 * 8 = 42 tall, so the visible window edge goes at 42 and the frame
