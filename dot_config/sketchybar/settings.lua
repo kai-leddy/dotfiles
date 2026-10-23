@@ -26,7 +26,7 @@ return {
 		-- gap. macOS draws its privacy dot (e.g. DisplayLink's screen capture) in
 		-- the top-right corner; this keeps it off the clock. Applied to both
 		-- sides so the bar stays symmetrical. If you change it, update
-		-- gaps.outer.left/right in ~/.config/aerospace/aerospace.toml too.
+		-- gaps.outer.left/right/bottom in ~/.config/aerospace/aerospace.toml too.
 		edge_inset = 14,
 		-- Line graphs inside the pills (graph.lua): plot width in points, and
 		-- the height of the track behind it (0% at its bottom, 100% at its top).

@@ -75,10 +75,11 @@ preset = 'qwerty'
 # the visible gap at 8: outer gaps are 8 + 3, gaps between windows 8 + 3 + 3.
 # Left and right also add sketchybar's `edge_inset` (14, which keeps the macOS
 # privacy dot off the clock) so windows line up with the pills: 8 + 3 + 14.
+# Bottom uses the same value so the bottom margin matches the sides.
 inner.horizontal = 14
 inner.vertical = 14
 outer.left = 25
-outer.bottom = 11
+outer.bottom = 25
 outer.right = 25
 # outer.top is measured from below the macOS menu bar area, which is 32 on the
 # built-in (notch) display and nothing on the externals. The sketchybar bar is
