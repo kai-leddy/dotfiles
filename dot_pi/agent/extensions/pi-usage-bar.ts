@@ -283,8 +283,10 @@ async function refresh(model: unknown) {
 function renderGauge(gauge: Gauge, theme: any): string {
   if (gauge.label === "DeepInfra")
     return `\x1b[1mDeepInfra\x1b[22m ${gauge.detail ?? "balance unavailable"}`;
-  const percent = Math.max(0, Math.min(100, (gauge.used / gauge.limit) * 100));
-  const color = percent > 85 ? "error" : percent >= 50 ? "warning" : "success";
+  // Show quota remaining: the bar starts full and drains as usage grows.
+  const percent =
+    100 - Math.max(0, Math.min(100, (gauge.used / gauge.limit) * 100));
+  const color = percent < 15 ? "error" : percent <= 50 ? "warning" : "success";
   const filled = Math.round(percent / 10);
   const bar = "▓".repeat(filled) + "░".repeat(10 - filled);
   const remaining =
