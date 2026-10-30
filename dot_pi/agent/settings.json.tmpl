@@ -29,7 +29,7 @@
     "deepinfra/XiaomiMiMo/MiMo-V2.6-Flash"
   ],
   "defaultThinkingLevel": "high",
-  "doubleEscapeAction": "tree",
+  "doubleEscapeAction": "none",
   "packages": [
     "npm:pi-open-tui",
     "npm:@watercol/pi-lens-simple",
@@ -38,7 +38,8 @@
     "npm:pi-skill-acli",
     "npm:pi-blackhole",
     "npm:@heyhuynhgiabuu/pi-pretty",
-    "npm:@mnemosyne-oss/pi-mnemosyne"
+    "npm:@mnemosyne-oss/pi-mnemosyne",
+    "npm:pi-voicekit"
   ],
   "hideThinkingBlock": true{{ if $isWorkLaptop }},
   "warnings": {
@@ -47,5 +48,21 @@
   "terminal": {
     "imageWidthCells": 120
   },
-  "shellPath": "{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/fish{{ else }}/usr/bin/fish{{ end }}"
+  "shellPath": "{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/fish{{ else }}/usr/bin/fish{{ end }}",
+  "voice": {
+    "version": 6,
+    "enabled": true,
+    "language": "en",
+    "localModel": "parakeet-v2",
+    "scope": "global",
+    "holdThresholdMs": 400,
+    "punctuationEnabled": false,
+    "previewEnabled": false,
+    "ttsEnabled": false,
+    "onboarding": {
+      "completed": true,
+      "schemaVersion": 6
+    },
+    "punctuationNoticeShown": true
+  }
 }
