@@ -1,5 +1,9 @@
 # Global preferences
 
+- Use `codemode` as much as possible for tool calls, not just for MCP or parallel work. This applies to ordinary tools such as `bash`, `read`, `write`, `edit`, `grep` and `find`, as well as MCP tools.
+  - When a task needs multiple tool calls, group them in `codemode` whenever possible. Run independent calls together with `Promise.allSettled`; chain dependent calls sequentially in the same script when no intermediate reasoning is needed.
+  - Avoid separate sequential tool calls when they could be grouped. Split calls when you must inspect a result and reason before deciding the next step, or when higher-priority instructions require it.
+  - Check failures and command exit codes, and do not run overlapping writes or other dependent operations in parallel.
 - Prefer Rust-based equivalents of Unix core utilities when available:
   - Use `rg` instead of `grep` for searching.
   - Use `fd` instead of `find` for locating files.
