@@ -7,6 +7,31 @@
       },
       "exposure": "codemode",
       "description": "Exa web search and page fetching; discover tools through codemode only when web research is needed."
+    },
+    "firefox-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mozilla/firefox-devtools-mcp@latest",
+        "--tool-preset",
+        "developer"
+      ],
+      "exposure": "codemode",
+      "description": "Control a separate Firefox session and inspect web pages with Firefox DevTools."
+    },
+    "zen-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@mozilla/firefox-devtools-mcp@latest",
+        "--firefox-path",
+        "/Applications/Zen.app/Contents/MacOS/zen",
+        "--auto-profile",
+        "--tool-preset",
+        "developer"
+      ],
+      "exposure": "codemode",
+      "description": "Open a visible Zen session with a persistent dedicated profile for shared browsing and debugging."
     }
   }
 }
