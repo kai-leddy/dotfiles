@@ -1,12 +1,17 @@
 /**
- * Startup header, shown above the chat: model, thinking level, working
- * directory and a few useful commands. It replaces Pi's logo and key hints.
+ * Startup header, shown above the chat. It replaces Pi's logo and key hints:
+ *
+ *   󰏿  (󰚩 claude-opus-5-5  󰧑 󰪣 high)
+ *      ( ~/src/app)
+ *      /model  /settings  /resume  /tree  /hotkeys  /kai-ui
  */
 
 import type { ExtensionAPI, ExtensionContext, ExtensionUIContext } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
-import { shortenPath } from "./format.ts";
+import { icons } from "./icons.ts";
 import { paint } from "./palette.ts";
+import { cwdSegment, join, modelSegment, thinkingSegment } from "./segments.ts";
+import { pill } from "./widgets.ts";
 
 type HeaderFactory = NonNullable<Parameters<ExtensionUIContext["setHeader"]>[0]>;
 
@@ -16,16 +21,10 @@ export function createHeader(pi: ExtensionAPI, ctx: ExtensionContext): HeaderFac
 	return (_tui, theme) => ({
 		// Reads the model and thinking level on every render, so it never shows stale values.
 		render(width: number): string[] {
-			const dot = paint(theme, "overlay", " · ");
-			const level = pi.getThinkingLevel();
-			const model = ctx.model
-				? paint(theme, "blue", ctx.model.id) + (ctx.model.reasoning ? dot + theme.getThinkingBorderColor(level)(level) : "")
-				: paint(theme, "subtext", "no model selected");
-
 			const lines = [
 				"",
-				` ${paint(theme, "mauve", theme.bold("π"))}  ${model}`,
-				`    ${paint(theme, "sapphire", shortenPath(ctx.cwd))}`,
+				` ${paint(theme, "mauve", theme.bold(icons.pi))}  ${pill(theme, join([modelSegment(theme, ctx), thinkingSegment(theme, pi, ctx, true)]))}`,
+				`    ${pill(theme, cwdSegment(theme, ctx.cwd))}`,
 				`    ${paint(theme, "overlay", COMMANDS.join("  "))}`,
 				"",
 			];

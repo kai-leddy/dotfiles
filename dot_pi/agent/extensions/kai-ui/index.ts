@@ -2,9 +2,12 @@
  * kai-ui: a small UI layer for Pi, coloured from the active (Catppuccin) theme.
  *
  * - header.ts   startup header: model, thinking level, cwd, commands
- * - footer.ts   cwd, git, runtime, model, context, tokens, cost, turn stats, extension statuses
- * - editor.ts   rounded frame around the input, with a ❯ prompt
- * - tools.ts    one-line rows for built-in tool calls; Ctrl+O shows Pi's full output
+ * - footer.ts   pills: cwd, git, runtime, model, thinking, context bar, tokens, cache, cost; extension statuses
+ * - editor.ts   rounded frame around the input, with a  prompt and the turn stats on its top rule
+ * - tools.ts    tool cards with icons and one-line summaries, codemode's nested calls too; Ctrl+O shows Pi's full output
+ * - segments.ts the pieces the header, footer and editor show
+ * - widgets.ts  pills, progress bar, sparkline
+ * - icons.ts    Nerd Font glyphs by meaning
  * - palette.ts  Catppuccin names for theme tokens, and the spinner
  * - project.ts  git status and runtime detection
  * - stats.ts    tokens/s, time to first token, run duration
@@ -17,10 +20,12 @@ import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-a
 import { FramedEditor } from "./editor.ts";
 import { createFooter } from "./footer.ts";
 import { createHeader } from "./header.ts";
+import { icons } from "./icons.ts";
 import { spinnerFrames } from "./palette.ts";
 import { Project } from "./project.ts";
+import { speedSegment } from "./segments.ts";
 import { TurnStats } from "./stats.ts";
-import { registerCompactTools } from "./tools.ts";
+import { registerToolCards } from "./tools.ts";
 
 export default function kaiUi(pi: ExtensionAPI) {
 	let enabled = true;
@@ -29,8 +34,10 @@ export default function kaiUi(pi: ExtensionAPI) {
 
 	function install(ctx: ExtensionContext): void {
 		ctx.ui.setHeader(createHeader(pi, ctx));
-		ctx.ui.setFooter(createFooter(pi, ctx, project, stats));
-		ctx.ui.setEditorComponent((tui, theme, keybindings) => new FramedEditor(tui, theme, keybindings));
+		ctx.ui.setFooter(createFooter(pi, ctx, project));
+		ctx.ui.setEditorComponent(
+			(tui, theme, keybindings) => new FramedEditor(tui, theme, keybindings, () => speedSegment(ctx.ui.theme, stats)),
+		);
 		ctx.ui.setWorkingIndicator({ frames: spinnerFrames(ctx.ui.theme), intervalMs: 80 });
 	}
 
@@ -42,9 +49,9 @@ export default function kaiUi(pi: ExtensionAPI) {
 	}
 
 	// Rendering hooks: registered once, and they check `enabled` themselves.
-	registerCompactTools(pi, () => enabled);
+	registerToolCards(pi, () => enabled);
 	pi.registerMarkdownTransformer((markdown, { messageType }) =>
-		enabled && messageType === "user" && markdown.trim() !== "" ? `❯ ${markdown}` : markdown,
+		enabled && messageType === "user" && markdown.trim() !== "" ? `${icons.prompt} ${markdown}` : markdown,
 	);
 
 	pi.on("session_start", (_event, ctx) => {

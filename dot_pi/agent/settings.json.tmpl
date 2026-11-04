@@ -11,6 +11,9 @@
   "defaultTools": [
     "+codemode"
   ],
+  "codemode": {
+    "mode": "only"
+  },
   "defaultProvider": {{ ternary "\"anthropic\"" "\"github-copilot\"" $isWorkLaptop }},
   "defaultModel": {{ ternary "\"claude-opus-5-5\"" "\"gpt-6-luna\"" $isWorkLaptop }},
   "enabledModels": [{{ if $isWorkLaptop }}

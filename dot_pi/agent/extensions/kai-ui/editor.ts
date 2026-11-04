@@ -1,31 +1,40 @@
 /**
- * Input box: Pi's editor in a rounded frame, with a ❯ prompt.
+ * Input box: Pi's editor in a rounded frame, with a  prompt and a label
+ * on the right of the top rule (index.ts passes the turn stats).
  *
- *   ╭──── ⠋ Working... ───────────────╮
- *   │ ❯ first line of the prompt      │
+ *   ╭──── ⠋ Working... ────  38 t/s ▂▄▆  󰔟 1.2s ─╮
+ *   │  first line of the prompt      │
  *   │   wrapped or second line        │
  *   ╰─────────────────────────────────╯
  *
  * It extends Pi's CustomEditor, so every key binding and agent control keeps
  * working. Pi sets `borderColor` from the thinking level (or bash mode), so
- * the frame and the ❯ follow it. The working spinner and scroll hints that Pi
+ * the frame and the  follow it. The working spinner and scroll hints that Pi
  * draws in the editor's top and bottom rules end up inside the frame.
  */
 
 import { CustomEditor, type KeybindingsManager } from "@earendil-works/pi-coding-agent";
-import type { EditorTheme, TUI, TuiMouseEvent, TuiMouseEventResult } from "@earendil-works/pi-tui";
+import { type EditorTheme, type TUI, type TuiMouseEvent, type TuiMouseEventResult, visibleWidth } from "@earendil-works/pi-tui";
+import { icons } from "./icons.ts";
 
-const PROMPT = "❯";
-/** Columns left of the text: "│ ❯ " */
+/** Columns left of the text: "│  " */
 const LEFT = 4;
 /** Columns right of the text: " │" */
 const RIGHT = 2;
+/** Narrowest the rest of the top rule may get before the label is dropped. */
+const MIN_RULE = 20;
 
 export class FramedEditor extends CustomEditor {
 	/** The last bottom rule, used to find where the text rows end. */
 	private bottomBorder = "";
 
-	constructor(tui: TUI, theme: EditorTheme, keybindings: KeybindingsManager) {
+	constructor(
+		tui: TUI,
+		theme: EditorTheme,
+		keybindings: KeybindingsManager,
+		/** Coloured text for the right of the top rule, read on every render. */
+		private readonly topRightLabel: () => string | undefined = () => undefined,
+	) {
 		super(tui, theme, keybindings, { embedWorkingStatus: true });
 	}
 
@@ -41,13 +50,20 @@ export class FramedEditor extends CustomEditor {
 			if (i === 0 || i === bottom) return line;
 			// Autocomplete suggestions sit below the frame, lined up with the text.
 			if (i > bottom) return " ".repeat(LEFT) + line;
-			const gutter = i === 1 ? this.borderColor(PROMPT) : " ";
+			const gutter = i === 1 ? this.borderColor(icons.prompt) : " ";
 			return `${side} ${gutter} ${line} ${side}`;
 		});
 	}
 
 	protected override renderTopBorder(width: number, hiddenLineCount: number): string {
-		return this.borderColor("╭───") + super.renderTopBorder(width, hiddenLineCount) + this.borderColor("─╮");
+		const label = this.topRightLabel();
+		const labelWidth = label ? visibleWidth(label) + 2 : 0;
+		if (!label || width - labelWidth < MIN_RULE) {
+			return this.borderColor("╭───") + super.renderTopBorder(width, hiddenLineCount) + this.borderColor("─╮");
+		}
+		// Pi draws its part of the rule (spinner, scroll hint) narrower, leaving room for the label.
+		const rule = super.renderTopBorder(width - labelWidth, hiddenLineCount);
+		return `${this.borderColor("╭───")}${rule} ${label} ${this.borderColor("─╮")}`;
 	}
 
 	protected override renderBottomBorder(width: number, hiddenLineCount: number): string {

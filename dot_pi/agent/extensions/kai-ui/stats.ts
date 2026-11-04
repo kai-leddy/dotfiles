@@ -5,11 +5,15 @@
  * index.ts feeds this from Pi's lifecycle events; the footer reads it.
  */
 
+const HISTORY_LENGTH = 10;
+
 export class TurnStats {
 	/** Output tokens per second of the last response, once it finished. */
 	tokensPerSecond: number | undefined;
 	/** Time from the start of the last turn to its first streamed token. */
 	timeToFirstTokenMs: number | undefined;
+	/** Tokens per second of recent responses, oldest first, for the sparkline. */
+	readonly speedHistory: number[] = [];
 
 	private runStartedAt: number | undefined;
 	private runEndedAt: number | undefined;
@@ -46,7 +50,10 @@ export class TurnStats {
 		if (this.firstTokenAt === undefined) return;
 		const seconds = (Date.now() - this.firstTokenAt) / 1000;
 		// Very short responses give meaningless rates.
-		if (seconds >= 0.25 && outputTokens > 0) this.tokensPerSecond = outputTokens / seconds;
+		if (seconds < 0.25 || outputTokens === 0) return;
+		this.tokensPerSecond = outputTokens / seconds;
+		this.speedHistory.push(this.tokensPerSecond);
+		if (this.speedHistory.length > HISTORY_LENGTH) this.speedHistory.shift();
 	}
 
 	/** Length of the current run while it's going, or of the last one afterwards. */

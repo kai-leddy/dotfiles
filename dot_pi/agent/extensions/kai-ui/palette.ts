@@ -8,6 +8,7 @@
  */
 
 import type { Theme, ThemeColor } from "@earendil-works/pi-coding-agent";
+import { spinner } from "./icons.ts";
 
 export const catppuccin = {
 	mauve: "accent",
@@ -32,10 +33,9 @@ export function paint(theme: Theme, color: CatppuccinColor, text: string): strin
 	return theme.fg(catppuccin[color], text);
 }
 
-const SPINNER = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
-const RAINBOW: CatppuccinColor[] = ["mauve", "pink", "red", "peach", "yellow", "green", "teal", "sky", "sapphire", "blue"];
+const RAINBOW: CatppuccinColor[] = ["mauve", "pink", "peach", "yellow", "green", "sky"];
 
-/** Braille spinner whose colour walks through the Catppuccin accents, one per frame. */
+/** Nerd Fonts' spinner, with its colour walking through the Catppuccin accents, one per frame. */
 export function spinnerFrames(theme: Theme): string[] {
-	return SPINNER.map((frame, i) => paint(theme, RAINBOW[i % RAINBOW.length]!, frame));
+	return spinner.map((frame, i) => paint(theme, RAINBOW[i % RAINBOW.length]!, frame));
 }
