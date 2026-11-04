@@ -1,3 +1,3 @@
 function pr-desc
-    pi -p /skill:pr-description
+    pi-bolt -p /skill:pr-description
 end

@@ -1,20 +1,20 @@
-function cz-reconcile --description 'Ask pi to fold live-file drift back into chezmoi templates'
+function cz-reconcile --description 'Ask pi-bolt to fold live-file drift back into chezmoi templates'
     argparse h/help n/dry-run 'm/model=' -- $argv; or return 1
 
     if set -q _flag_help
         echo 'usage: cz-reconcile [-n|--dry-run] [-m|--model MODEL] [TARGET...]'
         echo
-        echo 'For each drifted chezmoi file whose source is a template (*.tmpl), ask pi'
+        echo 'For each drifted chezmoi file whose source is a template (*.tmpl), ask pi-bolt'
         echo 'to edit the template so that `chezmoi apply` keeps the live changes.'
         echo 'With no TARGET, every drifted template is processed. Non-template files'
         echo 'are skipped; use `chezmoi re-add` for those.'
         echo
         echo '  -n, --dry-run   list the templates that would be reconciled, then exit'
-        echo '  -m, --model     model pattern passed to pi'
+        echo '  -m, --model     model pattern passed to pi-bolt'
         return 0
     end
 
-    for tool in chezmoi pi
+    for tool in chezmoi pi-bolt
         if not command -q $tool
             echo "cz-reconcile: $tool not found in PATH" >&2
             return 1
@@ -88,7 +88,7 @@ Rules:
 
         echo
         echo "==> Reconciling $target"
-        pi $pi_args $prompt
+        pi-bolt $pi_args $prompt
 
         if test -n "$(command chezmoi diff --no-pager --color=false $target | string collect)"
             echo "cz-reconcile: $target still differs from its template" >&2
