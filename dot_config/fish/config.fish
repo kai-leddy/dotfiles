@@ -47,8 +47,13 @@ if test (uname) = Darwin
     set local_bin $HOME/.local/bin
     set go_bin $GOBIN
     set cargo_bin $HOME/.cargo/bin
+    # Global, not universal: fish_variables is synced between machines by
+    # chezmoi, so a universal list collected every machine's paths. --move
+    # keeps this order even when a directory is already on PATH.
     # NOTE: make sure homebrew is last
-    fish_add_path --universal $gnu_sed $gnu_grep $android_path $composer $mint $local_bin $go_bin $cargo_bin /opt/homebrew/bin /opt/homebrew/sbin
+    fish_add_path --global --move $gnu_sed $gnu_grep $android_path $local_bin $go_bin $cargo_bin /opt/homebrew/bin /opt/homebrew/sbin
+    # Old pip --user tools (grip, dog, flask), behind Homebrew so its pip3 wins
+    fish_add_path --global --move --append $HOME/Library/Python/3.9/bin
 
     # pnpm
     set -gx PNPM_HOME /Users/kaileddy/Library/pnpm
@@ -61,7 +66,7 @@ else
     set local_bin $HOME/.local/bin
     set go_bin $GOBIN
     set cargo_bin $HOME/.cargo/bin
-    fish_add_path --universal $local_bin $go_bin $cargo_bin
+    fish_add_path --global --move $local_bin $go_bin $cargo_bin
 
     # pnpm for Linux
     set -gx PNPM_HOME $HOME/.local/share/pnpm
