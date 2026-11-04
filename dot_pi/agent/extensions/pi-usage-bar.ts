@@ -284,14 +284,21 @@ function renderGauge(gauge: Gauge, theme: any): string {
   if (gauge.label === "DeepInfra")
     return `\x1b[1mDeepInfra\x1b[22m ${gauge.detail ?? "balance unavailable"}`;
   // Show quota remaining: the bar starts full and drains as usage grows.
-  const percent =
+  const exact =
     100 - Math.max(0, Math.min(100, (gauge.used / gauge.limit) * 100));
+  // Trim float noise first (0.07 * 100 = 7.000000000000001) so a whole
+  // number isn't rounded to the one next to it.
+  const trimmed = Math.round(exact * 1e6) / 1e6;
+  // The number rounds down, like the sketchybar pill, so it never shows more
+  // than is actually left.
+  const percent = Math.floor(trimmed);
   const color = percent < 15 ? "error" : percent <= 50 ? "warning" : "success";
-  const filled = Math.round(percent / 10);
+  // The bar rounds to the nearest block (10%).
+  const filled = Math.round(trimmed / 10);
   const bar = "▓".repeat(filled) + "░".repeat(10 - filled);
   const remaining =
     gauge.remaining === undefined ? "" : ` $${gauge.remaining.toFixed(2)}`;
-  return `${theme.fg(color, bar)} \x1b[1m${gauge.label === "Copilot" ? "󰊤 Copilot" : gauge.label}\x1b[22m${remaining} \x1b[3m${percent.toFixed(0)}%\x1b[23m`;
+  return `${theme.fg(color, bar)} \x1b[1m${gauge.label === "Copilot" ? "󰊤 Copilot" : gauge.label}\x1b[22m${remaining} \x1b[3m${percent}%\x1b[23m`;
 }
 
 function gaugeKey(provider: string): string {

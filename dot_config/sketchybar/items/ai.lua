@@ -46,7 +46,8 @@ local function format(quota)
 		end
 		return string.format("$%.1f", math.floor(left * 10) / 10)
 	end
-	return string.format("%d%%", math.floor(left))
+	-- Trim float noise first, the same way the pi usage bar does, so both agree.
+	return string.format("%d%%", math.floor(math.floor(left * 1e6 + 0.5) / 1e6))
 end
 
 local poll = sbar.add("item", "ai.poll", {
