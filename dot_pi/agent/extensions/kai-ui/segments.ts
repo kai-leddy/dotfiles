@@ -21,9 +21,9 @@ export function join(parts: Part[], sep = "  "): string {
 	return parts.filter(Boolean).join(sep);
 }
 
-/** A dim dot between the segments of a footer or header line. */
-export function separator(theme: Theme): string {
-	return ` ${paint(theme, "overlay", icons.dot)} `;
+/** The gap between the segments of a footer, header or input box line. Each starts with its own icon, so no bullet is needed. */
+export function separator(_theme: Theme): string {
+	return "  ";
 }
 
 /** The working directory, with a folder icon. */
@@ -71,7 +71,7 @@ export function thinkingSegment(theme: Theme, pi: ExtensionAPI, ctx: ExtensionCo
 export function contextSegment(theme: Theme, ctx: ExtensionContext): string | undefined {
 	const usage = ctx.getContextUsage();
 	if (!usage) return undefined;
-	const size = paint(theme, "overlay", formatCount(usage.contextWindow));
+	const size = paint(theme, "text", formatCount(usage.contextWindow));
 	if (usage.percent === null) return `${paint(theme, "subtext", `${icons.context} ? `)}${size}`;
 
 	const color: CatppuccinColor = usage.percent >= 80 ? "red" : usage.percent >= 50 ? "yellow" : "green";
@@ -98,8 +98,8 @@ export function usageSegment(theme: Theme, ctx: ExtensionContext): string | unde
 	if (prompt + total.output === 0) return undefined;
 
 	return join([
-		paint(theme, "subtext", `${icons.tokensIn} ${formatCount(prompt)}`),
-		paint(theme, "subtext", `${icons.tokensOut} ${formatCount(total.output)}`),
+		paint(theme, "sky", `${icons.tokensIn} ${formatCount(prompt)}`),
+		paint(theme, "sapphire", `${icons.tokensOut} ${formatCount(total.output)}`),
 		total.cacheRead > 0 && cacheHitRate(theme, total.cacheRead / prompt),
 		paint(theme, "peach", `${icons.cost} ${total.cost.toFixed(2)}`),
 	]);

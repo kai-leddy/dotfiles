@@ -1,11 +1,12 @@
 /**
  * Input box: Pi's editor in a rounded frame, with a  prompt and a label
- * on the right of the top rule (index.ts passes the turn stats).
+ * on the right of the top rule and one on the left of the bottom rule (index.ts passes the turn
+ * stats, and the model with its thinking level).
  *
  *   ╭──── ⠋ Working... ────  38 t/s ▂▄▆  󰔟 1.2s ─╮
  *   │  first line of the prompt      │
  *   │   wrapped or second line        │
- *   ╰─────────────────────────────────╯
+ *   ╰─── claude-sonnet-5-5  high ───────────────╯
  *
  * It extends Pi's CustomEditor, so every key binding and agent control keeps
  * working. Pi sets `borderColor` from the thinking level (or bash mode), so
@@ -32,8 +33,13 @@ export class FramedEditor extends CustomEditor {
 		tui: TUI,
 		theme: EditorTheme,
 		keybindings: KeybindingsManager,
-		/** Coloured text for the right of the top rule, read on every render. */
-		private readonly topRightLabel: () => string | undefined = () => undefined,
+		/**
+		 * Coloured text for the right of the top rule, read on every render. It gets the columns
+		 * it may use and returns something that fits, or nothing.
+		 */
+		private readonly topRightLabel: (maxWidth: number) => string | undefined = () => undefined,
+		/** Same for the left of the bottom rule. */
+		private readonly bottomLeftLabel: (maxWidth: number) => string | undefined = () => undefined,
 	) {
 		super(tui, theme, keybindings, { embedWorkingStatus: true });
 	}
@@ -56,7 +62,7 @@ export class FramedEditor extends CustomEditor {
 	}
 
 	protected override renderTopBorder(width: number, hiddenLineCount: number): string {
-		const label = this.topRightLabel();
+		const label = this.topRightLabel(Math.max(0, width - MIN_RULE - 2));
 		const labelWidth = label ? visibleWidth(label) + 2 : 0;
 		if (!label || width - labelWidth < MIN_RULE) {
 			return this.borderColor("╭───") + super.renderTopBorder(width, hiddenLineCount) + this.borderColor("─╮");
@@ -67,7 +73,15 @@ export class FramedEditor extends CustomEditor {
 	}
 
 	protected override renderBottomBorder(width: number, hiddenLineCount: number): string {
-		this.bottomBorder = this.borderColor("╰───") + super.renderBottomBorder(width, hiddenLineCount) + this.borderColor("─╯");
+		const label = this.bottomLeftLabel(Math.max(0, width - MIN_RULE - 2));
+		const labelWidth = label ? visibleWidth(label) + 2 : 0;
+		if (!label || width - labelWidth < MIN_RULE) {
+			this.bottomBorder = this.borderColor("╰───") + super.renderBottomBorder(width, hiddenLineCount) + this.borderColor("─╯");
+		} else {
+			// Pi draws its part of the rule (scroll hint) narrower, leaving room for the label.
+			const rule = super.renderBottomBorder(width - labelWidth, hiddenLineCount);
+			this.bottomBorder = `${this.borderColor("╰───")} ${label} ${rule}${this.borderColor("─╯")}`;
+		}
 		return this.bottomBorder;
 	}
 

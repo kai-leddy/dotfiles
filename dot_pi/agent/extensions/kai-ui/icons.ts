@@ -33,6 +33,9 @@ export const icons = {
 	cancelled: "\uf05e", // ban
 	running: "\uf141", // ellipsis
 	tool: "\uf013", // cog, for tools without their own icon
+	lsp: "\uf121", // code, for the language server status
+	agents: "\uf0c0", // people, for running subagents
+	cleanup: "\u{f00e2}", // broom, for pi-blackhole's memory cleanup
 } as const;
 
 /** Nerd Fonts' progress-bar pieces: [left end, middle, right end]. */
