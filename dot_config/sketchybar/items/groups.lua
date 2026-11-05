@@ -2,6 +2,6 @@
 -- left-to-right order.
 return {
 	system = { "items.cpu", "items.mem" },
-	toggles = { "items.colima", "items.caffeinate", "items.tailscale", "items.vpn" },
+	toggles = { "items.colima", "items.caffeinate", "items.vpn" },
 	hardware = { "items.wifi", "items.bluetooth", "items.volume", "items.battery" },
 }
