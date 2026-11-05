@@ -70,12 +70,11 @@ compile it in once it settles: `pb compile --include kai-ui`.
 ## Diagnosing a flash or dropped keystrokes
 
 ```fish
-env PI_TUI_DEBUG_REDRAW=1 PI_VOICE_DEBUG=1 PI_TUI_WRITE_LOG=/tmp/pi-tui-raw.log pb
+env PI_TUI_DEBUG_REDRAW=1 PI_TUI_WRITE_LOG=/tmp/pi-tui-raw.log pb
 ```
 
 - `~/.pi/agent/pi-tui-debug.log` gets one line per full-screen redraw (the flash), with the reason.
   A flash with no line there came from the terminal or herdr, not Pi.
-- `PI_VOICE_DEBUG` logs what pi-voicekit does with each space to `pi-voice-debug.log` in `$TMPDIR`.
 - `PI_TUI_WRITE_LOG` records everything Pi writes to the terminal.
 
 ## Limits of the public API

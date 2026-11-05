@@ -16,7 +16,6 @@ __pycache__
 .pi/agent/*
 !.pi/agent/AGENTS.md
 !.pi/agent/settings.json
-!.pi/agent/open-tui.json
 !.pi/agent/zentui.json
 !.pi/agent/extensions/
 !.pi/agent/extensions/*.ts
