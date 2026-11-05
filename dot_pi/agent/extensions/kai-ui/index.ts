@@ -2,12 +2,13 @@
  * kai-ui: a small UI layer for Pi, coloured from the active (Catppuccin) theme.
  *
  * - header.ts   startup header: model, thinking level, cwd, commands
- * - footer.ts   pills: cwd, git, runtime, model, thinking, context bar, tokens, cache, cost; extension statuses
+ * - footer.ts   cwd, git, runtime, model, thinking, context bar, tokens, cache, cost; extension statuses
  * - editor.ts   rounded frame around the input, with a  prompt and the turn stats on its top rule
  * - tools.ts    tool cards with icons and one-line summaries, codemode's nested calls too; Ctrl+O shows Pi's full output
  * - segments.ts the pieces the header, footer and editor show
- * - widgets.ts  pills, progress bar, sparkline
+ * - widgets.ts  progress bar, sparkline
  * - icons.ts    Nerd Font glyphs by meaning
+ * - brands.ts   model logos (Claude, GitHub, OpenAI, Google...)
  * - palette.ts  Catppuccin names for theme tokens, and the spinner
  * - project.ts  git status and runtime detection
  * - stats.ts    tokens/s, time to first token, run duration

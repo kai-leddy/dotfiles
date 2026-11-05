@@ -6,9 +6,9 @@
  *    bash npm test  exit 1  3.1s
  *   󰯁 codemode  3 calls  1.3s
  *
- * Built-in tools show nothing else until expanded. codemode adds its script
- * (the first lines, all of them when expanded) and its nested calls in the
- * same style, plus the script's output when it failed or is expanded.
+ * Built-in tools show nothing else until expanded. codemode adds its nested
+ * calls in the same style. Its script and output show when expanded, and the
+ * output also when the script failed.
  *
  * Expand with Ctrl+O, or a click. Only the drawing changes; the tools
  * themselves are untouched.
@@ -108,8 +108,9 @@ function styleFor(name: string): ToolStyle {
 	return { icon, color, summary: firstString };
 }
 
-/** Lines of a codemode script a collapsed card shows. */
-const SCRIPT_LINES_SHOWN = 10;
+/** Spaces between a tool's icon and its name; the glyphs are wide, so one looks cramped. */
+const ICON_GAP = "  ";
+
 /** How many nested codemode calls a collapsed card lists: the latest ones. */
 const NESTED_CALLS_SHOWN = 8;
 /** Lines of a failed script's output a collapsed card shows. */
@@ -213,8 +214,9 @@ function codemodeRenderers(): ToolRenderers {
 			// Pi calls renderResult right after this, which adds the outcome and duration.
 			state.header ??= new Row();
 			state.header.parts = describeCall(theme, "codemode", CODEMODE, {}, {});
+			if (!context.expanded) return state.header;
 			const script = String((args as Args).code ?? "").replace(/\r/g, "").replace(/\t/g, "  ").trimEnd();
-			return stack(state.header, new Spacer(1), scriptPreview(theme, script, context));
+			return stack(state.header, new Spacer(1), new Text(highlightCode(script, "javascript").join("\n"), 0, 0));
 		},
 
 		renderResult(result, options, theme, context) {
@@ -248,14 +250,6 @@ function codemodeRenderers(): ToolRenderers {
 			return body;
 		},
 	};
-}
-
-/** The script, syntax-highlighted; only its first lines while collapsed. */
-function scriptPreview(theme: Theme, script: string, context: ToolRenderContext): Component {
-	const lines = highlightCode(script, "javascript");
-	if (context.expanded || lines.length <= SCRIPT_LINES_SHOWN) return new Text(lines.join("\n"), 0, 0);
-	const hint = paint(theme, "subtext", `${icons.running} ${lines.length - SCRIPT_LINES_SHOWN} more lines, ctrl+o to expand`);
-	return new Text([...lines.slice(0, SCRIPT_LINES_SHOWN), hint].join("\n"), 0, 0);
 }
 
 /** The script's own output, without codemode's "Script completed / Wall time / Output:" header. */
@@ -311,7 +305,7 @@ interface CallInfo {
 
 function describeCall(theme: Theme, name: string, style: ToolStyle, args: Args, info: CallInfo): RowParts {
 	const nested = info.status !== undefined;
-	const label = paint(theme, style.color, `${style.icon} ${nested ? name : theme.bold(name)}`);
+	const label = paint(theme, style.color, `${style.icon}${ICON_GAP}${nested ? name : theme.bold(name)}`);
 	const meta = [
 		info.outcome && paint(theme, info.failed ? "red" : "subtext", info.outcome),
 		info.durationMs !== undefined && paint(theme, "overlay", formatDuration(info.durationMs)),

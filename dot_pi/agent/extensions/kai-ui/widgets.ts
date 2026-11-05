@@ -1,21 +1,11 @@
 /**
- * Small graphics built from text: pills, a progress bar and a sparkline.
- * Each returns a coloured string.
+ * Small graphics built from text: a progress bar and a sparkline. Each
+ * returns a coloured string.
  */
 
 import type { Theme } from "@earendil-works/pi-coding-agent";
-import { icons, progress } from "./icons.ts";
+import { progress } from "./icons.ts";
 import { type CatppuccinColor, paint } from "./palette.ts";
-
-/**
- * `content` on a rounded background, like a status-bar pill. Colours
- * inside `content` are fine; only foreground colours should be used there,
- * because a background reset would end the pill early.
- */
-export function pill(theme: Theme, content: string): string {
-	const cap = (glyph: string) => theme.style(glyph, { fg: theme.colors.selectedBg });
-	return cap(icons.pillLeft) + theme.bg("selectedBg", ` ${content} `) + cap(icons.pillRight);
-}
 
 /** Nerd Fonts' progress bar, `cells` wide, filled for `fraction` (0 to 1), rounded to the nearest cell. */
 export function progressBar(theme: Theme, fraction: number, cells: number, color: CatppuccinColor): string {

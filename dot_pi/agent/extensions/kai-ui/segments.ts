@@ -1,13 +1,14 @@
 /**
- * The pieces the footer and header are made of. Each returns a coloured
- * string, or undefined when there is nothing to show; footer.ts and
- * header.ts decide where they go.
+ * The pieces the header, footer and editor are made of. Each returns a
+ * coloured string, or undefined when there is nothing to show; footer.ts,
+ * header.ts and index.ts decide where they go.
  */
 
 import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI, ExtensionContext, Theme } from "@earendil-works/pi-coding-agent";
+import { brandOf } from "./brands.ts";
 import { formatCount, formatDuration, shortenPath } from "./format.ts";
-import { icons, thinkingLevels } from "./icons.ts";
+import { icons } from "./icons.ts";
 import { type CatppuccinColor, paint } from "./palette.ts";
 import type { GitStatus, Runtime } from "./project.ts";
 import type { TurnStats } from "./stats.ts";
@@ -20,12 +21,17 @@ export function join(parts: Part[], sep = "  "): string {
 	return parts.filter(Boolean).join(sep);
 }
 
-/** ` ~/src/app` */
+/** A dim dot between the segments of a footer or header line. */
+export function separator(theme: Theme): string {
+	return ` ${paint(theme, "overlay", icons.dot)} `;
+}
+
+/** The working directory, with a folder icon. */
 export function cwdSegment(theme: Theme, cwd: string): string {
 	return paint(theme, "sapphire", `${icons.folder} ${shortenPath(cwd)}`);
 }
 
-/** ` main 1 2 +3 !4 ?5 ~1`: ahead, behind, staged, modified, untracked, conflicted. */
+/** Branch icon and name, then counts of ahead, behind, staged, modified, untracked and conflicted. */
 export function gitSegment(theme: Theme, branch: string | null, git: GitStatus | undefined): string | undefined {
 	if (!branch) return undefined;
 	const counts: Part[] = git
@@ -41,27 +47,27 @@ export function gitSegment(theme: Theme, branch: string | null, git: GitStatus |
 	return join([paint(theme, "mauve", `${icons.branch} ${branch}`), ...counts], " ");
 }
 
-/** ` 22.1.0`, with the runtime's own icon and colour. */
+/** The project's runtime version, with the runtime's own icon and colour. */
 export function runtimeSegment(theme: Theme, runtime: Runtime | undefined): string | undefined {
 	if (!runtime) return undefined;
 	return paint(theme, runtime.color, `${runtime.icon} ${runtime.version ?? runtime.name}`);
 }
 
-/** `󰚩 claude-opus-5-5` */
+/** The model's id, led by its maker's logo (see brands.ts). */
 export function modelSegment(theme: Theme, ctx: ExtensionContext): string {
 	if (!ctx.model) return paint(theme, "subtext", `${icons.model} no model`);
-	return paint(theme, "blue", `${icons.model} ${ctx.model.id}`);
+	const brand = brandOf(ctx.model.provider, ctx.model.id);
+	return `${paint(theme, brand.color, brand.icon)} ${paint(theme, "blue", ctx.model.id)}`;
 }
 
-/** `󰧑 󰪣`: a circle that fills up with the thinking level, in the level's colour. */
-export function thinkingSegment(theme: Theme, pi: ExtensionAPI, ctx: ExtensionContext, withLabel = false): string | undefined {
+/** A brain and the thinking level in words, in the level's colour. Nothing for models that don't think. */
+export function thinkingSegment(theme: Theme, pi: ExtensionAPI, ctx: ExtensionContext): string | undefined {
 	if (!ctx.model?.reasoning) return undefined;
 	const level = pi.getThinkingLevel();
-	const color = theme.getThinkingBorderColor(level);
-	return color(`${icons.thinking} ${thinkingLevels[level]}${withLabel ? ` ${level}` : ""}`);
+	return theme.getThinkingBorderColor(level)(`${icons.thinking} ${level}`);
 }
 
-/** `󰊚 ━━━━━━━━━━ 42% 1M`, going yellow from 50% and red from 80%. */
+/** A gauge, a progress bar, the percentage and the window size. Yellow from 50%, red from 80%. */
 export function contextSegment(theme: Theme, ctx: ExtensionContext): string | undefined {
 	const usage = ctx.getContextUsage();
 	if (!usage) return undefined;
@@ -74,8 +80,8 @@ export function contextSegment(theme: Theme, ctx: ExtensionContext): string | un
 }
 
 /**
- * `󰕒 12k  󰇚 3.4k  󱊩 94%  󰇁 0.42`: tokens sent and received, cache hit rate
- * and cost, totalled along the current branch.
+ * Tokens sent and received, the cache hit rate (database with a tick) and the
+ * cost, totalled along the current branch.
  */
 export function usageSegment(theme: Theme, ctx: ExtensionContext): string | undefined {
 	const total = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0 };
@@ -105,7 +111,7 @@ function cacheHitRate(theme: Theme, rate: number): string {
 	return paint(theme, color, `${icons.cache} ${Math.round(rate * 100)}%`);
 }
 
-/** ` 38 t/s ▂▄▆█▅  󰔟 1.2s  󰔛 8.4s`: speed and its recent history, time to first token, run time. */
+/** Tokens per second with its recent history, time to first token, and how long the run has taken. */
 export function speedSegment(theme: Theme, stats: TurnStats): string | undefined {
 	const { tokensPerSecond, timeToFirstTokenMs, runDurationMs, speedHistory } = stats;
 	return (
