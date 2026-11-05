@@ -19,9 +19,9 @@ local llms = {
   { name = "qwen3-235B-A22B", deepinfra_model = "Qwen/Qwen3-235B-A22B-Instruct-2507" },
   { name = "mimo-2.6-flash", deepinfra_model = "XiaomiMiMo/MiMo-V2.6-Flash" },
   { name = "copilot-gemini-flash-3.8", copilot_model = "gemini-3.8-flash" },
-  { name = "copilot-luna", copilot_model = "gpt-6-luna", reasoning_effort = "low" },
-  { name = "copilot-sol", copilot_model = "gpt-6-sol", reasoning_effort = "high" },
-  { name = "copilot-astra", copilot_model = "gpt-6-astra", reasoning_effort = "high" },
+  { name = "copilot-luna", copilot_model = "gpt-6-luna", reasoning_effort = "medium" },
+  { name = "copilot-terra", copilot_model = "gpt-6.1-terra", reasoning_effort = "high" },
+  { name = "copilot-sol", copilot_model = "gpt-6.1-sol", reasoning_effort = "high" },
 }
 
 local generated_agents = {}
