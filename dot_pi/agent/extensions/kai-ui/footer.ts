@@ -3,7 +3,7 @@
  * then the status text other extensions set with ctx.ui.setStatus(), shortened to icons
  * where statuses.ts has a rule for them.
  *
- *   folder, git branch and counts, runtime          context bar, tokens in and out, cache hit rate, cost
+ *   folder, git branch and counts, runtime          context bar, tokens in and out, cache hit rate, cost, usage quota
  *
  * The model, thinking level and turn stats sit on the input box's top rule instead (see index.ts).
  */
@@ -12,7 +12,7 @@ import type { ExtensionAPI, ExtensionContext, ExtensionUIContext } from "@earend
 import { truncateToWidth } from "@earendil-works/pi-tui";
 import { spread } from "./format.ts";
 import type { Project } from "./project.ts";
-import { statusSegment } from "./statuses.ts";
+import { quotaSegment, statusSegment } from "./statuses.ts";
 import {
 	contextSegment,
 	cwdSegment,
@@ -24,18 +24,9 @@ import {
 } from "./segments.ts";
 
 type FooterFactory = NonNullable<Parameters<ExtensionUIContext["setFooter"]>[0]>;
-/** What Pi lets a footer read: git branch and extension statuses. */
-export type FooterData = Parameters<FooterFactory>[2];
 
-export function createFooter(
-	_pi: ExtensionAPI,
-	ctx: ExtensionContext,
-	project: Project,
-	/** Called with the footer data, so the input box can read the extension statuses too. */
-	onFooterData: (data: FooterData | undefined) => void,
-): FooterFactory {
+export function createFooter(_pi: ExtensionAPI, ctx: ExtensionContext, project: Project): FooterFactory {
 	return (tui, theme, footerData) => {
-		onFooterData(footerData);
 		project.onUpdate = () => tui.requestRender();
 		const stopWatchingBranch = footerData.onBranchChange(() => void project.refreshGit());
 
@@ -45,7 +36,8 @@ export function createFooter(
 				const inner = width - 2; // a space of margin on each side
 
 				const location = join([cwdSegment(theme, ctx.cwd), gitSegment(theme, footerData.getGitBranch(), project.git), runtimeSegment(theme, project.runtime)], sep);
-				const usage = join([contextSegment(theme, ctx), usageSegment(theme, ctx)], sep);
+				const quota = quotaSegment(theme, footerData.getExtensionStatuses());
+				const usage = join([contextSegment(theme, ctx), usageSegment(theme, ctx), quota], sep);
 
 				const lines = [` ${spread(location, usage, inner)} `];
 
@@ -56,7 +48,6 @@ export function createFooter(
 			invalidate() {},
 			dispose() {
 				stopWatchingBranch();
-				onFooterData(undefined);
 				project.onUpdate = undefined;
 			},
 		};

@@ -2,7 +2,7 @@
  * kai-ui: a small UI layer for Pi, coloured from the active (Catppuccin) theme.
  *
  * - header.ts   startup header: model, thinking level, cwd, commands
- * - footer.ts   cwd, git, runtime on the left; context bar, tokens, cache, cost on the right; extension statuses
+ * - footer.ts   cwd, git, runtime on the left; context bar, tokens, cache, cost, usage quota on the right; extension statuses
  * - editor.ts   rounded frame around the input, with a  prompt and the turn stats on its top rule, the model and thinking level on its bottom rule
  * - tools.ts    tool cards with icons and one-line summaries, codemode's nested calls too; Ctrl+O shows Pi's full output
  * - segments.ts the pieces the header, footer and editor show
@@ -20,13 +20,12 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { visibleWidth } from "@earendil-works/pi-tui";
 import { FramedEditor } from "./editor.ts";
-import { createFooter, type FooterData } from "./footer.ts";
+import { createFooter } from "./footer.ts";
 import { createHeader } from "./header.ts";
 import { icons } from "./icons.ts";
 import { spinnerFrames } from "./palette.ts";
 import { Project } from "./project.ts";
 import { join, modelSegment, separator, speedSegment, thinkingSegment } from "./segments.ts";
-import { quotaSegment } from "./statuses.ts";
 import { TurnStats } from "./stats.ts";
 import { registerToolCards } from "./tools.ts";
 
@@ -39,11 +38,10 @@ export default function kaiUi(pi: ExtensionAPI) {
 	let enabled = true;
 	const stats = new TurnStats();
 	const project = new Project(pi);
-	let footerData: FooterData | undefined;
 
 	function install(ctx: ExtensionContext): void {
 		ctx.ui.setHeader(createHeader(pi, ctx));
-		ctx.ui.setFooter(createFooter(pi, ctx, project, (data) => (footerData = data)));
+		ctx.ui.setFooter(createFooter(pi, ctx, project));
 		ctx.ui.setEditorComponent(
 			(tui, theme, keybindings) =>
 				new FramedEditor(
@@ -51,19 +49,16 @@ export default function kaiUi(pi: ExtensionAPI) {
 					theme,
 					keybindings,
 					(maxWidth) => fitting(speedSegment(ctx.ui.theme, stats), maxWidth),
-					(maxWidth) => modelLabel(ctx, maxWidth),
+					(maxWidth) => fitting(modelLabel(ctx), maxWidth),
 				),
 		);
 		ctx.ui.setWorkingIndicator({ frames: spinnerFrames(ctx.ui.theme), intervalMs: 80 });
 	}
 
-	/** The model, its thinking level and the usage quota, for the left of the input box's bottom rule. */
-	function modelLabel(ctx: ExtensionContext, maxWidth: number): string | undefined {
+	/** The model and its thinking level, for the left of the input box's bottom rule. */
+	function modelLabel(ctx: ExtensionContext): string {
 		const theme = ctx.ui.theme;
-		const sep = separator(theme);
-		const model = join([modelSegment(theme, ctx), thinkingSegment(theme, pi, ctx)], sep);
-		const quota = footerData && quotaSegment(theme, footerData.getExtensionStatuses());
-		return fitting(join([model, quota], sep), maxWidth) ?? fitting(model, maxWidth);
+		return join([modelSegment(theme, ctx), thinkingSegment(theme, pi, ctx)], separator(theme));
 	}
 
 	function uninstall(ctx: ExtensionContext): void {

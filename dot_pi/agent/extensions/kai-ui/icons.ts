@@ -35,6 +35,7 @@ export const icons = {
 	tool: "\uf013", // cog, for tools without their own icon
 	lsp: "\uf121", // code, for the language server status
 	agents: "\uf0c0", // people, for running subagents
+	quota: "\u{f0584}", // wallet, for the usage quota left
 	cleanup: "\u{f00e2}", // broom, for pi-blackhole's memory cleanup
 } as const;
 

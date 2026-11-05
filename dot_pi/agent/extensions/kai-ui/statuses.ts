@@ -6,7 +6,7 @@
  * into an icon and a short value. Statuses without a rule are shown as they are.
  *
  * pi-usage-bar's quota gauge is not shown here: quotaSegment() puts its bar and percentage on the
- * input box instead (see index.ts).
+ * footer's right side, with the context and cost widgets (see footer.ts).
  *
  * To restyle another extension, add a rule keyed by the name it passes to
  * setStatus(); `text` is its message without colour codes.
@@ -62,7 +62,7 @@ const RULES: Record<string, StatusRule> = {
 		return `${paint(theme, "green", icons.cleanup)} ${gauges.join("  ")}${workers}`;
 	},
 
-	// pi-usage-bar: moved to the input box when it has a bar and a percentage (not for DeepInfra's balance).
+	// pi-usage-bar: moved to the footer's right side when it has a bar and a percentage (not for DeepInfra's balance).
 	[QUOTA_KEY]: (theme, text) => (parseQuota(theme, text) ? "" : undefined),
 };
 
@@ -74,17 +74,17 @@ function parseQuota(theme: Theme, text: string): string | undefined {
 	if (text.startsWith("DeepInfra")) {
 		const [, amount, state] = text.match(/\$([\d.]+) (available|owed)/) ?? [];
 		if (!amount) return undefined;
-		return state === "owed" ? paint(theme, "red", `$${amount} owed`) : paint(theme, "green", `$${amount}`);
+		return state === "owed" ? paint(theme, "red", `${icons.quota} $${amount} owed`) : paint(theme, "green", `${icons.quota} $${amount}`);
 	}
 	const percent = text.match(/(\d+)%/)?.[1];
 	const filled = text.match(/▓/g)?.length ?? 0;
 	if (percent === undefined || !/[▓░]/.test(text)) return undefined;
 	const left = Number(percent);
 	const color: CatppuccinColor = left < 15 ? "red" : left <= 50 ? "yellow" : "green";
-	return `${progressBar(theme, filled / 10, 10, color)} ${paint(theme, color, `${left}%`)}`;
+	return `${paint(theme, color, icons.quota)} ${progressBar(theme, filled / 10, 10, color)} ${paint(theme, color, `${left}%`)}`;
 }
 
-/** The usage quota for the input box, from the extension statuses; undefined when there is none to show. */
+/** The usage quota for the footer, from the extension statuses; undefined when there is none to show. */
 export function quotaSegment(theme: Theme, statuses: ReadonlyMap<string, string>): string | undefined {
 	const text = statuses.get(QUOTA_KEY);
 	return text ? parseQuota(theme, text.replace(ANSI, "")) : undefined;
