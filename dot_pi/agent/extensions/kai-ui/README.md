@@ -18,8 +18,7 @@ takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font g
 ╭───── ⠋ Working ────  38 t/s ▂▄▆  1.2s  8.4s ─╮    ← turn stats on the input's top rule
 │ > next prompt                                   │
 ╰─────────────────────────────────────────────────╯
- [folder] ~/src/app · [branch] main · [node] 22.1.0      [gauge] [progress bar] 42% 1M  [up] 140k [down] 3.4k [db-tick] 94% [usd] 0.42  [wallet] [progress bar] 62%
- [code] 2  [people] 1  <other extensions, as icons where statuses.ts has a rule>
+ [folder] ~/src/app  [branch] main  [node] 22.1.0  [code] LSP 2  [broom] O [bar] P [bar]     [gauge] [bar] 42% 1M  [up] 140k [down] 3.4k [db-tick] 94% [usd] 0.42  [wallet] [bar] 62%
 ```
 
 ## Files
@@ -28,7 +27,7 @@ takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font g
 |---|---|
 | `index.ts` | Wires everything up, feeds turn stats from Pi's events, adds `/kai-ui` |
 | `header.ts` | Startup header |
-| `footer.ts` | Footer layout: one row of segments, then other extensions' status text |
+| `footer.ts` | Footer layout: a single row, with other extensions' status text after the runtime |
 | `statuses.ts` | Rules that shorten other extensions' status text to icons (LSP, subagents, blackhole) and put the usage quota in the footer |
 | `editor.ts` | `FramedEditor`, a `CustomEditor` with a rounded frame, a prompt and a top-right label |
 | `segments.ts` | The pieces the header, footer and editor show: cwd, git, model, thinking, context, usage, speed |
