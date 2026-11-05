@@ -276,12 +276,41 @@ function nestedCallRow(theme: Theme, call: NestedCall, expanded: boolean): Compo
 	return stack(row, new Text(error.join("\n"), 0, 0));
 }
 
+/** Marks args recovered from a preview that codemode cut short, so summaries don't invent defaults. */
+const TRUNCATED = Symbol("truncated");
+
+/**
+ * Codemode records each nested call's arguments as a JSON preview cut at ~200 characters
+ * (ending in "..."), so anything longer isn't valid JSON. Recover the leading string
+ * fields (a bash command, a path) from the cut-off text instead of showing nothing.
+ */
 function parseArgs(json: string): Args {
 	try {
 		const args: unknown = JSON.parse(json);
 		return typeof args === "object" && args !== null ? (args as Args) : {};
 	} catch {
-		return {};
+		return salvageArgs(json);
+	}
+}
+
+function salvageArgs(preview: string): Args {
+	const args: Args = { [TRUNCATED]: true };
+	const text = preview.replace(/\.\.\.$/, "");
+	// `"key":"value"` pairs; the last value may be cut off mid-string.
+	for (const match of text.matchAll(/"([A-Za-z_]\w*)":"((?:[^"\\]|\\.)*)("|$)/g)) {
+		const [, key, raw, closing] = match;
+		if (Object.hasOwn(args, key!)) continue;
+		args[key!] = unescapeJson(raw!) + (closing ? "" : "\u2026");
+	}
+	return args;
+}
+
+function unescapeJson(raw: string): string {
+	try {
+		return JSON.parse(`"${raw}"`) as string;
+	} catch {
+		// A cut-off escape such as a trailing backslash.
+		return raw.replace(/\\n/g, "\n").replace(/\\"/g, '"').replace(/\\\\/g, "\\");
 	}
 }
 
@@ -360,6 +389,7 @@ function textOf(content: ReadonlyArray<{ type: string; text?: string }>): string
 }
 
 function path(args: Args): string {
+	if (args.path === undefined && (args as Record<symbol, unknown>)[TRUNCATED]) return "\u2026";
 	return shortenPath(String(args.path ?? "."));
 }
 
