@@ -6,7 +6,7 @@
 */ -}}
 {{- $isWorkLaptop := eq .machine "work-laptop" -}}
 {
-  "lastChangelogVersion": "1.4.0",
+  "lastChangelogVersion": "1.5.0",
   "theme": "catppuccin-mocha",
   "defaultTools": [
     "+codemode"
@@ -49,5 +49,11 @@
   "terminal": {
     "imageWidthCells": 120
   },
-  "shellPath": "{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/bash{{ else }}/usr/bin/bash{{ end }}"
+  "shellPath": "{{ if eq .chezmoi.os "darwin" }}/opt/homebrew/bin/bash{{ else }}/usr/bin/bash{{ end }}",
+  "extensionChangelogVersions": {
+    "{\"source\":\"npm:@watercol/pi-lens-simple\",\"scope\":\"user\"}": "1.0.0",
+    "{\"source\":\"npm:@gotgenes/pi-subagents\",\"scope\":\"user\"}": "25.0.5",
+    "{\"source\":\"npm:pi-blackhole\",\"scope\":\"user\"}": "0.5.17"
+  }
 }
+{{- "" }}
