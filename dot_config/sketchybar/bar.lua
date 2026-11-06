@@ -5,6 +5,8 @@ local settings = require("settings")
 sbar.bar({
 	height = settings.bar.height,
 	position = "top",
+	-- The macOS menu bar auto-hides; without this it steals clicks on the bar.
+	topmost = true,
 	-- edge_inset keeps the macOS privacy dot clear of the clock (settings.lua).
 	padding_left = settings.bar.item_padding + settings.bar.edge_inset,
 	padding_right = settings.bar.item_padding + settings.bar.edge_inset,
