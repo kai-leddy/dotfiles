@@ -63,13 +63,13 @@ The `devDependencies` are only for types and editor support; Pi supplies the rea
 npm install; and npm run check
 ```
 
-kai-ui is left out of `pi-bolt compile` (`--exclude kai-ui`) so edits load straight away. To
-compile it in once it settles: `pb compile --include kai-ui`.
+kai-ui is left out of `pi compile` (`--exclude kai-ui`) so edits load straight away. To
+compile it in once it settles: `pi compile --include kai-ui`.
 
 ## Diagnosing a flash or dropped keystrokes
 
 ```fish
-env PI_TUI_DEBUG_REDRAW=1 PI_TUI_WRITE_LOG=/tmp/pi-tui-raw.log pb
+env PI_TUI_DEBUG_REDRAW=1 PI_TUI_WRITE_LOG=/tmp/pi-tui-raw.log pi
 ```
 
 - `~/.pi/agent/pi-tui-debug.log` gets one line per full-screen redraw (the flash), with the reason.

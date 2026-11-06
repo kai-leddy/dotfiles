@@ -1,5 +1,5 @@
 # Fish completions for pi-bolt, the ahead-of-time compiled pi.
-# `alias pb pi-bolt` wraps pi-bolt, so these complete `pb` too.
+# `pi` is the same binary; see pi.fish.
 
 function __fish_pi_bolt_needs_subcommand
     set -l words (commandline -opc)

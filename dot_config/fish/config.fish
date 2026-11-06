@@ -91,9 +91,6 @@ alias g lazygit
 alias d lazydocker
 alias y 'lazygit -p $(chezmoi source-path)' # lazygit for chezmoi
 
-# Pi-Bolt, the ahead-of-time compiled pi (plain `pi` stays installed as a fallback)
-alias pb pi-bolt
-
 # Magic to make using `-` on its own work
 abbr -a -- - 'cd -'
 # Git abbreviations
