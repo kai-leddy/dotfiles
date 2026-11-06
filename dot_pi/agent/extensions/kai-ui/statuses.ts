@@ -62,6 +62,13 @@ const RULES: Record<string, StatusRule> = {
 		return `${paint(theme, "green", icons.cleanup)} ${gauges.join("  ")}${workers}`;
 	},
 
+	// pi-listen: idle "MIC LOCAL" becomes a mic and the mode; while holding, recording or transcribing the
+	// input box's top rule shows it instead (see voice.ts), so the footer says nothing.
+	voice: (theme, text) => {
+		const mode = text.match(/^MIC (LOCAL|STREAM|SETUP)$/)?.[1];
+		return mode ? badge(theme, mode === "SETUP" ? "yellow" : "subtext", icons.mic, mode.toLowerCase()) : "";
+	},
+
 	// pi-usage-bar: moved to the footer's right side when it has a bar and a percentage (not for DeepInfra's balance).
 	[QUOTA_KEY]: (theme, text) => (parseQuota(theme, text) ? "" : undefined),
 };

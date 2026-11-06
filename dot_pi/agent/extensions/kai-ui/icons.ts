@@ -37,6 +37,7 @@ export const icons = {
 	agents: "\uf0c0", // people, for running subagents
 	quota: "\u{f0584}", // wallet, for the usage quota left
 	cleanup: "\u{f00e2}", // broom, for pi-blackhole's memory cleanup
+	mic: "\u{f036c}", // microphone, for pi-listen
 } as const;
 
 /** Nerd Fonts' progress-bar pieces: [left end, middle, right end]. */

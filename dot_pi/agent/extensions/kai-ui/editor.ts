@@ -40,6 +40,8 @@ export class FramedEditor extends CustomEditor {
 		private readonly topRightLabel: (maxWidth: number) => string | undefined = () => undefined,
 		/** Same for the left of the bottom rule. */
 		private readonly bottomLeftLabel: (maxWidth: number) => string | undefined = () => undefined,
+		/** Same for the left of the top rule, before Pi's own spinner (pi-listen's hold and record state). */
+		private readonly topLeftLabel: (maxWidth: number) => string | undefined = () => undefined,
 	) {
 		super(tui, theme, keybindings, { embedWorkingStatus: true });
 	}
@@ -62,14 +64,27 @@ export class FramedEditor extends CustomEditor {
 	}
 
 	protected override renderTopBorder(width: number, hiddenLineCount: number): string {
-		const label = this.topRightLabel(Math.max(0, width - MIN_RULE - 2));
-		const labelWidth = label ? visibleWidth(label) + 2 : 0;
-		if (!label || width - labelWidth < MIN_RULE) {
-			return this.borderColor("╭───") + super.renderTopBorder(width, hiddenLineCount) + this.borderColor("─╮");
+		let room = width - MIN_RULE;
+		let left = this.topLeftLabel(Math.max(0, room - 2));
+		if (left) room -= visibleWidth(left) + 2;
+		let right = this.topRightLabel(Math.max(0, room - 2));
+		if (right) room -= visibleWidth(right) + 2;
+		// Drop labels that would squeeze Pi's part of the rule (the right one first).
+		if (room < 0) {
+			right = undefined;
+			left = left && width - visibleWidth(left) - 2 >= MIN_RULE ? left : undefined;
 		}
-		// Pi draws its part of the rule (spinner, scroll hint) narrower, leaving room for the label.
-		const rule = super.renderTopBorder(width - labelWidth, hiddenLineCount);
-		return `${this.borderColor("╭───")}${rule} ${label} ${this.borderColor("─╮")}`;
+		const leftWidth = left ? visibleWidth(left) + 2 : 0;
+		const rightWidth = right ? visibleWidth(right) + 2 : 0;
+		// Pi draws its part of the rule (spinner, scroll hint) narrower, leaving room for the labels.
+		const rule = super.renderTopBorder(width - leftWidth - rightWidth, hiddenLineCount);
+		return (
+			this.borderColor("╭───") +
+			(left ? ` ${left} ` : "") +
+			rule +
+			(right ? ` ${right} ` : "") +
+			this.borderColor("─╮")
+		);
 	}
 
 	protected override renderBottomBorder(width: number, hiddenLineCount: number): string {

@@ -29,6 +29,7 @@ takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font g
 | `header.ts` | Startup header |
 | `footer.ts` | Footer layout: a single row, with other extensions' status text after the runtime |
 | `statuses.ts` | Rules that shorten other extensions' status text to icons (LSP, subagents, blackhole) and put the usage quota in the footer |
+| `voice.ts` | Moves pi-listen's hold-to-talk island from below the editor onto the input's top rule (wraps `setWidget`/`setStatus` on the shared `ctx.ui`) |
 | `editor.ts` | `FramedEditor`, a `CustomEditor` with a rounded frame, a prompt and a top-right label |
 | `segments.ts` | The pieces the header, footer and editor show: cwd, git, model, thinking, context, usage, speed |
 | `brands.ts` | Which logo goes next to a model name (Claude, GitHub, OpenAI, Google, Azure, AWS) |

@@ -27,6 +27,7 @@ import { spinnerFrames } from "./palette.ts";
 import { Project } from "./project.ts";
 import { join, modelSegment, separator, speedSegment, thinkingSegment } from "./segments.ts";
 import { TurnStats } from "./stats.ts";
+import { attachVoice, detachVoice, VoiceIndicator } from "./voice.ts";
 import { registerToolCards } from "./tools.ts";
 
 /** A label if it fits in `maxWidth` columns, otherwise nothing. */
@@ -38,19 +39,25 @@ export default function kaiUi(pi: ExtensionAPI) {
 	let enabled = true;
 	const stats = new TurnStats();
 	const project = new Project(pi);
+	const voice = new VoiceIndicator();
 
 	function install(ctx: ExtensionContext): void {
+		attachVoice(ctx.ui, voice);
 		ctx.ui.setHeader(createHeader(pi, ctx));
 		ctx.ui.setFooter(createFooter(pi, ctx, project));
 		ctx.ui.setEditorComponent(
-			(tui, theme, keybindings) =>
-				new FramedEditor(
+			(tui, theme, keybindings) => {
+				voice.onChange = () => tui.requestRender();
+				return new FramedEditor(
 					tui,
 					theme,
 					keybindings,
 					(maxWidth) => fitting(speedSegment(ctx.ui.theme, stats), maxWidth),
 					(maxWidth) => fitting(modelLabel(ctx), maxWidth),
-				),
+					// pi-listen's hold/record state, left of Pi's working spinner.
+					(maxWidth) => fitting(voice.label(ctx.ui.theme), maxWidth),
+				);
+			},
 		);
 		ctx.ui.setWorkingIndicator({ frames: spinnerFrames(ctx.ui.theme), intervalMs: 80 });
 	}
@@ -62,6 +69,7 @@ export default function kaiUi(pi: ExtensionAPI) {
 	}
 
 	function uninstall(ctx: ExtensionContext): void {
+		detachVoice(ctx.ui, voice);
 		ctx.ui.setHeader(undefined);
 		ctx.ui.setFooter(undefined);
 		ctx.ui.setEditorComponent(undefined);
