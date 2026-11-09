@@ -77,7 +77,7 @@ const RULES: Record<string, StatusRule> = {
  * Quota left as a progress bar and a percentage, from pi-usage-bar's text ("▓▓▓░░ Copilot 42%"); for
  * DeepInfra, which has a balance instead, the dollar amount ("$3.00", or "$1.20 owed" in red).
  */
-function parseQuota(theme: Theme, text: string): string | undefined {
+function parseQuota(theme: Theme, text: string, barCells = 10): string | undefined {
 	if (text.startsWith("DeepInfra")) {
 		const [, amount, state] = text.match(/\$([\d.]+) (available|owed)/) ?? [];
 		if (!amount) return undefined;
@@ -88,13 +88,14 @@ function parseQuota(theme: Theme, text: string): string | undefined {
 	if (percent === undefined || !/[▓░]/.test(text)) return undefined;
 	const left = Number(percent);
 	const color: CatppuccinColor = left < 15 ? "red" : left <= 50 ? "yellow" : "green";
-	return `${paint(theme, color, icons.quota)} ${progressBar(theme, filled / 10, 10, color)} ${paint(theme, color, `${left}%`)}`;
+	const bar = barCells > 0 ? `${progressBar(theme, filled / 10, barCells, color)} ` : "";
+	return `${paint(theme, color, icons.quota)} ${bar}${paint(theme, color, `${left}%`)}`;
 }
 
 /** The usage quota for the footer, from the extension statuses; undefined when there is none to show. */
-export function quotaSegment(theme: Theme, statuses: ReadonlyMap<string, string>): string | undefined {
+export function quotaSegment(theme: Theme, statuses: ReadonlyMap<string, string>, barCells = 10): string | undefined {
 	const text = statuses.get(QUOTA_KEY);
-	return text ? parseQuota(theme, text.replace(ANSI, "")) : undefined;
+	return text ? parseQuota(theme, text.replace(ANSI, ""), barCells) : undefined;
 }
 
 /** The footer text for one status: the rule's version if there is one, otherwise the extension's own text. */

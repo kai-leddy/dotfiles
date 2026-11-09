@@ -68,22 +68,22 @@ export function thinkingSegment(theme: Theme, pi: ExtensionAPI, ctx: ExtensionCo
 }
 
 /** A gauge, a progress bar, the percentage and the window size. Yellow from 50%, red from 80%. */
-export function contextSegment(theme: Theme, ctx: ExtensionContext): string | undefined {
+export function contextSegment(theme: Theme, ctx: ExtensionContext, barCells = 10): string | undefined {
 	const usage = ctx.getContextUsage();
 	if (!usage) return undefined;
 	const size = paint(theme, "text", formatCount(usage.contextWindow));
 	if (usage.percent === null) return `${paint(theme, "subtext", `${icons.context} ? `)}${size}`;
 
 	const color: CatppuccinColor = usage.percent >= 80 ? "red" : usage.percent >= 50 ? "yellow" : "green";
-	const bar = progressBar(theme, usage.percent / 100, 10, color);
-	return `${paint(theme, color, icons.context)} ${bar} ${paint(theme, color, `${Math.round(usage.percent)}%`)} ${size}`;
+	const bar = barCells > 0 ? `${progressBar(theme, usage.percent / 100, barCells, color)} ` : "";
+	return `${paint(theme, color, icons.context)} ${bar}${paint(theme, color, `${Math.round(usage.percent)}%`)} ${size}`;
 }
 
 /**
  * Tokens sent and received, the cache hit rate (database with a tick) and the
  * cost, totalled along the current branch.
  */
-export function usageSegment(theme: Theme, ctx: ExtensionContext): string | undefined {
+export function usageSegment(theme: Theme, ctx: ExtensionContext, opts: { cache?: boolean; cost?: boolean } = {}): string | undefined {
 	const total = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0 };
 	for (const entry of ctx.sessionManager.getBranch()) {
 		if (entry.type !== "message" || entry.message.role !== "assistant") continue;
@@ -100,8 +100,8 @@ export function usageSegment(theme: Theme, ctx: ExtensionContext): string | unde
 	return join([
 		paint(theme, "sky", `${icons.tokensIn} ${formatCount(prompt)}`),
 		paint(theme, "sapphire", `${icons.tokensOut} ${formatCount(total.output)}`),
-		total.cacheRead > 0 && cacheHitRate(theme, total.cacheRead / prompt),
-		paint(theme, "peach", `${icons.cost} ${total.cost.toFixed(2)}`),
+		opts.cache !== false && total.cacheRead > 0 && cacheHitRate(theme, total.cacheRead / prompt),
+		opts.cost !== false && paint(theme, "peach", `${icons.cost} ${total.cost.toFixed(2)}`),
 	]);
 }
 

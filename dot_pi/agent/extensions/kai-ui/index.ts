@@ -40,15 +40,16 @@ export default function kaiUi(pi: ExtensionAPI) {
 	const stats = new TurnStats();
 	const project = new Project(pi);
 	const voice = new VoiceIndicator();
+	let editor: FramedEditor | undefined;
 
 	function install(ctx: ExtensionContext): void {
-		attachVoice(ctx.ui, voice);
+		attachVoice(ctx.ui, voice, () => editor);
 		ctx.ui.setHeader(createHeader(pi, ctx));
 		ctx.ui.setFooter(createFooter(pi, ctx, project));
 		ctx.ui.setEditorComponent(
 			(tui, theme, keybindings) => {
 				voice.onChange = () => tui.requestRender();
-				return new FramedEditor(
+				editor = new FramedEditor(
 					tui,
 					theme,
 					keybindings,
@@ -57,6 +58,7 @@ export default function kaiUi(pi: ExtensionAPI) {
 					// pi-listen's hold/record state, left of Pi's working spinner.
 					(maxWidth) => fitting(voice.label(ctx.ui.theme), maxWidth),
 				);
+				return editor;
 			},
 		);
 		ctx.ui.setWorkingIndicator({ frames: spinnerFrames(ctx.ui.theme), intervalMs: 80 });

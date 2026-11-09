@@ -111,15 +111,44 @@ function readHoldMs(): number {
 }
 
 const ORIGINALS = Symbol.for("kai-ui.voice.originals");
-type Patchable = ExtensionUIContext & { [ORIGINALS]?: Pick<ExtensionUIContext, "setWidget" | "setStatus"> };
+type Patchable = ExtensionUIContext & {
+	[ORIGINALS]?: Pick<ExtensionUIContext, "setWidget" | "setStatus" | "setEditorText">;
+};
+
+/** The parts of the input editor that attachVoice() needs. */
+export interface TextEditor {
+	getText(): string;
+	getExpandedText?(): string;
+	getLines(): string[];
+	getCursor(): { line: number; col: number };
+	insertTextAtCursor(text: string): void;
+}
 
 /**
  * Wrap setWidget and setStatus on the shared UI object. Safe to call again after /reload: it always
  * wraps the original functions, never an earlier wrapper.
+ *
+ * It also wraps setEditorText. A tap on space makes pi-listen call setEditorText(text + " "), which
+ * puts the space at the end and sends the cursor there. When that is the call and the cursor is
+ * somewhere else, the space is typed at the cursor instead.
  */
-export function attachVoice(ui: ExtensionUIContext, voice: VoiceIndicator): void {
+export function attachVoice(ui: ExtensionUIContext, voice: VoiceIndicator, getEditor: () => TextEditor | undefined = () => undefined): void {
 	const target = ui as Patchable;
-	const original = (target[ORIGINALS] ??= { setWidget: ui.setWidget, setStatus: ui.setStatus });
+	const original = (target[ORIGINALS] ??= { setWidget: ui.setWidget, setStatus: ui.setStatus, setEditorText: ui.setEditorText });
+	target.setEditorText = ((text: string) => {
+		const editor = getEditor();
+		if (editor && text.endsWith(" ")) {
+			const current = editor.getExpandedText?.() ?? editor.getText();
+			const lines = editor.getLines();
+			const { line, col } = editor.getCursor();
+			const atEnd = line >= lines.length - 1 && col >= (lines[lines.length - 1] ?? "").length;
+			if (text === current + " " && !atEnd) {
+				editor.insertTextAtCursor(" ");
+				return;
+			}
+		}
+		return original.setEditorText.call(ui, text);
+	}) as ExtensionUIContext["setEditorText"];
 	target.setWidget = ((key: string, ...rest: unknown[]) => {
 		if (key === WIDGET_KEY) return; // the island below the editor; drawn on the input's top-left rule instead
 		return (original.setWidget as (...args: unknown[]) => void).call(ui, key, ...rest);
@@ -137,6 +166,7 @@ export function detachVoice(ui: ExtensionUIContext, voice: VoiceIndicator): void
 	if (original) {
 		target.setWidget = original.setWidget;
 		target.setStatus = original.setStatus;
+		target.setEditorText = original.setEditorText;
 		delete target[ORIGINALS];
 	}
 	voice.reset();

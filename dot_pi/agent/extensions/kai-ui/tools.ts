@@ -361,16 +361,25 @@ function statusIcon(theme: Theme, status: NestedCall["status"]): string {
 	}
 }
 
+/**
+ * Shorten to `width` columns with a one-column ellipsis. truncateToWidth() ends with a full SGR reset,
+ * which also drops the card's background for the rest of the row (a dark patch around the ellipsis), so
+ * only the foreground and weight are reset here.
+ */
+function clip(text: string, width: number): string {
+	return truncateToWidth(text, width, "\u2026").replaceAll("\x1b[0m", "\x1b[22;39m");
+}
+
 /** One line that never wraps: a long summary is shortened so the outcome stays visible. */
 class Row implements Component {
 	parts: RowParts = { head: "", summary: "", meta: "" };
 
 	render(width: number): string[] {
 		const { head, summary, meta } = this.parts;
-		if (!summary) return [truncateToWidth(head.trimEnd() + meta, width)];
+		if (!summary) return [clip(head.trimEnd() + meta, width)];
 		const room = width - visibleWidth(head + meta);
-		const line = room >= 10 ? head + truncateToWidth(summary, room) + meta : head + summary + meta;
-		return [truncateToWidth(line, width)];
+		const line = room >= 10 ? head + clip(summary, room) + meta : head + summary + meta;
+		return [clip(line, width)];
 	}
 
 	invalidate(): void {}
