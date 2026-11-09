@@ -27,13 +27,13 @@ takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font g
 |---|---|
 | `index.ts` | Wires everything up, feeds turn stats from Pi's events, adds `/kai-ui` |
 | `header.ts` | Startup header |
-| `footer.ts` | Footer layout: a single row, with other extensions' status text after the runtime |
+| `footer.ts` | Footer layout: one row that never truncates. On narrow terminals it drops statuses, the runtime, the cache rate and the bars in turn, then splits into two lines |
 | `statuses.ts` | Rules that shorten other extensions' status text to icons (LSP, subagents, blackhole) and put the usage quota in the footer |
-| `voice.ts` | Moves pi-listen's hold-to-talk island from below the editor onto the input's top rule (wraps `setWidget`/`setStatus` on the shared `ctx.ui`) |
+| `voice.ts` | Moves pi-listen's hold-to-talk island from below the editor onto the input's top rule (wraps `setWidget`/`setStatus` on the shared `ctx.ui`). Also wraps `setEditorText` so a tapped space is typed at the cursor, not appended at the end |
 | `editor.ts` | `FramedEditor`, a `CustomEditor` with a rounded frame, a prompt and a top-right label |
 | `segments.ts` | The pieces the header, footer and editor show: cwd, git, model, thinking, context, usage, speed |
 | `brands.ts` | Which logo goes next to a model name (Claude, GitHub, OpenAI, Google, Azure, AWS) |
-| `tools.ts` | Tool cards for built-in tools and codemode, including codemode's nested calls |
+| `tools.ts` | Tool cards for built-in tools and codemode, including codemode's nested calls. Long rows are clipped with `…` without resetting the card's background |
 | `widgets.ts` | Nerd Font progress bar, sparkline |
 | `icons.ts` | Nerd Font glyphs by meaning, plus the progress-bar and spinner glyphs |
 | `palette.ts` | Catppuccin colour names → theme tokens, and the spinner frames |
