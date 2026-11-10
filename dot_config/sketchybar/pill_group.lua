@@ -16,9 +16,32 @@ local settings = require("settings")
 
 local M = {}
 
--- Space either side of each icon/label inside a merged pill.
-local inner_padding = 6
+-- Spacing inside merged pills. The gap between neighbouring icons (and between
+-- an icon and its label) is the same as the gap between the outermost icon and
+-- the pill's edge, i.e. M.edge_padding (the same 8 a standalone pill has):
+--   * every member has inner_padding either side, which across the 2pt
+--     separator makes up the gap between members;
+--   * an empty item at each end of the bracket tops the edge up to edge_padding;
+--   * a label sits edge_padding - inner_padding after its icon.
+-- inner_padding * 2 + 2 (the separator) == edge_padding.
+local edge_padding = settings.padding.big
+local inner_padding = (edge_padding - 2) / 2
 M.inner_padding = inner_padding
+M.edge_padding = edge_padding
+
+-- Empty item inside the bracket that pads the end of the pill out to
+-- edge_padding. Width is what's missing after the end member's own padding.
+function M.edge(position)
+	return sbar.add("item", {
+		position = position,
+		padding_left = 0,
+		padding_right = 0,
+		width = edge_padding - inner_padding,
+		icon = { drawing = false },
+		label = { drawing = false },
+		background = { drawing = false },
+	})
+end
 
 -- A bracket's background covers its members' outer padding, so members get
 -- no outer padding and these empty items supply the gap outside the pill
@@ -68,7 +91,7 @@ function M.member(item)
 		padding_left = 0,
 		padding_right = 0,
 		icon = { padding_left = inner_padding, padding_right = inner_padding },
-		label = { padding_right = inner_padding },
+		label = { padding_left = edge_padding - inner_padding, padding_right = inner_padding },
 		background = { color = colors.transparent },
 	})
 	return item
@@ -81,7 +104,7 @@ function M.merge(position, modules)
 	end
 
 	M.spacer(position)
-	local members = {}
+	local members = { M.edge(position).name }
 	for i, module in ipairs(order) do
 		if i > 1 then
 			table.insert(members, M.separator(position).name)
@@ -97,6 +120,7 @@ function M.merge(position, modules)
 			table.insert(members, M.member(item).name)
 		end
 	end
+	table.insert(members, M.edge(position).name)
 	M.spacer(position)
 
 	return M.bracket(members)

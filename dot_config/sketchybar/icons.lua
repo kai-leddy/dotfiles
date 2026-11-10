@@ -6,6 +6,7 @@ return {
 	mail = "",
 	github = "",
 	docker = "",
+	aws = "\u{E7AD}", -- nf-dev-aws (AWS logo): SSO login state (items/aws.lua)
 	coffee = "", -- fa-coffee: used for the caffeinate (keep-awake) toggle
 
 	cpu = "", -- Microchip icon for CPU

@@ -50,7 +50,8 @@ function M.add(name, opts)
 	local graph = sbar.add("graph", name, opts.width or b.graph_width, {
 		position = "left",
 		drawing = drawing,
-		padding_left = 0,
+		-- Gap after the icon matches the gap between icons (see pill_group.lua).
+		padding_left = pill_group.edge_padding - pill_group.inner_padding,
 		padding_right = pill_group.inner_padding, -- gap before the separator
 		icon = { drawing = false, padding_left = 0, padding_right = 0 },
 		label = { drawing = false, padding_left = 0, padding_right = 0 },

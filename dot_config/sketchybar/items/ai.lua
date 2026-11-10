@@ -59,6 +59,9 @@ local poll = sbar.add("item", "ai.poll", {
 
 local spacers = { pill_group.spacer("left") }
 local members = {}
+local edge_left = pill_group.edge("left")
+table.insert(spacers, edge_left)
+table.insert(members, edge_left.name)
 for i, provider in ipairs(providers) do
 	if i > 1 then
 		provider.separator = pill_group.separator("left")
@@ -73,6 +76,9 @@ for i, provider in ipairs(providers) do
 	}))
 	table.insert(members, provider.item.name)
 end
+local edge_right = pill_group.edge("left")
+table.insert(spacers, edge_right)
+table.insert(members, edge_right.name)
 table.insert(spacers, pill_group.spacer("left"))
 for _, spacer in ipairs(spacers) do
 	spacer:set({ drawing = false })

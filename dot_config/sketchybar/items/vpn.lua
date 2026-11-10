@@ -7,7 +7,7 @@ local colors = require("colors")
 -- colour and label:
 --   grey            none
 --   blue   ALT      Altium via FortiClient
---   peach  OCT      Octopart via sshuttle
+--   sapphire OCT      Octopart via sshuttle
 --   mauve  TS       Tailscale
 -- Yellow with the same label means that VPN is still connecting.
 --
@@ -33,7 +33,7 @@ local sshuttle_status = string.format('[ -f "%s" ] && kill -0 "$(cat "%s")" 2>/d
 -- Checked in this order; the first one that isn't off wins.
 local vpns = {
 	{ name = "altium", label = "ALT", color = colors.blue },
-	{ name = "octopart", label = "OCT", color = colors.peach },
+	{ name = "octopart", label = "OCT", color = colors.sapphire },
 	{ name = "tailscale", label = "TS", color = colors.mauve },
 }
 
