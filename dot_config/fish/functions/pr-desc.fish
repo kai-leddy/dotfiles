@@ -1,3 +1,3 @@
 function pr-desc
-    pi-bolt -p /skill:pr-description
+    pi-bolt --no-lsp -p /skill:pr-description
 end
