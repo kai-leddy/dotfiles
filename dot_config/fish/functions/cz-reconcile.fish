@@ -60,7 +60,7 @@ function cz-reconcile --description 'Ask pi-bolt to fold live-file drift back in
         return 0
     end
 
-    set -l pi_args -p --no-session --no-lsp
+    set -l pi_args -p --no-session
     set -q _flag_model; and set -a pi_args --model $_flag_model
 
     set -l machine (command chezmoi execute-template '{{ .machine }}' 2>/dev/null)
