@@ -1,4 +1,5 @@
 local colors = require("colors")
+local settle = require("settle")
 local icons = require("icons")
 
 local wifi_item_name = "wifi_status_indicator" -- Unique name for the item
@@ -94,7 +95,10 @@ local function initialize_wifi_monitor()
 	)
 end
 
-wifi:subscribe({ "routine", "forced", "wifi_change", "system_woke" }, update_wifi_status)
+wifi:subscribe({ "routine", "forced" }, update_wifi_status)
+-- wifi_change fires several times while reassociating after a wake, so both
+-- go through the settle window (see settle.lua) rather than refreshing each time.
+settle.subscribe({ "wifi_change", "system_woke" }, update_wifi_status, { delay = 0.5, name = "wifi" })
 
 -- Initialize the monitor to find the Wi-Fi device and perform the first update
 initialize_wifi_monitor()

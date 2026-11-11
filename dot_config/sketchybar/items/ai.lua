@@ -12,6 +12,7 @@
 local colors = require("colors")
 local icons = require("icons")
 local pill_group = require("pill_group")
+local settle = require("settle")
 
 local script = (os.getenv("CONFIG_DIR") or (os.getenv("HOME") .. "/.config/sketchybar")) .. "/helpers/ai_quota.sh"
 
@@ -124,7 +125,9 @@ local function update()
 	end)
 end
 
-poll:subscribe({ "routine", "forced", "system_woke" }, update)
+poll:subscribe({ "routine", "forced" }, update)
+-- A network fetch, so it goes last once the wake has settled (see settle.lua).
+settle.subscribe("system_woke", update, { delay = 1.5, name = "ai quota" })
 for _, provider in ipairs(providers) do
 	provider.item:subscribe("mouse.clicked", update)
 end

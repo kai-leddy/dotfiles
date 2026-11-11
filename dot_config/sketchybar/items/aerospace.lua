@@ -1,5 +1,7 @@
 local settings = require("settings")
 local colors = require("colors")
+local debounce = require("debounce")
+local settle = require("settle")
 local app_icons = require("app_icons")
 
 local query_workspaces =
@@ -136,13 +138,17 @@ local function updateWindow(workspace_index, args)
 	end)
 end
 
-local function updateWindows()
+-- Focus changes and display changes can arrive in bursts. Only one refresh
+-- (three aerospace calls) runs at a time, and anything that arrives meanwhile
+-- collapses into a single follow-up run.
+local updateWindows = debounce.single_flight(function(done)
 	withWindows(function(args)
 		for workspace_index, _ in pairs(workspaces) do
 			updateWindow(workspace_index, args)
 		end
+		done()
 	end)
-end
+end)
 
 local function updateWorkspaceMonitor()
 	local workspace_monitor = {}
@@ -220,10 +226,12 @@ sbar.exec(query_workspaces, function(workspaces_and_monitors)
 		updateWindows()
 	end)
 
-	root:subscribe("display_change", function()
+	-- display_change comes in bursts when a DisplayLink dock reconnects; wait
+	-- for it to settle and refresh once (see settle.lua).
+	settle.subscribe("display_change", function()
 		updateWorkspaceMonitor()
 		updateWindows()
-	end)
+	end, { delay = 0.25, name = "aerospace monitors + windows" })
 
 	sbar.exec("aerospace list-workspaces --focused", function(focused_workspace)
 		local focused = focused_workspace:match("^%s*(.-)%s*$")

@@ -43,12 +43,6 @@ local cal = sbar.add("item", {
 
 local next_event = nil
 
-local function update_display_assignments()
-	utils.get_display_lengths(function(displays)
-		cal_short:set({ display = table.concat(displays.short, ",") })
-		cal:set({ display = #displays.long > 0 and table.concat(displays.long, ",") or "99" })
-	end)
-end
 
 local function update()
 	local start_time = os.date("%H:%M", os.time() - 600)
@@ -164,11 +158,14 @@ local function click()
 	end
 end
 
-update_display_assignments()
+-- Shared with task.lua: one query for all watchers, re-run once per settled
+-- display change.
+utils.watch_display_lengths(function(displays)
+	cal_short:set({ display = table.concat(displays.short, ",") })
+	cal:set({ display = #displays.long > 0 and table.concat(displays.long, ",") or "99" })
+end)
 
 cal:subscribe({ "routine", "forced" }, update)
 cal_short:subscribe({ "routine", "forced" }, update)
 cal:subscribe({ "mouse.clicked" }, click)
 cal_short:subscribe({ "mouse.clicked" }, click)
-cal:subscribe({ "display_change" }, update_display_assignments)
-cal_short:subscribe({ "display_change" }, update_display_assignments)

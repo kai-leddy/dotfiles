@@ -1,4 +1,5 @@
 local colors = require("colors")
+local settle = require("settle")
 local icons = require("icons")
 local settings = require("settings")
 
@@ -50,6 +51,7 @@ local function battery_update()
 	end)
 end
 
-battery:subscribe({ "routine", "power_source_change", "system_woke" }, battery_update)
+battery:subscribe({ "routine", "power_source_change" }, battery_update)
+settle.subscribe("system_woke", battery_update, { delay = 0.75, name = "battery" })
 
 return battery

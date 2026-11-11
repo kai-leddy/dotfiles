@@ -13,6 +13,11 @@ return {
 		size = 16.0,
 	},
 	padding = { small = 4, big = 8, bigger = 12, biggest = 16 },
+	-- See settle.lua. Refreshes triggered by wake / unlock / display changes
+	-- wait until no such event has arrived for `wait` seconds (at most
+	-- `max_wait` in total), then run once. `debug` logs every raw event and
+	-- every flush to /tmp/sketchybar-settle.log; turn it off when you're done.
+	settle = { wait = 2, max_wait = 10, debug = false },
 	bar = {
 		gap = gap,
 		item_height = item_height,

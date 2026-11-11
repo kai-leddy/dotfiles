@@ -1,6 +1,9 @@
 --- Utility functions for SketchyBar configuration.
 --- @module utils
 
+local debounce = require("debounce")
+local settle = require("settle")
+
 local M = {}
 
 -- Displays at least this many points wide get the long label variants.
@@ -46,6 +49,38 @@ function M.get_display_lengths(callback, attempt)
 
 		callback({ short = short_displays, long = long_displays })
 	end)
+end
+
+local listeners = {}
+local watching = false
+
+-- One shared query for every listener, never two at once, and a request made
+-- while one is running becomes a single follow-up run.
+local refresh = debounce.single_flight(function(done)
+	M.get_display_lengths(function(displays)
+		for _, listener in ipairs(listeners) do
+			listener(displays)
+		end
+		done()
+	end)
+end)
+
+-- Items register as they load; this folds the registrations into one query.
+local first_refresh = debounce.trailing(0.1, refresh)
+
+--- Like `get_display_lengths`, but keeps `callback` up to date: it's called
+--- once soon after registration and again whenever the displays change. All
+--- watchers share one query and one (settled) display_change subscription, so
+--- adding more of them costs nothing extra.
+---
+--- @param callback fun(displays: {short: string[], long: string[]})
+function M.watch_display_lengths(callback)
+	table.insert(listeners, callback)
+	first_refresh()
+	if not watching then
+		watching = true
+		settle.subscribe("display_change", refresh, { name = "display lengths" })
+	end
 end
 
 return M

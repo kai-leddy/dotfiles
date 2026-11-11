@@ -118,18 +118,14 @@ local function click()
 	end)
 end
 
-local function update_display_assignments()
-	utils.get_display_lengths(function(displays)
-		task_short:set({ display = table.concat(displays.short, ",") })
-		task:set({ display = #displays.long > 0 and table.concat(displays.long, ",") or "99" })
-	end)
-end
-
-update_display_assignments()
+-- Shared with meeting.lua: one query for all watchers, re-run once per
+-- settled display change.
+utils.watch_display_lengths(function(displays)
+	task_short:set({ display = table.concat(displays.short, ",") })
+	task:set({ display = #displays.long > 0 and table.concat(displays.long, ",") or "99" })
+end)
 
 task:subscribe({ "routine", "forced" }, update_task_widget)
 task_short:subscribe({ "routine", "forced" }, update_task_widget)
 task:subscribe({ "mouse.clicked" }, click)
 task_short:subscribe({ "mouse.clicked" }, click)
-task:subscribe({ "display_change" }, update_display_assignments)
-task_short:subscribe({ "display_change" }, update_display_assignments)
