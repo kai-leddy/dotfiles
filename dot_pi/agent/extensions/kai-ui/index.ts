@@ -94,7 +94,9 @@ export default function kaiUi(pi: ExtensionAPI) {
 	pi.on("agent_start", () => stats.startRun());
 	pi.on("turn_start", () => stats.startTurn());
 	pi.on("message_update", (event) => {
-		if (event.assistantMessageEvent.type.endsWith("_delta")) stats.sawToken();
+		const e = event.assistantMessageEvent;
+		if (!e.type.endsWith("_delta") || !("delta" in e)) return;
+		stats.sawToken(e.delta, e.partial.usage?.output ?? 0);
 	});
 	pi.on("message_end", (event) => {
 		if (event.message.role === "assistant") stats.finishResponse(event.message.usage.output);

@@ -19,6 +19,7 @@ import { type Component, Box, Container, Spacer, Text, truncateToWidth, visibleW
 import { formatDuration, shortenPath } from "./format.ts";
 import { icons } from "./icons.ts";
 import { type CatppuccinColor, paint } from "./palette.ts";
+import { LIVE_CALLS, LiveAgentRows, syncTicker } from "./subagents-live.ts";
 
 type Args = Record<string, unknown>;
 /** The context Pi passes to tool renderers (the type isn't exported by name). */
@@ -135,6 +136,8 @@ export function registerToolCards(pi: ExtensionAPI, isEnabled: () => boolean): v
  */
 interface RowState {
 	header?: Row;
+	/** Redraw timer for live subagent rows (see subagents-live.ts). */
+	ticker?: ReturnType<typeof setInterval>;
 	nativeCall?: Component;
 	nativeResult?: Component;
 }
@@ -224,6 +227,9 @@ function codemodeRenderers(): ToolRenderers {
 			const calls = (result.details as { calls?: NestedCall[] } | undefined)?.calls ?? [];
 			const output = scriptOutput(result.content);
 			const failed = context.isError && !options.isPartial;
+			// While a subagent runs inside the script, show its live progress and keep redrawing.
+			const watching = options.isPartial === true && calls.some((call) => call.status === "running" && LIVE_CALLS.has(call.name));
+			syncTicker(state, watching, context.invalidate);
 
 			state.header ??= new Row();
 			state.header.parts = describeCall(theme, "codemode", CODEMODE, {}, {
@@ -240,6 +246,7 @@ function codemodeRenderers(): ToolRenderers {
 					body.addChild(new Text(paint(theme, "subtext", `${icons.running} ${calls.length - shown.length} earlier calls`), 0, 0));
 				}
 				for (const call of shown) body.addChild(nestedCallRow(theme, call, options.expanded));
+				if (watching) body.addChild(new LiveAgentRows(theme));
 			}
 
 			if (output && (options.expanded || failed)) {
