@@ -29,7 +29,7 @@ import { execFile } from "node:child_process";
 import path from "node:path";
 import { promisify } from "node:util";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { Box, Text } from "@earendil-works/pi-tui";
+import { type Component, Box, Container, Spacer, Text, truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 const run = promisify(execFile);
 
@@ -181,45 +181,112 @@ const minutes = (ms: number) => (ms >= 60_000 ? `${Math.round(ms / 60_000)} min`
 const ENTRY_TYPE = "lsp-reaper";
 
 interface ReapedEntry {
-	why: string;
+	reason: "idle" | "manual";
+	idleMs: number;
 	timestamp: number;
 	servers: { name: string; pid: number; mb: number }[];
+}
+
+// --- The chat card ------------------------------------------------------------
+// Drawn like kai-ui's tool cards (see kai-ui/tools.ts): Pi's tool-success background, a header
+// line with a coloured Nerd Font icon and bold name, dim " " separators, and one
+// "✓ <icon>  name" row per server like codemode's nested calls. Colours are theme tokens, the
+// ones kai-ui's palette maps Catppuccin names to (sapphire = thinkingLow, and so on).
+
+interface CardTheme {
+	fg(color: string, text: string): string;
+	bg(color: string, text: string): string;
+	bold(text: string): string;
+}
+
+const ICON = "\uf121"; // code, the glyph kai-ui uses for lsp_* tools
+const ICON_GAP = "  "; // the glyphs are wide, one space looks cramped
+const DOT = "\uf444"; // separator
+const TICK = "\uf00c";
+
+const sapphire = (theme: CardTheme, text: string) => theme.fg("thinkingLow", text);
+const subtext = (theme: CardTheme, text: string) => theme.fg("muted", text);
+const overlay = (theme: CardTheme, text: string) => theme.fg("dim", text);
+
+/** Like kai-ui's clip(): shorten with an ellipsis without resetting the card's background. */
+const clip = (text: string, width: number) => truncateToWidth(text, width, "\u2026").replaceAll("\x1b[0m", "\x1b[22;39m");
+
+/** One line that never wraps. */
+class Row implements Component {
+	private readonly text: string;
+	constructor(text: string) {
+		this.text = text;
+	}
+	render(width: number): string[] {
+		return [visibleWidth(this.text) > width ? clip(this.text, width) : this.text];
+	}
+	invalidate(): void {}
+}
+
+const stack = (...children: Component[]) => {
+	const container = new Container();
+	for (const child of children) container.addChild(child);
+	return container;
+};
+
+const plural = (n: number, word: string) => (n === 1 ? word : word + "s");
+
+function formatIdle(ms: number): string {
+	return ms >= 60_000 ? Math.round(ms / 60_000) + " min" : Math.round(ms / 1000) + " s";
+}
+
+function renderCard(data: ReapedEntry, expanded: boolean, theme: CardTheme, outputPad: number): Component {
+	const count = data.servers.length;
+	const total = data.servers.reduce((sum, s) => sum + s.mb, 0);
+	const dot = overlay(theme, " " + DOT + " ");
+	const header =
+		sapphire(theme, ICON + ICON_GAP + theme.bold("lsp-reaper")) +
+		[
+			subtext(theme, count + " " + plural(count, "server") + " stopped"),
+			subtext(theme, "~" + total + " MB freed"),
+			overlay(theme, data.reason === "idle" ? "idle " + formatIdle(data.idleMs) : "on request"),
+		]
+			.map((part) => dot + part)
+			.join("");
+
+	const body = new Container();
+	body.addChild(new Row(header));
+	body.addChild(new Spacer(1));
+	for (const s of data.servers) {
+		const status = theme.fg("success", TICK);
+		const label = sapphire(theme, ICON + ICON_GAP + s.name);
+		body.addChild(new Row("  " + status + " " + label + " " + "pid " + s.pid + dot + subtext(theme, s.mb + " MB")));
+	}
+	if (expanded) {
+		body.addChild(new Spacer(1));
+		body.addChild(
+			new Text(
+				overlay(theme, "Stopped at " + new Date(data.timestamp).toLocaleTimeString() + ". pi-lens starts a server again the next time one is needed."),
+				0,
+				0,
+			),
+		);
+	}
+
+	const box = new Box(outputPad, 1, (text: string) => theme.bg("toolSuccessBg", text));
+	box.addChild(body);
+	return box;
 }
 
 // registerEntryRenderer is in Pi's runtime API; older type packages may not declare it yet.
 type EntryApi = ExtensionAPI & {
 	registerEntryRenderer<T>(
 		customType: string,
-		renderer: (
-			entry: { data?: T },
-			options: { expanded: boolean },
-			theme: { fg(color: string, text: string): string; bg(color: string, text: string): string },
-		) => unknown,
+		renderer: (entry: { data?: T }, options: { expanded: boolean; outputPad?: number }, theme: CardTheme) => Component,
 	): void;
 };
 
 export default function lspReaper(api: ExtensionAPI) {
 	const pi = api as EntryApi;
-	pi.registerEntryRenderer<ReapedEntry>(ENTRY_TYPE, (entry, { expanded }, theme) => {
-		const data = entry.data;
-		const box = new Box(1, 1, (text: string) => theme.bg("customMessageBg", text));
-		if (!data) return box;
-		const total = data.servers.reduce((sum, s) => sum + s.mb, 0);
-		const count = data.servers.length;
-		const names = data.servers.map((s) => s.name).join(", ");
-		box.addChild(
-			new Text(
-				`${theme.fg("accent", "[lsp-reaper]")} Stopped ${count} language server${count === 1 ? "" : "s"} (${names}), about ${total} MB, ${data.why}. They start again on next use.`,
-				0,
-				0,
-			),
-		);
-		if (expanded) {
-			for (const s of data.servers) box.addChild(new Text(theme.fg("dim", `  ${s.name}  pid ${s.pid}  ${s.mb} MB`), 0, 0));
-			box.addChild(new Text(theme.fg("dim", `  at ${new Date(data.timestamp).toLocaleTimeString()}`), 0, 0));
-		}
-		return box;
-	});
+
+	pi.registerEntryRenderer<ReapedEntry>(ENTRY_TYPE, (entry, options, theme) =>
+		entry.data ? renderCard(entry.data, options.expanded, theme, (options as { outputPad?: number }).outputPad ?? 1) : new Container(),
+	);
 
 	let lastActivity = Date.now();
 	const firstSeen = new Map<number, number>();
@@ -254,10 +321,11 @@ export default function lspReaper(api: ExtensionAPI) {
 	}
 
 	/** Put a card in the chat history; fall back to a toast if the entry can't be written. */
-	function notifyReaped(ctx: ExtensionContext | undefined, reaped: Server[], why: string) {
+	function notifyReaped(ctx: ExtensionContext | undefined, reaped: Server[], reason: ReapedEntry["reason"]) {
 		if (reaped.length === 0) return;
 		const entry: ReapedEntry = {
-			why,
+			reason,
+			idleMs: IDLE_MS,
 			timestamp: Date.now(),
 			servers: reaped.map((s) => ({ name: s.name, pid: s.pid, mb: mb(s.rssKb) })),
 		};
@@ -267,7 +335,7 @@ export default function lspReaper(api: ExtensionAPI) {
 			if (!ctx?.hasUI) return;
 			const freed = entry.servers.reduce((sum, s) => sum + s.mb, 0);
 			try {
-				ctx.ui.notify(`Stopped ${reaped.length} language server(s) (${entry.servers.map((s) => s.name).join(", ")}), about ${freed} MB, ${why}.`, "info");
+				ctx.ui.notify("Stopped " + reaped.length + " language server(s) (" + entry.servers.map((x) => x.name).join(", ") + "), about " + freed + " MB.", "info");
 			} catch {}
 		}
 	}
@@ -278,7 +346,7 @@ export default function lspReaper(api: ExtensionAPI) {
 		firstSeen.clear();
 		if (timer) clearInterval(timer);
 		timer = setInterval(async () => {
-			notifyReaped(latestCtx, await reap(false), `idle for ${minutes(IDLE_MS)}`);
+			notifyReaped(latestCtx, await reap(false), "idle");
 		}, CHECK_MS);
 		timer.unref?.();
 	});
@@ -299,7 +367,7 @@ export default function lspReaper(api: ExtensionAPI) {
 			if (args.trim() === "now") {
 				const reaped = await reap(true);
 				if (reaped.length === 0) ctx.ui.notify("No language servers running.", "info");
-				else notifyReaped(ctx, reaped, "on request");
+				else notifyReaped(ctx, reaped, "manual");
 				return;
 			}
 			const servers = await findServers();
