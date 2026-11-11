@@ -1,5 +1,5 @@
 [tools]
-neovim = "stable"
+neovim = "latest"
 node = "latest"
 "pypi:mnemosyne-memory" = "latest"
 uv = "latest"
