@@ -14,3 +14,9 @@
 - When completing a task requires checking documentation for a tool, library, or language to get it right, use context7 (`ctx7_library` then `ctx7_docs`) rather than relying on memory.
 - The agent runs on Pi-Bolt, whose `bash` tool and `!` commands always run bash (`shellPath` points at Homebrew's bash 5), so write commands for those in bash syntax.
 - The user's interactive shell is fish. When giving the user commands to run in their own terminal, or writing fish config, functions or scripts, use fish syntax: `set -x VAR val` instead of `export`, `(cmd)` instead of `$(cmd)`, `; and` / `; or` or `&&` / `||`, `for x in ...; ...; end` instead of `do`/`done`, and `if ...; ...; end` instead of `then`/`fi`. To run fish-specific code from the `bash` tool, use `fish -c '...'`.
+- Mark all AI-assisted Git work with the model that did it, so reviewers can see it was AI-assisted and which model was used.
+  - Add a `Co-authored-by:` trailer to every commit message (including amends, squashes and merge commits you write), after a blank line at the end of the message. Format: `Co-authored-by: <Model name> <noreply@<provider-domain>>`, e.g. `Co-authored-by: Claude Sonnet 5.5 <noreply@anthropic.com>`.
+  - Identify the model from your own identity or the `PI_PROVIDER` and `PI_MODEL` environment variables (check with `bash`); never guess or reuse a stale name. If the model changes mid-session, use the current one.
+  - Keep any trailers the user or repo already requires (e.g. `Signed-off-by`, Jira keys) and put the co-author trailer alongside them.
+  - Pull request descriptions, and other Git-hosted text you write (issue and PR comments, review replies), should end with a short line such as `AI-assisted: <Model name>`. Apply this in the `pr-description` skill's output too.
+  - Don't add the trailer to commits you didn't author, and don't rewrite existing history just to add it unless asked.
