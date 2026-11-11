@@ -179,6 +179,8 @@ const mb = (kb: number) => Math.round(kb / 1024);
 const minutes = (ms: number) => (ms >= 60_000 ? `${Math.round(ms / 60_000)} min` : `${Math.round(ms / 1000)} s`);
 
 const ENTRY_TYPE = "lsp-reaper";
+/** The status key pi-lens uses for its footer count; kai-ui's statuses.ts has a rule for it. */
+const LSP_STATUS_KEY = "pi-lens-lsp";
 
 interface ReapedEntry {
 	reason: "idle" | "manual";
@@ -340,6 +342,20 @@ export default function lspReaper(api: ExtensionAPI) {
 		}
 	}
 
+	/**
+	 * pi-lens writes the footer's LSP count ("LSP Active (n)") only at session start and after a
+	 * write/edit/lsp_navigation touch, never after lsp_diagnostics and never when a server stops, so
+	 * the count goes stale. Keep the same status key up to date from what is really running.
+	 */
+	async function refreshStatus(ctx: ExtensionContext | undefined) {
+		if (!ctx?.hasUI) return;
+		try {
+			const count = (await findServers()).length;
+			const theme = ctx.ui.theme;
+			ctx.ui.setStatus(LSP_STATUS_KEY, count > 0 ? theme.fg("success", "LSP Active (" + count + ")") : theme.fg("dim", "LSP Inactive"));
+		} catch {}
+	}
+
 	pi.on("session_start", async (_event, ctx) => {
 		latestCtx = ctx;
 		lastActivity = Date.now();
@@ -347,12 +363,21 @@ export default function lspReaper(api: ExtensionAPI) {
 		if (timer) clearInterval(timer);
 		timer = setInterval(async () => {
 			notifyReaped(latestCtx, await reap(false), "idle");
+			await refreshStatus(latestCtx);
 		}, CHECK_MS);
 		timer.unref?.();
 	});
 
 	pi.on("tool_call", async (event) => touch(event.toolName));
-	pi.on("tool_result", async (event) => touch(event.toolName));
+	pi.on("tool_result", async (event, ctx) => {
+		touch(event.toolName);
+		if (event.toolName.startsWith("lsp_") || event.toolName === "write" || event.toolName === "edit") {
+			latestCtx = ctx;
+			// A server started by this call is already running; one started by pi-lens's own follow-up may take a moment.
+			void refreshStatus(ctx);
+			setTimeout(() => void refreshStatus(ctx), 3000).unref?.();
+		}
+	});
 
 	pi.on("session_shutdown", async () => {
 		if (timer) clearInterval(timer);
@@ -368,6 +393,7 @@ export default function lspReaper(api: ExtensionAPI) {
 				const reaped = await reap(true);
 				if (reaped.length === 0) ctx.ui.notify("No language servers running.", "info");
 				else notifyReaped(ctx, reaped, "manual");
+				await refreshStatus(ctx);
 				return;
 			}
 			const servers = await findServers();
