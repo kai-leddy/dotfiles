@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# One script behind every git hook name in this directory (the others are symlinks to it).
+#
+# Pi puts this directory in as core.hooksPath for its own processes only (../index.ts).
+# That would switch off the repo's own hooks, so this runs them: it finds where the repo keeps its
+# hooks (a local core.hooksPath such as husky's, else a global one, else .git/hooks) and hands over to the
+# hook of the same name there, with the same arguments and stdin. Any trouble finding them means "no
+# hook", never a failure: this must not be able to break git.
+#
+# commit-msg first adds the Co-authored-by trailer for the model running the session (see pi-coauthor),
+# unless PI_NO_COAUTHOR is set. If the trailer can't be made, the commit goes ahead with a warning.
+
+hook=$(basename "$0")
+here=$(cd "$(dirname "$0")" && pwd -P) || exit 0
+
+if [ "$hook" = commit-msg ] && [ -z "${PI_NO_COAUTHOR:-}" ] && [ -n "${PI_MODEL:-}" ] && [ -f "${1:-}" ]; then
+  err=$(mktemp 2>/dev/null) || err=/dev/null
+  if trailer=$("$here/../bin/pi-coauthor" 2>"$err"); then
+    git interpret-trailers --in-place --if-exists addIfDifferent --trailer "$trailer" "$1" ||
+      echo "warning: could not add the co-author trailer" >&2
+  else
+    echo "warning: no co-author trailer added: $(cat "$err")" >&2
+  fi
+  [ "$err" = /dev/null ] || rm -f "$err"
+fi
+
+dir=$(git config --local --get core.hooksPath 2>/dev/null || git config --global --get core.hooksPath 2>/dev/null || true)
+if [ -n "$dir" ]; then
+  case $dir in "~"*) dir="$HOME${dir#\~}" ;; esac
+  case $dir in /*) ;; *) top=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0; dir="$top/$dir" ;; esac
+else
+  common=$(git rev-parse --git-common-dir 2>/dev/null) || exit 0
+  dir="$common/hooks"
+fi
+
+[ -x "$dir/$hook" ] || exit 0
+real=$(cd "$dir" && pwd -P) || exit 0
+[ "$real" != "$here" ] || exit 0
+exec "$dir/$hook" "$@"
