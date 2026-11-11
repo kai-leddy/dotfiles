@@ -32,12 +32,17 @@ function badge(theme: Theme, color: CatppuccinColor, icon: string, value?: strin
 /** How many cells pi-blackhole draws its gauges with. */
 const GAUGE_CELLS = 8;
 
+/** Whether an extension's "LSP Active (n)" / "LSP Inactive" status shows in the footer. Off while no LSP plugin is installed. */
+const SHOW_LSP_STATUS = false;
+
 /** The key pi-usage-bar passes to setStatus(): a memory chip glyph. */
 const QUOTA_KEY = "\u{f035b}";
 
 const RULES: Record<string, StatusRule> = {
 	// pi-lens: "LSP Active (2)" or "LSP Inactive" become "</> LSP 2" (green) and "</> LSP 0" (grey).
+	// Hidden while there is no LSP plugin (pi-lens was removed); set SHOW_LSP_STATUS to bring it back.
 	"pi-lens-lsp": (theme, text) => {
+		if (!SHOW_LSP_STATUS) return "";
 		const count = text.match(/Active \((\d+)\)/)?.[1];
 		return count ? badge(theme, "green", icons.lsp, `LSP ${count}`) : badge(theme, "subtext", icons.lsp, "LSP 0");
 	},

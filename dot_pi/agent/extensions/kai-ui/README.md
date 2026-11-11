@@ -18,7 +18,7 @@ takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font g
 ╭───── ⠋ Working ────  38 t/s ▂▄▆  1.2s  8.4s ─╮    ← turn stats on the input's top rule
 │ > next prompt                                   │
 ╰─────────────────────────────────────────────────╯
- [folder] ~/src/app  [branch] main  [node] 22.1.0  [code] LSP 2  [broom] O [bar] P [bar]     [gauge] [bar] 42% 1M  [up] 140k [down] 3.4k [db-tick] 94% [usd] 0.42  [wallet] [bar] 62%
+ [folder] ~/src/app  [branch] main  [node] 22.1.0  [broom] O [bar] P [bar]     [gauge] [bar] 42% 1M  [up] 140k [down] 3.4k [db-tick] 94% [usd] 0.42  [wallet] [bar] 62%
 ```
 
 ## Files
@@ -28,7 +28,7 @@ takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font g
 | `index.ts` | Wires everything up, feeds turn stats from Pi's events, adds `/kai-ui` |
 | `header.ts` | Startup header |
 | `footer.ts` | Footer layout: one row that never truncates. On narrow terminals it drops statuses, the runtime, the cache rate and the bars in turn, then splits into two lines |
-| `statuses.ts` | Rules that shorten other extensions' status text to icons (LSP, subagents, blackhole) and put the usage quota in the footer |
+| `statuses.ts` | Rules that shorten other extensions' status text to icons (LSP, subagents, blackhole; the LSP one is hidden while no LSP plugin is installed, see `SHOW_LSP_STATUS`) and put the usage quota in the footer |
 | `voice.ts` | Moves pi-listen's hold-to-talk island from below the editor onto the input's top rule (wraps `setWidget`/`setStatus` on the shared `ctx.ui`). Also wraps `setEditorText` so a tapped space is typed at the cursor, not appended at the end |
 | `editor.ts` | `FramedEditor`, a `CustomEditor` with a rounded frame, a prompt and a top-right label |
 | `segments.ts` | The pieces the header, footer and editor show: cwd, git, model, thinking, context, usage, speed |
