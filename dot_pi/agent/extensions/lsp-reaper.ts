@@ -19,6 +19,9 @@
  *   /lsp-reaper           show the servers it can see and how long until each is stopped
  *   /lsp-reaper now       stop them immediately
  *
+ * Each time it stops servers it adds a card to the chat (a custom entry, so it stays in the
+ * session history and is not sent to the model), not just a toast.
+ *
  * Env: PI_LSP_REAPER_IDLE_SECONDS (default 600).
  */
 
@@ -26,6 +29,7 @@ import { execFile } from "node:child_process";
 import path from "node:path";
 import { promisify } from "node:util";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { Box, Text } from "@earendil-works/pi-tui";
 
 const run = promisify(execFile);
 
@@ -174,7 +178,49 @@ async function stop(server: Server) {
 const mb = (kb: number) => Math.round(kb / 1024);
 const minutes = (ms: number) => (ms >= 60_000 ? `${Math.round(ms / 60_000)} min` : `${Math.round(ms / 1000)} s`);
 
-export default function lspReaper(pi: ExtensionAPI) {
+const ENTRY_TYPE = "lsp-reaper";
+
+interface ReapedEntry {
+	why: string;
+	timestamp: number;
+	servers: { name: string; pid: number; mb: number }[];
+}
+
+// registerEntryRenderer is in Pi's runtime API; older type packages may not declare it yet.
+type EntryApi = ExtensionAPI & {
+	registerEntryRenderer<T>(
+		customType: string,
+		renderer: (
+			entry: { data?: T },
+			options: { expanded: boolean },
+			theme: { fg(color: string, text: string): string; bg(color: string, text: string): string },
+		) => unknown,
+	): void;
+};
+
+export default function lspReaper(api: ExtensionAPI) {
+	const pi = api as EntryApi;
+	pi.registerEntryRenderer<ReapedEntry>(ENTRY_TYPE, (entry, { expanded }, theme) => {
+		const data = entry.data;
+		const box = new Box(1, 1, (text: string) => theme.bg("customMessageBg", text));
+		if (!data) return box;
+		const total = data.servers.reduce((sum, s) => sum + s.mb, 0);
+		const count = data.servers.length;
+		const names = data.servers.map((s) => s.name).join(", ");
+		box.addChild(
+			new Text(
+				`${theme.fg("accent", "[lsp-reaper]")} Stopped ${count} language server${count === 1 ? "" : "s"} (${names}), about ${total} MB, ${data.why}. They start again on next use.`,
+				0,
+				0,
+			),
+		);
+		if (expanded) {
+			for (const s of data.servers) box.addChild(new Text(theme.fg("dim", `  ${s.name}  pid ${s.pid}  ${s.mb} MB`), 0, 0));
+			box.addChild(new Text(theme.fg("dim", `  at ${new Date(data.timestamp).toLocaleTimeString()}`), 0, 0));
+		}
+		return box;
+	});
+
 	let lastActivity = Date.now();
 	const firstSeen = new Map<number, number>();
 	let timer: ReturnType<typeof setInterval> | undefined;
@@ -207,13 +253,23 @@ export default function lspReaper(pi: ExtensionAPI) {
 		}
 	}
 
+	/** Put a card in the chat history; fall back to a toast if the entry can't be written. */
 	function notifyReaped(ctx: ExtensionContext | undefined, reaped: Server[], why: string) {
-		if (reaped.length === 0 || !ctx?.hasUI) return;
-		const names = reaped.map((s) => s.name).join(", ");
-		const freed = mb(reaped.reduce((sum, s) => sum + s.rssKb, 0));
+		if (reaped.length === 0) return;
+		const entry: ReapedEntry = {
+			why,
+			timestamp: Date.now(),
+			servers: reaped.map((s) => ({ name: s.name, pid: s.pid, mb: mb(s.rssKb) })),
+		};
 		try {
-			ctx.ui.notify(`Stopped ${reaped.length} language server${reaped.length === 1 ? "" : "s"} (${names}), about ${freed} MB, ${why}. They start again on next use.`, "info");
-		} catch {}
+			pi.appendEntry(ENTRY_TYPE, entry);
+		} catch {
+			if (!ctx?.hasUI) return;
+			const freed = entry.servers.reduce((sum, s) => sum + s.mb, 0);
+			try {
+				ctx.ui.notify(`Stopped ${reaped.length} language server(s) (${entry.servers.map((s) => s.name).join(", ")}), about ${freed} MB, ${why}.`, "info");
+			} catch {}
+		}
 	}
 
 	pi.on("session_start", async (_event, ctx) => {
