@@ -13,13 +13,15 @@
  * - project.ts  git status and runtime detection
  * - stats.ts    tokens/s, time to first token, run duration
  *
- * Only Pi's public extension API is used. `/kai-ui` switches it off and on to
- * compare with Pi's default UI.
+ * `/kai-ui` switches the layer off and on while retaining the previous editor.
+ * The frame observes the editor's protected bottom-border hook for layout.
  */
 
-import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { visibleWidth } from "@earendil-works/pi-tui";
-import { FramedEditor } from "./editor.ts";
+import { CustomEditor, type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { visibleWidth, type EditorComponent } from "@earendil-works/pi-tui";
+import { homedir } from "node:os";
+import { join as joinPath } from "node:path";
+import { frameEditor } from "./editor.ts";
 import { createFooter } from "./footer.ts";
 import { createHeader } from "./header.ts";
 import { icons } from "./icons.ts";
@@ -35,27 +37,54 @@ function fitting(label: string | undefined, maxWidth: number): string | undefine
 	return label && visibleWidth(label) <= maxWidth ? label : undefined;
 }
 
-export default function kaiUi(pi: ExtensionAPI) {
+/** Only decorate editors exposing the hooks and text methods used by the frame. */
+function isFrameable(editor: EditorComponent): editor is CustomEditor {
+	return ["renderBottomBorder", "render", "handleMouse", "isShowingAutocomplete", "borderColor", "getLines", "getCursor", "insertTextAtCursor"]
+		.every((name) => typeof (editor as unknown as Record<string, unknown>)[name] === "function");
+}
+
+export default async function kaiUi(pi: ExtensionAPI) {
+	// Pi's package filter prevents a second registration. Register its hooks first
+	// so its session_start installs the factory before kai-ui captures it.
+	let vimError: string | undefined;
+	try {
+		const agentDir = process.env.PI_CODING_AGENT_DIR || joinPath(homedir(), ".pi/agent");
+		const path = joinPath(agentDir, "npm/node_modules/pi-vim/index.ts");
+		const plugin = await import(path);
+		if (typeof plugin.default !== "function") throw new Error("missing default extension factory");
+		await plugin.default(pi);
+	} catch (error) {
+		vimError = error instanceof Error ? error.message : String(error);
+	}
+
 	let enabled = true;
 	const stats = new TurnStats();
 	const project = new Project(pi);
 	const voice = new VoiceIndicator();
-	let editor: FramedEditor | undefined;
+	let editor: CustomEditor | undefined;
+	let previousEditor: ReturnType<ExtensionContext["ui"]["getEditorComponent"]>;
 
 	function install(ctx: ExtensionContext): void {
+		previousEditor = ctx.ui.getEditorComponent();
 		attachVoice(ctx.ui, voice, () => editor);
 		ctx.ui.setHeader(createHeader(pi, ctx));
 		ctx.ui.setFooter(createFooter(pi, ctx, project));
 		ctx.ui.setEditorComponent(
 			(tui, theme, keybindings) => {
 				voice.onChange = () => tui.requestRender();
-				editor = new FramedEditor(
-					tui,
-					theme,
-					keybindings,
+				const base = previousEditor?.(tui, theme, keybindings) ?? new CustomEditor(tui, theme, keybindings, { embedWorkingStatus: true });
+				if (!isFrameable(base)) {
+					detachVoice(ctx.ui, voice);
+					voice.onChange = undefined;
+					editor = undefined;
+					ctx.ui.notify("kai-ui: editor cannot be framed; leaving it unchanged", "warning");
+					return base;
+				}
+				editor = frameEditor(
+					base,
 					(maxWidth) => fitting(speedSegment(ctx.ui.theme, stats), maxWidth),
 					(maxWidth) => fitting(modelLabel(ctx), maxWidth),
-					// pi-listen's hold/record state, left of Pi's working spinner.
+					// pi-listen's hold/record state on the top rule.
 					(maxWidth) => fitting(voice.label(ctx.ui.theme), maxWidth),
 				);
 				return editor;
@@ -74,7 +103,9 @@ export default function kaiUi(pi: ExtensionAPI) {
 		detachVoice(ctx.ui, voice);
 		ctx.ui.setHeader(undefined);
 		ctx.ui.setFooter(undefined);
-		ctx.ui.setEditorComponent(undefined);
+		ctx.ui.setEditorComponent(previousEditor);
+		editor = undefined;
+		voice.onChange = undefined;
 		ctx.ui.setWorkingIndicator();
 	}
 
@@ -86,8 +117,16 @@ export default function kaiUi(pi: ExtensionAPI) {
 
 	pi.on("session_start", (_event, ctx) => {
 		if (ctx.mode !== "tui") return;
+		if (vimError) ctx.ui.notify(`kai-ui: pi-vim unavailable; using Pi editor (${vimError})`, "warning");
 		void project.load(ctx.cwd);
 		if (enabled) install(ctx);
+	});
+
+	pi.on("session_shutdown", (_event, ctx) => {
+		if (ctx.mode !== "tui") return;
+		detachVoice(ctx.ui, voice);
+		voice.onChange = undefined;
+		editor = undefined;
 	});
 
 	// Turn telemetry for the footer.
@@ -109,12 +148,13 @@ export default function kaiUi(pi: ExtensionAPI) {
 	});
 
 	pi.registerCommand("kai-ui", {
-		description: "Switch kai-ui off or on, to compare with Pi's default UI",
+		description: "Switch kai-ui off or on, keeping the previous editor",
 		handler: async (_args, ctx) => {
+			if (ctx.mode !== "tui") return;
 			enabled = !enabled;
 			if (enabled) install(ctx);
 			else uninstall(ctx);
-			ctx.ui.notify(enabled ? "kai-ui on" : "kai-ui off: Pi's default UI (for new tool rows and messages)", "info");
+			ctx.ui.notify(enabled ? "kai-ui on" : "kai-ui off: previous editor restored (new tool rows and messages use Pi's UI)", "info");
 		},
 	});
 }

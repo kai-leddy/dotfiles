@@ -39,7 +39,8 @@
     "npm:pi-skill-acli",
     "npm:pi-blackhole",
     "npm:@mnemosyne-oss/pi-mnemosyne",
-    "npm:@codexstar/pi-listen"
+    "npm:@codexstar/pi-listen",
+    { "source": "npm:pi-vim@0.16.0", "extensions": [] }
   ],
   "shadedCodeBlocks": true,
   "hideThinkingBlock": true{{ if $isWorkLaptop }},
@@ -53,6 +54,9 @@
   "extensionChangelogVersions": {
     "{\"source\":\"npm:@gotgenes/pi-subagents\",\"scope\":\"user\"}": "25.0.5",
     "{\"source\":\"npm:pi-blackhole\",\"scope\":\"user\"}": "0.5.17"
+  },
+  "piVim": {
+    "labelPosition": "top-left"
   },
   "voice": {
     "version": 2,

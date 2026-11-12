@@ -1,8 +1,8 @@
 # kai-ui
 
-My Pi UI layer, replacing `pi-open-tui` and `pi-pretty`. It only uses Pi's public extension API,
-takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font glyphs
-(FantasqueSansM Nerd Font) wherever one exists.
+My Pi UI layer, replacing `pi-open-tui` and `pi-pretty`. It takes colours from the active
+theme (Catppuccin Mocha) and uses Nerd Font glyphs (FantasqueSansM Nerd Font). The input frame
+observes the editor's protected bottom-border hook to locate autocomplete suggestions.
 
 ```
  [pi]  [logo] claude-opus-5-5 · [brain] high       ← header (startup)
@@ -30,7 +30,7 @@ takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font g
 | `footer.ts` | Footer layout: one row that never truncates. On narrow terminals it drops statuses, the runtime, the cache rate and the bars in turn, then splits into two lines |
 | `statuses.ts` | Rules that shorten other extensions' status text to icons (LSP, subagents, blackhole; the LSP one is hidden while no LSP plugin is installed, see `SHOW_LSP_STATUS`) and put the usage quota in the footer |
 | `voice.ts` | Moves pi-listen's hold-to-talk island from below the editor onto the input's top rule (wraps `setWidget`/`setStatus` on the shared `ctx.ui`). Also wraps `setEditorText` so a tapped space is typed at the cursor, not appended at the end |
-| `editor.ts` | `FramedEditor`, a `CustomEditor` with a rounded frame, a prompt and a top-right label |
+| `editor.ts` | Frames the active editor, including pi-vim, without replacing its input handling |
 | `segments.ts` | The pieces the header, footer and editor show: cwd, git, model, thinking, context, usage, speed |
 | `brands.ts` | Which logo goes next to a model name (Claude, GitHub, OpenAI, Google, Azure, AWS) |
 | `tools.ts` | Tool cards for built-in tools and codemode, including codemode's nested calls. Long rows are clipped with `…` without resetting the card's background |
@@ -53,8 +53,10 @@ takes every colour from the active theme (Catppuccin Mocha) and uses Nerd Font g
   codemode get an icon from `OTHER_TOOLS` by name prefix. `ICON_GAP` sets the space after an icon.
 - **Runtimes:** add a line to `RUNTIMES` in `project.ts`.
 - Pi picks up changes after `/reload` or in a new session.
-- `/kai-ui` switches the layer off and on to compare with Pi's default UI. Tool cards and messages
-  already drawn keep their style.
+- `/kai-ui` switches the layer off and on. Vim editing stays active; switching recreates the
+  editor, so its mode and undo history reset. Tool cards and messages already drawn keep their style.
+- `pi-vim` is installed as a filtered package and loaded by kai-ui before it frames the editor.
+  The Vim mode label is on the top rule. Pi's working spinner appears on a separate row.
 
 ## Type checking
 
