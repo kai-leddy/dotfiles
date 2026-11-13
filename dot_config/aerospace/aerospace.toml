@@ -169,6 +169,11 @@ l = ['join-with right', 'mode main']
 # Fallback value (if you omit the key): mode.main.binding = {}
 [mode.main.binding]
 
+# Cmd+M opens Raycast's Search Menu Items instead of minimising the window.
+# AeroSpace grabs the key globally, so the app's own Minimize never sees it.
+# Raycast asks to confirm the first deeplink run; tick "Always open" there.
+cmd-m = 'exec-and-forget open -g "raycast://extensions/raycast/navigation/search-menu-items"'
+
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 ctrl-alt-cmd-backspace = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
