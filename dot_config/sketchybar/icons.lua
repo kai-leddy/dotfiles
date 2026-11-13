@@ -8,6 +8,7 @@ return {
 	docker = "",
 	aws = "\u{E7AD}", -- nf-dev-aws (AWS logo): SSO login state (items/aws.lua)
 	coffee = "", -- fa-coffee: used for the caffeinate (keep-awake) toggle
+	menubar = "\u{F013F}", -- nf-md-chevron_double_up: slides the bar off the top (items/menubar.lua)
 
 	cpu = "", -- Microchip icon for CPU
 	mem = "", -- Memory chip icon for RAM
